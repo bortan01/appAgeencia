@@ -17,7 +17,7 @@ class bienvenidosPage extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   _titulos(),
-                  _botonesRedondeados()
+                  _botonesRedondeados(context)
                 ],
               ),
             )
@@ -125,32 +125,32 @@ class bienvenidosPage extends StatelessWidget {
   }
 
 
-  Widget _botonesRedondeados() {
+  Widget _botonesRedondeados(BuildContext context) {
 
     return Table(
       children: [
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.blue, Icons.border_all, 'General' ),
-              _crearBotonRedondeado( Colors.purpleAccent, Icons.directions_bus, 'Bus' ),
+              _crearBotonRedondeado( Colors.blue, Icons.border_all, 'General',context ),
+              _crearBotonRedondeado( Colors.purpleAccent, Icons.directions_bus, 'Bus',context ),
             ]
         ),
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.pinkAccent, Icons.shop, 'Buy' ),
-              _crearBotonRedondeado( Colors.orange, Icons.insert_drive_file, 'File' ),
+              _crearBotonRedondeado( Colors.pinkAccent, Icons.shop, 'Buy',context ),
+              _crearBotonRedondeado( Colors.orange, Icons.insert_drive_file, 'File',context ),
             ]
         ),
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.blueAccent, Icons.movie_filter, 'Entertaiment' ),
-              _crearBotonRedondeado( Colors.green, Icons.cloud, 'Grocery' ),
+              _crearBotonRedondeado( Colors.blueAccent, Icons.movie_filter, 'Entertaiment' ,context),
+              _crearBotonRedondeado( Colors.green, Icons.cloud, 'Grocery' ,context),
             ]
         ),
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.red, Icons.collections, 'Photos' ),
-              _crearBotonRedondeado( Colors.teal, Icons.help_outline, 'General' ),
+              _crearBotonRedondeado( Colors.red, Icons.collections, 'Photos' ,context),
+              _crearBotonRedondeado( Colors.teal, Icons.help_outline, 'General' ,context),
             ]
         )
       ],
@@ -158,33 +158,36 @@ class bienvenidosPage extends StatelessWidget {
 
   }
 
-  Widget _crearBotonRedondeado( Color color, IconData icono, String texto ) {
+  Widget _crearBotonRedondeado( Color color, IconData icono, String texto ,BuildContext context) {
 
 
     return ClipRect(
 
 
-        child: Container(
-          height: 180.0,
-          margin: EdgeInsets.all(15.0),
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(62, 66, 107, 0.7),
-              borderRadius: BorderRadius.circular(20.0)
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[
-              SizedBox( height: 5.0 ),
-              CircleAvatar(
-                backgroundColor: color,
-                radius: 35.0,
-                child: Icon( icono, color: Colors.white, size: 30.0 ),
-              ),
-              Text( texto , style: TextStyle( color: color )),
-              SizedBox( height: 5.0 )
-            ],
-          ),
+        child: GestureDetector(
+          onTap: (){Navigator.of(context).pushNamed("home");},
+          child: Container(
+            height: 180.0,
+            margin: EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+                color: Color.fromRGBO(62, 66, 107, 0.7),
+                borderRadius: BorderRadius.circular(20.0)
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                SizedBox( height: 5.0 ),
+                CircleAvatar(
+                  backgroundColor: color,
+                  radius: 35.0,
+                  child: Icon( icono, color: Colors.white, size: 30.0 ),
+                ),
+                Text( texto , style: TextStyle( color: color )),
+                SizedBox( height: 5.0 )
+              ],
+            ),
 
+          ),
         ),
 
     );
