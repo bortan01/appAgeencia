@@ -12,6 +12,7 @@ import 'package:peliculas/src/page/input_page.dart';
 import 'package:peliculas/src/page/slider_page.dart';
 import 'package:peliculas/src/page/listView.dart';
 import 'package:peliculas/src/page/home_componentes.dart';
+import 'package:peliculas/src/page/lista_peliculas.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         'inputs': (BuildContext context) => InputPage(),
         'slider': (BuildContext context) => SliderPage(),
         'list': (BuildContext context) => ListaPage(),
+        'listaPeliculas': (BuildContext context) => ListaPeliculas(),
 
       },
     );
