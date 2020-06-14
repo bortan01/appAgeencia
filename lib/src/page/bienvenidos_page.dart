@@ -165,7 +165,7 @@ class bienvenidosPage extends StatelessWidget {
 
 
         child: GestureDetector(
-          onTap: (){Navigator.of(context).pushNamed("basico");},
+          onTap: (){Navigator.of(context).pushNamed("homeComponentes");},
           child: Container(
             height: 180.0,
             margin: EdgeInsets.all(15.0),

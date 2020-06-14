@@ -4,7 +4,14 @@ import 'package:peliculas/src/page/home_page.dart';
 import 'package:peliculas/src/page/pelicula_detalle.dart';
 import 'package:peliculas/src/page/scroll_page.dart';
 import 'package:peliculas/src/page/basico_page.dart';
-
+import 'package:peliculas/src/page/alert_page.dart';
+import 'package:peliculas/src/page/avatar_page.dart';
+import 'package:peliculas/src/page/card_page.dart';
+import 'package:peliculas/src/page/animated_container.dart';
+import 'package:peliculas/src/page/input_page.dart';
+import 'package:peliculas/src/page/slider_page.dart';
+import 'package:peliculas/src/page/listView.dart';
+import 'package:peliculas/src/page/home_componentes.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -18,9 +25,17 @@ class MyApp extends StatelessWidget {
       routes: {
         '/'       : (BuildContext context) => bienvenidosPage(),
         'home'       : (BuildContext context) => HomePage(),
+        'homeComponentes': (BuildContext context) => HomeComponents(),
         'detalle' : (BuildContext context) => PeliculaDetalle(),
         'scrollPage' : (BuildContext context) => ScrollPage(),
         'basico' : (BuildContext context) => BasicoPage(),
+        'alert' : (BuildContext context) => AlertPage(),
+        'avatar': (BuildContext context) => AvatarPage(),
+        'card': (BuildContext context) => CardPage(),
+        'AnimateContarinerPage': (BuildContext context) => AnimateContarinerPage(),
+        'inputs': (BuildContext context) => InputPage(),
+        'slider': (BuildContext context) => SliderPage(),
+        'list': (BuildContext context) => ListaPage(),
 
       },
     );
