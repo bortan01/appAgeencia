@@ -131,41 +131,36 @@ class bienvenidosPage extends StatelessWidget {
       children: [
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.blue, Icons.border_all, 'General',context ),
-              _crearBotonRedondeado( Colors.purpleAccent, Icons.directions_bus, 'Bus',context ),
+              _crearBotonRedondeado( Colors.blue, Icons.border_all, 'HomePage',context, "home" ),
+              _crearBotonRedondeado( Colors.purpleAccent, Icons.directions_bus, 'HomeComponents',context,"homeComponentes" ),
             ]
         ),
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.pinkAccent, Icons.shop, 'Buy',context ),
-              _crearBotonRedondeado( Colors.orange, Icons.insert_drive_file, 'File',context ),
+              _crearBotonRedondeado( Colors.pinkAccent, Icons.shop, 'ScrollPage',context, "scrollPage" ),
+              _crearBotonRedondeado( Colors.orange, Icons.insert_drive_file, 'BasicoPage',context,"basico" ),
             ]
         ),
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.blueAccent, Icons.movie_filter, 'Entertaiment' ,context),
-              _crearBotonRedondeado( Colors.green, Icons.cloud, 'Grocery' ,context),
+              _crearBotonRedondeado( Colors.blueAccent, Icons.movie_filter, 'ListaPeliculas' ,context, "listaPeliculas"),
+              _crearBotonRedondeado( Colors.green, Icons.cloud, 'Exit' ,context , "/"),
             ]
         ),
-        TableRow(
-            children: [
-              _crearBotonRedondeado( Colors.red, Icons.collections, 'Photos' ,context),
-              _crearBotonRedondeado( Colors.teal, Icons.help_outline, 'General' ,context),
-            ]
-        )
+
       ],
     );
 
   }
 
-  Widget _crearBotonRedondeado( Color color, IconData icono, String texto ,BuildContext context) {
+  Widget _crearBotonRedondeado( Color color, IconData icono, String texto ,BuildContext context, String ruta) {
 
 
     return ClipRect(
 
 
         child: GestureDetector(
-          onTap: (){Navigator.of(context).pushNamed("listaPeliculas");},
+          onTap: (){Navigator.of(context).pushNamed(ruta);},
           child: Container(
             height: 180.0,
             margin: EdgeInsets.all(15.0),

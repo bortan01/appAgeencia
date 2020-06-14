@@ -52,8 +52,8 @@ Future<List<Null>> fetchNotes() async {
   var response2 = await http.get(ur2);
 
 
-var responseJson = json.decode(response2.body);
-  print(responseJson);
-print('estoy impirmiiendo');
+//var responseJson = json.decode(response2.body);
+//  print(responseJson);
+//  print('estoy impirmiiendo');
 
 }
