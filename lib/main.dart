@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+ import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/bienvenidos_page.dart';
 import 'package:peliculas/src/page/home_page.dart';
 import 'package:peliculas/src/page/pelicula_detalle.dart';
@@ -13,6 +13,7 @@ import 'package:peliculas/src/page/slider_page.dart';
 import 'package:peliculas/src/page/listView.dart';
 import 'package:peliculas/src/page/home_componentes.dart';
 import 'package:peliculas/src/page/lista_peliculas.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -21,6 +22,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
 
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: GlobalMaterialLocalizations.delegates,
+      supportedLocales: [
+      const Locale('es', 'ES'), // American English
+      const Locale('en', 'US'), // Israeli Hebrew
+       // ...
+      ],
       title: 'Agencia Martinez Travels y Tours',
       initialRoute: '/',
       routes: {
