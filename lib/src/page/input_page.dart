@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 
 class InputPage extends StatefulWidget {
@@ -12,7 +10,7 @@ class _InputPageState extends State<InputPage> {
   String _email = "";
   String _fecha = "";
   String opcionSeleccionada = "volar";
-  List _poderes = ['volar' , 'rashos X', 'super aliento' , 'super fuerza'];
+  List _poderes = ['volar', 'rashos X', 'super aliento', 'super fuerza'];
   TextEditingController _controllerFecha = new TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -92,7 +90,6 @@ class _InputPageState extends State<InputPage> {
           labelText: 'password',
           suffixIcon: Icon(Icons.lock_open),
           icon: Icon(Icons.lock)),
-
     );
   }
 
@@ -104,27 +101,25 @@ class _InputPageState extends State<InputPage> {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
           hintText: 'Fecha de nacimiento',
           labelText: 'Escribe la fecha ',
-
           suffixIcon: Icon(Icons.calendar_today),
           icon: Icon(Icons.calendar_view_day)),
-      onTap: (){
+      onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());
         _selectDate(context);
       },
     );
   }
 
-  _selectDate(BuildContext context)async{
+  _selectDate(BuildContext context) async {
     DateTime picked = await showDatePicker(
-        context: context,
-        initialDate: new DateTime.now(),
-        firstDate: new DateTime(2018),
-        lastDate: new DateTime(2025),
-        locale: Locale('es', 'ES'),
-
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime(2018),
+      lastDate: new DateTime(2025),
+      locale: Locale('es', 'ES'),
     );
- 
-    if(picked != null){
+
+    if (picked != null) {
       setState(() {
         _fecha = picked.toString();
         _controllerFecha.text = _fecha;
@@ -134,41 +129,33 @@ class _InputPageState extends State<InputPage> {
 
   Widget _crearDropDown() {
     return new Row(
-
       children: <Widget>[
-
         new Icon(Icons.select_all),
-        SizedBox(width: 30.0,),
+        SizedBox(
+          width: 30.0,
+        ),
         Expanded(
           child: DropdownButton(
               value: opcionSeleccionada,
               items: getItemDropdown(),
-
-              onChanged: (opt){
+              onChanged: (opt) {
                 setState(() {
                   opcionSeleccionada = opt;
                 });
-              }
-          ),
+              }),
         )
       ],
     );
   }
 
-  List<DropdownMenuItem<String>> getItemDropdown(){
+  List<DropdownMenuItem<String>> getItemDropdown() {
     List<DropdownMenuItem<String>> lista = new List();
-     _poderes.forEach((poder){
-       lista.add(DropdownMenuItem(
-          child: new Text(poder) ,
-          value: poder,
-       )
-       );
-     });
-     return lista;
+    _poderes.forEach((poder) {
+      lista.add(DropdownMenuItem(
+        child: new Text(poder),
+        value: poder,
+      ));
+    });
+    return lista;
   }
-
-
-
-
-
 }
