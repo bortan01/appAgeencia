@@ -43,7 +43,7 @@ class ScrollPage extends StatelessWidget {
       width: double.infinity,
       height: double.infinity,
       child: Image(
-        image: AssetImage('assets/img/scroll-1.png'),
+        image: AssetImage('assets/img/logo.png'),
         fit: BoxFit.cover,
       ),
     );
@@ -58,8 +58,8 @@ class ScrollPage extends StatelessWidget {
       child: Column(
         children: <Widget>[
           SizedBox(height: 20.0 ),
-          Text('11°', style: estiloTexto ),
-          Text('Miércoles', style: estiloTexto ),
+          Text('', style: estiloTexto ),
+          Text('', style: estiloTexto ),
           Expanded( child: Container() ),
           Icon( Icons.keyboard_arrow_down, size: 70.0, color: Colors.white )
         ],

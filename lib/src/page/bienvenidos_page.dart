@@ -56,8 +56,8 @@ class bienvenidosPage extends StatelessWidget {
               borderRadius: BorderRadius.circular(80.0),
               gradient: LinearGradient(
                   colors: [
-                    Color.fromRGBO(236, 98, 188, 1.0),
-                    Color.fromRGBO(241, 142, 172, 1.0)
+                    Color.fromRGBO(52, 152, 219, 1.0),
+                    Color.fromRGBO(133, 193, 233, 1.0)
                   ]
               )
           ),
@@ -84,9 +84,9 @@ class bienvenidosPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Classify transaction', style: TextStyle( color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.bold )),
+            Text('Martínez Travels & Tours', style: TextStyle( color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.bold )),
             SizedBox( height: 10.0 ),
-            Text('Classify this transaction into a particular category', style: TextStyle( color: Colors.white, fontSize: 18.0 )),
+            Text('Agencia de Viajes', style: TextStyle( color: Colors.white, fontSize: 18.0 )),
           ],
         ),
       ),
@@ -131,14 +131,14 @@ class bienvenidosPage extends StatelessWidget {
       children: [
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.blue, Icons.border_all, 'HomePage',context, "home" ),
-              _crearBotonRedondeado( Colors.purpleAccent, Icons.directions_bus, 'HomeComponents',context,"homeComponentes" ),
+              _crearBotonRedondeado( Colors.blue, Icons.map, 'Paquetes',context, "home" ),
+              _crearBotonRedondeado( Colors.purpleAccent, Icons.beach_access, 'Tours',context,"homeComponentes" ),
             ]
         ),
         TableRow(
             children: [
-              _crearBotonRedondeado( Colors.pinkAccent, Icons.shop, 'ScrollPage',context, "scrollPage" ),
-              _crearBotonRedondeado( Colors.orange, Icons.insert_drive_file, 'BasicoPage',context,"basico" ),
+              _crearBotonRedondeado( Colors.pinkAccent, Icons.directions_car, 'Vehiculos',context, "scrollPage" ),
+              _crearBotonRedondeado( Colors.orange, Icons.contact_mail, 'Encomiendas',context,"basico" ),
             ]
         ),
         TableRow(
