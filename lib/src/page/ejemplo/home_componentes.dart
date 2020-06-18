@@ -1,4 +1,4 @@
-import 'package:peliculas/src/page/dad.dart';
+import 'package:peliculas/src/page/ejemplo/dad.dart';
 import 'package:peliculas/src/utils/icono_string_util.dart';
 
 import 'package:flutter/material.dart';

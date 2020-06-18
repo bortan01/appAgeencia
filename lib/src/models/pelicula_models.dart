@@ -69,7 +69,8 @@ class Pelicula {
     if (posterPath == null) {
       return 'https://lh3.googleusercontent.com/proxy/EwEgMBEeHKs5Qq-aLVHrxWAUQ8_hPzc8L9bykZ_o6b6mZbnauitJ7JpanUq7Ogv4savFUcKKsi12vtEZvpy8H4ovFZLUIFfpk6fXHUkBPKGf0XoVrLygWI_Zrdr4_fI25A';
     } else {
-      return 'https://image.tmdb.org/t/p/w500//$posterPath';
+      //return 'https://image.tmdb.org/t/p/w500//$posterPath';
+      return posterPath;
     }
   }
 
@@ -77,7 +78,8 @@ class Pelicula {
     if (posterPath == null) {
       return 'https://lh3.googleusercontent.com/proxy/EwEgMBEeHKs5Qq-aLVHrxWAUQ8_hPzc8L9bykZ_o6b6mZbnauitJ7JpanUq7Ogv4savFUcKKsi12vtEZvpy8H4ovFZLUIFfpk6fXHUkBPKGf0XoVrLygWI_Zrdr4_fI25A';
     } else {
-      return 'https://image.tmdb.org/t/p/w500//$backdropPath';
+      //return 'https://image.tmdb.org/t/p/w500//$backdropPath';
+      return backdropPath;
     }
   }
 }

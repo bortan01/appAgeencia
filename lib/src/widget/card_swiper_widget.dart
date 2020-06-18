@@ -12,7 +12,7 @@ class CardSwiper extends StatelessWidget {
     final tamanioPantalla = MediaQuery.of(context).size;
 
     return Container(
-      color: Colors.blue,
+      //color: Colors.blue,
       padding: EdgeInsets.only(top: 10.0),
       child: Swiper(
         layout: SwiperLayout.STACK,

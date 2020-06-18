@@ -15,8 +15,7 @@ class MovieHorizontal extends StatelessWidget {
 
     /// este metodo se dispara cada vez que se mueve el scroll horizontal
     _pageController.addListener(() {
-      if (_pageController.position.pixels >=
-          _pageController.position.maxScrollExtent - 200) {
+      if (_pageController.position.pixels >=  _pageController.position.maxScrollExtent - 200) {
         siguientePagina();
       }
     });
@@ -67,7 +66,7 @@ class MovieHorizontal extends StatelessWidget {
   Widget _crearTarjeta(BuildContext context, Pelicula peli) {
     peli.uniqueId = '${peli.id}-poster';
     final tarjeta = new Container(
-      color: Colors.red,
+     // color: Colors.red,
       margin: const EdgeInsets.only(right: 15.0),
       child: new Column(
         children: <Widget>[

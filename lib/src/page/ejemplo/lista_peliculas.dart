@@ -1,6 +1,6 @@
  import 'package:flutter/material.dart';
 import 'package:peliculas/src/common/HttpHandler.dart';
-import 'package:peliculas/src/page/media_list.dart';
+import 'package:peliculas/src/page/ejemplo/media_list.dart';
 
 class ListaPeliculas extends StatefulWidget {
   @override
