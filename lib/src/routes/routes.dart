@@ -15,6 +15,7 @@ import 'package:peliculas/src/page/ejemplo/slider_page.dart';
 import 'package:peliculas/src/page/ejemplo/listView.dart';
 import 'package:peliculas/src/page/ejemplo/home_componentes.dart';
 import 'package:peliculas/src/page/ejemplo/lista_peliculas.dart';
+import 'package:peliculas/src/page/encomienda/encomienda.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 
@@ -25,7 +26,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'homeComponentes': (BuildContext context) => HomeComponents(),
     'detalle': (BuildContext context) => PeliculaDetalle(),
     'scrollPage': (BuildContext context) => ScrollPage(),
-    'basico': (BuildContext context) => BasicoPage(),
+    'encomienda': (BuildContext context) => EncomiendaPage(),
     'alert': (BuildContext context) => AlertPage(),
     'avatar': (BuildContext context) => AvatarPage(),
     'card': (BuildContext context) => CardPage(),
