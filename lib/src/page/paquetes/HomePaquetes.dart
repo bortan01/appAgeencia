@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/pelicula_models.dart';
 import 'package:peliculas/src/providers/peliculas_provider.dart';
-import 'package:peliculas/src/search/search_delegate.dart';
 import 'package:peliculas/src/widget/card_swiper_widget.dart';
 import 'package:peliculas/src/widget/movie_horizontal.dart';
 

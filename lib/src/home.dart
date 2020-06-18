@@ -48,10 +48,10 @@ class Home extends StatelessWidget {
       child: Column(
         children: <Widget>[
           SizedBox(height: 20.0),
-          Text('Bienvenidos', style: estiloTexto),
+          Text('', style: estiloTexto),
           Expanded(child: Container()),
-          Text('Conoce Nuestros', style: estiloTexto),
-          Text('Servicios', style: estiloTexto),
+          Text('', style: estiloTexto),
+          Text('', style: estiloTexto),
           Icon(Icons.keyboard_arrow_down, size: 70.0, color: Colors.white)
         ],
       ),
@@ -161,7 +161,7 @@ class Home extends StatelessWidget {
         ]),
         TableRow(children: [
           _crearBotonRedondeado(Colors.pinkAccent, Icons.directions_car,
-              'Vehiculos', context, "scrollPage"),
+              'Vehiculos', context, "carritos"),
           _crearBotonRedondeado(Colors.orange, Icons.contact_mail,
               'Encomiendas', context, "basico"),
         ]),

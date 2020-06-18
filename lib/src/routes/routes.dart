@@ -16,6 +16,7 @@ import 'package:peliculas/src/page/ejemplo/listView.dart';
 import 'package:peliculas/src/page/ejemplo/home_componentes.dart';
 import 'package:peliculas/src/page/ejemplo/lista_peliculas.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
+import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
   return <String, WidgetBuilder>{
@@ -35,6 +36,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'listaPeliculas': (BuildContext context) => ListaPeliculas(),
     //AQUI EMPIEZAN LOS NUESTROS 
     '/': (BuildContext context) => Home(),  
-    'HomePaquetes': (BuildContext context) => HomePaquetes(),    
+    'HomePaquetes': (BuildContext context) => HomePaquetes(),  
+    'carritos': (BuildContext context) => HomeVehiculos(),   
   };
 }
