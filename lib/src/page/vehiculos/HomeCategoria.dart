@@ -14,13 +14,10 @@ var COLORS = [
 class HomeCategoria extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: '',
-      debugShowCheckedModeBanner: false,
-      theme: new ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: new MyHomePage(title: ''),
+    return new Scaffold(
+      
+           
+      body: new MyHomePage(title: ''),
     );
   }
 }
@@ -91,11 +88,14 @@ class _MyHomePageState extends State<MyHomePage> {
               primary: true,
               itemCount: data.length,
               itemBuilder: (BuildContext content, int index) {
-                return AwesomeListItem(
-                    title: data[index]["title"],
-                    content: data[index]["content"],
-                    color: data[index]["color"],
-                    image: data[index]["image"]);
+                return GestureDetector(
+                      onTap: (){  Navigator.pushNamed(context, 'HomePaquetes');},
+                      child: AwesomeListItem(
+                      title: data[index]["title"],
+                      content: data[index]["content"],
+                      color: data[index]["color"],
+                      image: data[index]["image"]),
+                );
               },
             ),
           ),
