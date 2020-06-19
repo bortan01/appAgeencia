@@ -42,8 +42,10 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     //MODULO PAQUETES
     'HomePaquetes': (BuildContext context) => HomePaquetes(),  
     'DetallePaquetes': (BuildContext context) => DetallePaquetes(),  
-    //MODULO VEHICULO
+    //MODULO CATEGORIA VEHICULO
     'carritos': (BuildContext context) => HomeCategoria(), 
+    //MODULO VEHICULO
+    'HomeVehiculos': (BuildContext context) => HomeVehiculos(), 
     //MODULO ENCOMIENDA  
     'encomienda': (BuildContext context) => EncomiendaPage(),
     //MODULO CHAT
