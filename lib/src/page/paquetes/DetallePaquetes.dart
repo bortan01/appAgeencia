@@ -123,21 +123,22 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             _elementos(
-                paquete.incluye[0],
+                "Hotel",
                 new Icon(
                   Icons.hotel,
                   color: Colors.redAccent,
                 )),
             _elementos(
-                paquete.incluye[1],
+                "Desayuno",
                 new Icon(
                   Icons.free_breakfast,
                   color: Colors.deepPurpleAccent,
                 )),
-            _elementos(paquete.incluye[2],
+            _elementos(
+              "Transporte",
                 new Icon(Icons.airport_shuttle, color: Colors.orangeAccent)),
             _elementos(
-                paquete.incluye[3],
+               "Refrigerio",
                 new Icon(
                   Icons.local_dining,
                   color: Colors.green,
@@ -163,26 +164,26 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
   List<Step> listaDeElementos(Paquete paquete) {
     List<Step> myLista = [
       new Step(
-          title: new Text(paquete.incluye[0]),
+          title: new Text("Hotel"),
           content: new Text(
               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
           subtitle: new Text("Subtitulo"),
           state: StepState.complete,
           isActive: true),
       new Step(
-          title: new Text(paquete.incluye[1]),
+          title: new Text("Desayuno"),
           content: new Text(
               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
           subtitle: new Text("Subtitulo"),
           isActive: true),
       new Step(
-          title: new Text(paquete.incluye[2]),
+          title: new Text("Transporte"),
           content: new Text(
               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
           subtitle: new Text("Subtitulo"),
           isActive: true),
       new Step(
-          title: new Text(paquete.incluye[1]),
+          title: new Text("Refrigerio"),
           content: new Text(
               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
           subtitle: new Text("Subtitulo"),
