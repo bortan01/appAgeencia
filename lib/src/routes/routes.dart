@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/home.dart';
 import 'package:peliculas/src/page/chat/ChatScreen.dart';
+import 'package:peliculas/src/page/chatAdmin/WhatsAppHome.dart';
 import 'package:peliculas/src/page/ejemplo/avatar_page.dart';
 import 'package:peliculas/src/page/ejemplo/bienvenidos_page.dart';
 import 'package:peliculas/src/page/ejemplo/home_page.dart';
 import 'package:peliculas/src/page/ejemplo/pelicula_detalle.dart';
 import 'package:peliculas/src/page/ejemplo/scroll_page.dart';
-import 'package:peliculas/src/page/ejemplo/basico_page.dart';
 import 'package:peliculas/src/page/ejemplo/alert_page.dart';
 
 import 'package:peliculas/src/page/ejemplo/card_page.dart';
@@ -47,5 +47,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'encomienda': (BuildContext context) => EncomiendaPage(),
     //MODULO CHAT
     'chat':(BuildContext context)=> ChatScreen(),
+    //MODULO DE CHAT ADMIN
+    'chatAdmin':(BuildContext context)=> WhatsAppHome(),
   };
 }

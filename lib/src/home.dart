@@ -169,7 +169,7 @@ class Home extends StatelessWidget {
           _crearBotonRedondeado(Colors.blueGrey, Icons.chat,
               'Chat', context, "chat"),
           _crearBotonRedondeado(
-              Colors.lightBlueAccent, Icons.cloud, 'Mismos Ejemplos', context, "bienvenidoos"),
+              Colors.lightBlueAccent, Icons.chat, 'Chat Admin', context, "chatAdmin"),
         ]),
         TableRow(children: [
           _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter,

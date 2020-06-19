@@ -1,25 +1,28 @@
 import 'package:peliculas/src/models/ChatModel.dart';
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/page/chatAdmin/ChatMessageA.dart';
 
-import 'package:peliculas/src/page/chat/ChatMessage.dart';
 
-class ChatScreen extends StatefulWidget {
-  final String name='';
+class ChatScreenA extends StatefulWidget {
+  final String name;
+
+  ChatScreenA({this.name});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 /// ============================================================================================
-class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
+class _ChatScreenState extends State<ChatScreenA> with TickerProviderStateMixin {
   final TextEditingController _textController = new TextEditingController();
-  final List<ChatMessage> _messages = <ChatMessage>[];
+  final List<ChatMessageA> _messages = <ChatMessageA>[];
   bool _isTyped = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
           backgroundColor: Colors.blueGrey,
-          title: new Text('Agencia de viajes'),
+          title: new Text(widget.name),
         ),
         body: new Container(
           child: new Column(
@@ -74,7 +77,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   _handeleSubmit(String text) {
     _textController.clear();
     _isTyped = false;
-    ChatMessage message = new ChatMessage(
+    ChatMessageA message = new ChatMessageA(
         name: widget.name,
         text: text,
         animationController: new AnimationController(
