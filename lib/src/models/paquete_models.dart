@@ -29,6 +29,10 @@ class Paquete {
   double voteAverage;
   String overview;
   String releaseDate;
+  List<String> incluye;
+  List<String> noincluye;
+  List<String> requisitos;
+  List<String> promociones;
 
 
   Paquete({
@@ -46,6 +50,10 @@ class Paquete {
     this.voteAverage,
     this.overview,
     this.releaseDate,
+    this.incluye,
+    this.noincluye,
+    this.requisitos,
+    this.promociones
   });
 
   Paquete.fromJsonMap(Map<String, dynamic> json) {
