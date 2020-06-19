@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/home.dart';
+import 'package:peliculas/src/page/chat/ChatScreen.dart';
 import 'package:peliculas/src/page/ejemplo/avatar_page.dart';
 import 'package:peliculas/src/page/ejemplo/bienvenidos_page.dart';
 import 'package:peliculas/src/page/ejemplo/home_page.dart';
@@ -44,5 +45,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'carritos': (BuildContext context) => HomeVehiculos(), 
     //MODULO ENCOMIENDA  
     'encomienda': (BuildContext context) => EncomiendaPage(),
+    //MODULO CHAT
+    'chat':(BuildContext context)=> ChatScreen(),
   };
 }

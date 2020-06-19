@@ -8,7 +8,7 @@ class EncomiendaPage extends StatefulWidget {
 class _EncomiendaPageState extends State<EncomiendaPage> {
   String _cantidad = "";
   String _direccion = "";
-  String _destino_final = "";
+  String _destinoFinal = "";
   String _total="35.50";
   String opcionSeleccionada = "Producto";
   List _productos = ['Producto', 'Medicamentos', 'Jeringas', 'otros'];
@@ -24,11 +24,11 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
         children: <Widget>[
           _crearDropDown(),
           new Divider(),
-          _crearInput_cantidad(),
+          _crearInputCantidad(),
           new Divider(),
-          _crearInput_dir(),
+          _crearInputDir(),
           new Divider(),
-          _crearInput_dir_final(),
+          _crearInputFinal(),
           new Divider(),
           _crearPersona(),
           new Divider(),
@@ -38,7 +38,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
-  Widget _crearInput_dir() {
+  Widget _crearInputDir() {
     return new TextField(
       // autofocus: true,
       textCapitalization: TextCapitalization.words,
@@ -57,26 +57,26 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
-  Widget _crearInput_dir_final() {
+  Widget _crearInputFinal() {
     return new TextField(
       // autofocus: true,
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          counter: new Text("Letras ${_destino_final.length}"),
+          counter: new Text("Letras ${_destinoFinal.length}"),
           hintText: 'Dirección final',
           labelText: 'Dirección final',
           helperText: 'Debes digitar la dirección',
           suffixIcon: Icon(Icons.add_location),
           icon: Icon(Icons.spellcheck)),
       onChanged: (String valor) {
-        _destino_final = valor;
+        _destinoFinal = valor;
         setState(() {});
       },
     );
   }
 
-  Widget _crearInput_cantidad() {
+  Widget _crearInputCantidad() {
     return new TextField(
       // autofocus: true,
       textCapitalization: TextCapitalization.words,
@@ -98,7 +98,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     return new ListTile(
       trailing: new Text(opcionSeleccionada),
       title: new Text("Direccion inicial: $_direccion"),
-      subtitle: new Text("Direccón Final: $_destino_final"),
+      subtitle: new Text("Direccón Final: $_destinoFinal"),
      
     );
   }
