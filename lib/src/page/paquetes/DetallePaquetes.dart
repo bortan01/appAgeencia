@@ -146,7 +146,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
         ),
         new Stepper(
           currentStep: pasoActual,
-          physics: new ClampingScrollPhysics(),
+          physics: new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
           steps: listaDeElementos(paquete),
           onStepContinue: () {
             setState(() {

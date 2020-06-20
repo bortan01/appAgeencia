@@ -18,6 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Agencia Martinez Travels y Tours',
       initialRoute: '/',
       routes: getAplicationRoute(),
+      //theme: ,
     );
   }
 }

@@ -1,7 +1,7 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:peliculas/src/common/HttpHandler.dart';
 import 'package:peliculas/src/page/ejemplo/media_list.dart';
-
+import 'package:peliculas/src/widget/drawerDefault.dart';
 class ListaPeliculas extends StatefulWidget {
   @override
   _ListaPeliculas createState() => _ListaPeliculas();
@@ -21,29 +21,7 @@ class _ListaPeliculas extends State<ListaPeliculas> {
              onPressed: null)
         ],
       ),
-      drawer: new Drawer(
-        child: new ListView(
-          children: <Widget>[
-            new DrawerHeader(child: new Material()),
-            new ListTile(
-              title: new Text("Peliculas"),
-              trailing: new Icon(Icons.local_movies),
-            ),
-            new Divider(height: 5.0 ),
-            new ListTile(
-              title: new Text("Television"),
-              trailing: new Icon(Icons.live_tv),
-            ),
-            new Divider(height: 5.0 ),
-            new ListTile(
-              title: new Text("Cerrar"),
-              trailing: new Icon(Icons.close),
-              onTap: () => Navigator.of(context).pop(),
-            ),
-            new Divider(height: 5.0 )
-          ],
-        ),
-      ),
+      drawer: getDrawerDefault(context),
       body: new PageView(
         children: <Widget>[
           new MediaList(

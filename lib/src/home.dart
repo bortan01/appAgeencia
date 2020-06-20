@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'dart:ui';
+import 'package:peliculas/src/widget/drawerDefault.dart';
 
 class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: PageView(
-      scrollDirection: Axis.vertical,
-      children: <Widget>[_pagina1(), _pagina2(context)],
-    ));
+      body: PageView(
+        scrollDirection: Axis.vertical,
+        children: <Widget>[_pagina1(), _pagina2(context)],
+      ),
+    );
   }
 
   Widget _pagina1() {
@@ -71,7 +73,17 @@ class Home extends StatelessWidget {
             )
           ],
         ),
-        bottomNavigationBar: _bottomNavigationBar(context));
+        appBar: new AppBar(
+          backgroundColor: Color.fromRGBO(55, 57, 84, 1.0),
+          title: Text('Martínez Travels & Tours',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold)),
+        ),
+        drawer: getDrawerDefault(context),
+        bottomNavigationBar: _bottomNavigationBar(context)
+        );
   }
 
   ///elementos para page 2
@@ -115,11 +127,6 @@ class Home extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text('Martínez Travels & Tours',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold)),
             SizedBox(height: 10.0),
             Text('Agencia de Viajes',
                 style: TextStyle(color: Colors.white, fontSize: 18.0)),
@@ -165,11 +172,11 @@ class Home extends StatelessWidget {
           _crearBotonRedondeado(Colors.orange, Icons.contact_mail,
               'Encomiendas', context, "encomienda"),
         ]),
-         TableRow(children: [
-          _crearBotonRedondeado(Colors.blueGrey, Icons.chat,
-              'Chat', context, "chat"),
+        TableRow(children: [
           _crearBotonRedondeado(
-              Colors.lightBlueAccent, Icons.chat, 'Chat Admin', context, "chatAdmin"),
+              Colors.blueGrey, Icons.chat, 'Chat', context, "chat"),
+          _crearBotonRedondeado(Colors.lightBlueAccent, Icons.chat,
+              'Chat Admin', context, "chatAdmin"),
         ]),
         TableRow(children: [
           _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter,
