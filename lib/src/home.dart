@@ -82,7 +82,7 @@ class Home extends StatelessWidget {
                   fontWeight: FontWeight.bold)),
         ),
         drawer: getDrawerDefault(context),
-        bottomNavigationBar: _bottomNavigationBar(context)
+        //bottomNavigationBar: _bottomNavigationBar(context)
         );
   }
 
