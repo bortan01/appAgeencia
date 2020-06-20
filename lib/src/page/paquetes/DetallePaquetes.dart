@@ -13,7 +13,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
   Widget build(BuildContext context) {
     final Paquete paquete = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-//        backgroundColor: Colors.blueAccent,
+        //backgroundColor: Colors.blueAccent,
         body: CustomScrollView(
       slivers: <Widget>[
         _crearAppbar(paquete),
@@ -24,8 +24,8 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           ),
           _posterTitulo(paquete, context),
           new SizedBox(height: 10.0),
+
           _incluye(paquete, context),
-          _crearAcciones()
 
           //_crearCasting(pelicula)
         ]))
@@ -134,11 +134,10 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
                   Icons.free_breakfast,
                   color: Colors.deepPurpleAccent,
                 )),
-            _elementos(
-              "Transporte",
+            _elementos("Transporte",
                 new Icon(Icons.airport_shuttle, color: Colors.orangeAccent)),
             _elementos(
-               "Refrigerio",
+                "Refrigerio",
                 new Icon(
                   Icons.local_dining,
                   color: Colors.green,
@@ -147,14 +146,38 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
         ),
         new Stepper(
           currentStep: pasoActual,
+          physics: new ClampingScrollPhysics(),
           steps: listaDeElementos(paquete),
-          //type: StepperType.horizontal,
           onStepContinue: () {
             setState(() {
               if (pasoActual < listaDeElementos(paquete).length - 1) {
                 pasoActual++;
               }
             });
+          },
+          onStepCancel: () {
+            setState(() {
+              if (pasoActual > 0) {
+                pasoActual--;
+              }
+            });
+          },
+          controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+            return Row(
+              children: <Widget>[
+                FlatButton(
+                  onPressed: onStepContinue,
+                  color: (Theme.of(context).accentColor),
+                  child: const Text('SIGUIENTE', style: TextStyle(color: Colors.white ),),
+                ),
+                SizedBox(width: 5.0,),
+                FlatButton(
+                  onPressed: onStepCancel,
+                  color: (Theme.of(context).accentColor),
+                  child: const Text('ATRAS', style: TextStyle(color: Colors.white ),),
+                ),
+              ],
+            );
           },
         )
       ],
@@ -178,6 +201,18 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           isActive: true),
       new Step(
           title: new Text("Transporte"),
+          content: new Text(
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+          subtitle: new Text("Subtitulo"),
+          isActive: true),
+      new Step(
+          title: new Text("Refrigerio"),
+          content: new Text(
+              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+          subtitle: new Text("Subtitulo"),
+          isActive: true),
+      new Step(
+          title: new Text("Refrigerio"),
           content: new Text(
               "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
           subtitle: new Text("Subtitulo"),
