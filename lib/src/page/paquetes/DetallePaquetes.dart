@@ -9,9 +9,6 @@ class DetallePaquetes extends StatefulWidget {
 
 class _DetallePaquetesState extends State<DetallePaquetes> {
   int pasoActual = 0;
-  String dropdownValueNinos = 'Niños (Menores de 12 años)';
-  String dropdownValueAdultos = 'Adultos (Entre 12 y 60 años)';
-  String dropdownValueAncianos = 'Tercera Edad (Mayores de 60 años)';
   @override
   Widget build(BuildContext context) {
     final Paquete paquete = ModalRoute.of(context).settings.arguments;
@@ -31,11 +28,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           _incluye(paquete, context),
           _noIncluye(paquete, context),
           _requisitos(paquete, context),
-          _dropdownNino(),
-          _dropdowAdulto(),
-          _dropdowAnciano(),
-          _crearAcciones(),
-          _crearBoton()
+
           //_crearCasting(pelicula)
         ]))
       ],
@@ -226,7 +219,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
                   Icons.cancel,
                   color: Colors.red,
                 )),
-            _elementos(
+                _elementos(
                 "Entrada a centros turisticos",
                 new Icon(
                   Icons.cancel,
@@ -277,7 +270,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           state: StepState.complete,
           isActive: true),
       new Step(
-          title: new Text("Transporte"),
+          title: new Text("Transporte"), 
           content: Column(
             children: <Widget>[
               new FadeInImage(
@@ -323,6 +316,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
         width: 100.0,
         height: 100.0,
         child: Column(
+          
           children: <Widget>[
             new Container(
               padding: EdgeInsets.all(8.0),
@@ -333,12 +327,13 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
             ),
             new SizedBox(height: 7.0),
             new Container(
+                
                 child: new Text(
-              texto,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              maxLines: 3,
-            ))
+                  texto,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                ))
           ],
         ),
       ),
@@ -397,128 +392,6 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
         ),
       ],
     );
+      
   }
-
-  Widget _dropdownNino() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: DropdownButton<String>(
-        value: dropdownValueNinos,
-        icon: Icon(Icons.arrow_downward),
-        iconSize: 24,
-        elevation: 16,
-        isExpanded: true,
-        style: TextStyle(color: Theme.of(context).accentColor),
-        underline: Container(
-          height: 2,
-          color: Theme.of(context).accentColor,
-        ),
-        onChanged: (String newValue) {
-          setState(() {
-            dropdownValueNinos = newValue;
-          });
-        },
-        items: <String>[
-          'Niños (Menores de 12 años)',
-          '0',
-          '1',
-          '2',
-          '3',
-          '4',
-          '5'
-        ].map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Center(child: Text(value)),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget _dropdowAdulto() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: DropdownButton<String>(
-        value: dropdownValueAdultos,
-        icon: Icon(Icons.arrow_downward),
-        iconSize: 24,
-        elevation: 16,
-        isExpanded: true,
-        style: TextStyle(color: Theme.of(context).accentColor),
-        underline: Container(
-          height: 2,
-          color: Theme.of(context).accentColor,
-        ),
-        onChanged: (String newValue) {
-          setState(() {
-            dropdownValueAdultos = newValue;
-          });
-        },
-        items: <String>[
-          'Adultos (Entre 12 y 60 años)',
-          '0',
-          '1',
-          '2',
-          '3',
-          '4',
-          '5'
-        ].map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Center(child: Text(value)),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
-  Widget _dropdowAnciano() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 25.0),
-      child: DropdownButton<String>(
-        value: dropdownValueAncianos,
-        icon: Icon(Icons.arrow_downward),
-        iconSize: 24,
-        elevation: 16,
-        isExpanded: true,
-        style: TextStyle(color: Theme.of(context).accentColor),
-        underline: Container(
-          height: 2,
-          color: Theme.of(context).accentColor,
-        ),
-        onChanged: (String newValue) {
-          setState(() {
-            dropdownValueAncianos = newValue;
-          });
-        },
-        items: <String>[
-          'Tercera Edad (Mayores de 60 años)',
-          '0',
-          '1',
-          '2',
-          '3',
-          '4',
-          '5'
-        ].map<DropdownMenuItem<String>>((String value) {
-          return DropdownMenuItem<String>(
-            value: value,
-            child: Center(child: Text(value)),
-          );
-        }).toList(),
-      ),
-    );
-  }
-
- Widget _crearBoton() {
-   return Container(
-     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-     child: new RaisedButton(
-       child: new Text("Continuar"),
-       color: Theme.of(context).accentColor,
-       textColor: Theme.of(context).bottomAppBarColor,
-       shape: StadiumBorder(),
-       onPressed: (){}),
-   );
- }
 }
