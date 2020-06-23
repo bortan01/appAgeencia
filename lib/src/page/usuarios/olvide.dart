@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 
-class Login extends StatefulWidget {
-  static String tag = 'login-page';
+class Olvide extends StatefulWidget {
+  static String tag = 'olvide-page';
 
    @override
    
-  _LoginPageState createState() => _LoginPageState();
+  _OlvidePageState createState() => _OlvidePageState();
   
 }
-  class _LoginPageState extends State<Login> {
+  class _OlvidePageState extends State<Olvide> {
   @override
   Widget build(BuildContext context) {
    
@@ -24,18 +24,8 @@ class Login extends StatefulWidget {
       ),
     );
 
-    final password = TextFormField(
-      autofocus: false,
-      initialValue: 'Contraseña',
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Contraseña',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final loginButton = Padding(
+   
+    final enviarButton = Padding(
       padding: EdgeInsets.symmetric(vertical: 16.0),
       child: RaisedButton(
         shape: RoundedRectangleBorder(
@@ -47,17 +37,33 @@ class Login extends StatefulWidget {
         },
         padding: EdgeInsets.all(12),
         color: Colors.blue,
-        child: Text('Iniciar Sesion', style: TextStyle(color: Colors.white)),
+        child: Text('Enviar', style: TextStyle(color: Colors.white)),
+      ),
+    );
+
+    final cancelarButton = Padding(
+      padding: EdgeInsets.symmetric(vertical: 16.0),
+      child: RaisedButton(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        onPressed: () {
+         
+          Navigator.pushNamed(context, 'bienvenidoos');
+        },
+        padding: EdgeInsets.all(12),
+        color: Colors.blueGrey,
+        child: Text('Cancelar', style: TextStyle(color: Colors.white)),
       ),
     );
 
     final forgotLabel = FlatButton(
       child: Text(
-      '¿Olvidastes tu contraseña?',
+      'Le enviaremos un correo de verificación',
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-         Navigator.pushNamed(context, 'olvidado');
+         
       },
     );
 
@@ -66,7 +72,7 @@ class Login extends StatefulWidget {
       children: <Widget>[
         new Container(
           decoration: new BoxDecoration(
-            image: new DecorationImage(image: new AssetImage("assets/img/2.png"), fit: BoxFit.cover,),
+            image: new DecorationImage(image: new AssetImage("assets/img/recupera1.png"), fit: BoxFit.cover,),
           ),
         ),
         new Center(
@@ -76,12 +82,12 @@ class Login extends StatefulWidget {
           children: <Widget>[   
            
             email,
-            SizedBox(height: 8.0),
-            password,
-            SizedBox(height: 10.0),
-            loginButton,
-            
-            forgotLabel
+            SizedBox(height: 1.5),
+
+            forgotLabel,
+            SizedBox(height: 28.0),
+            enviarButton,
+            cancelarButton
           ],
         ),
       ),
