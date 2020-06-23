@@ -26,6 +26,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           new SizedBox(height: 10.0),
 
           _incluye(paquete, context),
+          _noIncluye(paquete, context),
 
           //_crearCasting(pelicula)
         ]))
@@ -48,7 +49,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           child: Text(
             paquete.title,
             style: TextStyle(color: Colors.white, fontSize: 16.0),
-            //  overflow: TextOverflow.ellipsis,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         background: FadeInImage(
@@ -123,7 +124,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             _elementos(
-                "Hotel",
+                "Hotel FADFAD AFDAFD ",
                 new Icon(
                   Icons.hotel,
                   color: Colors.redAccent,
@@ -194,6 +195,35 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
     );
   }
 
+  Widget _noIncluye(Paquete paquete, BuildContext context) {
+    return Column(
+      children: <Widget>[
+        new Text(
+          "El viaje no incluye",
+          style: Theme.of(context).textTheme.title,
+        ),
+        SizedBox(height: 10.0),
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _elementos(
+                "Seguros de Viaje",
+                new Icon(
+                  Icons.cancel,
+                  color: Colors.red,
+                )),
+            _elementos(
+                "Ni otros no especificados en el programa",
+                new Icon(
+                  Icons.cancel,
+                  color: Colors.red,
+                )),
+          ],
+        ),
+      ],
+    );
+  }
+
   List<Step> listaDeElementos(Paquete paquete) {
     List<Step> myLista = [
       new Step(
@@ -232,7 +262,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           subtitle: new Text("Subtitulo"),
           state: StepState.complete,
           isActive: true),
-     new Step(
+      new Step(
           title: new Text("Transporte"),
           content: Column(
             children: <Widget>[
@@ -250,7 +280,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           subtitle: new Text("Subtitulo"),
           state: StepState.complete,
           isActive: true),
-    new Step(
+      new Step(
           title: new Text("Transporte"),
           content: Column(
             children: <Widget>[
@@ -268,7 +298,6 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           subtitle: new Text("Subtitulo"),
           state: StepState.complete,
           isActive: true),
-    
     ];
     return myLista;
   }
@@ -277,7 +306,10 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
     return Opacity(
       opacity: 0.7,
       child: new Container(
+        width: 100.0,
+        height: 100.0,
         child: Column(
+          
           children: <Widget>[
             new Container(
               padding: EdgeInsets.all(8.0),
@@ -288,10 +320,13 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
             ),
             new SizedBox(height: 7.0),
             new Container(
+                
                 child: new Text(
-              texto,
-              textAlign: TextAlign.center,
-            ))
+                  texto,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                ))
           ],
         ),
       ),

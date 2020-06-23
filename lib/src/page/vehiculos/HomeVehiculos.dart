@@ -39,7 +39,8 @@ class HomeVehiculos extends StatelessWidget {
 
   Widget _footer(BuildContext context) {
     List<Vehiculo> autosFicticios = getPeliculaInventada();
-
+    final tamanioPantalla = MediaQuery.of(context).size;
+    double espacioDisponible = (tamanioPantalla.height)  *0.28;
     return new Container(
       ///para que tome todo el espacio
       width: double.infinity,
@@ -56,7 +57,7 @@ class HomeVehiculos extends StatelessWidget {
             height: 5.0,
           ),
           new MovieHorizontal(
-              carro: autosFicticios, siguientePagina: () {})
+              carro: autosFicticios, especioDisponible: espacioDisponible,siguientePagina: () {})
         ],
       ),
     );
