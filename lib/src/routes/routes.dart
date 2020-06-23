@@ -19,6 +19,7 @@ import 'package:peliculas/src/page/ejemplo/lista_peliculas.dart';
 import 'package:peliculas/src/page/encomienda/encomienda.dart';
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
+import 'package:peliculas/src/page/usuarios/login.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 
@@ -52,5 +53,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'chat':(BuildContext context)=> ChatScreen(),
     //MODULO DE CHAT ADMIN
     'chatAdmin':(BuildContext context)=> WhatsAppHome(),
+
+    'login':(BuildContext context)=> Login(),
   };
 }

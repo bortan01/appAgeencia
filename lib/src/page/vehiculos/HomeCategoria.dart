@@ -89,7 +89,7 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: data.length,
               itemBuilder: (BuildContext content, int index) {
                 return GestureDetector(
-                      onTap: (){  Navigator.pushNamed(context, 'HomeVehiculos');},
+                      onTap: (){  Navigator.pushNamed(context, 'HomePaquetes');},
                       child: AwesomeListItem(
                       title: data[index]["title"],
                       content: data[index]["content"],

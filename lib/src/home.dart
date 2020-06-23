@@ -182,7 +182,7 @@ class Home extends StatelessWidget {
           _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter,
               'ListaPeliculas', context, "listaPeliculas"),
           _crearBotonRedondeado(
-              Colors.green, Icons.cloud, 'Ejemplos', context, "bienvenidoos"),
+              Colors.green, Icons.cloud, 'Login', context, "login"),
         ]),
       ],
     );
