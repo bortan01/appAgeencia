@@ -60,13 +60,10 @@ class HomePageX extends StatelessWidget {
        // crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            child: new Text("populares",
-                style: Theme.of(context).textTheme.subhead),
+            child: new Text("populares",style: Theme.of(context).textTheme.subhead),
             padding: EdgeInsets.only(left: 25.0),
           ),
-          new SizedBox(
-            height: 5.0,
-          ),
+          new SizedBox(height: 5.0,),
           new StreamBuilder(
               stream: peliculaProvider.popularesStream,
               builder: (BuildContext context, AsyncSnapshot<List> snapshot) {

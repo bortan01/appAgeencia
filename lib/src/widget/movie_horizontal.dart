@@ -6,8 +6,7 @@ class MovieHorizontal extends StatelessWidget {
   final Function siguientePagina;
 
   MovieHorizontal({@required this.peliculas, @required this.siguientePagina});
-  final _pageController =
-      new PageController(initialPage: 1, viewportFraction: 0.3);
+  final _pageController = new PageController(initialPage: 1, viewportFraction: 0.3);
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +70,8 @@ class MovieHorizontal extends StatelessWidget {
       child: new Column(
         children: <Widget>[
           Hero(
-            child: ClipRRect(
+             tag: peli.uniqueId,
+            child: ClipRRect(  
               child: new FadeInImage(
                   placeholder: AssetImage('assets/img/no-image.jpg'),
                   fit: BoxFit.cover,
@@ -81,7 +81,7 @@ class MovieHorizontal extends StatelessWidget {
                   )),
               borderRadius: BorderRadius.circular(20.0),
             ),
-            tag: peli.uniqueId,
+           
             transitionOnUserGestures: false,
           ),
           new Text(

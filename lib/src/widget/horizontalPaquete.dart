@@ -4,8 +4,8 @@ import 'package:peliculas/src/models/paquete_models.dart';
 class HorizontalPaquete extends StatelessWidget {
   final List<Paquete> paquetes;
   final Function siguientePagina;
-
-  HorizontalPaquete({@required this.paquetes, @required this.siguientePagina});
+  final double especioDisponible ;
+  HorizontalPaquete({@required this.paquetes, @required this.siguientePagina, @required this.especioDisponible});
   final _pageController =
       new PageController(initialPage: 1, viewportFraction: 0.3);
 
@@ -51,7 +51,7 @@ class HorizontalPaquete extends StatelessWidget {
                   image: NetworkImage(
                     peli.getPosterImg(),
                   )),
-              borderRadius: BorderRadius.circular(20.0),
+              borderRadius: BorderRadius.circular(40.0),
             ),
             new Text(
               peli.title,
@@ -75,7 +75,7 @@ class HorizontalPaquete extends StatelessWidget {
               child: new FadeInImage(
                   placeholder: AssetImage('assets/img/no-image.jpg'),
                   fit: BoxFit.cover,
-                  height: 200.0,
+                  height: especioDisponible,
                   image: NetworkImage(
                     peli.getPosterImg(),
                   )),

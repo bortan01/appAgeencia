@@ -36,6 +36,7 @@ class HomePaquetes extends StatelessWidget {
     ///estos son datos quemados
     List<Paquete> paquetes = getPeliculaInventada();
     final tamanioPantalla = MediaQuery.of(context).size;
+    print("el tamano es " + tamanioPantalla.height.toString());
 
     return Container(
       //color: Colors.blue,
@@ -79,7 +80,8 @@ class HomePaquetes extends StatelessWidget {
 
   Widget _footer(BuildContext context) {
     List<Paquete> peliculasFicticias = getPeliculaInventada();
-
+    final tamanioPantalla = MediaQuery.of(context).size;
+    double espacioDisponible = (tamanioPantalla.height)  *0.28;
     return new Container(
       ///para que tome todo el espacio
       width: double.infinity,
@@ -88,15 +90,16 @@ class HomePaquetes extends StatelessWidget {
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            child: new Text("Promociones",
-                style: Theme.of(context).textTheme.subhead),
-            padding: EdgeInsets.only(left: 25.0),
+            child: new Text(
+              "Promociones",
+              style: Theme.of(context).textTheme.subhead),
+              padding: EdgeInsets.only(left: 25.0),
           ),
           new SizedBox(
             height: 5.0,
           ),
           new HorizontalPaquete(
-              paquetes: peliculasFicticias, siguientePagina: () {})
+              paquetes: peliculasFicticias, especioDisponible: espacioDisponible,  siguientePagina: () {})
         ],
       ),
     );

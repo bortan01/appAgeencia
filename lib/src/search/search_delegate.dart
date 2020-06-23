@@ -5,14 +5,13 @@ import 'package:peliculas/src/providers/peliculas_provider.dart';
 class DataSearch extends SearchDelegate {
   String seleccion = '';
   final peliculas = ['spiderman', 'batman', 'golden boy', 'lala', 'luffy', 'zorro'];
-  final peliculasRecientes =[
-    'spiderman','capitan america '
-  ];
+  final peliculasRecientes =['spiderman','capitan america '];
 
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    // TODO: las acciones de nuestro appBar
+    // TODO: las acciones de nuestro appBar 
+    //EJMPLO ICONO PARA LIMPIAR TEXTO ETC
     return [
       new IconButton(
           icon: new Icon(Icons.clear),

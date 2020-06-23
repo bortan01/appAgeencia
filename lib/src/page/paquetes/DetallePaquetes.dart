@@ -146,7 +146,8 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
         ),
         new Stepper(
           currentStep: pasoActual,
-          physics: new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
+          physics:
+              new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
           steps: listaDeElementos(paquete),
           onStepContinue: () {
             setState(() {
@@ -162,19 +163,28 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
               }
             });
           },
-          controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+          controlsBuilder: (BuildContext context,
+              {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
             return Row(
               children: <Widget>[
                 FlatButton(
                   onPressed: onStepContinue,
                   color: (Theme.of(context).accentColor),
-                  child: const Text('SIGUIENTE', style: TextStyle(color: Colors.white ),),
+                  child: const Text(
+                    'SIGUIENTE',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                SizedBox(width: 5.0,),
+                SizedBox(
+                  width: 5.0,
+                ),
                 FlatButton(
                   onPressed: onStepCancel,
                   color: (Theme.of(context).accentColor),
-                  child: const Text('ATRAS', style: TextStyle(color: Colors.white ),),
+                  child: const Text(
+                    'ATRAS',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ],
             );
@@ -188,41 +198,77 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
     List<Step> myLista = [
       new Step(
           title: new Text("Hotel"),
-          content: new Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+          content: Column(
+            children: <Widget>[
+              new FadeInImage(
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  fit: BoxFit.cover,
+                  // height: especioDisponible,
+                  image: AssetImage(
+                    "assets/img/hotel.jpg",
+                  )),
+              new Text(
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+            ],
+          ),
           subtitle: new Text("Subtitulo"),
           state: StepState.complete,
           isActive: true),
       new Step(
           title: new Text("Desayuno"),
-          content: new Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+          content: Column(
+            children: <Widget>[
+              new FadeInImage(
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  fit: BoxFit.cover,
+                  // height: especioDisponible,
+                  image: AssetImage(
+                    "assets/img/desayunos.jpg",
+                  )),
+              new Text(
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+            ],
+          ),
           subtitle: new Text("Subtitulo"),
+          state: StepState.complete,
           isActive: true),
-      new Step(
+     new Step(
           title: new Text("Transporte"),
-          content: new Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+          content: Column(
+            children: <Widget>[
+              new FadeInImage(
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  fit: BoxFit.cover,
+                  // height: especioDisponible,
+                  image: AssetImage(
+                    "assets/img/transporte.jpg",
+                  )),
+              new Text(
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+            ],
+          ),
           subtitle: new Text("Subtitulo"),
+          state: StepState.complete,
           isActive: true),
-      new Step(
-          title: new Text("Refrigerio"),
-          content: new Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
+    new Step(
+          title: new Text("Transporte"),
+          content: Column(
+            children: <Widget>[
+              new FadeInImage(
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  fit: BoxFit.cover,
+                  // height: especioDisponible,
+                  image: AssetImage(
+                    "assets/img/refrigerio.jpg",
+                  )),
+              new Text(
+                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
+            ],
+          ),
           subtitle: new Text("Subtitulo"),
+          state: StepState.complete,
           isActive: true),
-      new Step(
-          title: new Text("Refrigerio"),
-          content: new Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
-          subtitle: new Text("Subtitulo"),
-          isActive: true),
-      new Step(
-          title: new Text("Refrigerio"),
-          content: new Text(
-              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."),
-          subtitle: new Text("Subtitulo"),
-          isActive: true)
+    
     ];
     return myLista;
   }

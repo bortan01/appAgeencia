@@ -63,27 +63,35 @@ class Home extends StatelessWidget {
   ///aqui empieza la page 2
   Widget _pagina2(BuildContext context) {
     return Scaffold(
-        body: Stack(
-          children: <Widget>[
-            _fondoApp(),
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[_titulos(), _botonesRedondeados(context)],
+      body: Stack(
+        children: <Widget>[
+          // _fondoApp(),
+          new Container(
+            decoration: new BoxDecoration(
+              image: new DecorationImage(
+                image: new AssetImage("assets/img/1.png"),
+                fit: BoxFit.cover,
               ),
-            )
-          ],
-        ),
-        appBar: new AppBar(
-          backgroundColor: Color.fromRGBO(55, 57, 84, 1.0),
-          title: Text('Martínez Travels & Tours',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold)),
-        ),
-        drawer: getDrawerDefault(context),
-        //bottomNavigationBar: _bottomNavigationBar(context)
-        );
+            ),
+          ),
+          SingleChildScrollView(
+            child: Column(
+              children: <Widget>[_titulos(), _botonesRedondeados(context)],
+            ),
+          )
+        ],
+      ),
+      appBar: new AppBar(
+        backgroundColor: Theme.of(context).accentColor.withOpacity(1.0),
+        title: Text('Martínez Travels & Tours',
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold)),
+      ),
+      drawer: getDrawerDefault(context),
+      //bottomNavigationBar: _bottomNavigationBar(context)
+    );
   }
 
   ///elementos para page 2

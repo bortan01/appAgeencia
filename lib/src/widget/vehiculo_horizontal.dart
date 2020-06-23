@@ -4,8 +4,9 @@ import 'package:peliculas/src/models/vehiculo_models.dart';
 class MovieHorizontal extends StatelessWidget {
   final List<Vehiculo> carro;
   final Function siguientePagina;
+   final double especioDisponible ;
 
-  MovieHorizontal({@required this.carro, @required this.siguientePagina});
+  MovieHorizontal({@required this.carro, @required this.siguientePagina, @required this.especioDisponible});
   final _pageController =
       new PageController(initialPage: 1, viewportFraction: 0.3);
 
@@ -75,7 +76,7 @@ class MovieHorizontal extends StatelessWidget {
               child: new FadeInImage(
                   placeholder: AssetImage('assets/img/no-image.jpg'),
                   fit: BoxFit.cover,
-                  height: 200.0,
+                  height: especioDisponible,
                   image: NetworkImage(
                     carro.getPosterImg(),
                   )),
