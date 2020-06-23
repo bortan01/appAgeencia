@@ -27,6 +27,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
 
           _incluye(paquete, context),
           _noIncluye(paquete, context),
+          _requisitos(paquete, context),
 
           //_crearCasting(pelicula)
         ]))
@@ -98,9 +99,9 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
                   overflow: TextOverflow.ellipsis),
               new Row(
                 children: <Widget>[
-                  new Icon(Icons.star_border),
+                  new Icon(Icons.attach_money),
                   new Text(
-                    "PERU",
+                    "695.00",
                     style: Theme.of(context).textTheme.title,
                   )
                 ],
@@ -124,24 +125,24 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             _elementos(
-                "Hotel FADFAD AFDAFD ",
+                "Hotel",
                 new Icon(
                   Icons.hotel,
-                  color: Colors.redAccent,
+                  color: Colors.blueAccent,
                 )),
             _elementos(
                 "Desayuno",
                 new Icon(
                   Icons.free_breakfast,
-                  color: Colors.deepPurpleAccent,
+                  color: Colors.blueAccent,
                 )),
             _elementos("Transporte",
-                new Icon(Icons.airport_shuttle, color: Colors.orangeAccent)),
+                new Icon(Icons.airport_shuttle, color: Colors.blueAccent)),
             _elementos(
                 "Refrigerio",
                 new Icon(
                   Icons.local_dining,
-                  color: Colors.green,
+                  color: Colors.blueAccent,
                 )),
           ],
         ),
@@ -218,6 +219,12 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
                   Icons.cancel,
                   color: Colors.red,
                 )),
+                _elementos(
+                "Entrada a centros turisticos",
+                new Icon(
+                  Icons.cancel,
+                  color: Colors.red,
+                )),
           ],
         ),
       ],
@@ -263,7 +270,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           state: StepState.complete,
           isActive: true),
       new Step(
-          title: new Text("Transporte"),
+          title: new Text("Transporte"), 
           content: Column(
             children: <Widget>[
               new FadeInImage(
@@ -281,7 +288,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           state: StepState.complete,
           isActive: true),
       new Step(
-          title: new Text("Transporte"),
+          title: new Text("Refrigerio"),
           content: Column(
             children: <Widget>[
               new FadeInImage(
@@ -355,5 +362,36 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
         )
       ],
     );
+  }
+
+  Widget _requisitos(Paquete paquete, BuildContext context) {
+    return Column(
+      children: <Widget>[
+        SizedBox(height: 15.0),
+        new Text(
+          "Requisitos",
+          style: Theme.of(context).textTheme.title,
+        ),
+        SizedBox(height: 10.0),
+        new Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            _elementos(
+                "Pasaporte Vigente",
+                new Icon(
+                  Icons.report,
+                  color: Colors.green,
+                )),
+            _elementos(
+                "Vacuna contra la fiebre amarilla",
+                new Icon(
+                  Icons.report,
+                  color: Colors.green,
+                )),
+          ],
+        ),
+      ],
+    );
+      
   }
 }
