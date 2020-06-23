@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/vehiculo_models.dart';
-import 'package:peliculas/src/providers/vehiculo_provider.dart';
-import 'package:peliculas/src/widget/card_swiper_widget_vehiculo.dart';
-import 'package:peliculas/src/widget/vehiculo_horizontal.dart';
+import 'package:peliculas/src/models/paquete_models.dart';
+import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:peliculas/src/providers/paquete_provider.dart';
+import 'package:peliculas/src/widget/horizontalPaquete.dart';
+
 
 class HomeVehiculos extends StatelessWidget {
-  VehiculoProvider autoProvider = new VehiculoProvider();
+  final PaqueteProvider peliculaProvider = new PaqueteProvider();
   @override
   Widget build(BuildContext context) {
-    autoProvider.getPopulares();
+    peliculaProvider.getPopulares();
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Flota de Veliculos"),
+        title: new Text("Flota de Vehiculos"),
         // backgroundColor: Colors.deepPurple,
         actions: <Widget>[
           new IconButton(
@@ -25,20 +26,60 @@ class HomeVehiculos extends StatelessWidget {
         //color: Colors.greenAccent,
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[_swiperTarjetas(), _footer(context)],
+          children: <Widget>[_swiperTarjetas(context), _footer(context)],
         ),
       ),
     );
   }
 
-  _swiperTarjetas() {
+  _swiperTarjetas(BuildContext context) {
     ///estos son datos quemados
-    List<Vehiculo> autosFicticios = getPeliculaInventada();
-    return new CardSwiper(carro: autosFicticios);
+    List<Paquete> paquetes = getPeliculaInventada();
+    final tamanioPantalla = MediaQuery.of(context).size;
+    print("el tamano es " + tamanioPantalla.height.toString());
+
+    return Container(
+      //color: Colors.blue,
+      padding: EdgeInsets.only(top: 10.0),
+      child: Swiper(
+        layout: SwiperLayout.STACK,
+        itemWidth: tamanioPantalla.width * 0.8,
+        itemHeight: tamanioPantalla.height * 0.5,
+        itemBuilder: (BuildContext context, int index) {
+          paquetes[index].uniqueId = '${paquetes[index].id}-tarjeta';
+          return Container(
+            child: Hero(
+              child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
+                  child: GestureDetector(
+                    child: GestureDetector(
+                      onTap: (){
+                        final tou = paquetes[index];
+
+                        Navigator.pushNamed(context, 'DetalleVehiculos', arguments: tou);
+                      },
+                      child: FadeInImage(
+                        image: NetworkImage(paquetes[index].getPosterImg()),
+                        placeholder: AssetImage('assets/img/no-image.jpg'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+              ),
+            tag: paquetes[index].uniqueId,
+            ),
+          );
+        },
+        itemCount: paquetes.length,
+        // pagination: new SwiperPagination(),
+        // control: new SwiperControl(),
+      ),
+    );
+  }
   }
 
   Widget _footer(BuildContext context) {
-    List<Vehiculo> autosFicticios = getPeliculaInventada();
+    List<Paquete> peliculasFicticias = getPeliculaInventada();
     final tamanioPantalla = MediaQuery.of(context).size;
     double espacioDisponible = (tamanioPantalla.height)  *0.28;
     return new Container(
@@ -49,87 +90,86 @@ class HomeVehiculos extends StatelessWidget {
         // crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            child: new Text("Promociones",
-                style: Theme.of(context).textTheme.subhead),
-            padding: EdgeInsets.only(left: 25.0),
+            child: new Text(
+              "Promociones",
+              style: Theme.of(context).textTheme.subhead),
+              padding: EdgeInsets.only(left: 25.0),
           ),
           new SizedBox(
             height: 5.0,
           ),
-          new MovieHorizontal(
-              carro: autosFicticios, especioDisponible: espacioDisponible,siguientePagina: () {})
+          new HorizontalPaquete(
+              paquetes: peliculasFicticias, especioDisponible: espacioDisponible,  siguientePagina: () {})
         ],
       ),
     );
   }
 
-  List<Vehiculo> getPeliculaInventada() {
-    List<Vehiculo> autosFicticios = new List<Vehiculo>();
+  List<Paquete> getPeliculaInventada() {
+    List<Paquete> peliculasFicticias = new List<Paquete>();
     //de momento ocuparemos valores ficticios asi que inventarlos
-    autosFicticios.add(
-      new Vehiculo(
+    peliculasFicticias.add(
+      new Paquete(
         posterPath:
-            "https://img.autocosmos.com/noticias/fotosprinc/NAZ_d3cd3f472a4f4405aae5e4ac5c243f81.jpg",
-        title: "Hyundai",
-        originalTitle: "Hyundai",
+            "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-2.png",
+        title: "Macupichu",
+        originalTitle: "Machupichu",
         backdropPath:
-            "https://img.autocosmos.com/noticias/fotosprinc/NAZ_d3cd3f472a4f4405aae5e4ac5c243f81.jpg",
+            "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-2.png",
         id: 2312323123,
-       overview: descripcion()
+        incluye:["Hotel","Desayuno", "Transporte", "Refrigerio", "Gia Turistico" ]        
       ),
     );
 
-    autosFicticios.add(new Vehiculo(
+    peliculasFicticias.add(new Paquete(
         posterPath:
-            "https://automociontotal.hiperarticulos.com/wp-content/uploads/2015/12/autos-chinos-1.jpg",
-        title: "Hyundai Accent 2012",
-        originalTitle: "Hyundai Accent 2012",
+            "https://www.brenson.com.ar/img/vehiculos/ecosport/banner-ecosport-sm.jpg",
+        title: "Nicaragua",
+        originalTitle: "Nicaragua",
         backdropPath:
-            "https://automociontotal.hiperarticulos.com/wp-content/uploads/2015/12/autos-chinos-1.jpg",
+            "https://www.brenson.com.ar/img/vehiculos/ecosport/banner-ecosport-sm.jpg",
         id: 435345534,
-        overview: descripcion()
+        
         ));
 
-    autosFicticios.add(new Vehiculo(
+    peliculasFicticias.add(new Paquete(
         posterPath:
-            "https://www.latercera.com/resizer/BFzSKCqYeOAMrIEtRCKZgW-0UmE=/800x0/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/ZJPPLCVG7FGU5GHUECVAOV33QY.jpg",
-        title: "Azulito",
-        originalTitle: "Azulito",
+            "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-1.png",
+        title: "Volcan de Conchagua",
+        originalTitle: "Volcan de Conchagua",
         backdropPath:
-            "https://www.latercera.com/resizer/BFzSKCqYeOAMrIEtRCKZgW-0UmE=/800x0/smart/arc-anglerfish-arc2-prod-copesa.s3.amazonaws.com/public/ZJPPLCVG7FGU5GHUECVAOV33QY.jpg",
+            "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-1.png",
         id: 3454374523,
-         overview: descripcion()
+         
         ));
 
-    autosFicticios.add(new Vehiculo(
+    peliculasFicticias.add(new Paquete(
         posterPath:
-            "https://www.autoshondaenpiura.com/wp-content/uploads/2019/07/wrv-lx.jpg",
-        title: "Ocre",
-        originalTitle: "Ocre",
+            "https://imagenes-cdn.autofacil.es/multimedia/fotos/2020/04/10/184138/tesla-model3-2018-1024-02-68_mg.jpg",
+        title: "Panama",
+        originalTitle: "Panama",
         backdropPath:
-            "https://www.autoshondaenpiura.com/wp-content/uploads/2019/07/wrv-lx.jpg",
+            "https://imagenes-cdn.autofacil.es/multimedia/fotos/2020/04/10/184138/tesla-model3-2018-1024-02-68_mg.jpg",
         id: 3454434523,
-         overview: descripcion()
+         
         ));
 
-    autosFicticios.add(new Vehiculo(
+    peliculasFicticias.add(new Paquete(
         posterPath:
-            "https://www.cronista.com/export/sites/diarioelcronista/img/2018/04/27/toyotacorollachinanota-01.jpg_956867179.jpg",
-        title: "Celeste",
-        originalTitle: "Celeste",
+            "https://www.excelenciasdelmotor.com/sites/default/files/inline-images/tesla-model-x.jpg",
+        title: "Costa Rica",
+        originalTitle: "Costa Rica",
         backdropPath:
-            "https://www.cronista.com/export/sites/diarioelcronista/img/2018/04/27/toyotacorollachinanota-01.jpg_956867179.jpg",
+            "https://www.excelenciasdelmotor.com/sites/default/files/inline-images/tesla-model-x.jpg",
         id: 34543477523,
-         overview: descripcion()
+         
         ));
 
-    return autosFicticios;
+    return peliculasFicticias;
   }
 
- String descripcion(){
-   String texto = '¡ ¡ ¡ VÁMONOS A MACHUPICCHU !!!';
- 
- return texto;
- }
 
-}
+
+
+
+

@@ -22,6 +22,7 @@ import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
+import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
   return <String, WidgetBuilder>{
@@ -47,6 +48,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'carritos': (BuildContext context) => HomeCategoria(), 
     //MODULO VEHICULO
     'HomeVehiculos': (BuildContext context) => HomeVehiculos(), 
+    'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(), 
     //MODULO ENCOMIENDA  
     'encomienda': (BuildContext context) => EncomiendaPage(),
     //MODULO CHAT
