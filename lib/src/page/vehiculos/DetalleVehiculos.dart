@@ -4,9 +4,7 @@ import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 class DetalleVehiculos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-   
     return MaterialApp(
-
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -38,7 +36,6 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      
       child: Scaffold(
         backgroundColor: Color(0xFF009ff7),
         body: Column(
@@ -48,7 +45,6 @@ class MyHomePage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  
                   SizedBox(height: 11),
                   Container(
                     child: Row(
@@ -57,7 +53,6 @@ class MyHomePage extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
-                            
                             Text(
                               "Hyundai Elantra 2020",
                               style: Theme.of(context).textTheme.headline,
@@ -72,18 +67,16 @@ class MyHomePage extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(5.0),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.black45,
-                                blurRadius: 3.0,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
+                          
+                          decoration: new BoxDecoration(
+                            borderRadius: new BorderRadius.circular(10.0),
+                            image: new DecorationImage(
+                                image:
+                                    new AssetImage("assets/img/transporte.jpg"),
+                                fit: BoxFit.cover),
                           ),
-                          padding: EdgeInsets.all(5.0),
+                          
+                          padding: EdgeInsets.all(20.0),
                           child: IconButton(
                             icon: Icon(
                               Icons.add_shopping_cart,
@@ -111,7 +104,6 @@ class MyHomePage extends StatelessWidget {
                           "\$28.50",
                           style: Theme.of(context).textTheme.subtitle,
                         ),
-                        
                       ],
                     ),
                   ),
@@ -138,7 +130,11 @@ class MyHomePage extends StatelessWidget {
                             ],
                           ),
                           onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeCategoria()),);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => HomeCategoria()),
+                            );
                           },
                         ),
                         Container(
@@ -280,7 +276,6 @@ class MyHomePage extends StatelessWidget {
                                               style: TextStyle(
                                                   color: Colors.black45),
                                             ),
-                                            
                                           ],
                                         ),
                                       ),
@@ -289,8 +284,7 @@ class MyHomePage extends StatelessWidget {
                                 },
                               ),
                             ),
-                         
-                          Expanded(
+                            Expanded(
                               child: ListView.builder(
                                 itemCount: 1,
                                 itemBuilder: (BuildContext context, int index) {
@@ -327,7 +321,6 @@ class MyHomePage extends StatelessWidget {
                                               style: TextStyle(
                                                   color: Colors.black45),
                                             ),
-                                            
                                           ],
                                         ),
                                       ),
@@ -336,7 +329,7 @@ class MyHomePage extends StatelessWidget {
                                 },
                               ),
                             ),
-                           Expanded(
+                            Expanded(
                               child: ListView.builder(
                                 itemCount: 1,
                                 itemBuilder: (BuildContext context, int index) {
@@ -373,7 +366,6 @@ class MyHomePage extends StatelessWidget {
                                               style: TextStyle(
                                                   color: Colors.black45),
                                             ),
-                                            
                                           ],
                                         ),
                                       ),
@@ -382,7 +374,6 @@ class MyHomePage extends StatelessWidget {
                                 },
                               ),
                             ),
-                         
                           ],
                         ),
                       ),
