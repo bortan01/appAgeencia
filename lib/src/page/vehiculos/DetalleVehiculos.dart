@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 
 class DetalleVehiculos extends StatelessWidget {
   @override
@@ -133,7 +134,9 @@ class MyHomePage extends StatelessWidget {
                               )
                             ],
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => HomeCategoria()),);
+                          },
                         ),
                         Container(
                           height: 30,
