@@ -18,18 +18,36 @@ Widget getDrawerDefault(BuildContext context) {
             child: Text(""),
           ),
           new ListTile(
-            title: new Text("Peliculas", style: estiloLetra,),
+            title: new Text("Home", style: estiloLetra,),
             
             trailing: new Icon(Icons.local_movies, color:  colorBase,),
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(
-            title: new Text("Television", style: estiloLetra,),
+            title: new Text("Servicios", style: estiloLetra,),
             trailing: new Icon(Icons.live_tv, color:  colorBase),
           ),
           new Divider(height: 5.0 , color: colorBase),
           new ListTile(
-            title: new Text("Cerrar", style: estiloLetra,),
+            title: new Text("Promociones", style: estiloLetra,),
+            trailing: new Icon(Icons.close, color:  colorBase),
+            onTap: () => Navigator.of(context).pop(),
+          ),
+          new Divider(height: 5.0,  color: colorBase,),
+          new ListTile(
+            title: new Text("Contactanos", style: estiloLetra,),
+            trailing: new Icon(Icons.close, color:  colorBase),
+            onTap: () => Navigator.of(context).pop(),
+          ),
+          new Divider(height: 5.0,  color: colorBase,),
+          new ListTile(
+            title: new Text("Registrate", style: estiloLetra,),
+            trailing: new Icon(Icons.close, color:  colorBase),
+            onTap: () => Navigator.of(context).pop(),
+          ),
+          new Divider(height: 5.0,  color: colorBase,),
+          new ListTile(
+            title: new Text("Salir", style: estiloLetra,),
             trailing: new Icon(Icons.close, color:  colorBase),
             onTap: () => Navigator.of(context).pop(),
           ),
