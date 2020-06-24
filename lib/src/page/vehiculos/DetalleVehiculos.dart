@@ -1,359 +1,339 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/paquete_models.dart';
-//import 'package:peliculas/src/providers/peliculas_provider.dart';
 
-class DetalleVehiculos extends StatefulWidget {
-  @override
-  _DetallePaquetesState createState() => _DetallePaquetesState();
-}
-
-class _DetallePaquetesState extends State<DetalleVehiculos> {
-  int pasoActual = 0;
+class DetalleVehiculos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final Paquete paquete = ModalRoute.of(context).settings.arguments;
-    return Scaffold(
-        //backgroundColor: Colors.blueAccent,
-        body: CustomScrollView(
-      slivers: <Widget>[
-        _crearAppbar(paquete),
-        new SliverList(
-            delegate: new SliverChildListDelegate([
-          new SizedBox(
-            height: 10.0,
+    return MaterialApp(
+      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        textTheme: TextTheme(
+          headline: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
           ),
-          _posterTitulo(paquete, context),
-          new SizedBox(height: 10.0),
-
-          _incluye(paquete, context),
-          _noIncluye(paquete, context),
-
-          //_crearCasting(pelicula)
-        ]))
-      ],
-    ));
-  }
-
-  Widget _crearAppbar(Paquete paquete) {
-    return SliverAppBar(
-      elevation: 2.0,
-      backgroundColor: Colors.black54,
-      expandedHeight: 200.0,
-      floating: false,
-      pinned: true,
-      flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-        centerTitle: true,
-        title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-          child: Text(
-            paquete.title,
-            style: TextStyle(color: Colors.white, fontSize: 16.0),
-            overflow: TextOverflow.ellipsis,
+          subhead: TextStyle(color: Colors.white54),
+          body1: TextStyle(color: Colors.white54),
+          subtitle: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 17,
           ),
-        ),
-        background: FadeInImage(
-          image: NetworkImage(paquete.getBackgroudImage()),
-          placeholder: AssetImage('assets/img/loading.gif'),
-          fadeInDuration: Duration(microseconds: 150000),
-          fit: BoxFit.cover,
+          title: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            fontSize: 19,
+          ),
         ),
       ),
+      home: MyHomePage(),
     );
   }
+}
 
-  _posterTitulo(Paquete paquete, BuildContext context) {
-    print(paquete.originalTitle);
-    return new Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
-      child: Row(
-        children: <Widget>[
-          Hero(
-            child: ClipRRect(
-              child: new Image(
-                image: NetworkImage(paquete.getPosterImg()),
-                height: 150,
+class MyHomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xFF009ff7),
+        body: Column(
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(11.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  
+                  SizedBox(height: 11),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              "Hyundai Elantra 2020",
+                              style: Theme.of(context).textTheme.headline,
+                            ),
+                            SizedBox(height: 5.0),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 9.0, vertical: 5.0),
+                              color: Colors.white12,
+                              child: Text("Depósito de combustible lleno"),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(5.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black45,
+                                blurRadius: 3.0,
+                                offset: Offset(0, 3),
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.all(5.0),
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.add_shopping_cart,
+                            ),
+                            onPressed: () {},
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 5),
+                  Divider(
+                    color: Colors.white54,
+                  ),
+                  SizedBox(height: 5),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          "\Costo diario:",
+                          style: Theme.of(context).textTheme.subtitle,
+                        ),
+                        Text(
+                          "\$28.50",
+                          style: Theme.of(context).textTheme.subtitle,
+                        ),
+                        
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 11),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white30,
+                      borderRadius: BorderRadius.circular(35),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        FlatButton(
+                          child: Row(
+                            children: <Widget>[
+                              Icon(
+                                Icons.call_received,
+                                color: Colors.white,
+                              ),
+                              Text(
+                                "Ver Flota de Vehiculos",
+                                style: TextStyle(color: Colors.white),
+                              )
+                            ],
+                          ),
+                          onPressed: () {},
+                        ),
+                        Container(
+                          height: 30,
+                          width: 1,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              left: BorderSide(
+                                color: Colors.white54,
+                                width: 3.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          child: Row(
+                            children: <Widget>[
+                              Text(
+                                "Reservar",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Icon(
+                                Icons.call_made,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                          onPressed: () {},
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 11),
+                ],
               ),
-              borderRadius: new BorderRadius.circular(20.0),
             ),
-            tag: paquete.uniqueId,
-          ),
-          new SizedBox(
-            width: 20.0,
-          ),
-          new Flexible(
-              child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: new Text(
-                  paquete.title,
-                  style: Theme.of(context).textTheme.title,
-                  overflow:
-                      TextOverflow.ellipsis, //por si el titulo es muy grande
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(31),
+                    topRight: Radius.circular(31),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(11.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          MyIconButton(
+                            buttonText: "Gasolina",
+                            buttonIcon: Icons.drive_eta,
+                          ),
+                          MyIconButton(
+                            buttonText: "Automatico",
+                            buttonIcon: Icons.drive_eta,
+                          ),
+                          MyIconButton(
+                            buttonText: "4 Puertas",
+                            buttonIcon: Icons.home,
+                          ),
+                          MyIconButton(
+                            buttonText: "5 Pasajeros",
+                            buttonIcon: Icons.event_seat,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        padding: EdgeInsets.all(11.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(31),
+                            topRight: Radius.circular(31),
+                          ),
+                          color: Colors.grey[200],
+                        ),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Text(
+                                  "Adicional: ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black87,
+                                  ),
+                                ),
+                                FlatButton(
+                                  child: Text(
+                                    "",
+                                    style: TextStyle(
+                                      color: Color(0xFF009ff7),
+                                    ),
+                                  ),
+                                  onPressed: () {},
+                                ),
+                              ],
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: 3,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(11),
+                                        margin: EdgeInsets.all(11),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Color(0xFF009ff7),
+                                        ),
+                                        child: Icon(
+                                          Icons.wifi,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5.0,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              "Wifi Móvil",
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            ),
+                                            Text(
+                                              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic.",
+                                              style: TextStyle(
+                                                  color: Colors.black45),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              new Text(paquete.originalTitle,
-                  style: Theme.of(context).textTheme.subtitle,
-                  overflow: TextOverflow.ellipsis),
-              new Row(
-                children: <Widget>[
-                  new Icon(Icons.star_border),
-                  new Text(
-                    "PERU",
-                    style: Theme.of(context).textTheme.title,
-                  )
-                ],
-              )
-            ],
-          ))
-        ],
-      ),
-    );
-  }
-
-  Widget _incluye(Paquete paquete, BuildContext context) {
-    return Column(
-      children: <Widget>[
-        new Text(
-          "El viaje Incluye",
-          style: Theme.of(context).textTheme.title,
-        ),
-        SizedBox(height: 10.0),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _elementos(
-                "Hotel FADFAD AFDAFD ",
-                new Icon(
-                  Icons.hotel,
-                  color: Colors.redAccent,
-                )),
-            _elementos(
-                "Desayuno",
-                new Icon(
-                  Icons.free_breakfast,
-                  color: Colors.deepPurpleAccent,
-                )),
-            _elementos("Transporte",
-                new Icon(Icons.airport_shuttle, color: Colors.orangeAccent)),
-            _elementos(
-                "Refrigerio",
-                new Icon(
-                  Icons.local_dining,
-                  color: Colors.green,
-                )),
+            )
           ],
         ),
-        new Stepper(
-          currentStep: pasoActual,
-          physics:
-              new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
-          steps: listaDeElementos(paquete),
-          onStepContinue: () {
-            setState(() {
-              if (pasoActual < listaDeElementos(paquete).length - 1) {
-                pasoActual++;
-              }
-            });
-          },
-          onStepCancel: () {
-            setState(() {
-              if (pasoActual > 0) {
-                pasoActual--;
-              }
-            });
-          },
-          controlsBuilder: (BuildContext context,
-              {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-            return Row(
-              children: <Widget>[
-                FlatButton(
-                  onPressed: onStepContinue,
-                  color: (Theme.of(context).accentColor),
-                  child: const Text(
-                    'SIGUIENTE',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                FlatButton(
-                  onPressed: onStepCancel,
-                  color: (Theme.of(context).accentColor),
-                  child: const Text(
-                    'ATRAS',
-                    style: TextStyle(color: Colors.white),
-                  ),
+      ),
+    );
+  }
+}
+
+class MyIconButton extends StatelessWidget {
+  final String buttonText;
+  final IconData buttonIcon;
+  const MyIconButton({Key key, this.buttonText, this.buttonIcon})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.all(5.0),
+            margin: EdgeInsets.all(7.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(5.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey[400],
+                  blurRadius: 3.0,
                 ),
               ],
-            );
-          },
-        )
-      ],
-    );
-  }
-
-  Widget _noIncluye(Paquete paquete, BuildContext context) {
-    return Column(
-      children: <Widget>[
-        new Text(
-          "El viaje no incluye",
-          style: Theme.of(context).textTheme.title,
-        ),
-        SizedBox(height: 10.0),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _elementos(
-                "Seguros de Viaje",
-                new Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                )),
-            _elementos(
-                "Ni otros no especificados en el programa",
-                new Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                )),
-          ],
-        ),
-      ],
-    );
-  }
-
-  List<Step> listaDeElementos(Paquete paquete) {
-    List<Step> myLista = [
-      new Step(
-          title: new Text("Hotel"),
-          content: Column(
-            children: <Widget>[
-              new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  // height: especioDisponible,
-                  image: AssetImage(
-                    "assets/img/hotel.jpg",
-                  )),
-              new Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-            ],
-          ),
-          subtitle: new Text("Subtitulo"),
-          state: StepState.complete,
-          isActive: true),
-      new Step(
-          title: new Text("Desayuno"),
-          content: Column(
-            children: <Widget>[
-              new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  // height: especioDisponible,
-                  image: AssetImage(
-                    "assets/img/desayunos.jpg",
-                  )),
-              new Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-            ],
-          ),
-          subtitle: new Text("Subtitulo"),
-          state: StepState.complete,
-          isActive: true),
-      new Step(
-          title: new Text("Transporte"),
-          content: Column(
-            children: <Widget>[
-              new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  // height: especioDisponible,
-                  image: AssetImage(
-                    "assets/img/transporte.jpg",
-                  )),
-              new Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-            ],
-          ),
-          subtitle: new Text("Subtitulo"),
-          state: StepState.complete,
-          isActive: true),
-      new Step(
-          title: new Text("Transporte"),
-          content: Column(
-            children: <Widget>[
-              new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  // height: especioDisponible,
-                  image: AssetImage(
-                    "assets/img/refrigerio.jpg",
-                  )),
-              new Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-            ],
-          ),
-          subtitle: new Text("Subtitulo"),
-          state: StepState.complete,
-          isActive: true),
-    ];
-    return myLista;
-  }
-
-  Widget _elementos(String texto, Icon icono) {
-    return Opacity(
-      opacity: 0.7,
-      child: new Container(
-        width: 100.0,
-        height: 100.0,
-        child: Column(
-          
-          children: <Widget>[
-            new Container(
-              padding: EdgeInsets.all(8.0),
-              child: (icono),
-              decoration: new BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(40.0)),
             ),
-            new SizedBox(height: 7.0),
-            new Container(
-                
-                child: new Text(
-                  texto,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                ))
-          ],
-        ),
+            child: Icon(
+              buttonIcon,
+              color: Color(0xFF009ff7),
+            ),
+          ),
+          Text(
+            buttonText,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black54,
+            ),
+          ),
+        ],
       ),
-    );
-  }
-
-  Widget _crearAcciones() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        _accion(Icons.call, 'CALL'),
-        _accion(Icons.near_me, 'ROUTE'),
-        _accion(Icons.share, 'Share'),
-      ],
-    );
-  }
-
-  Widget _accion(IconData icon, String texto) {
-    return Column(
-      children: <Widget>[
-        Icon(icon, color: Colors.blue, size: 40.0),
-        SizedBox(height: 5.0),
-        Text(
-          texto,
-          style: TextStyle(fontSize: 15.0, color: Colors.blue),
-        )
-      ],
     );
   }
 }
