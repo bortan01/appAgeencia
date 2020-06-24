@@ -4,8 +4,9 @@ import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 class DetalleVehiculos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+   
     return MaterialApp(
-      title: 'Flutter Demo',
+
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -37,6 +38,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      
       child: Scaffold(
         backgroundColor: Color(0xFF009ff7),
         body: Column(
@@ -55,6 +57,7 @@ class MyHomePage extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            
                             Text(
                               "Hyundai Elantra 2020",
                               style: Theme.of(context).textTheme.headline,
@@ -242,7 +245,7 @@ class MyHomePage extends StatelessWidget {
                             ),
                             Expanded(
                               child: ListView.builder(
-                                itemCount: 3,
+                                itemCount: 1,
                                 itemBuilder: (BuildContext context, int index) {
                                   return Row(
                                     children: <Widget>[
@@ -277,6 +280,7 @@ class MyHomePage extends StatelessWidget {
                                               style: TextStyle(
                                                   color: Colors.black45),
                                             ),
+                                            
                                           ],
                                         ),
                                       ),
@@ -285,6 +289,100 @@ class MyHomePage extends StatelessWidget {
                                 },
                               ),
                             ),
+                         
+                          Expanded(
+                              child: ListView.builder(
+                                itemCount: 1,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(11),
+                                        margin: EdgeInsets.all(11),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Color(0xFF009ff7),
+                                        ),
+                                        child: Icon(
+                                          Icons.volume_up,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5.0,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              "Sonido",
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            ),
+                                            Text(
+                                              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic.",
+                                              style: TextStyle(
+                                                  color: Colors.black45),
+                                            ),
+                                            
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                           Expanded(
+                              child: ListView.builder(
+                                itemCount: 1,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Row(
+                                    children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.all(11),
+                                        margin: EdgeInsets.all(11),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(15),
+                                          color: Color(0xFF009ff7),
+                                        ),
+                                        child: Icon(
+                                          Icons.toys,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 5.0,
+                                      ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              "Aire Acondicionado",
+                                              style: TextStyle(
+                                                  color: Colors.black87),
+                                            ),
+                                            Text(
+                                              "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic.",
+                                              style: TextStyle(
+                                                  color: Colors.black45),
+                                            ),
+                                            
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              ),
+                            ),
+                         
                           ],
                         ),
                       ),
