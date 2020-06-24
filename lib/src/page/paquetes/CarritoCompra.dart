@@ -2,38 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/paquete_models.dart';
 //import 'package:peliculas/src/providers/peliculas_provider.dart';
 
-class DetallePaquetes extends StatefulWidget {
+class CarritoCompra extends StatefulWidget {
   @override
-  _DetallePaquetesState createState() => _DetallePaquetesState();
+  _CarritoCompraState createState() => _CarritoCompraState();
 }
 
-class _DetallePaquetesState extends State<DetallePaquetes> {
+class _CarritoCompraState extends State<CarritoCompra> {
   int pasoActual = 0;
- 
+  String dropdownValueNinos = '0';
+  String dropdownValueAdultos = '0';
+  String dropdownValueAncianos = '0';
   @override
   Widget build(BuildContext context) {
     final Paquete paquete = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         //backgroundColor: Colors.blueAccent,
-        body: CustomScrollView(
-      slivers: <Widget>[
-        _crearAppbar(paquete),
-        new SliverList(
-            delegate: new SliverChildListDelegate([
-          new SizedBox(
-            height: 10.0,
+        appBar: new AppBar(
+          title: Text(
+            "Carrito de Compra",
           ),
-          _posterTitulo(paquete, context),
-          new SizedBox(height: 10.0),
+        ),
+        body: CustomScrollView(
+          slivers: <Widget>[
+            //_crearAppbar(paquete),
 
-          _incluye(paquete, context),
-          _noIncluye(paquete, context),
-          _requisitos(paquete, context),
-          _crearBoton(paquete, context)
-          //_crearCasting(pelicula)
-        ]))
-      ],
-    ));
+            new SliverList(
+                delegate: new SliverChildListDelegate([
+              new SizedBox(
+                height: 10.0,
+              ),
+              _posterTitulo(paquete, context),
+              new SizedBox(height: 10.0),
+              _dropdownNino(),
+              _dropdowAdulto(),
+              _dropdowAnciano(),
+              _totalPagp(),
+              new SizedBox(height: 90.0,),
+              _crearBoton()
+            ]))
+          ],
+        ));
   }
 
   Widget _crearAppbar(Paquete paquete) {
@@ -111,124 +119,6 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           ))
         ],
       ),
-    );
-  }
-
-  Widget _incluye(Paquete paquete, BuildContext context) {
-    return Column(
-      children: <Widget>[
-        new Text(
-          "El viaje Incluye",
-          style: Theme.of(context).textTheme.title,
-        ),
-        SizedBox(height: 10.0),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _elementos(
-                "Hotel",
-                new Icon(
-                  Icons.hotel,
-                  color: Colors.blueAccent,
-                )),
-            _elementos(
-                "Desayuno",
-                new Icon(
-                  Icons.free_breakfast,
-                  color: Colors.blueAccent,
-                )),
-            _elementos("Transporte",
-                new Icon(Icons.airport_shuttle, color: Colors.blueAccent)),
-            _elementos(
-                "Refrigerio",
-                new Icon(
-                  Icons.local_dining,
-                  color: Colors.blueAccent,
-                )),
-          ],
-        ),
-        new Stepper(
-          currentStep: pasoActual,
-          physics:
-              new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
-          steps: listaDeElementos(paquete),
-          onStepContinue: () {
-            setState(() {
-              if (pasoActual < listaDeElementos(paquete).length - 1) {
-                pasoActual++;
-              }
-            });
-          },
-          onStepCancel: () {
-            setState(() {
-              if (pasoActual > 0) {
-                pasoActual--;
-              }
-            });
-          },
-          controlsBuilder: (BuildContext context,
-              {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-            return Row(
-              children: <Widget>[
-                FlatButton(
-                  onPressed: onStepContinue,
-                  color: (Theme.of(context).accentColor),
-                  child: const Text(
-                    'SIGUIENTE',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                FlatButton(
-                  onPressed: onStepCancel,
-                  color: (Theme.of(context).accentColor),
-                  child: const Text(
-                    'ATRAS',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            );
-          },
-        )
-      ],
-    );
-  }
-
-  Widget _noIncluye(Paquete paquete, BuildContext context) {
-    return Column(
-      children: <Widget>[
-        new Text(
-          "El viaje no incluye",
-          style: Theme.of(context).textTheme.title,
-        ),
-        SizedBox(height: 10.0),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _elementos(
-                "Seguros de Viaje",
-                new Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                )),
-            _elementos(
-                "Ni otros no especificados en el programa",
-                new Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                )),
-            _elementos(
-                "Entrada a centros turisticos",
-                new Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                )),
-          ],
-        ),
-      ],
     );
   }
 
@@ -310,102 +200,169 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
     return myLista;
   }
 
-  Widget _elementos(String texto, Icon icono) {
-    return Opacity(
-      opacity: 0.7,
-      child: new Container(
-        width: 100.0,
-        height: 100.0,
-        child: Column(
-          children: <Widget>[
-            new Container(
-              padding: EdgeInsets.all(8.0),
-              child: (icono),
-              decoration: new BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(40.0)),
-            ),
-            new SizedBox(height: 7.0),
-            new Container(
-                child: new Text(
-              texto,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              maxLines: 3,
-            ))
-          ],
+  Widget _dropdownNino() {
+    return new Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: new Text("Niños (Menores de 12 años)"),
         ),
-      ),
-    );
-  }
-
-  Widget _crearAcciones() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        _accion(Icons.call, 'CALL'),
-        _accion(Icons.near_me, 'ROUTE'),
-        _accion(Icons.share, 'Share'),
-      ],
-    );
-  }
-
-  Widget _accion(IconData icon, String texto) {
-    return Column(
-      children: <Widget>[
-        Icon(icon, color: Colors.blue, size: 40.0),
-        SizedBox(height: 5.0),
-        Text(
-          texto,
-          style: TextStyle(fontSize: 15.0, color: Colors.blue),
+        new Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: DropdownButton<String>(
+              value: dropdownValueNinos,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              isExpanded: true,
+              style: TextStyle(color: Theme.of(context).accentColor),
+              underline: Container(
+                height: 2,
+                color: Theme.of(context).accentColor,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValueNinos = newValue;
+                });
+              },
+              items: <String>['0', '1', '2', '3', '4', '5']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Center(child: Text(value)),
+                );
+              }).toList(),
+            ),
+          ),
         )
       ],
     );
   }
 
-  Widget _requisitos(Paquete paquete, BuildContext context) {
-    return Column(
+  Widget _dropdowAdulto() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        SizedBox(height: 15.0),
-        new Text(
-          "Requisitos",
-          style: Theme.of(context).textTheme.title,
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: new Text("Adultos (Entre 12 y 60 años)"),
         ),
-        SizedBox(height: 10.0),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _elementos(
-                "Pasaporte Vigente",
-                new Icon(
-                  Icons.report,
-                  color: Colors.green,
-                )),
-            _elementos(
-                "Vacuna contra la fiebre amarilla",
-                new Icon(
-                  Icons.report,
-                  color: Colors.green,
-                )),
-          ],
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: DropdownButton<String>(
+              value: dropdownValueAdultos,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              isExpanded: true,
+              style: TextStyle(color: Theme.of(context).accentColor),
+              underline: Container(
+                height: 2,
+                color: Theme.of(context).accentColor,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValueAdultos = newValue;
+                });
+              },
+              items: <String>['0', '1', '2', '3', '4', '5']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Center(child: Text(value)),
+                );
+              }).toList(),
+            ),
+          ),
         ),
       ],
     );
   }
 
+  Widget _dropdowAnciano() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: new Text("Ancianos (Mayores de 60)"),
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: DropdownButton<String>(
+              value: dropdownValueAncianos,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              isExpanded: true,
+              style: TextStyle(color: Theme.of(context).accentColor),
+              underline: Container(
+                height: 2,
+                color: Theme.of(context).accentColor,
+              ),
+              onChanged: (String newValue) {
+                setState(() {
+                  dropdownValueAncianos = newValue;
+                });
+              },
+              items: <String>['0', '1', '2', '3', '4', '5']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Center(child: Text(value)),
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
- Widget _crearBoton(Paquete paquete, BuildContext context) {
-   return Container(
-     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-     child: new RaisedButton.icon(
-       label:  new Text("Añadir a carrito"),
-       icon: new Icon(Icons.shopping_cart),
-       color: Theme.of(context).accentColor,
-       textColor: Theme.of(context).bottomAppBarColor,
-       shape: StadiumBorder(),
-       onPressed: (){
-         Navigator.pushNamed(context, 'CarritoCompra', arguments: paquete);
-       }),
-   );
- }
+  Widget _crearBoton() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: new RaisedButton.icon(
+          label: new Text("Reservar"),
+          icon: new Icon(Icons.payment),
+          color: Theme.of(context).accentColor,
+          textColor: Theme.of(context).bottomAppBarColor,
+          shape: StadiumBorder(),
+          onPressed: () {}),
+    );
+  }
+
+  Widget _totalPagp() {
+    return new Container(
+      height: 80.0,
+      margin: EdgeInsets.all(15.0),
+      decoration: BoxDecoration(
+          color: Theme.of(context).accentColor,
+          borderRadius: BorderRadius.circular(20.0)),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[              
+              Text("Descripcion", style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
+              Text("Total", style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
+            ],
+          ),
+          new Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            
+            children: <Widget>[              
+              Text("2x Machupichu (Adulto)",  style: TextStyle(color: Theme.of(context).bottomAppBarColor,)),
+              Text('€200'  , style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
+            ],
+          )
+        ],
+      ),
+    );
+  }
 }

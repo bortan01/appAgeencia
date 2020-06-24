@@ -13,7 +13,7 @@ class HomePaquetes extends StatelessWidget {
     return Scaffold(
       appBar: new AppBar(
         title: new Text("Paquetes"),
-        // backgroundColor: Colors.deepPurple,
+        
         actions: <Widget>[
           new IconButton(
               icon: new Icon(Icons.search),
