@@ -3,24 +3,14 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:peliculas/src/widget/drawerDefault.dart';
 
-class Home extends StatelessWidget {
+class MenuEncomienda extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
         scrollDirection: Axis.vertical,
-        children: <Widget>[_pagina1(), _pagina2(context)],
+        children: <Widget>[_pagina2(context)],
       ),
-    );
-  }
-
-  Widget _pagina1() {
-    return Stack(
-      children: <Widget>[
-        _colorFondo(),
-        _imagenFondo(),
-        _textos(),
-      ],
     );
   }
 
@@ -136,7 +126,7 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: 10.0),
-            Text('Agencia de Viajes',
+            Text('Encomienda',
                 style: TextStyle(color: Colors.white, fontSize: 18.0)),
           ],
         ),
@@ -170,27 +160,9 @@ class Home extends StatelessWidget {
       children: [
         TableRow(children: [
           _crearBotonRedondeado(
-              Colors.blue, Icons.map, 'Paquetes', context, "HomePaquetes"),
+              Colors.blue, Icons.map, 'Cotizador', context, "encomienda"),
           _crearBotonRedondeado(Colors.purpleAccent, Icons.beach_access,
-              'Tours', context, "homeComponentes"),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(Colors.pinkAccent, Icons.directions_car,
-              'Vehiculos', context, "carritos"),
-          _crearBotonRedondeado(Colors.orange, Icons.contact_mail,
-              'Encomiendas', context, "menuEncomienda"),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.blueGrey, Icons.chat, 'Chat', context, "chat"),
-          _crearBotonRedondeado(Colors.lightBlueAccent, Icons.chat,
-              'Chat Admin', context, "chatAdmin"),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter,
-              'ListaPeliculas', context, "listaPeliculas"),
-          _crearBotonRedondeado(
-              Colors.green, Icons.cloud, 'Login', context, "login"),
+              'Encomiendas', context, "envio"),
         ]),
       ],
     );

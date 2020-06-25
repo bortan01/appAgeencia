@@ -17,6 +17,7 @@ import 'package:peliculas/src/page/ejemplo/listView.dart';
 import 'package:peliculas/src/page/ejemplo/home_componentes.dart';
 import 'package:peliculas/src/page/ejemplo/lista_peliculas.dart';
 import 'package:peliculas/src/page/encomienda/encomienda.dart';
+import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
 import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
@@ -54,6 +55,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(), 
     //MODULO ENCOMIENDA  
     'encomienda': (BuildContext context) => EncomiendaPage(),
+    'menuEncomienda': (BuildContext context) => MenuEncomienda(),
     //MODULO CHAT
     'chat':(BuildContext context)=> ChatScreen(),
     //MODULO DE CHAT ADMIN
