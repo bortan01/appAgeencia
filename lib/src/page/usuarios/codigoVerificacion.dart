@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
 
-class Olvide extends StatefulWidget {
-  static String tag = 'olvide-page';
+class Codigo extends StatefulWidget {
+  static String tag = 'codigo-page';
 
    @override
    
-  _OlvidePageState createState() => _OlvidePageState();
+  _CodigoPageState createState() => _CodigoPageState();
   
 }
-  class _OlvidePageState extends State<Olvide> {
+  class _CodigoPageState extends State<Codigo> {
   @override
   Widget build(BuildContext context) {
    
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
+    final inputCodigo = TextFormField(
+      keyboardType: TextInputType.text,
       autofocus: false,
-      initialValue: 'pineverdi@gmail.com',
+      initialValue: '10102040',
       decoration: InputDecoration(
-        hintText: 'Correo Electronico',
+        hintText: 'Código de verificación',
         contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
       ),
@@ -33,7 +33,7 @@ class Olvide extends StatefulWidget {
         ),
         onPressed: () {
          
-          Navigator.pushNamed(context, 'codigo');
+          Navigator.pushNamed(context, 'nuevaContra');
         },
         padding: EdgeInsets.all(12),
         color: Colors.blue,
@@ -57,22 +57,13 @@ class Olvide extends StatefulWidget {
       ),
     );
 
-    final forgotLabel = FlatButton(
-      child: Text(
-      'Le enviaremos un correo de verificación',
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {
-         
-      },
-    );
 
     return Scaffold(
       body: new Stack(
       children: <Widget>[
         new Container(
           decoration: new BoxDecoration(
-            image: new DecorationImage(image: new AssetImage("assets/img/recupera1.png"), fit: BoxFit.cover,),
+            image: new DecorationImage(image: new AssetImage("assets/img/codigo.jpeg"), fit: BoxFit.cover,),
           ),
         ),
         new Center(
@@ -81,10 +72,8 @@ class Olvide extends StatefulWidget {
           padding: EdgeInsets.only(left: 24.0, right: 24.0),
           children: <Widget>[   
            
-            email,
+            inputCodigo,
             SizedBox(height: 1.5),
-
-            forgotLabel,
             SizedBox(height: 28.0),
             enviarButton,
             cancelarButton

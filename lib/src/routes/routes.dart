@@ -21,7 +21,10 @@ import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
 import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
+import 'package:peliculas/src/page/usuarios/codigoVerificacion.dart';
+import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
+import 'package:peliculas/src/page/usuarios/recuperarContrasena.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
@@ -62,5 +65,8 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'chatAdmin':(BuildContext context)=> WhatsAppHome(),
 
     'login':(BuildContext context)=> Login(),
+    'olvide':(BuildContext context)=> Olvide(),
+    'codigo':(BuildContext context)=> Codigo(),
+    'nuevaContra':(BuildContext context)=> IngreseContra(),
   };
 }

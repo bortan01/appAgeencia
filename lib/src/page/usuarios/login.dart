@@ -56,7 +56,9 @@ class Login extends StatefulWidget {
       '¿Olvidastes tu contraseña?',
         style: TextStyle(color: Colors.black54),
       ),
-      onPressed: () {},
+      onPressed: () {
+         Navigator.pushNamed(context, 'olvide');
+      },
     );
 
     return Scaffold(
