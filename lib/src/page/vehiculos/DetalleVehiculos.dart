@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 
 class DetalleVehiculos extends StatelessWidget {
@@ -162,7 +164,14 @@ class MyHomePage extends StatelessWidget {
                               ),
                             ],
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FormularioAlquiler()),
+                            );
+
+                          },
                         ),
                       ],
                     ),
