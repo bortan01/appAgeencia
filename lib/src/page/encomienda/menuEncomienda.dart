@@ -162,7 +162,7 @@ class MenuEncomienda extends StatelessWidget {
           _crearBotonRedondeado(
               Colors.blue, Icons.map, 'Cotizador', context, "encomienda"),
           _crearBotonRedondeado(Colors.purpleAccent, Icons.beach_access,
-              'Encomiendas', context, "envio"),
+              'Encomiendas', context, "listaEncomienda"),
         ]),
       ],
     );
