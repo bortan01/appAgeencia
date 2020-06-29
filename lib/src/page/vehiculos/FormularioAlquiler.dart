@@ -18,7 +18,8 @@ class Alquiler extends StatefulWidget {
 class _AlquilerPageState extends State<Alquiler> {
 
   double screenHeight;
-
+  String opcionSeleccionada = "Lugar";
+  List _lugar = ['Servicio a Domicilio', 'Aeropuerto', 'Ciudad', 'otros'];
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -81,6 +82,7 @@ class _AlquilerPageState extends State<Alquiler> {
                       ),
                     ),
                   ),
+                  
                   SizedBox(
                     height: 15,
                   ),
