@@ -17,7 +17,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
   Color colorPrimary =  Colors.transparent;
   Color colorCardView = Colors.white12;
   Color colorCardViewHorizontal = Colors.white10;
-  Color colorTitulo = Colors.white30;
+  Color colorTitulo = Colors.white;
   Color colorTextoCardview = Colors.white;
   AnimationController animateController;
   AnimationController animateController2;
@@ -34,7 +34,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
   Widget build(BuildContext context) {
 
  
-    boxDecorationFondo = Theme.of(context).brightness==Brightness.dark? BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [Theme.of(context).canvasColor,Theme.of(context).canvasColor],)) : BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [ Color.fromRGBO(46, 134, 193  , 1.0),Color.fromRGBO(46, 134, 193 , 1.0) ],))  ;
+    boxDecorationFondo = Theme.of(context).brightness==Brightness.dark? BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [Theme.of(context).canvasColor,Theme.of(context).canvasColor],)) : BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [ Color.fromRGBO(253, 254, 254 , 1.0),Color.fromRGBO(253, 254, 254, 1.0) ],))  ;
     listaVehiculos = [
       {
         'titulo': "Sedan",
@@ -125,7 +125,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(12.0),
-            child: Text( "Categorias de Vehiculos Disponibles",style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: colorTitulo)),
+            child: Text( "Categorias de Vehiculos Disponibles",style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: Color(0xFF4B9DFE))),
           ),
           Flexible( /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
             /* Iteramos la lista horizontal de los cuerpos del vehiculos */
@@ -177,7 +177,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
         margin: new EdgeInsets.only(left: 30.0),
         /* margen Tarjeta */
         decoration: new BoxDecoration(
-          color: color,
+          color: Color(0xFF4B9DFE),
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
           boxShadow: <BoxShadow>[BoxShadow(color: Colors.black12,blurRadius: 10.0,offset: Offset(0.0, 8.0))], /* Aplica sombra */
@@ -249,9 +249,9 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
         width:  width,
         height: 300.0,
         /* Margen de la tarjeta */
-        margin: new EdgeInsets.only(top: 75.0),
+        margin: new EdgeInsets.only(top: 35.0),
         decoration: new BoxDecoration(
-          color: color,
+          color: Color(0xFF4B9DFE),
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
           boxShadow: <BoxShadow>[ BoxShadow(color: Colors.black12,blurRadius: 10.0,offset: Offset(0.0, 8.0)) ], /* Aplica sombra */
