@@ -34,7 +34,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
   Widget build(BuildContext context) {
 
  
-    boxDecorationFondo = Theme.of(context).brightness==Brightness.dark? BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [Theme.of(context).canvasColor,Theme.of(context).canvasColor],)) : BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [ Color.fromRGBO(253, 254, 254 , 1.0),Color.fromRGBO(253, 254, 254, 1.0) ],))  ;
+    boxDecorationFondo = Theme.of(context).brightness==Brightness.dark? BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [Theme.of(context).canvasColor,Theme.of(context).canvasColor],)) : BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [ Color.fromRGBO(253, 254, 254 , 1.0),Color.fromRGBO(214, 234, 248 , 1.0) ],))  ;
     listaVehiculos = [
       {
         'titulo': "Sedan",
@@ -47,7 +47,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
       {
         'titulo': "Camionetas",
         'subtitulo':
-            "Es el planeta del sistema solar más próximo al Sol y el más pequeño. Forma parte de los denominados planetas interiores o terrestres y carece de satélites naturales al igual que Venus. ",
+            "Empleado generalmente para el transporte de mercancías, un término que hoy en día se aplica a veces informalmente a distintos tipos de automóviles, en concreto pickups, vehículos todoterreno, furgonetas, monovolúmenes, y familiares.",
         'assetImage': AssetImage("assets/img/camioneta.png"),
         'superficie': '74,8 millones km²',
         'distancia': ' 57,91 millones km',
@@ -55,7 +55,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
       {
         'titulo': "Pickup",
         'subtitulo':
-            "Es el segundo planeta del sistema solar en orden de distancia desde el Sol, el sexto en cuanto a tamaño, ordenados de mayor a menor. Al igual que Mercurio, carece de satélites naturales. Recibe su nombre en honor a Venus, la diosa romana del amor.",
+            "Empleado generalmente para el transporte de mercancías, y que tiene en su parte trasera una zona de carga descubierta (denominada caja, batea, balde, carrocería, platón, cama o palangana), en la cual se pueden colocar objetos grandes.",
         'assetImage': AssetImage("assets/img/pickup.png"),
         'superficie': '460,2 millones km²',
         'distancia': '108,2 millones km',
@@ -125,7 +125,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(12.0),
-            child: Text( "Categorias de Vehiculos Disponibles",style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: Color(0xFF4B9DFE))),
+            child: Text( "Categorias de Vehiculos Disponibles",style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: Colors.blue)),
           ),
           Flexible( /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
             /* Iteramos la lista horizontal de los cuerpos del vehiculos */
