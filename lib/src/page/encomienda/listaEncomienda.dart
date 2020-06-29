@@ -7,7 +7,7 @@ class ListaEncomienda extends StatefulWidget {
   }
 }
 
-class ListaEncomiendaState extends State<ListaEncomienda>{
+class ListaEncomiendaState extends State<ListaEncomienda> {
   Widget bodyData() => DataTable(
       onSelectAll: (b) {},
       sortColumnIndex: 1,
@@ -35,7 +35,7 @@ class ListaEncomiendaState extends State<ListaEncomienda>{
           },
           tooltip: "Para mostrar la fecha",
         ),
-         DataColumn(
+        DataColumn(
           label: Text("Ver"),
           numeric: false,
           onSort: (i, b) {
@@ -50,65 +50,57 @@ class ListaEncomiendaState extends State<ListaEncomienda>{
       rows: names
           .map(
             (name) => DataRow(
-                  cells: [
-                    DataCell(
-                      Text(name.producto),
-                      showEditIcon: false,
-                      placeholder: false,
-                    ),
-                    DataCell(
-                      Text(name.fecha),
-                      showEditIcon: false,
-                      placeholder: false,
-                    ),
-                    DataCell(
-                    IconButton(
-                      icon: Icon(Icons.near_me),
-                      onPressed: (){
-
-                      },
-                    ))
-                  ],
+              cells: [
+                DataCell(
+                  Text(name.producto),
+                  showEditIcon: false,
+                  placeholder: false,
                 ),
+                DataCell(
+                  Text(name.fecha),
+                  showEditIcon: false,
+                  placeholder: false,
+                ),
+                DataCell(IconButton(
+                  icon: Icon(Icons.near_me),
+                  onPressed: () {
+                    Navigator.pushNamed(context, 'HistoEncomienda');
+                  },
+                ))
+              ],
+            ),
           )
           .toList());
 
   @override
   Widget build(BuildContext context) {
-
-
-    
     return Scaffold(
-      appBar:new AppBar(
-        backgroundColor: Theme.of(context).accentColor.withOpacity(1.0),
-        title: Text('Listado de Encomienda',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-                fontWeight: FontWeight.bold)),
-      ),
-      body: new Stack(
-        children: <Widget>[  
-          
-          new Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(image: new AssetImage("assets/img/fondoEnco.jpg"), 
-              fit: BoxFit.cover,),
+        appBar: new AppBar(
+          backgroundColor: Theme.of(context).accentColor.withOpacity(1.0),
+          title: Text('Listado de Encomienda',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold)),
+        ),
+        body: new Stack(
+          children: <Widget>[
+            new Container(
+              decoration: new BoxDecoration(
+                image: new DecorationImage(
+                  image: new AssetImage("assets/img/fondoEnco.jpg"),
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          ),
-          SizedBox(height: 50.0),
-       SingleChildScrollView(
-            child: Column(
-              children: <Widget>[_titulos(), bodyData()],
-            ),
-          )
-         
-       
-          
-          
-        ],
-      )
-    );
+            SizedBox(height: 50.0),
+            SingleChildScrollView(
+              child: Column(
+                children: <Widget>[_titulos(), bodyData()],
+              ),
+            )
+          ],
+        ));
   }
 }
 
@@ -120,45 +112,44 @@ class Name {
 }
 
 var names = <Name>[
-  Name(producto: "Jeringas, Medicamentos",fecha: "20-07-2020"),
-  Name(producto: "Medicamentos",fecha: "25-06-2020"),
-   Name(producto: "Medicamentos",fecha: "25-06-2020"), 
-   Name(producto: "Medicamentos",fecha: "25-06-2020"),
-    Name(producto: "Medicamentos",fecha: "25-06-2020"),
-     Name(producto: "Medicamentos",fecha: "25-06-2020"),
-      Name(producto: "Jeringas",fecha: "20-06-2020"),
-  Name(producto: "Medicamentos",fecha: "25-06-2020"),
-   Name(producto: "Medicamentos",fecha: "25-06-2020"), 
-   Name(producto: "Medicamentos",fecha: "25-06-2020"),
-    Name(producto: "Medicamentos",fecha: "25-06-2020"),
-     Name(producto: "Medicamentos",fecha: "25-06-2020"),
-      Name(producto: "Jeringas",fecha: "20-06-2020"),
-  Name(producto: "Medicamentos",fecha: "25-06-2020"),
-   Name(producto: "Medicamentos",fecha: "25-06-2020"), 
-   Name(producto: "Medicamentos",fecha: "25-06-2020"),
-    Name(producto: "Medicamentos",fecha: "25-06-2020"),
-     Name(producto: "Medicamos",fecha: "25-06-2020"),
-      Name(producto: "Jeringas",fecha: "20-06-2020"),
-  Name(producto: "Medicamentos",fecha: "25-06-2020"),
-   Name(producto: "Medicamentos",fecha: "25-06-2020"), 
-   Name(producto: "Medicamentos",fecha: "25-06-2020"),
-    Name(producto: "Medicamentos",fecha: "25-06-2020"),
-     Name(producto: "Medicamentos",fecha: "25-06-2020"),
-
+  Name(producto: "Jeringas, Medicamentos", fecha: "20-07-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Jeringas", fecha: "20-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Jeringas", fecha: "20-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamos", fecha: "25-06-2020"),
+  Name(producto: "Jeringas", fecha: "20-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
+  Name(producto: "Medicamentos", fecha: "25-06-2020"),
 ];
 
 Widget _titulos() {
-    return SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 10.0),
-            Text('Historial de Encomiendas Enviadas',
-                style: TextStyle(color: Colors.white, fontSize: 18.0)),
-          ],
-        ),
+  return SafeArea(
+    child: Container(
+      padding: EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          SizedBox(height: 10.0),
+          Text('Historial de Encomiendas Enviadas',
+              style: TextStyle(color: Colors.white, fontSize: 18.0)),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
