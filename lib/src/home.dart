@@ -82,7 +82,7 @@ class Home extends StatelessWidget {
         ],
       ),
       appBar: new AppBar(
-        backgroundColor: Theme.of(context).accentColor.withOpacity(1.0),
+        backgroundColor: Theme.of(context).primaryColor.withOpacity(1.0),
         title: Text('Martínez Travels & Tours',
             style: TextStyle(
                 color: Colors.white,

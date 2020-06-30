@@ -1,10 +1,11 @@
+
 import 'package:flutter/material.dart';
 
 Widget getDrawerDefault(BuildContext context) {
   final colorBase =  Theme.of(context).bottomAppBarColor;
    final estiloLetra  = new TextStyle(color: colorBase); 
   return Theme(
-    data: Theme.of(context).copyWith(canvasColor: Theme.of(context).accentColor.withOpacity(0.5)),
+    data: Theme.of(context).copyWith(canvasColor: Theme.of(context).primaryColor.withOpacity(0.5)),
     child: new Drawer(
       child: new ListView(
         children: <Widget>[

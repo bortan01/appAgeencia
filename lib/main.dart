@@ -1,4 +1,4 @@
- import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:peliculas/src/routes/routes.dart';
 void main() => runApp(MyApp());
@@ -18,7 +18,10 @@ class MyApp extends StatelessWidget {
       title: 'Agencia Martinez Travels y Tours',
       initialRoute: '/',
       routes: getAplicationRoute(),
-      //theme: ,
+      theme: ThemeData(
+        //primaryColor: Colors.deepPurple,
+        //accentColor: Colors.deepPurple
+      ),
     );
   }
 }

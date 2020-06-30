@@ -72,7 +72,7 @@ class Login extends StatefulWidget {
         new Center(
          child: ListView(
           shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0),
+          padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 50.0),
           children: <Widget>[   
            
             email,
