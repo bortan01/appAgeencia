@@ -69,7 +69,7 @@ class Home extends StatelessWidget {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage("assets/img/1.png"),
+                image: new AssetImage("assets/img/fondoMenu.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -207,7 +207,7 @@ class Home extends StatelessWidget {
           height: 180.0,
           margin: EdgeInsets.all(15.0),
           decoration: BoxDecoration(
-              color: Color.fromRGBO(62, 66, 107, 0.7),
+              color: Colors.white60,
               borderRadius: BorderRadius.circular(20.0)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
