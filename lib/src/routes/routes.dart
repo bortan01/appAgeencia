@@ -20,6 +20,8 @@ import 'package:peliculas/src/page/encomienda/encomienda.dart';
 import 'package:peliculas/src/page/encomienda/historialEnco.dart';
 import 'package:peliculas/src/page/encomienda/listaEncomienda.dart';
 import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
+
+import 'package:peliculas/src/page/inicio/pruebaList.dart';
 import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
@@ -30,6 +32,7 @@ import 'package:peliculas/src/page/usuarios/recuperarContrasena.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
+
 
 
 Map<String, WidgetBuilder> getAplicationRoute() {
@@ -72,5 +75,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'olvide':(BuildContext context)=> Olvide(),
     'codigo':(BuildContext context)=> Codigo(),
     'nuevaContra':(BuildContext context)=> IngreseContra(),
+     'pruebas':(BuildContext context)=> pruebaList(),
   };
 }

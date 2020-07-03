@@ -188,7 +188,7 @@ class Home extends StatelessWidget {
         ]),
         TableRow(children: [
           _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter,
-              'ListaPeliculas', context, "listaPeliculas"),
+              'Pruebas', context, "pruebas"),
           _crearBotonRedondeado(
               Colors.green, Icons.cloud, 'Login', context, "login"),
         ]),
