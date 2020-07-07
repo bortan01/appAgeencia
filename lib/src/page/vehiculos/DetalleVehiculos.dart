@@ -74,7 +74,7 @@ class MyHomePage extends StatelessWidget {
                             borderRadius: new BorderRadius.circular(10.0),
                             image: new DecorationImage(
                                 image:
-                                    new AssetImage("assets/img/transporte.jpg"),
+                                    new AssetImage("assets/img/1.png"),
                                 fit: BoxFit.cover),
                           ),
                           

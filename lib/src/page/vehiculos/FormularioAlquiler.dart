@@ -18,8 +18,18 @@ class Alquiler extends StatefulWidget {
 class _AlquilerPageState extends State<Alquiler> {
 
   double screenHeight;
-  String opcionSeleccionada = "Lugar";
-  List _lugar = ['Servicio a Domicilio', 'Aeropuerto', 'Ciudad', 'otros'];
+
+   String _nombre = "";
+    String _lugarRecogida = "";
+      String _lugarRecogidaFnal = "";
+  
+  String opcionSeleccionada = 'Servicio a Domicilio';
+
+  List <String> _lugar = ['Servicio a Domicilio', 'Aeropuerto', 'Ciudad', 'otros'];
+  
+  
+
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -86,10 +96,7 @@ class _AlquilerPageState extends State<Alquiler> {
                   SizedBox(
                     height: 15,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Nombre Completo", hasFloatingPlaceholder: true),
-                  ),
+                  _inputNombre(),
                   SizedBox(
                     height: 20,
                   ),
@@ -100,10 +107,7 @@ class _AlquilerPageState extends State<Alquiler> {
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Lugar de Recogida", hasFloatingPlaceholder: true),
-                  ),
+                 _crearDropdown(),
                   SizedBox(
                     height: 20,
                   ),
@@ -117,6 +121,7 @@ class _AlquilerPageState extends State<Alquiler> {
                   TextFormField(
                     decoration: InputDecoration(
                         labelText: "Fecha", hasFloatingPlaceholder: true),
+                    
                   ),
                   SizedBox(
                     height: 20,
@@ -193,5 +198,107 @@ class _AlquilerPageState extends State<Alquiler> {
     );
   }
 
+ 
+ Widget _inputNombre() {
+    return new TextField(
+      // autofocus: true,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+      hintText: 'Digite su Nombre',
+      labelText: 'Digite su Nombre Completo',
+      helperText: 'Nombre Completo', hasFloatingPlaceholder: true,
+      suffixIcon: Icon(Icons.playlist_add_check),
+      ),
+      onChanged: (String persona) {
+        _nombre = persona;
+        setState(() {});
+      },
+    );
+  }
+   Widget _inputTelefono() {
+    return new TextField(
+      // autofocus: true,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+      hintText: 'Digite su Nombre',
+      labelText: 'Digite su Nombre Completo',
+      helperText: 'Nombre Completo', hasFloatingPlaceholder: true,
+      suffixIcon: Icon(Icons.playlist_add_check),
+      ),
+      onChanged: (String persona) {
+        _nombre = persona;
+        setState(() {});
+      },
+    );
+  }
+   Widget _inputLugarRecogida() {
+    return new TextField(
+      // autofocus: true,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+      hintText: 'Digite su Nombre',
+      labelText: 'Digite su Nombre Completo',
+      helperText: 'Nombre Completo', hasFloatingPlaceholder: true,
+      suffixIcon: Icon(Icons.playlist_add_check),
+      ),
+      onChanged: (String persona) {
+        _nombre = persona;
+        setState(() {});
+      },
+    );
+  }
+ 
+
+
+
+ Widget _inputRecogida() {
+    return new TextField(
+      // autofocus: true,
+     
+      textCapitalization: TextCapitalization.words,
+      
+      decoration: InputDecoration(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+      hintText: 'Digite su Nombre',
+      labelText: 'Digite su Nombre Completo',
+      helperText: 'Nombre Completo', hasFloatingPlaceholder: true,
+     
+      suffixIcon: Icon(Icons.playlist_add_check),
+      ),
+      onChanged: (String persona) {
+        _nombre = persona;
+        setState(() {});
+      },
+    );
+  }
+
+   
+
+  List<DropdownMenuItem<String>> getOpcionesDropdown() {
+    List<DropdownMenuItem<String>> lista = new List();
+    _lugar.forEach((lugar) {
+      lista.add(DropdownMenuItem(
+        child: new Text(lugar),
+        value: lugar,
+      ));
+    });
+    return lista;
+  }
+   Widget _crearDropdown() {
+    return DropdownButton(
+      
+     value: opcionSeleccionada,
+     items: getOpcionesDropdown(),
+     onChanged: (opc){
+       setState(() {
+         opcionSeleccionada = opc;
+       });
+     },
+
+    );
+  }
  
 }
