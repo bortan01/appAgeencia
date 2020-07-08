@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
+import 'package:peliculas/src/page/Colores/ColoresAgencia.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 
 class HomeCategoria extends StatefulWidget {
@@ -139,7 +140,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
                 style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blueAccent)),
+                    color: LightColor.brighter)),
           ),
           Flexible(
             /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
@@ -193,7 +194,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
         margin: new EdgeInsets.only(left: 30.0),
         /* margen Tarjeta */
         decoration: new BoxDecoration(
-          color: Color(0xFF4B9DFE),
+          color: LightColor.blue4,
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
           boxShadow: <BoxShadow>[
