@@ -8,7 +8,7 @@ class FormularioAlquiler extends StatelessWidget {
       home: Alquiler(),
     );
   }
-} 
+}
 
 class Alquiler extends StatefulWidget {
   @override
@@ -16,19 +16,25 @@ class Alquiler extends StatefulWidget {
 }
 
 class _AlquilerPageState extends State<Alquiler> {
-
   double screenHeight;
 
-   String _nombre = "";
-    String _lugarRecogida = "";
-      String _lugarRecogidaFnal = "";
-  
+  String _nombre = "";
+  String _telefono = "";
+  String _direccionRecogida = "";
+  String _direccionDevolucion = "";
+  String _lugarRecogida = "";
+  String _lugarRecogidaFnal = "";
+  TextEditingController _controllerFecha = new TextEditingController();
+  String _fechaR = "";
+
   String opcionSeleccionada = 'Servicio a Domicilio';
 
-  List <String> _lugar = ['Servicio a Domicilio', 'Aeropuerto', 'Ciudad', 'otros'];
-  
-  
-
+  List<String> _lugar = [
+    'Servicio a Domicilio',
+    'Aeropuerto',
+    'Ciudad',
+    'otros'
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +43,7 @@ class _AlquilerPageState extends State<Alquiler> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
-          children: <Widget>[           
+          children: <Widget>[
             paginaFondo(),
             imagenPortada(context),
             cajaFormulario(context),
@@ -54,7 +60,6 @@ class _AlquilerPageState extends State<Alquiler> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-        
           Text(
             "",
             style: TextStyle(
@@ -92,7 +97,6 @@ class _AlquilerPageState extends State<Alquiler> {
                       ),
                     ),
                   ),
-                  
                   SizedBox(
                     height: 15,
                   ),
@@ -100,43 +104,27 @@ class _AlquilerPageState extends State<Alquiler> {
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Numero de Telefono", hasFloatingPlaceholder: true),
-                  ),
+                  _inputTelefono(),
                   SizedBox(
                     height: 20,
                   ),
-                 _crearDropdown(),
+                  _crearDropdown(),
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Dirección", hasFloatingPlaceholder: true),
-                  ),
+                  _inputDireccionRecogida(),
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Fecha", hasFloatingPlaceholder: true),
-                    
-                  ),
+                  _crearFecha(context),
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Lugar de Devolución", hasFloatingPlaceholder: true),
-                  ),
+                  _crearDropdownDevolucion(),
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Dirección", hasFloatingPlaceholder: true),
-                  ),
+                  _inputDireccionDevolucion(),
                   SizedBox(
                     height: 20,
                   ),
@@ -150,7 +138,6 @@ class _AlquilerPageState extends State<Alquiler> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      
                       Expanded(
                         child: Container(),
                       ),
@@ -182,13 +169,13 @@ class _AlquilerPageState extends State<Alquiler> {
               "Puede completar datos adicionales en Pagina Web",
               style: TextStyle(color: Colors.grey),
             ),
-            
           ],
         )
       ],
     );
   }
-   Widget imagenPortada(BuildContext context) {
+
+  Widget imagenPortada(BuildContext context) {
     return Container(
       height: screenHeight / 2,
       child: Image.asset(
@@ -198,75 +185,17 @@ class _AlquilerPageState extends State<Alquiler> {
     );
   }
 
- 
- Widget _inputNombre() {
+  Widget _inputNombre() {
     return new TextField(
       // autofocus: true,
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-      hintText: 'Digite su Nombre',
-      labelText: 'Digite su Nombre Completo',
-      helperText: 'Nombre Completo', hasFloatingPlaceholder: true,
-      suffixIcon: Icon(Icons.playlist_add_check),
-      ),
-      onChanged: (String persona) {
-        _nombre = persona;
-        setState(() {});
-      },
-    );
-  }
-   Widget _inputTelefono() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-      hintText: 'Digite su Nombre',
-      labelText: 'Digite su Nombre Completo',
-      helperText: 'Nombre Completo', hasFloatingPlaceholder: true,
-      suffixIcon: Icon(Icons.playlist_add_check),
-      ),
-      onChanged: (String persona) {
-        _nombre = persona;
-        setState(() {});
-      },
-    );
-  }
-   Widget _inputLugarRecogida() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-      hintText: 'Digite su Nombre',
-      labelText: 'Digite su Nombre Completo',
-      helperText: 'Nombre Completo', hasFloatingPlaceholder: true,
-      suffixIcon: Icon(Icons.playlist_add_check),
-      ),
-      onChanged: (String persona) {
-        _nombre = persona;
-        setState(() {});
-      },
-    );
-  }
- 
-
-
-
- Widget _inputRecogida() {
-    return new TextField(
-      // autofocus: true,
-     
-      textCapitalization: TextCapitalization.words,
-      
-      decoration: InputDecoration(
-      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-      hintText: 'Digite su Nombre',
-      labelText: 'Digite su Nombre Completo',
-      helperText: 'Nombre Completo', hasFloatingPlaceholder: true,
-     
-      suffixIcon: Icon(Icons.playlist_add_check),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Digite su Nombre',
+        labelText: 'Digite su Nombre Completo',
+        helperText: 'Nombre Completo',
+        hasFloatingPlaceholder: true,
+        suffixIcon: Icon(Icons.supervised_user_circle),
       ),
       onChanged: (String persona) {
         _nombre = persona;
@@ -275,7 +204,62 @@ class _AlquilerPageState extends State<Alquiler> {
     );
   }
 
-   
+  Widget _inputTelefono() {
+    return new TextField(
+      // autofocus: true,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Digite su Numero de Telefono',
+        labelText: 'Digite su Numero de Telefono',
+        helperText: 'Numero de Telefono',
+        hasFloatingPlaceholder: true,
+        suffixIcon: Icon(Icons.phone),
+      ),
+      onChanged: (String persona) {
+        _telefono = persona;
+        setState(() {});
+      },
+    );
+  }
+
+  Widget _inputDireccionRecogida() {
+    return new TextField(
+      // autofocus: true,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Digite dirección',
+        labelText: 'Digite la Dirección de Recogida',
+        helperText: 'Dirección Completa',
+        hasFloatingPlaceholder: true,
+        suffixIcon: Icon(Icons.map),
+      ),
+      onChanged: (String persona) {
+        _direccionRecogida = persona;
+        setState(() {});
+      },
+    );
+  }
+
+  Widget _inputDireccionDevolucion() {
+    return new TextField(
+      // autofocus: true,
+      textCapitalization: TextCapitalization.words,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Digite de Devolución',
+        labelText: 'Dirección de Devolución',
+        helperText: 'Dirección Completa',
+        hasFloatingPlaceholder: true,
+        suffixIcon: Icon(Icons.map),
+      ),
+      onChanged: (String persona) {
+        _direccionDevolucion = persona;
+        setState(() {});
+      },
+    );
+  }
 
   List<DropdownMenuItem<String>> getOpcionesDropdown() {
     List<DropdownMenuItem<String>> lista = new List();
@@ -287,18 +271,74 @@ class _AlquilerPageState extends State<Alquiler> {
     });
     return lista;
   }
-   Widget _crearDropdown() {
-    return DropdownButton(
-      
-     value: opcionSeleccionada,
-     items: getOpcionesDropdown(),
-     onChanged: (opc){
-       setState(() {
-         opcionSeleccionada = opc;
-       });
-     },
 
+  Widget _crearDropdown() {
+    return DropdownButton(
+      value: opcionSeleccionada,
+      items: getOpcionesDropdown(),
+      onChanged: (opc) {
+        setState(() {
+          opcionSeleccionada = opc;
+        });
+      },
     );
   }
- 
+
+  List<DropdownMenuItem<String>> getOpcionesDevolucionDropdown() {
+    List<DropdownMenuItem<String>> lista = new List();
+    _lugar.forEach((lugar) {
+      lista.add(DropdownMenuItem(
+        child: new Text(lugar),
+        value: lugar,
+      ));
+    });
+    return lista;
+  }
+
+  Widget _crearDropdownDevolucion() {
+    return DropdownButton(
+      value: opcionSeleccionada,
+      items: getOpcionesDropdown(),
+      onChanged: (opc) {
+        setState(() {
+          opcionSeleccionada = opc;
+        });
+      },
+    );
+  }
+
+  Widget _crearFecha(BuildContext context) {
+    return new TextField(
+      controller: _controllerFecha,
+      enableInteractiveSelection: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Fecha de Recogida',
+        labelText: 'Fecha de Recogida',
+        helperText: 'Fecha en que Recogera el Vehiculo',
+        suffixIcon: Icon(Icons.calendar_today),
+      ),
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+        _selectDate(context);
+      },
+    );
+  }
+
+  _selectDate(BuildContext context) async {
+    DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime(2018),
+      lastDate: new DateTime(2025),
+      locale: Locale('es', 'ES'),
+    );
+
+    if (picked != null) {
+      setState(() {
+        _fechaR = picked.toString();
+        _controllerFecha.text = _fechaR;
+      });
+    }
+  }
 }
