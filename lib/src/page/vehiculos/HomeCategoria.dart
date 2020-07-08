@@ -140,7 +140,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
                 style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
-                    color: LightColor.brighter)),
+                    color: ColorAgencia.brighter)),
           ),
           Flexible(
             /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
@@ -194,7 +194,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
         margin: new EdgeInsets.only(left: 30.0),
         /* margen Tarjeta */
         decoration: new BoxDecoration(
-          color: LightColor.blue4,
+          color: ColorAgencia.blue4,
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
           boxShadow: <BoxShadow>[

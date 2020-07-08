@@ -17,7 +17,7 @@ class pruebaList extends StatelessWidget {
           height: 120,
           width: width,
           decoration: BoxDecoration(
-            color: LightColor.seeBlue,
+            color: ColorAgencia.seeBlue,
           ),
           child: Stack(
             fit: StackFit.expand,
@@ -26,11 +26,11 @@ class pruebaList extends StatelessWidget {
               Positioned(
                   top: 10,
                   right: -120,
-                  child: _circulosContainer(300, LightColor.darkseeBlue)),
+                  child: _circulosContainer(300, ColorAgencia.darkseeBlue)),
               Positioned(
                   top: -60,
                   left: -65,
-                  child: _circulosContainer(width * .5, LightColor.seeBlue)),
+                  child: _circulosContainer(width * .5, ColorAgencia.seeBlue)),
               Positioned(
                   top: -230,
                   right: -30,
@@ -71,14 +71,13 @@ class pruebaList extends StatelessWidget {
       height: height,
       width: height,
       decoration: BoxDecoration(
-      shape: BoxShape.circle,
-      color: color,
-      border: Border.all(color: borderColor, width: borderWidth),
+        shape: BoxShape.circle,
+        color: color,
+        border: Border.all(color: borderColor, width: borderWidth),
       ),
     );
   }
 
-  
   Widget _Listado() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -86,31 +85,32 @@ class pruebaList extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            _courceInfo(CourseList.list[0],
-                _paquetes(Colors.blueAccent, -110, -85),
-                background: LightColor.seeBlue),
+            _courceInfo(
+                CourseList.list[0], _paquetes(Colors.blueAccent, -110, -85),
+                background: ColorAgencia.seeBlue),
             Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
             ),
-            _courceInfo(CourseList.list[1],  _tours(),
-                background: LightColor.seeBlue),
+            _courceInfo(CourseList.list[1], _tours(),
+                background: ColorAgencia.seeBlue),
             Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
             ),
-            _courceInfo(CourseList.list[2], _vehiculos(Colors.blueAccent, -110, -85),
-                background: LightColor.seeBlue),
-                 Divider(
+            _courceInfo(
+                CourseList.list[2], _vehiculos(Colors.blueAccent, -110, -85),
+                background: ColorAgencia.seeBlue),
+            Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
             ),
-             _courceInfo(CourseList.list[3], _encomiendas(),
-                background: LightColor.seeBlue),
-                 Divider(
+            _courceInfo(CourseList.list[3], _encomiendas(),
+                background: ColorAgencia.seeBlue),
+            Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
@@ -122,12 +122,9 @@ class pruebaList extends StatelessWidget {
   }
 
   Widget _card(
-      {
-      Color primaryColor = LightColor.seeBlue,
+      {Color primaryColor = ColorAgencia.seeBlue,
       String imgPath,
-      Widget backWidget
-      }) 
-      {
+      Widget backWidget}) {
     return Container(
         height: 190,
         width: width * .34,
@@ -169,32 +166,29 @@ class pruebaList extends StatelessWidget {
                       Expanded(
                         child: Text(model.nombre,
                             style: TextStyle(
-                                color: LightColor.lightBlue,
+                                color: ColorAgencia.lightBlue,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold)),
                       ),
-                  
                       SizedBox(
                         width: 5,
                       ),
-                      
                       SizedBox(width: 10)
                     ],
                   ),
                 ),
-                
                 SizedBox(height: 15),
                 Text(model.descripcion,
                     style: AppTheme.h6Style.copyWith(
-                        fontSize: 12, color: LightColor.extraDarkPurple)),
+                        fontSize: 12, color: ColorAgencia.extraDarkPurple)),
                 SizedBox(height: 15),
                 Row(
                   children: <Widget>[
-                    _chip(model.tag1, LightColor.celeVerde, height: 5),
+                    _chip(model.tag1, ColorAgencia.celeVerde, height: 5),
                     SizedBox(
                       width: 10,
                     ),
-                    _chip(model.tag2, LightColor.brighter, height: 5),
+                    _chip(model.tag2, ColorAgencia.brighter, height: 5),
                   ],
                 )
               ],
@@ -228,10 +222,9 @@ class pruebaList extends StatelessWidget {
           left: left,
           child: CircleAvatar(
             radius: 100,
-            backgroundColor: LightColor.darkseeBlue,
+            backgroundColor: ColorAgencia.darkseeBlue,
           ),
         ),
-        
         Positioned(
           top: -30,
           right: -10,
@@ -243,16 +236,16 @@ class pruebaList extends StatelessWidget {
           right: -50,
           child: CircleAvatar(
             radius: 60,
-            backgroundColor: LightColor.darkseeBlue,
+            backgroundColor: ColorAgencia.darkseeBlue,
             child:
-                CircleAvatar(radius: 40, backgroundColor: LightColor.seeBlue),
+                CircleAvatar(radius: 40, backgroundColor: ColorAgencia.seeBlue),
           ),
         ),
       ],
     );
   }
 
-  Widget  _tours() {
+  Widget _tours() {
     return Stack(
       children: <Widget>[
         Positioned(
@@ -260,16 +253,16 @@ class pruebaList extends StatelessWidget {
           left: -65,
           child: CircleAvatar(
             radius: 70,
-            backgroundColor: LightColor.darkseeBlue,
-            child: CircleAvatar(
-                radius: 30, backgroundColor: LightColor.seeBlue),
+            backgroundColor: ColorAgencia.darkseeBlue,
+            child:
+                CircleAvatar(radius: 30, backgroundColor: ColorAgencia.seeBlue),
           ),
         ),
         Positioned(
             bottom: -35,
             right: -40,
-            child:
-                CircleAvatar(backgroundColor: LightColor.darkseeBlue, radius: 40)),
+            child: CircleAvatar(
+                backgroundColor: ColorAgencia.darkseeBlue, radius: 40)),
         Positioned(
           top: 50,
           left: -40,
@@ -288,10 +281,9 @@ class pruebaList extends StatelessWidget {
           left: left,
           child: CircleAvatar(
             radius: 100,
-            backgroundColor: LightColor.darkseeBlue,
+            backgroundColor: ColorAgencia.darkseeBlue,
           ),
         ),
-        
         Positioned(
           top: -30,
           right: -10,
@@ -303,32 +295,33 @@ class pruebaList extends StatelessWidget {
           right: -50,
           child: CircleAvatar(
             radius: 60,
-            backgroundColor: LightColor.darkseeBlue,
+            backgroundColor: ColorAgencia.darkseeBlue,
             child:
-                CircleAvatar(radius: 40, backgroundColor: LightColor.seeBlue),
+                CircleAvatar(radius: 40, backgroundColor: ColorAgencia.seeBlue),
           ),
         ),
       ],
     );
   }
+
   Widget _encomiendas() {
-     return Stack(
+    return Stack(
       children: <Widget>[
         Positioned(
           top: -65,
           left: -65,
           child: CircleAvatar(
             radius: 70,
-            backgroundColor: LightColor.darkseeBlue,
-            child: CircleAvatar(
-                radius: 30, backgroundColor: LightColor.seeBlue),
+            backgroundColor: ColorAgencia.darkseeBlue,
+            child:
+                CircleAvatar(radius: 30, backgroundColor: ColorAgencia.seeBlue),
           ),
         ),
         Positioned(
             bottom: -35,
             right: -40,
-            child:
-                CircleAvatar(backgroundColor: LightColor.darkseeBlue, radius: 40)),
+            child: CircleAvatar(
+                backgroundColor: ColorAgencia.darkseeBlue, radius: 40)),
         Positioned(
           top: 50,
           left: -40,
@@ -339,28 +332,19 @@ class pruebaList extends StatelessWidget {
     );
   }
 
-  
-
-  
-
   @override
   Widget build(BuildContext context) {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
-        
         body: SingleChildScrollView(
             child: Container(
-          child: Column(
-            children: <Widget>[
-              _encabezado(context),
-              SizedBox(height: 20),
-              _Listado()
-
-            ],
-          ),
-        )));
+      child: Column(
+        children: <Widget>[
+          _encabezado(context),
+          SizedBox(height: 20),
+          _Listado()
+        ],
+      ),
+    )));
   }
 }
-
-
-

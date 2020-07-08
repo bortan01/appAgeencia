@@ -2,41 +2,40 @@ import 'package:flutter/material.dart';
 
 import 'ColoresAgencia.dart';
 
-
 class AppTheme {
   const AppTheme();
   static ThemeData lightTheme = ThemeData(
     primarySwatch: Colors.blue,
-    backgroundColor: LightColor.background,
-    primaryColor: LightColor.purple,
-    accentColor: LightColor.lightblack,
-    primaryColorDark: LightColor.Darker,
-    primaryColorLight: LightColor.brighter,
-    cardTheme: CardTheme(color: LightColor.background),
-    textTheme: TextTheme(display1: TextStyle(color: LightColor.black)),
-    iconTheme: IconThemeData(color: LightColor.lightblack),
-    bottomAppBarColor: LightColor.background,
-    dividerColor: LightColor.lightGrey,
+    backgroundColor: ColorAgencia.background,
+    primaryColor: ColorAgencia.purple,
+    accentColor: ColorAgencia.lightblack,
+    primaryColorDark: ColorAgencia.Darker,
+    primaryColorLight: ColorAgencia.brighter,
+    cardTheme: CardTheme(color: ColorAgencia.background),
+    textTheme: TextTheme(display1: TextStyle(color: ColorAgencia.black)),
+    iconTheme: IconThemeData(color: ColorAgencia.lightblack),
+    bottomAppBarColor: ColorAgencia.background,
+    dividerColor: ColorAgencia.lightGrey,
     colorScheme: ColorScheme(
-        primary: LightColor.purple,
-        primaryVariant: LightColor.purple,
-        secondary: LightColor.lightBlue,
-        secondaryVariant: LightColor.darkBlue,
-        surface: LightColor.background,
-        background: LightColor.background,
+        primary: ColorAgencia.purple,
+        primaryVariant: ColorAgencia.purple,
+        secondary: ColorAgencia.lightBlue,
+        secondaryVariant: ColorAgencia.darkBlue,
+        surface: ColorAgencia.background,
+        background: ColorAgencia.background,
         error: Colors.red,
-        onPrimary: LightColor.Darker,
-        onSecondary: LightColor.background,
-        onSurface: LightColor.Darker,
-        onBackground: LightColor.titleTextColor,
-        onError: LightColor.titleTextColor,
+        onPrimary: ColorAgencia.Darker,
+        onSecondary: ColorAgencia.background,
+        onSurface: ColorAgencia.Darker,
+        onBackground: ColorAgencia.titleTextColor,
+        onError: ColorAgencia.titleTextColor,
         brightness: Brightness.dark),
   );
 
   static TextStyle titleStyle =
-      const TextStyle(color: LightColor.titleTextColor, fontSize: 16);
+      const TextStyle(color: ColorAgencia.titleTextColor, fontSize: 16);
   static TextStyle subTitleStyle =
-      const TextStyle(color: LightColor.subTitleTextColor, fontSize: 12);
+      const TextStyle(color: ColorAgencia.subTitleTextColor, fontSize: 12);
 
   static TextStyle h1Style =
       const TextStyle(fontSize: 24, fontWeight: FontWeight.bold);
