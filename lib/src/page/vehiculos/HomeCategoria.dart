@@ -3,18 +3,15 @@ import 'package:animate_do/animate_do.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 
 class HomeCategoria extends StatefulWidget {
-  
   @override
   _PagelistaVehiculostate createState() => _PagelistaVehiculostate();
 }
 
 class _PagelistaVehiculostate extends State<HomeCategoria> {
-
-  
   int posicionVehiculo = 0;
   List listaVehiculos;
-  BoxDecoration boxDecorationFondo ;
-  Color colorPrimary =  Colors.transparent;
+  BoxDecoration boxDecorationFondo;
+  Color colorPrimary = Colors.transparent;
   Color colorCardView = Colors.white12;
   Color colorCardViewHorizontal = Colors.white10;
   Color colorTitulo = Colors.white;
@@ -22,9 +19,8 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
   AnimationController animateController;
   AnimationController animateController2;
 
-
   @override
-  void dispose(){
+  void dispose() {
     animateController.dispose();
     animateController2.dispose();
     super.dispose();
@@ -32,9 +28,25 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
 
   @override
   Widget build(BuildContext context) {
-
- 
-    boxDecorationFondo = Theme.of(context).brightness==Brightness.dark? BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [Theme.of(context).canvasColor,Theme.of(context).canvasColor],)) : BoxDecoration(gradient: LinearGradient(begin: Alignment.topRight,end: Alignment.bottomLeft,colors: [ Color.fromRGBO(253, 254, 254 , 1.0),Color.fromRGBO(214, 234, 248 , 1.0) ],))  ;
+    boxDecorationFondo = Theme.of(context).brightness == Brightness.dark
+        ? BoxDecoration(
+            gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Theme.of(context).canvasColor,
+              Theme.of(context).canvasColor
+            ],
+          ))
+        : BoxDecoration(
+            gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromRGBO(253, 254, 254, 1.0),
+              Color.fromRGBO(214, 234, 248, 1.0)
+            ],
+          ));
     listaVehiculos = [
       {
         'titulo': "Sedan",
@@ -63,7 +75,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
       {
         'titulo': "Microbus",
         'subtitulo':
-            "Es un planeta del sistema solar que gira alrededor de su estrella —el Sol— en la tercera órbita más interna. Es el más denso y el quinto mayor de los ocho planetas del sistema solar. También es el mayor de los cuatro terrestres o rocosos.",
+            "Gran furgoneta que tiene asientos en la parte posterior para los pasajeros y ventanas a los lados.",
         'assetImage': AssetImage("assets/img/1.png"),
         'superficie': '510,1 millones km²',
         'distancia': '149,6 millones km',
@@ -71,13 +83,11 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
       {
         'titulo': "Minivans",
         'subtitulo':
-            "Es el cuarto planeta en orden de distancia al Sol y el segundo más pequeño del sistema solar, después de Mercurio.",
+            "Ofrece características aptas para la familia, además de toda la tecnología que se podría desear en un paquete atractivo y a un precio muy conveniente.",
         'assetImage': AssetImage("assets/img/1.png"),
         'superficie': '144,8 millones km²',
         'distancia': '227,9 millones km',
       },
-      
-     
     ];
 
     return Container(
@@ -99,20 +109,20 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
                 superficie: listaVehiculos[posicionVehiculo]["superficie"],
               ),
             ],
-            
           ),
         ),
-     
-      floatingActionButton: FloatingActionButton.extended(
-      onPressed: () {
-        Navigator.push(context, MaterialPageRoute( builder: (context) => HomeVehiculos()),);
-        // Add your onPressed code here!
-      },
-      label: Text('Ver autos'),
-      icon: Icon(Icons.check),
-      backgroundColor: Colors.blue,
-    ),
-       
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeVehiculos()),
+            );
+            // Add your onPressed code here!
+          },
+          label: Text('Ver autos'),
+          icon: Icon(Icons.check),
+          backgroundColor: Colors.blue,
+        ),
       ),
     );
   }
@@ -125,9 +135,14 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(12.0),
-            child: Text( "Categorias de Vehiculos Disponibles",style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold,color: Colors.blue)),
+            child: Text("Categorias de Vehiculos Disponibles",
+                style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueAccent)),
           ),
-          Flexible( /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
+          Flexible(
+            /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
             /* Iteramos la lista horizontal de los cuerpos del vehiculos */
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -149,6 +164,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
       ),
     );
   }
+
   /* Devuelve una cardview */
   Widget cardViewAutoHorizontal({
     @required int index,
@@ -157,8 +173,8 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
     String subtitulo = "",
     String distancia = "",
     String superficie = "",
-    Color color=Colors.white10,
-    Color colortexto=Colors.white10,
+    Color color = Colors.white10,
+    Color colortexto = Colors.white10,
   }) {
     /* Imagen */
     final imagenVehiculo = new Container(
@@ -180,7 +196,12 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
           color: Color(0xFF4B9DFE),
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
-          boxShadow: <BoxShadow>[BoxShadow(color: Colors.black12,blurRadius: 10.0,offset: Offset(0.0, 8.0))], /* Aplica sombra */
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 8.0))
+          ], /* Aplica sombra */
         ),
         child: InkWell(
           onTap: () {
@@ -192,15 +213,24 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
           },
           borderRadius: new BorderRadius.circular(8.0),
           child: Container(
-            margin: const EdgeInsets.only(left: 55.0, top: 12.0, right: 12.0, bottom: 12.0),
+            margin: const EdgeInsets.only(
+                left: 55.0, top: 12.0, right: 12.0, bottom: 12.0),
             /*  Margen del contenido dentro de la tarjeta  */
             constraints: new BoxConstraints.expand(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                new Text(titulo,style:TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold,color: colortexto),overflow: TextOverflow.ellipsis),
-                new Text(subtitulo,style: TextStyle(fontSize: 12.0,color: colortexto),maxLines: 2,overflow: TextOverflow.ellipsis),
+                new Text(titulo,
+                    style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                        color: colortexto),
+                    overflow: TextOverflow.ellipsis),
+                new Text(subtitulo,
+                    style: TextStyle(fontSize: 12.0, color: colortexto),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis),
               ],
             ),
           ),
@@ -215,6 +245,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
           ],
         ));
   }
+
   /* Devuelve una vista previa de un tarjeta grande con los datos del planeta enfocado */
   Widget cardViewAutoView({
     @required AssetImage assetImage,
@@ -222,31 +253,35 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
     String subtitulo = "",
     String distancia = "",
     String superficie = "",
-    Color color=Colors.white10,
-    Color colortexto=Colors.white10,
+    Color color = Colors.white10,
+    Color colortexto = Colors.white10,
   }) {
-
     double width = MediaQuery.of(context).size.width;
     /* Imagen */
     final imagenVehiculo = new Container(
-      margin: EdgeInsets.only(left: width*0.27),
+      margin: EdgeInsets.only(left: width * 0.27),
       alignment: FractionalOffset.centerLeft,
-      child: ElasticInDown( /* ElasticInDown : animación */
-        manualTrigger: true, /* (opcional) si es verdadero, no disparará la animación al cargar */
-        controller: ( controller ) => animateController = controller,/* (opcional, pero obligatorio si usa manualTrigger: true) Esta devolución de llamada expone el AnimationController utilizado para la animación seleccionada. Luego puede llamar a animationController.forward () para activar la animación donde quiera manualmente. */
-        child: SpinPerfect( /* SpinPerfect : animación */
-          manualTrigger: true, /* (opcional) si es verdadero, no disparará la animación al cargar */
-          controller: ( controller ) => animateController2 = controller,/* (opcional, pero obligatorio si usa manualTrigger: true) Esta devolución de llamada expone el AnimationController utilizado para la animación seleccionada. Luego puede llamar a animationController.forward () para activar la animación donde quiera manualmente. */
-          child: Image(image: assetImage,height: 150.0,width: 150.0) ,
+      child: ElasticInDown(
+        /* ElasticInDown : animación */
+        manualTrigger: true,
+        /* (opcional) si es verdadero, no disparará la animación al cargar */
+        controller: (controller) => animateController = controller,
+        /* (opcional, pero obligatorio si usa manualTrigger: true) Esta devolución de llamada expone el AnimationController utilizado para la animación seleccionada. Luego puede llamar a animationController.forward () para activar la animación donde quiera manualmente. */
+        child: SpinPerfect(
+          /* SpinPerfect : animación */
+          manualTrigger: true,
+          /* (opcional) si es verdadero, no disparará la animación al cargar */
+          controller: (controller) => animateController2 = controller,
+          /* (opcional, pero obligatorio si usa manualTrigger: true) Esta devolución de llamada expone el AnimationController utilizado para la animación seleccionada. Luego puede llamar a animationController.forward () para activar la animación donde quiera manualmente. */
+          child: Image(image: assetImage, height: 150.0, width: 150.0),
           infinite: true,
           animate: true,
-          duration: Duration(seconds: 50,)
         ),
       ),
     );
     /* Tarjeta con detalles */
     final tarjetaDetalles = new Container(
-        width:  width,
+        width: width,
         height: 300.0,
         /* Margen de la tarjeta */
         margin: new EdgeInsets.only(top: 35.0),
@@ -254,35 +289,53 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
           color: Color(0xFF4B9DFE),
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
-          boxShadow: <BoxShadow>[ BoxShadow(color: Colors.black12,blurRadius: 10.0,offset: Offset(0.0, 8.0)) ], /* Aplica sombra */
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Colors.black12,
+                blurRadius: 10.0,
+                offset: Offset(0.0, 8.0))
+          ], /* Aplica sombra */
         ),
         child: Container(
           /* Margen del contenido */
-          margin: const EdgeInsets.only( left: 12.0, top: 75.0, right: 12.0, bottom: 12.0),
+          margin: const EdgeInsets.only(
+              left: 12.0, top: 75.0, right: 12.0, bottom: 12.0),
           constraints: new BoxConstraints.expand(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Text(titulo,style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold,color: colortexto),overflow: TextOverflow.ellipsis),
+              new Text(titulo,
+                  style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                      color: colortexto),
+                  overflow: TextOverflow.ellipsis),
               new SizedBox(height: 5.0),
-              new Text(subtitulo,style: TextStyle(fontSize: 14.0,color: colortexto),textAlign: TextAlign.center),
+              new Text(subtitulo,
+                  style: TextStyle(fontSize: 14.0, color: colortexto),
+                  textAlign: TextAlign.center),
               new Divider(),
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   new Icon(Icons.brightness_7, size: 14.0, color: Colors.amber),
                   new SizedBox(width: 5.0),
-                  new Text(distancia,style: TextStyle(fontSize: 12.0,color: colortexto),overflow: TextOverflow.ellipsis),
+                  new Text(distancia,
+                      style: TextStyle(fontSize: 12.0, color: colortexto),
+                      overflow: TextOverflow.ellipsis),
                 ],
               ),
               new SizedBox(height: 5.0),
               new Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  new Icon(Icons.transfer_within_a_station,size: 14.0, color: Colors.blueAccent),
+                  new Icon(Icons.transfer_within_a_station,
+                      size: 14.0, color: Colors.blueAccent),
                   new SizedBox(width: 5.0),
-                  new Text(superficie,style: TextStyle(fontSize: 12.0,color: colortexto),overflow: TextOverflow.ellipsis),
+                  new Text(superficie,
+                      style: TextStyle(fontSize: 12.0, color: colortexto),
+                      overflow: TextOverflow.ellipsis),
                 ],
               ),
             ],

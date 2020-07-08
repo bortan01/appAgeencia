@@ -24,8 +24,8 @@ class _AlquilerPageState extends State<Alquiler> {
   String _direccionDevolucion = "";
   String _lugarRecogida = "";
   String _lugarRecogidaFnal = "";
-  TextEditingController _controllerFecha = new TextEditingController();
   String _fechaR = "";
+  TextEditingController _controllerFecha = new TextEditingController();
 
   String opcionSeleccionada = 'Servicio a Domicilio';
 
