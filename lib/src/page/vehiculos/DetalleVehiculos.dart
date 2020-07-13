@@ -31,12 +31,12 @@ class DetalleVehiculos extends StatelessWidget {
                                 color: ColorAgencia.lightblack,
                               ),
                             ),
-                            SizedBox(height: 5.0),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 9.0, vertical: 5.0),
-                              color: ColorAgencia.blue1,
-                              child: Text("Depósito de combustible lleno"),
+                            Text(
+                              "Depósito de combustible lleno",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: ColorAgencia.blue1,
+                              ),
                             ),
                           ],
                         ),
