@@ -15,8 +15,9 @@ class _AlquilerPageState extends State<Alquiler> {
   String _lugarRecogida = "";
   String _lugarRecogidaFnal = "";
   String _fechaR = "";
+  String _fechaD = "";
   TextEditingController _controllerFecha = new TextEditingController();
-
+  TextEditingController _controllerFechaD = new TextEditingController();
   String opcionSeleccionada = 'Servicio a Domicilio';
 
   List<String> _lugar = [
@@ -118,10 +119,7 @@ class _AlquilerPageState extends State<Alquiler> {
                   SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                        labelText: "Fecha", hasFloatingPlaceholder: true),
-                  ),
+                  _crearFechaDevolucion(context),
                   SizedBox(
                     height: 20,
                   ),
@@ -328,6 +326,42 @@ class _AlquilerPageState extends State<Alquiler> {
       setState(() {
         _fechaR = picked.toString();
         _controllerFecha.text = _fechaR;
+      });
+    }
+  }
+  //Fecha de Devolucion
+
+  Widget _crearFechaDevolucion(BuildContext context) {
+    return new TextField(
+      controller: _controllerFecha,
+      enableInteractiveSelection: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Fecha de Devolución',
+        labelText: 'Fecha de Devolución',
+        helperText: 'Fecha de Devolución el Vehiculo',
+        suffixIcon: Icon(Icons.calendar_today),
+      ),
+      onTap: () {
+        FocusScope.of(context).requestFocus(new FocusNode());
+        _selectDateDevolucion(context);
+      },
+    );
+  }
+
+  _selectDateDevolucion(BuildContext context) async {
+    DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime(2018),
+      lastDate: new DateTime(2025),
+      locale: Locale('es', 'ES'),
+    );
+
+    if (picked != null) {
+      setState(() {
+        _fechaD = picked.toString();
+        _controllerFechaD.text = _fechaR;
       });
     }
   }
