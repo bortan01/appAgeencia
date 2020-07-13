@@ -3,24 +3,14 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:peliculas/src/widget/drawerDefault.dart';
 
-class Home extends StatelessWidget {
+class MenuProductos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
         scrollDirection: Axis.vertical,
-        children: <Widget>[_pagina1(), _pagina2(context)],
+        children: <Widget>[_pagina2(context)],
       ),
-    );
-  }
-
-  Widget _pagina1() {
-    return Stack(
-      children: <Widget>[
-        _colorFondo(),
-        _imagenFondo(),
-        _textos(),
-      ],
     );
   }
 
@@ -69,7 +59,7 @@ class Home extends StatelessWidget {
           new Container(
             decoration: new BoxDecoration(
               image: new DecorationImage(
-                image: new AssetImage("assets/img/fondoMenu.png"),
+                image: new AssetImage("assets/img/1.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -82,7 +72,7 @@ class Home extends StatelessWidget {
         ],
       ),
       appBar: new AppBar(
-        backgroundColor: Theme.of(context).primaryColor.withOpacity(1.0),
+        backgroundColor: Theme.of(context).accentColor.withOpacity(1.0),
         title: Text('Martínez Travels & Tours',
             style: TextStyle(
                 color: Colors.white,
@@ -136,7 +126,7 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: 10.0),
-            Text('Agencia de Viajes',
+            Text('Servicos Adquiridos',
                 style: TextStyle(color: Colors.white, fontSize: 18.0)),
           ],
         ),
@@ -169,38 +159,10 @@ class Home extends StatelessWidget {
     return Table(
       children: [
         TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.blue, Icons.map, 'Paquetes', context, "HomePaquetes"),
+          _crearBotonRedondeado(Colors.blueAccent, Icons.directions_car,
+              'Autos Alquilados', context, "carrosAlqui"),
           _crearBotonRedondeado(Colors.purpleAccent, Icons.beach_access,
-              'Tours', context, "homeComponentes"),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(Colors.pinkAccent, Icons.directions_car,
-              'Vehiculos', context, "carritos"),
-          _crearBotonRedondeado(Colors.orange, Icons.contact_mail,
-              'Encomiendas', context, "menuEncomienda"),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.blueGrey, Icons.chat, 'Chat', context, "chat"),
-          _crearBotonRedondeado(Colors.lightBlueAccent, Icons.chat,
-              'Chat Admin', context, "chatAdmin"),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(
-              Colors.deepPurpleAccent,
-              Icons.add_shopping_cart,
-              'Servicos Adquiridos',
-              context,
-              "menuProductos"),
-          _crearBotonRedondeado(Colors.lightBlueAccent, Icons.chat,
-              'disponible espacio', context, " "),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter,
-              'Pruebas', context, "pruebas"),
-          _crearBotonRedondeado(
-              Colors.green, Icons.cloud, 'Login', context, "login"),
+              'Tours Asitidos', context, "toursAsistidos"),
         ]),
       ],
     );
@@ -217,7 +179,8 @@ class Home extends StatelessWidget {
           height: 180.0,
           margin: EdgeInsets.all(15.0),
           decoration: BoxDecoration(
-              color: Colors.white60, borderRadius: BorderRadius.circular(20.0)),
+              color: Color.fromRGBO(62, 66, 107, 0.7),
+              borderRadius: BorderRadius.circular(20.0)),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[

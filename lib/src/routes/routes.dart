@@ -25,6 +25,9 @@ import 'package:peliculas/src/page/inicio/pruebaList.dart';
 import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
+import 'package:peliculas/src/page/productosAdquiridos/menuProductos.dart';
+import 'package:peliculas/src/page/productosAdquiridos/toursAsistidos.dart';
+import 'package:peliculas/src/page/productosAdquiridos/vehiculosAlquilados.dart';
 import 'package:peliculas/src/page/usuarios/codigoVerificacion.dart';
 import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
@@ -75,5 +78,9 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'codigo': (BuildContext context) => Codigo(),
     'nuevaContra': (BuildContext context) => IngreseContra(),
     'pruebas': (BuildContext context) => pruebaList(),
+    //MODULO DE PRODUCTOS ADQUIRIDOS
+    'menuProductos': (BuildContext context) => MenuProductos(),
+    'toursAsistidos': (BuildContext context) => ToursAsistidos(),
+    'carrosAlqui': (BuildContext context) => VehiculoAlquilado(),
   };
 }
