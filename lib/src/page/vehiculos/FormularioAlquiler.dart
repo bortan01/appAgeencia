@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/page/Colores/ColoresAgencia.dart';
 
 class Alquiler extends StatefulWidget {
   @override

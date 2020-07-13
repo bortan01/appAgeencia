@@ -99,6 +99,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
           child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
+              appBarCategorias(),
               vehiculosPopulares(),
               cardViewAutoView(
                 color: colorCardView,
@@ -130,18 +131,10 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
 
   Widget vehiculosPopulares() {
     return SizedBox(
-      height: 175.0,
+      height: 100.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(12.0),
-            child: Text("Categorias de Vehiculos Disponibles",
-                style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    color: ColorAgencia.brighter)),
-          ),
           Flexible(
             /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
             /* Iteramos la lista horizontal de los cuerpos del vehiculos */
@@ -352,5 +345,21 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
             imagenVehiculo,
           ],
         ));
+  }
+
+  Widget appBarCategorias() {
+    return AppBar(
+      leading: Builder(builder: (BuildContext context) {
+        return IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, '/');
+          },
+        );
+      }),
+      backgroundColor: ColorAgencia.blue3,
+      centerTitle: true,
+      title: Text("Categoría de Vehiculos"),
+    );
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/providers/paquete_provider.dart';
 import 'package:peliculas/src/widget/horizontalPaquete.dart';
 
-
 class HomeVehiculos extends StatelessWidget {
   final PaqueteProvider peliculaProvider = new PaqueteProvider();
   @override
@@ -14,13 +13,6 @@ class HomeVehiculos extends StatelessWidget {
       appBar: new AppBar(
         title: new Text("Flota de Vehiculos"),
         // backgroundColor: Colors.deepPurple,
-        actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.search),
-              onPressed: () {
-                //showSearch(context: context, delegate: DataSearch());
-              })
-        ],
       ),
       body: new Container(
         //color: Colors.greenAccent,
@@ -53,10 +45,11 @@ class HomeVehiculos extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.0),
                   child: GestureDetector(
                     child: GestureDetector(
-                      onTap: (){
+                      onTap: () {
                         final tou = paquetes[index];
 
-                        Navigator.pushNamed(context, 'DetalleVehiculos', arguments: tou);
+                        Navigator.pushNamed(context, 'DetalleVehiculos',
+                            arguments: tou);
                       },
                       child: FadeInImage(
                         image: NetworkImage(paquetes[index].getPosterImg()),
@@ -64,9 +57,8 @@ class HomeVehiculos extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                     ),
-                  )
-              ),
-            tag: paquetes[index].uniqueId,
+                  )),
+              tag: paquetes[index].uniqueId,
             ),
           );
         },
@@ -76,100 +68,95 @@ class HomeVehiculos extends StatelessWidget {
       ),
     );
   }
-  }
+}
 
-  Widget _footer(BuildContext context) {
-    List<Paquete> peliculasFicticias = getPeliculaInventada();
-    final tamanioPantalla = MediaQuery.of(context).size;
-    double espacioDisponible = (tamanioPantalla.height)  *0.28;
-    return new Container(
-      ///para que tome todo el espacio
-      width: double.infinity,
+Widget _footer(BuildContext context) {
+  List<Paquete> peliculasFicticias = getPeliculaInventada();
+  final tamanioPantalla = MediaQuery.of(context).size;
+  double espacioDisponible = (tamanioPantalla.height) * 0.28;
+  return new Container(
+    ///para que tome todo el espacio
+    width: double.infinity,
 
-      child: new Column(
-        // crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            child: new Text(
-              "Promociones",
+    child: new Column(
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          child: new Text("Promociones",
               style: Theme.of(context).textTheme.subhead),
-              padding: EdgeInsets.only(left: 25.0),
-          ),
-          new SizedBox(
-            height: 5.0,
-          ),
-          new HorizontalPaquete(
-              paquetes: peliculasFicticias, especioDisponible: espacioDisponible,  siguientePagina: () {})
-        ],
-      ),
-    );
-  }
+          padding: EdgeInsets.only(left: 25.0),
+        ),
+        new SizedBox(
+          height: 5.0,
+        ),
+        new HorizontalPaquete(
+            paquetes: peliculasFicticias,
+            especioDisponible: espacioDisponible,
+            siguientePagina: () {})
+      ],
+    ),
+  );
+}
 
-  List<Paquete> getPeliculaInventada() {
-    List<Paquete> peliculasFicticias = new List<Paquete>();
-    //de momento ocuparemos valores ficticios asi que inventarlos
-    peliculasFicticias.add(
-      new Paquete(
+List<Paquete> getPeliculaInventada() {
+  List<Paquete> peliculasFicticias = new List<Paquete>();
+  //de momento ocuparemos valores ficticios asi que inventarlos
+  peliculasFicticias.add(
+    new Paquete(
         posterPath:
             "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-2.png",
         title: "Macupichu",
         originalTitle: "Machupichu",
-        backdropPath:
-            "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-2.png",
+        backdropPath: "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-2.png",
         id: 2312323123,
-        incluye:["Hotel","Desayuno", "Transporte", "Refrigerio", "Gia Turistico" ]        
-      ),
-    );
+        incluye: [
+          "Hotel",
+          "Desayuno",
+          "Transporte",
+          "Refrigerio",
+          "Gia Turistico"
+        ]),
+  );
 
-    peliculasFicticias.add(new Paquete(
-        posterPath:
-            "https://www.brenson.com.ar/img/vehiculos/ecosport/banner-ecosport-sm.jpg",
-        title: "Nicaragua",
-        originalTitle: "Nicaragua",
-        backdropPath:
-            "https://www.brenson.com.ar/img/vehiculos/ecosport/banner-ecosport-sm.jpg",
-        id: 435345534,
-        
-        ));
+  peliculasFicticias.add(new Paquete(
+    posterPath:
+        "https://www.brenson.com.ar/img/vehiculos/ecosport/banner-ecosport-sm.jpg",
+    title: "Nicaragua",
+    originalTitle: "Nicaragua",
+    backdropPath:
+        "https://www.brenson.com.ar/img/vehiculos/ecosport/banner-ecosport-sm.jpg",
+    id: 435345534,
+  ));
 
-    peliculasFicticias.add(new Paquete(
-        posterPath:
-            "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-1.png",
-        title: "Volcan de Conchagua",
-        originalTitle: "Volcan de Conchagua",
-        backdropPath:
-            "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-1.png",
-        id: 3454374523,
-         
-        ));
+  peliculasFicticias.add(new Paquete(
+    posterPath:
+        "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-1.png",
+    title: "Volcan de Conchagua",
+    originalTitle: "Volcan de Conchagua",
+    backdropPath:
+        "https://www.brenson.com.ar/img/vehiculos/banner-vehiculos-sm-1.png",
+    id: 3454374523,
+  ));
 
-    peliculasFicticias.add(new Paquete(
-        posterPath:
-            "https://imagenes-cdn.autofacil.es/multimedia/fotos/2020/04/10/184138/tesla-model3-2018-1024-02-68_mg.jpg",
-        title: "Panama",
-        originalTitle: "Panama",
-        backdropPath:
-            "https://imagenes-cdn.autofacil.es/multimedia/fotos/2020/04/10/184138/tesla-model3-2018-1024-02-68_mg.jpg",
-        id: 3454434523,
-         
-        ));
+  peliculasFicticias.add(new Paquete(
+    posterPath:
+        "https://imagenes-cdn.autofacil.es/multimedia/fotos/2020/04/10/184138/tesla-model3-2018-1024-02-68_mg.jpg",
+    title: "Panama",
+    originalTitle: "Panama",
+    backdropPath:
+        "https://imagenes-cdn.autofacil.es/multimedia/fotos/2020/04/10/184138/tesla-model3-2018-1024-02-68_mg.jpg",
+    id: 3454434523,
+  ));
 
-    peliculasFicticias.add(new Paquete(
-        posterPath:
-            "https://www.excelenciasdelmotor.com/sites/default/files/inline-images/tesla-model-x.jpg",
-        title: "Costa Rica",
-        originalTitle: "Costa Rica",
-        backdropPath:
-            "https://www.excelenciasdelmotor.com/sites/default/files/inline-images/tesla-model-x.jpg",
-        id: 34543477523,
-         
-        ));
+  peliculasFicticias.add(new Paquete(
+    posterPath:
+        "https://www.excelenciasdelmotor.com/sites/default/files/inline-images/tesla-model-x.jpg",
+    title: "Costa Rica",
+    originalTitle: "Costa Rica",
+    backdropPath:
+        "https://www.excelenciasdelmotor.com/sites/default/files/inline-images/tesla-model-x.jpg",
+    id: 34543477523,
+  ));
 
-    return peliculasFicticias;
-  }
-
-
-
-
-
-
+  return peliculasFicticias;
+}

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/page/Colores/ColoresAgencia.dart';
 
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 
@@ -7,7 +8,7 @@ class DetalleVehiculos extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0xFF009ff7),
+        backgroundColor: ColorAgencia.Darker,
         body: Column(
           children: <Widget>[
             Padding(
@@ -25,38 +26,34 @@ class DetalleVehiculos extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               "Hyundai Elantra 2020",
-                              style: Theme.of(context).textTheme.headline,
+                              style: TextStyle(
+                                fontSize: 24,
+                                color: ColorAgencia.lightblack,
+                              ),
                             ),
                             SizedBox(height: 5.0),
                             Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 9.0, vertical: 5.0),
-                              color: Colors.white12,
+                              color: ColorAgencia.blue1,
                               child: Text("Depósito de combustible lleno"),
                             ),
                           ],
                         ),
                         Container(
-                          decoration: new BoxDecoration(
-                            borderRadius: new BorderRadius.circular(10.0),
-                            image: new DecorationImage(
-                                image: new AssetImage("assets/img/1.png"),
-                                fit: BoxFit.cover),
+                          child: Image(
+                            height: 100,
+                            width: 125,
+                            image: NetworkImage(
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQG356LIbLadfZO3JsJcNpCSwBrotB57G35xQ&usqp=CAU"),
                           ),
-                          padding: EdgeInsets.all(20.0),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.add_shopping_cart,
-                            ),
-                            onPressed: () {},
-                          ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                   SizedBox(height: 5),
                   Divider(
-                    color: Colors.white54,
+                    color: ColorAgencia.blue1,
                   ),
                   SizedBox(height: 5),
                   Container(
@@ -65,11 +62,17 @@ class DetalleVehiculos extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           "\Costo diario:",
-                          style: Theme.of(context).textTheme.subtitle,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: ColorAgencia.lightblack,
+                          ),
                         ),
                         Text(
                           "\$28.50",
-                          style: Theme.of(context).textTheme.subtitle,
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: ColorAgencia.lightblack,
+                          ),
                         ),
                       ],
                     ),
@@ -77,7 +80,7 @@ class DetalleVehiculos extends StatelessWidget {
                   SizedBox(height: 11),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white30,
+                      color: ColorAgencia.blue1,
                       borderRadius: BorderRadius.circular(35),
                     ),
                     child: Row(
