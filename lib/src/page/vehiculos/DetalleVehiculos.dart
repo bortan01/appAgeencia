@@ -1,40 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 
 class DetalleVehiculos extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: TextTheme(
-          headline: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-          subhead: TextStyle(color: Colors.white54),
-          body1: TextStyle(color: Colors.white54),
-          subtitle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-          ),
-          title: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 19,
-          ),
-        ),
-      ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -69,15 +37,12 @@ class MyHomePage extends StatelessWidget {
                           ],
                         ),
                         Container(
-                          
                           decoration: new BoxDecoration(
                             borderRadius: new BorderRadius.circular(10.0),
                             image: new DecorationImage(
-                                image:
-                                    new AssetImage("assets/img/1.png"),
+                                image: new AssetImage("assets/img/1.png"),
                                 fit: BoxFit.cover),
                           ),
-                          
                           padding: EdgeInsets.all(20.0),
                           child: IconButton(
                             icon: Icon(
@@ -165,12 +130,7 @@ class MyHomePage extends StatelessWidget {
                             ],
                           ),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FormularioAlquiler()),
-                            );
-
+                            Navigator.pushNamed(context, 'Alquiler');
                           },
                         ),
                       ],

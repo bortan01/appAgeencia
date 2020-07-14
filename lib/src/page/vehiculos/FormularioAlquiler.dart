@@ -1,15 +1,5 @@
 import 'package:flutter/material.dart';
 
-class FormularioAlquiler extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Alquiler(),
-    );
-  }
-}
-
 class Alquiler extends StatefulWidget {
   @override
   _AlquilerPageState createState() => _AlquilerPageState();

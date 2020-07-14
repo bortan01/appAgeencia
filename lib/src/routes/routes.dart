@@ -29,11 +29,10 @@ import 'package:peliculas/src/page/usuarios/codigoVerificacion.dart';
 import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
 import 'package:peliculas/src/page/usuarios/recuperarContrasena.dart';
+import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
+import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
-import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
-
-
 
 Map<String, WidgetBuilder> getAplicationRoute() {
   return <String, WidgetBuilder>{
@@ -50,31 +49,31 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'slider': (BuildContext context) => SliderPage(),
     'list': (BuildContext context) => ListaPage(),
     'listaPeliculas': (BuildContext context) => ListaPeliculas(),
-    //AQUI EMPIEZAN LOS NUESTROS 
-    '/': (BuildContext context) => Home(),  
+    //AQUI EMPIEZAN LOS NUESTROS
+    '/': (BuildContext context) => Home(),
     //MODULO PAQUETES
-    'HomePaquetes': (BuildContext context) => HomePaquetes(),  
+    'HomePaquetes': (BuildContext context) => HomePaquetes(),
     'DetallePaquetes': (BuildContext context) => DetallePaquetes(),
-    'CarritoCompra': (BuildContext context) => CarritoCompra(),  
-    //MODULO CATEGORIA VEHICULO
-    'carritos': (BuildContext context) => HomeCategoria(), 
+    'CarritoCompra': (BuildContext context) => CarritoCompra(),
     //MODULO VEHICULO
-    'HomeVehiculos': (BuildContext context) => HomeVehiculos(), 
-    'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(), 
-    //MODULO ENCOMIENDA  
+    'carritos': (BuildContext context) => HomeCategoria(),
+    'HomeVehiculos': (BuildContext context) => HomeVehiculos(),
+    'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(),
+    'Alquiler': (BuildContext context) => Alquiler(),
+    //MODULO ENCOMIENDA
     'encomienda': (BuildContext context) => EncomiendaPage(),
     'menuEncomienda': (BuildContext context) => MenuEncomienda(),
     'listaEncomienda': (BuildContext context) => ListaEncomienda(),
     'HistoEncomienda': (BuildContext context) => HistorialEncomienda(),
     //MODULO CHAT
-    'chat':(BuildContext context)=> ChatScreen(),
+    'chat': (BuildContext context) => ChatScreen(),
     //MODULO DE CHAT ADMIN
-    'chatAdmin':(BuildContext context)=> WhatsAppHome(),
+    'chatAdmin': (BuildContext context) => WhatsAppHome(),
 
-    'login':(BuildContext context)=> Login(),
-    'olvide':(BuildContext context)=> Olvide(),
-    'codigo':(BuildContext context)=> Codigo(),
-    'nuevaContra':(BuildContext context)=> IngreseContra(),
-     'pruebas':(BuildContext context)=> pruebaList(),
+    'login': (BuildContext context) => Login(),
+    'olvide': (BuildContext context) => Olvide(),
+    'codigo': (BuildContext context) => Codigo(),
+    'nuevaContra': (BuildContext context) => IngreseContra(),
+    'pruebas': (BuildContext context) => pruebaList(),
   };
 }
