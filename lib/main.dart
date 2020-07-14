@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: [
         const Locale('es', 'ES'), // American English
-        const Locale('en', 'US'), // ESPAÑOL DE ESPAÑA A TODO GAS TIO
+        const Locale('en', 'US'), // ESPAÑOL DE ESPAÑA A
         // ...
       ],
       title: 'Agencia Martinez Travels y Tours',
@@ -21,18 +21,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
         textTheme: TextTheme(
-          headline: TextStyle(
+          headline1: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
-          subhead: TextStyle(color: Colors.white54),
-          body1: TextStyle(color: Colors.white54),
-          subtitle: TextStyle(
+          subtitle1: TextStyle(color: Colors.white54),
+          bodyText2: TextStyle(color: Colors.white54),
+          subtitle2: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 17,
           ),
-          title: TextStyle(
+          headline6: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 19,

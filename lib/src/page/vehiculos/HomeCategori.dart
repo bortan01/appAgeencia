@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-
 var COLORS = [
   Color(0xFF6c8ac8),
   Color(0xFF00f7aa),
@@ -15,8 +14,6 @@ class HomeCategoria extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      
-           
       body: new MyHomePage(title: ''),
     );
   }
@@ -37,7 +34,8 @@ class _MyHomePageState extends State<MyHomePage> {
       "title": "Sedan",
       "content": "Espacio, seguridad y rendimiento es la fórmula de un sedán.",
       "color": COLORS[new Random().nextInt(5)],
-      "image": "http://universalrentaautos.com/fotos/nissan-versa-2016-blanco.jpg"
+      "image":
+          "http://universalrentaautos.com/fotos/nissan-versa-2016-blanco.jpg"
     },
     {
       "title": "Camionetas",
@@ -53,13 +51,16 @@ class _MyHomePageState extends State<MyHomePage> {
     },
     {
       "title": "Microbuses",
-      "content": "Excelente visibilidad además de una carrocería con zonas que absorben la colisión o aplastamiento.",
+      "content":
+          "Excelente visibilidad además de una carrocería con zonas que absorben la colisión o aplastamiento.",
       "color": COLORS[new Random().nextInt(5)],
-      "image": "http://universalrentaautos.com/fotos/hiunday-h1-tq-2013-blanca.jpg"
+      "image":
+          "http://universalrentaautos.com/fotos/hiunday-h1-tq-2013-blanca.jpg"
     },
     {
       "title": "Minivans",
-      "content": "Para personas mayores o con discapacidad, una minivan puede ser más fácil de abordar y más cómoda al subir, al salir y al moverse en el interior.",
+      "content":
+          "Para personas mayores o con discapacidad, una minivan puede ser más fácil de abordar y más cómoda al subir, al salir y al moverse en el interior.",
       "color": COLORS[new Random().nextInt(5)],
       "image": "https://realrentcar.com.sv/files/vehiculos/129/129-1.jpg"
     }
@@ -80,7 +81,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: new Stack(
         children: <Widget>[
           new Transform.translate(
-            offset: new Offset(0.0, MediaQuery.of(context).size.height * 0.1050),
+            offset:
+                new Offset(0.0, MediaQuery.of(context).size.height * 0.1050),
             child: new ListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.all(0.0),
@@ -89,8 +91,10 @@ class _MyHomePageState extends State<MyHomePage> {
               itemCount: data.length,
               itemBuilder: (BuildContext content, int index) {
                 return GestureDetector(
-                      onTap: (){  Navigator.pushNamed(context, 'HomeVehiculos');},
-                      child: AwesomeListItem(
+                  onTap: () {
+                    Navigator.pushNamed(context, 'HomeVehiculos');
+                  },
+                  child: AwesomeListItem(
                       title: data[index]["title"],
                       content: data[index]["content"],
                       color: data[index]["color"],
@@ -99,7 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
           ),
-
           new Transform.translate(
             offset: Offset(0.0, -56.0),
             child: new Container(
@@ -118,7 +121,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     new Transform.translate(
                       offset: Offset(0.0, 60.0),
                       child: new ListTile(
-                        
                         title: new Text(
                           "",
                           style: new TextStyle(

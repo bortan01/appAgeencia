@@ -4,9 +4,12 @@ import 'package:peliculas/src/models/vehiculo_models.dart';
 class MovieHorizontal extends StatelessWidget {
   final List<Vehiculo> carro;
   final Function siguientePagina;
-   final double especioDisponible ;
+  final double especioDisponible;
 
-  MovieHorizontal({@required this.carro, @required this.siguientePagina, @required this.especioDisponible});
+  MovieHorizontal(
+      {@required this.carro,
+      @required this.siguientePagina,
+      @required this.especioDisponible});
   final _pageController =
       new PageController(initialPage: 1, viewportFraction: 0.3);
 
@@ -16,7 +19,8 @@ class MovieHorizontal extends StatelessWidget {
 
     /// este metodo se dispara cada vez que se mueve el scroll horizontal
     _pageController.addListener(() {
-      if (_pageController.position.pixels >=  _pageController.position.maxScrollExtent - 200) {
+      if (_pageController.position.pixels >=
+          _pageController.position.maxScrollExtent - 200) {
         siguientePagina();
       }
     });
@@ -36,38 +40,10 @@ class MovieHorizontal extends StatelessWidget {
     );
   }
 
-  List<Widget> _tarjetas() {
-    return carro.map((peli) {
-      //  return Container
-      return new Container(
-        color: Colors.red,
-        margin: const EdgeInsets.only(right: 15.0),
-        child: new Column(
-          children: <Widget>[
-            ClipRRect(
-              child: new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  height: 200.0,
-                  image: NetworkImage(
-                    peli.getPosterImg(),
-                  )),
-              borderRadius: BorderRadius.circular(20.0),
-            ),
-            new Text(
-              peli.title,
-              overflow: TextOverflow.ellipsis,
-            )
-          ],
-        ),
-      );
-    }).toList();
-  }
-
   Widget _crearTarjeta(BuildContext context, Vehiculo carro) {
     carro.uniqueId = '${carro.id}-poster';
     final tarjeta = new Container(
-     // color: Colors.red,
+      // color: Colors.red,
       margin: const EdgeInsets.only(right: 15.0),
       child: new Column(
         children: <Widget>[

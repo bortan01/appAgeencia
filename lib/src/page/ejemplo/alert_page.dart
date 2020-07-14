@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class AlertPage extends StatelessWidget {
   @override
@@ -9,17 +8,16 @@ class AlertPage extends StatelessWidget {
         title: Text('page aleert'),
       ),
       body: new Center(
-        child: new RaisedButton(
-          onPressed: () => mostrarAlerta(context),
-          child: new Text("Mostrar Alerta"),
-          color: Colors.blueAccent,
-          textColor: Colors.white,
-          shape: new StadiumBorder(),
-        )
-      ),
+          child: new RaisedButton(
+        onPressed: () => mostrarAlerta(context),
+        child: new Text("Mostrar Alerta"),
+        color: Colors.blueAccent,
+        textColor: Colors.white,
+        shape: new StadiumBorder(),
+      )),
       floatingActionButton: FloatingActionButton(
-        child: Icon (Icons.exit_to_app),
-        onPressed: (){
+        child: Icon(Icons.exit_to_app),
+        onPressed: () {
           Navigator.pop(context);
         },
       ),
@@ -27,7 +25,6 @@ class AlertPage extends StatelessWidget {
   }
 
   mostrarAlerta(BuildContext context) {
-
 //    rootBundle.loadString('http://www.christianmeza.com/api/index.php')
 //        .then((data){
 //      print(data);
@@ -35,18 +32,20 @@ class AlertPage extends StatelessWidget {
 //    });
 
     showDialog(
-        context:context,
-      barrierDismissible: true,
-      builder: (context){
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
           return AlertDialog(
-            shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(50.0)),
+            shape: new RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50.0)),
             title: new Text("titulo"),
             content: new Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 new Text("Este es el contenido de la cjaja de la alerta"),
-                new FlutterLogo(size: 100.0,)
-
+                new FlutterLogo(
+                  size: 100.0,
+                )
               ],
             ),
             actions: <Widget>[
@@ -55,20 +54,14 @@ class AlertPage extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pop(),
               ),
               new FlatButton(
-                  onPressed: (){
+                  onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: new Text("ok")
-              )
+                  child: new Text("ok"))
             ],
           );
-      ///
 
-
-
-
-
-        }
-    );
+          ///
+        });
   }
 }

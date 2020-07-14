@@ -5,29 +5,27 @@ import 'package:peliculas/src/widget/card_swiper_widget.dart';
 import 'package:peliculas/src/widget/movie_horizontal.dart';
 
 class HomePageX extends StatelessWidget {
-  PeliculaProvider peliculaProvider = new PeliculaProvider();
+  final PeliculaProvider peliculaProvider = new PeliculaProvider();
   @override
   Widget build(BuildContext context) {
     peliculaProvider.getPopulares();
     return Scaffold(
       appBar: new AppBar(
-
         title: new Text("Agencia Martinez y Tours"),
         backgroundColor: Colors.deepPurple,
         actions: <Widget>[
-          new IconButton(icon: new Icon(Icons.search), onPressed: () {
-            showSearch(context: context, delegate: DataSearch());
-          })
+          new IconButton(
+              icon: new Icon(Icons.search),
+              onPressed: () {
+                showSearch(context: context, delegate: DataSearch());
+              })
         ],
       ),
       body: new Container(
         color: Colors.greenAccent,
         child: new Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            _swiperTarjetas(),
-            _footer(context)
-          ],
+          children: <Widget>[_swiperTarjetas(), _footer(context)],
         ),
       ),
     );
@@ -49,30 +47,33 @@ class HomePageX extends StatelessWidget {
   }
 
   Widget _footer(BuildContext context) {
-   // PeliculaProvider p = new PeliculaProvider();
-   // p.getPopulares();
+    // PeliculaProvider p = new PeliculaProvider();
+    // p.getPopulares();
 
     return new Container(
       ///para que tome todo el espacio
       width: double.infinity,
 
       child: new Column(
-       // crossAxisAlignment: CrossAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Container(
-            child: new Text("populares",style: Theme.of(context).textTheme.subhead),
+            child: new Text("populares",
+                style: Theme.of(context).textTheme.subtitle1),
             padding: EdgeInsets.only(left: 25.0),
           ),
-          new SizedBox(height: 5.0,),
+          new SizedBox(
+            height: 5.0,
+          ),
           new StreamBuilder(
               stream: peliculaProvider.popularesStream,
               builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
-
                 if (snapshot.hasData) {
                   if (snapshot.data != null) {
                     return new MovieHorizontal(
                       peliculas: snapshot.data,
-                      siguientePagina: peliculaProvider.getPopulares, );
+                      siguientePagina: peliculaProvider.getPopulares,
+                    );
                   } else {
                     return Center(child: CircularProgressIndicator());
                   }

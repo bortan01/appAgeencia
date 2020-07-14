@@ -37,39 +37,13 @@ class _CarritoCompraState extends State<CarritoCompra> {
               _dropdowAdulto(),
               _dropdowAnciano(),
               _totalPagp(),
-              new SizedBox(height: 90.0,),
+              new SizedBox(
+                height: 90.0,
+              ),
               _crearBoton()
             ]))
           ],
         ));
-  }
-
-  Widget _crearAppbar(Paquete paquete) {
-    return SliverAppBar(
-      elevation: 2.0,
-      backgroundColor: Colors.black54,
-      expandedHeight: 200.0,
-      floating: false,
-      pinned: true,
-      flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-        centerTitle: true,
-        title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-          child: Text(
-            paquete.title,
-            style: TextStyle(color: Colors.white, fontSize: 16.0),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        background: FadeInImage(
-          image: NetworkImage(paquete.getBackgroudImage()),
-          placeholder: AssetImage('assets/img/loading.gif'),
-          fadeInDuration: Duration(microseconds: 150000),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
   }
 
   _posterTitulo(Paquete paquete, BuildContext context) {
@@ -98,20 +72,20 @@ class _CarritoCompraState extends State<CarritoCompra> {
               Container(
                 child: new Text(
                   paquete.title,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                   overflow:
                       TextOverflow.ellipsis, //por si el titulo es muy grande
                 ),
               ),
               new Text(paquete.originalTitle,
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).textTheme.subtitle2,
                   overflow: TextOverflow.ellipsis),
               new Row(
                 children: <Widget>[
                   new Icon(Icons.attach_money),
                   new Text(
                     "695.00",
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   )
                 ],
               )
@@ -348,17 +322,22 @@ class _CarritoCompraState extends State<CarritoCompra> {
         children: <Widget>[
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: <Widget>[              
-              Text("Descripcion", style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
-              Text("Total", style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
+            children: <Widget>[
+              Text("Descripcion",
+                  style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
+              Text("Total",
+                  style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
             ],
           ),
           new Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            
-            children: <Widget>[              
-              Text("2x Machupichu (Adulto)",  style: TextStyle(color: Theme.of(context).bottomAppBarColor,)),
-              Text('€200'  , style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
+            children: <Widget>[
+              Text("2x Machupichu (Adulto)",
+                  style: TextStyle(
+                    color: Theme.of(context).bottomAppBarColor,
+                  )),
+              Text('€200',
+                  style: TextStyle(color: Theme.of(context).bottomAppBarColor)),
             ],
           )
         ],

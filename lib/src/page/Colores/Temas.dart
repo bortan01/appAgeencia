@@ -12,7 +12,7 @@ class AppTheme {
     primaryColorDark: ColorAgencia.Darker,
     primaryColorLight: ColorAgencia.brighter,
     cardTheme: CardTheme(color: ColorAgencia.background),
-    textTheme: TextTheme(display1: TextStyle(color: ColorAgencia.black)),
+    textTheme: TextTheme(headline4: TextStyle(color: ColorAgencia.black)),
     iconTheme: IconThemeData(color: ColorAgencia.lightblack),
     bottomAppBarColor: ColorAgencia.background,
     dividerColor: ColorAgencia.lightGrey,

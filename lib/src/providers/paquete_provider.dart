@@ -39,10 +39,10 @@ class PaqueteProvider {
   }
 
   Future<List<Paquete>> getPopulares() async {
-    if(_cargando){
+    if (_cargando) {
       return [];
     }
-    _cargando =true;
+    _cargando = true;
     _populares_page++;
     print('cargando siguientes......');
     final url = Uri.https(_url, '3/movie/popular', {
@@ -54,7 +54,7 @@ class PaqueteProvider {
 
     _populares.addAll(resultado);
     popularesSink(_populares);
-    _cargando= false;
+    _cargando = false;
     return resultado;
   }
 
@@ -68,28 +68,24 @@ class PaqueteProvider {
     return peliculas.items;
   }
 
-  Future<List<Actor>> getCast(String peliId) async{
-    final url = Uri.https(_url, '3/movie/$peliId/credits', {
-      'api_key'  : _apikey,
-      'language' : _languaje
-    });
+  Future<List<Actor>> getCast(String peliId) async {
+    final url = Uri.https(_url, '3/movie/$peliId/credits',
+        {'api_key': _apikey, 'language': _languaje});
 
     final resp = await http.get(url);
-    final decodedData = json.decode( resp.body );
+    final decodedData = json.decode(resp.body);
 
     final cast = new Cast.fromJsonList(decodedData['cast']);
 
     return cast.actores;
-
   }
 
   Future<List<Paquete>> buscarPelicula(String query) async {
     final url = Uri.https(_url, '3/search/movie', {
       'api_key': _apikey,
       'language': _languaje,
-      'query' :query,
+      'query': query,
     });
     return await _procesarRespueta(url);
   }
-
 }

@@ -9,7 +9,7 @@ class DetallePaquetes extends StatefulWidget {
 
 class _DetallePaquetesState extends State<DetallePaquetes> {
   int pasoActual = 0;
- 
+
   @override
   Widget build(BuildContext context) {
     final Paquete paquete = ModalRoute.of(context).settings.arguments;
@@ -90,20 +90,20 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
               Container(
                 child: new Text(
                   paquete.title,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                   overflow:
                       TextOverflow.ellipsis, //por si el titulo es muy grande
                 ),
               ),
               new Text(paquete.originalTitle,
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).textTheme.subtitle2,
                   overflow: TextOverflow.ellipsis),
               new Row(
                 children: <Widget>[
                   new Icon(Icons.attach_money),
                   new Text(
                     "695.00",
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   )
                 ],
               )
@@ -119,7 +119,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
       children: <Widget>[
         new Text(
           "El viaje Incluye",
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.headline6,
         ),
         SizedBox(height: 10.0),
         new Row(
@@ -202,7 +202,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
       children: <Widget>[
         new Text(
           "El viaje no incluye",
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.headline6,
         ),
         SizedBox(height: 10.0),
         new Row(
@@ -339,37 +339,13 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
     );
   }
 
-  Widget _crearAcciones() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        _accion(Icons.call, 'CALL'),
-        _accion(Icons.near_me, 'ROUTE'),
-        _accion(Icons.share, 'Share'),
-      ],
-    );
-  }
-
-  Widget _accion(IconData icon, String texto) {
-    return Column(
-      children: <Widget>[
-        Icon(icon, color: Colors.blue, size: 40.0),
-        SizedBox(height: 5.0),
-        Text(
-          texto,
-          style: TextStyle(fontSize: 15.0, color: Colors.blue),
-        )
-      ],
-    );
-  }
-
   Widget _requisitos(Paquete paquete, BuildContext context) {
     return Column(
       children: <Widget>[
         SizedBox(height: 15.0),
         new Text(
           "Requisitos",
-          style: Theme.of(context).textTheme.title,
+          style: Theme.of(context).textTheme.headline6,
         ),
         SizedBox(height: 10.0),
         new Row(
@@ -393,19 +369,18 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
     );
   }
 
-
- Widget _crearBoton(Paquete paquete, BuildContext context) {
-   return Container(
-     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-     child: new RaisedButton.icon(
-       label:  new Text("Añadir a carrito"),
-       icon: new Icon(Icons.shopping_cart),
-       color: Theme.of(context).accentColor,
-       textColor: Theme.of(context).bottomAppBarColor,
-       shape: StadiumBorder(),
-       onPressed: (){
-         Navigator.pushNamed(context, 'CarritoCompra', arguments: paquete);
-       }),
-   );
- }
+  Widget _crearBoton(Paquete paquete, BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      child: new RaisedButton.icon(
+          label: new Text("Añadir a carrito"),
+          icon: new Icon(Icons.shopping_cart),
+          color: Theme.of(context).accentColor,
+          textColor: Theme.of(context).bottomAppBarColor,
+          shape: StadiumBorder(),
+          onPressed: () {
+            Navigator.pushNamed(context, 'CarritoCompra', arguments: paquete);
+          }),
+    );
+  }
 }

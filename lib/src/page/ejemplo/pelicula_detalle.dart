@@ -74,27 +74,27 @@ class PeliculaDetalle extends StatelessWidget {
           ),
           //EL FLEXIBLE HACE QUE OCUPE EL ESPACIO RESTANTE
           new Flexible(
-            child: new Column(
+              child: new Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
                 child: new Text(
                   pelicula.title,
-                  style: Theme.of(context).textTheme.title,
+                  style: Theme.of(context).textTheme.headline6,
                   overflow:
                       TextOverflow.ellipsis, //por si el titulo es muy grande
                 ),
               ),
               //EL OVERFLOW ES POR SI EL TEXTO ES MUY LARGO
               new Text(pelicula.originalTitle,
-                  style: Theme.of(context).textTheme.subtitle,
+                  style: Theme.of(context).textTheme.subtitle2,
                   overflow: TextOverflow.ellipsis),
               new Row(
                 children: <Widget>[
                   new Icon(Icons.star, color: Colors.yellowAccent),
                   new Text(
                     pelicula.voteAverage.toString(),
-                    style: Theme.of(context).textTheme.title,
+                    style: Theme.of(context).textTheme.headline6,
                   )
                 ],
               )

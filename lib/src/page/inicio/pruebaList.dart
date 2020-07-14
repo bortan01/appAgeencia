@@ -3,8 +3,8 @@ import 'package:peliculas/src/page/Colores/ColoresAgencia.dart';
 import 'package:peliculas/src/page/Colores/Temas.dart';
 import 'modelo/ModeloInformacion.dart';
 
-class pruebaList extends StatelessWidget {
-  pruebaList({Key key}) : super(key: key);
+class PruebaList extends StatelessWidget {
+  PruebaList({Key key}) : super(key: key);
 
   double width;
 
@@ -78,7 +78,7 @@ class pruebaList extends StatelessWidget {
     );
   }
 
-  Widget _Listado() {
+  Widget _listado() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
@@ -342,7 +342,7 @@ class pruebaList extends StatelessWidget {
         children: <Widget>[
           _encabezado(context),
           SizedBox(height: 20),
-          _Listado()
+          _listado()
         ],
       ),
     )));

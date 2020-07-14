@@ -83,7 +83,7 @@ Widget _footer(BuildContext context) {
       children: <Widget>[
         Container(
           child: new Text("Promociones",
-              style: Theme.of(context).textTheme.subhead),
+              style: Theme.of(context).textTheme.subtitle1),
           padding: EdgeInsets.only(left: 25.0),
         ),
         new SizedBox(

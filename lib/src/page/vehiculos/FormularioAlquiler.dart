@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/page/Colores/ColoresAgencia.dart';
 
 class Alquiler extends StatefulWidget {
   @override
@@ -183,7 +182,7 @@ class _AlquilerPageState extends State<Alquiler> {
         hintText: 'Digite su Nombre',
         labelText: 'Digite su Nombre Completo',
         helperText: 'Nombre Completo',
-        hasFloatingPlaceholder: true,
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.supervised_user_circle),
       ),
       onChanged: (String persona) {
@@ -202,7 +201,7 @@ class _AlquilerPageState extends State<Alquiler> {
         hintText: 'Digite su Numero de Telefono',
         labelText: 'Digite su Numero de Telefono',
         helperText: 'Numero de Telefono',
-        hasFloatingPlaceholder: true,
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.phone),
       ),
       onChanged: (String persona) {
@@ -221,7 +220,7 @@ class _AlquilerPageState extends State<Alquiler> {
         hintText: 'Digite dirección',
         labelText: 'Digite la Dirección de Recogida',
         helperText: 'Dirección Completa',
-        hasFloatingPlaceholder: true,
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.map),
       ),
       onChanged: (String persona) {
@@ -240,7 +239,7 @@ class _AlquilerPageState extends State<Alquiler> {
         hintText: 'Digite de Devolución',
         labelText: 'Dirección de Devolución',
         helperText: 'Dirección Completa',
-        hasFloatingPlaceholder: true,
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.map),
       ),
       onChanged: (String persona) {

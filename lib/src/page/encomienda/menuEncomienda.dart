@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'dart:ui';
 import 'package:peliculas/src/widget/drawerDefault.dart';
 
@@ -10,42 +9,6 @@ class MenuEncomienda extends StatelessWidget {
       body: PageView(
         scrollDirection: Axis.vertical,
         children: <Widget>[_pagina2(context)],
-      ),
-    );
-  }
-
-  Widget _colorFondo() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Color.fromRGBO(108, 192, 218, 1.0),
-    );
-  }
-
-  Widget _imagenFondo() {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      child: Image(
-        image: AssetImage('assets/img/logo.png'),
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _textos() {
-    final estiloTexto = TextStyle(color: Colors.white, fontSize: 50.0);
-
-    return SafeArea(
-      child: Column(
-        children: <Widget>[
-          SizedBox(height: 20.0),
-          Text('', style: estiloTexto),
-          Expanded(child: Container()),
-          Text('', style: estiloTexto),
-          Text('', style: estiloTexto),
-          Icon(Icons.keyboard_arrow_down, size: 70.0, color: Colors.white)
-        ],
       ),
     );
   }
@@ -86,38 +49,6 @@ class MenuEncomienda extends StatelessWidget {
 
   ///elementos para page 2
 
-  Widget _fondoApp() {
-    final gradiente = Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: FractionalOffset(0.0, 0.6),
-              end: FractionalOffset(0.0, 1.0),
-              colors: [
-            Color.fromRGBO(52, 54, 101, 1.0),
-            Color.fromRGBO(35, 37, 57, 1.0)
-          ])),
-    );
-
-    final cajaRosa = Transform.rotate(
-        angle: -pi / 5.0,
-        child: Container(
-          height: 360.0,
-          width: 360.0,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(80.0),
-              gradient: LinearGradient(colors: [
-                Color.fromRGBO(52, 152, 219, 1.0),
-                Color.fromRGBO(133, 193, 233, 1.0)
-              ])),
-        ));
-
-    return Stack(
-      children: <Widget>[gradiente, Positioned(top: -100.0, child: cajaRosa)],
-    );
-  }
-
   Widget _titulos() {
     return SafeArea(
       child: Container(
@@ -130,27 +61,6 @@ class MenuEncomienda extends StatelessWidget {
                 style: TextStyle(color: Colors.white, fontSize: 18.0)),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _bottomNavigationBar(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(
-          canvasColor: Color.fromRGBO(55, 57, 84, 1.0),
-          primaryColor: Colors.pinkAccent,
-          textTheme: Theme.of(context).textTheme.copyWith(
-              caption: TextStyle(color: Color.fromRGBO(116, 117, 152, 1.0)))),
-      child: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.calendar_today, size: 30.0), title: Container()),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.bubble_chart, size: 30.0), title: Container()),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.supervised_user_circle, size: 30.0),
-              title: Container()),
-        ],
       ),
     );
   }

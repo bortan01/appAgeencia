@@ -39,7 +39,7 @@ import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
   return <String, WidgetBuilder>{
-    'bienvenidoos': (BuildContext context) => bienvenidosPage(),
+    'bienvenidoos': (BuildContext context) => BienvenidosPage(),
     'homeX': (BuildContext context) => HomePageX(),
     'homeComponentes': (BuildContext context) => HomeComponents(),
     'detalle': (BuildContext context) => PeliculaDetalle(),
@@ -77,7 +77,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'olvide': (BuildContext context) => Olvide(),
     'codigo': (BuildContext context) => Codigo(),
     'nuevaContra': (BuildContext context) => IngreseContra(),
-    'pruebas': (BuildContext context) => pruebaList(),
+    'pruebas': (BuildContext context) => PruebaList(),
     //MODULO DE PRODUCTOS ADQUIRIDOS
     'menuProductos': (BuildContext context) => MenuProductos(),
     'toursAsistidos': (BuildContext context) => ToursAsistidos(),
