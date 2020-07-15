@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/page/Colores/ColoresAgencia.dart';
-import 'package:peliculas/src/page/Colores/Temas.dart';
+import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'modelo/ModeloInformacion.dart';
 
 class PruebaList extends StatelessWidget {
@@ -17,7 +16,7 @@ class PruebaList extends StatelessWidget {
           height: 120,
           width: width,
           decoration: BoxDecoration(
-            color: ColorAgencia.seeBlue,
+            color: Colors.blue,
           ),
           child: Stack(
             fit: StackFit.expand,
@@ -26,11 +25,11 @@ class PruebaList extends StatelessWidget {
               Positioned(
                   top: 10,
                   right: -120,
-                  child: _circulosContainer(300, ColorAgencia.darkseeBlue)),
+                  child: _circulosContainer(300, Colors.blue)),
               Positioned(
                   top: -60,
                   left: -65,
-                  child: _circulosContainer(width * .5, ColorAgencia.seeBlue)),
+                  child: _circulosContainer(width * .5, Colors.blue)),
               Positioned(
                   top: -230,
                   right: -30,
@@ -87,14 +86,13 @@ class PruebaList extends StatelessWidget {
           children: <Widget>[
             _courceInfo(
                 CourseList.list[0], _paquetes(Colors.blueAccent, -110, -85),
-                background: ColorAgencia.seeBlue),
+                background: Colors.blue),
             Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
             ),
-            _courceInfo(CourseList.list[1], _tours(),
-                background: ColorAgencia.seeBlue),
+            _courceInfo(CourseList.list[1], _tours(), background: Colors.blue),
             Divider(
               thickness: 1,
               endIndent: 20,
@@ -102,14 +100,14 @@ class PruebaList extends StatelessWidget {
             ),
             _courceInfo(
                 CourseList.list[2], _vehiculos(Colors.blueAccent, -110, -85),
-                background: ColorAgencia.seeBlue),
+                background: Colors.blue),
             Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
             ),
             _courceInfo(CourseList.list[3], _encomiendas(),
-                background: ColorAgencia.seeBlue),
+                background: Colors.blue),
             Divider(
               thickness: 1,
               endIndent: 20,
@@ -122,9 +120,7 @@ class PruebaList extends StatelessWidget {
   }
 
   Widget _card(
-      {Color primaryColor = ColorAgencia.seeBlue,
-      String imgPath,
-      Widget backWidget}) {
+      {Color primaryColor = Colors.blue, String imgPath, Widget backWidget}) {
     return Container(
         height: 190,
         width: width * .34,
@@ -166,7 +162,7 @@ class PruebaList extends StatelessWidget {
                       Expanded(
                         child: Text(model.nombre,
                             style: TextStyle(
-                                color: ColorAgencia.lightBlue,
+                                color: Colors.lightBlue,
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold)),
                       ),
@@ -179,16 +175,16 @@ class PruebaList extends StatelessWidget {
                 ),
                 SizedBox(height: 15),
                 Text(model.descripcion,
-                    style: AppTheme.h6Style.copyWith(
-                        fontSize: 12, color: ColorAgencia.extraDarkPurple)),
+                    style: AppTheme.h6Style
+                        .copyWith(fontSize: 12, color: Colors.purple)),
                 SizedBox(height: 15),
                 Row(
                   children: <Widget>[
-                    _chip(model.tag1, ColorAgencia.celeVerde, height: 5),
+                    _chip(model.tag1, Colors.green, height: 5),
                     SizedBox(
                       width: 10,
                     ),
-                    _chip(model.tag2, ColorAgencia.brighter, height: 5),
+                    _chip(model.tag2, Colors.blue, height: 5),
                   ],
                 )
               ],
@@ -222,7 +218,7 @@ class PruebaList extends StatelessWidget {
           left: left,
           child: CircleAvatar(
             radius: 100,
-            backgroundColor: ColorAgencia.darkseeBlue,
+            backgroundColor: Colors.blue,
           ),
         ),
         Positioned(
@@ -236,9 +232,8 @@ class PruebaList extends StatelessWidget {
           right: -50,
           child: CircleAvatar(
             radius: 60,
-            backgroundColor: ColorAgencia.darkseeBlue,
-            child:
-                CircleAvatar(radius: 40, backgroundColor: ColorAgencia.seeBlue),
+            backgroundColor: Colors.blue,
+            child: CircleAvatar(radius: 40, backgroundColor: Colors.blue),
           ),
         ),
       ],
@@ -253,16 +248,14 @@ class PruebaList extends StatelessWidget {
           left: -65,
           child: CircleAvatar(
             radius: 70,
-            backgroundColor: ColorAgencia.darkseeBlue,
-            child:
-                CircleAvatar(radius: 30, backgroundColor: ColorAgencia.seeBlue),
+            backgroundColor: Colors.blue,
+            child: CircleAvatar(radius: 30, backgroundColor: Colors.blue),
           ),
         ),
         Positioned(
             bottom: -35,
             right: -40,
-            child: CircleAvatar(
-                backgroundColor: ColorAgencia.darkseeBlue, radius: 40)),
+            child: CircleAvatar(backgroundColor: Colors.blue, radius: 40)),
         Positioned(
           top: 50,
           left: -40,
@@ -281,7 +274,7 @@ class PruebaList extends StatelessWidget {
           left: left,
           child: CircleAvatar(
             radius: 100,
-            backgroundColor: ColorAgencia.darkseeBlue,
+            backgroundColor: Colors.blue,
           ),
         ),
         Positioned(
@@ -295,9 +288,8 @@ class PruebaList extends StatelessWidget {
           right: -50,
           child: CircleAvatar(
             radius: 60,
-            backgroundColor: ColorAgencia.darkseeBlue,
-            child:
-                CircleAvatar(radius: 40, backgroundColor: ColorAgencia.seeBlue),
+            backgroundColor: Colors.blue,
+            child: CircleAvatar(radius: 40, backgroundColor: Colors.blue),
           ),
         ),
       ],
@@ -312,16 +304,14 @@ class PruebaList extends StatelessWidget {
           left: -65,
           child: CircleAvatar(
             radius: 70,
-            backgroundColor: ColorAgencia.darkseeBlue,
-            child:
-                CircleAvatar(radius: 30, backgroundColor: ColorAgencia.seeBlue),
+            backgroundColor: Colors.blue,
+            child: CircleAvatar(radius: 30, backgroundColor: Colors.blue),
           ),
         ),
         Positioned(
             bottom: -35,
             right: -40,
-            child: CircleAvatar(
-                backgroundColor: ColorAgencia.darkseeBlue, radius: 40)),
+            child: CircleAvatar(backgroundColor: Colors.blue, radius: 40)),
         Positioned(
           top: 50,
           left: -40,

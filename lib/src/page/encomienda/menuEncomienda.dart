@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:animate_do/animate_do.dart';
-import 'package:peliculas/src/page/Colores/ColoresAgencia.dart';
 import 'package:peliculas/src/page/encomienda/encomienda.dart';
-
 
 class MenuEncomienda extends StatefulWidget {
   @override
   _PagelistaInformaciontate createState() => _PagelistaInformaciontate();
-} 
+}
 
 class _PagelistaInformaciontate extends State<MenuEncomienda> {
   int posicionInformacion = 0;
@@ -66,7 +64,6 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
         'superficie': '74,8 millones km²',
         'distancia': ' 57,91 millones km',
       },
-      
     ];
 
     return Container(
@@ -87,12 +84,9 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
                 subtitulo: listaInformacion[posicionInformacion]["subtitulo"],
                 distancia: listaInformacion[posicionInformacion]["distancia"],
                 superficie: listaInformacion[posicionInformacion]["superficie"],
-                
               ),
             ],
-            
           ),
-          
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
@@ -136,10 +130,7 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
                 }),
           ),
         ],
-        
-
       ),
-      
     );
   }
 
@@ -171,7 +162,7 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
         margin: new EdgeInsets.only(left: 30.0),
         /* margen Tarjeta */
         decoration: new BoxDecoration(
-          color: ColorAgencia.blue4,
+          color: Colors.blue,
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
           boxShadow: <BoxShadow>[
@@ -212,7 +203,6 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
               ],
             ),
           ),
-          
         ));
     /* Creamos una vista superpuesta  */
     return Container(
@@ -221,7 +211,6 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
           children: <Widget>[
             tarjetaDetalles,
             imagenIlustrativa,
-            
           ],
         ));
   }
@@ -258,7 +247,6 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
           animate: true,
         ),
       ),
-      
     );
     /* Tarjeta con detalles */
     final tarjetaDetalles = new Container(
@@ -317,9 +305,7 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
                   new Text(superficie,
                       style: TextStyle(fontSize: 12.0, color: colortexto),
                       overflow: TextOverflow.ellipsis),
-                      
                 ],
-                
               ),
               _boton(),
             ],
@@ -347,33 +333,30 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
           },
         );
       }),
-      backgroundColor: ColorAgencia.blue3,
+      backgroundColor: Colors.blue,
       centerTitle: true,
       title: Text("Encomiendas"),
     );
   }
 
-
-   Widget _boton() {
+  Widget _boton() {
     return FlatButton(
       padding: EdgeInsets.only(
         left: 10,
         right: 10,
-        bottom:10,
+        bottom: 10,
         top: 10,
       ),
       color: Colors.orange,
-      
       textColor: Colors.white,
-      onPressed: (){},
+      onPressed: () {},
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
-        
       ),
-      child: Text("Botoncito",
-       style: TextStyle(fontSize: 15),
-       
-       ), 
+      child: Text(
+        "Botoncito",
+        style: TextStyle(fontSize: 15),
+      ),
     );
   }
 }

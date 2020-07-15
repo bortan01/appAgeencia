@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/page/Colores/ColoresAgencia.dart';
 
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 
@@ -8,7 +7,7 @@ class DetalleVehiculos extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: ColorAgencia.Darker,
+        backgroundColor: Colors.white,
         body: Column(
           children: <Widget>[
             Padding(
@@ -28,14 +27,14 @@ class DetalleVehiculos extends StatelessWidget {
                               "Hyundai Elantra 2020",
                               style: TextStyle(
                                 fontSize: 24,
-                                color: ColorAgencia.lightblack,
+                                color: Colors.black,
                               ),
                             ),
                             Text(
                               "Depósito de combustible lleno",
                               style: TextStyle(
                                 fontSize: 12,
-                                color: ColorAgencia.blue1,
+                                color: Colors.blueAccent,
                               ),
                             ),
                           ],
@@ -53,7 +52,7 @@ class DetalleVehiculos extends StatelessWidget {
                   ),
                   SizedBox(height: 5),
                   Divider(
-                    color: ColorAgencia.blue1,
+                    color: Colors.blueAccent,
                   ),
                   SizedBox(height: 5),
                   Container(
@@ -64,14 +63,14 @@ class DetalleVehiculos extends StatelessWidget {
                           "\Costo diario:",
                           style: TextStyle(
                             fontSize: 20,
-                            color: ColorAgencia.lightblack,
+                            color: Colors.black,
                           ),
                         ),
                         Text(
                           "\$28.50",
                           style: TextStyle(
                             fontSize: 20,
-                            color: ColorAgencia.lightblack,
+                            color: Colors.black,
                           ),
                         ),
                       ],
@@ -80,7 +79,7 @@ class DetalleVehiculos extends StatelessWidget {
                   SizedBox(height: 11),
                   Container(
                     decoration: BoxDecoration(
-                      color: ColorAgencia.blue1,
+                      color: Colors.blueAccent,
                       borderRadius: BorderRadius.circular(35),
                     ),
                     child: Row(

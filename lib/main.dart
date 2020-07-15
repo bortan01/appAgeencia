@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:peliculas/src/routes/routes.dart';
-import 'package:peliculas/src/page/Colores/Temas.dart';
+import 'package:peliculas/src/page/Temas/Temas.dart';
 
 void main() => runApp(MyApp());
 
