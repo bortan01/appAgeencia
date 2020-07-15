@@ -90,7 +90,9 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
                 
               ),
             ],
+            
           ),
+          
         ),
         floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
@@ -134,7 +136,10 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
                 }),
           ),
         ],
+        
+
       ),
+      
     );
   }
 
@@ -207,6 +212,7 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
               ],
             ),
           ),
+          
         ));
     /* Creamos una vista superpuesta  */
     return Container(
@@ -215,6 +221,7 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
           children: <Widget>[
             tarjetaDetalles,
             imagenIlustrativa,
+            
           ],
         ));
   }
@@ -251,6 +258,7 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
           animate: true,
         ),
       ),
+      
     );
     /* Tarjeta con detalles */
     final tarjetaDetalles = new Container(
@@ -309,8 +317,11 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
                   new Text(superficie,
                       style: TextStyle(fontSize: 12.0, color: colortexto),
                       overflow: TextOverflow.ellipsis),
+                      
                 ],
+                
               ),
+              _boton(),
             ],
           ),
         ));
@@ -339,6 +350,30 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
       backgroundColor: ColorAgencia.blue3,
       centerTitle: true,
       title: Text("Encomiendas"),
+    );
+  }
+
+
+   Widget _boton() {
+    return FlatButton(
+      padding: EdgeInsets.only(
+        left: 10,
+        right: 10,
+        bottom:10,
+        top: 10,
+      ),
+      color: Colors.orange,
+      
+      textColor: Colors.white,
+      onPressed: (){},
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+        
+      ),
+      child: Text("Botoncito",
+       style: TextStyle(fontSize: 15),
+       
+       ), 
     );
   }
 }

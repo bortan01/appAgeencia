@@ -13,8 +13,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   String _destinoFinal = "";
   String _total="35.50";
   String opcionSeleccionada = 'Producto';
-  List _productos = ['Producto', 'Medicamentos', 'Jeringas', 'otros'];
-
+  List<String> _productos = ['Producto', 'Medicamentos', 'Jeringas', 'otros'];
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -78,8 +77,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                   ),
                   SizedBox(
                     height: 15,
-                  ),
-                  
+                  ),    
                   _crearDropDown(),
                   SizedBox(
                     height: 20,
@@ -258,5 +256,9 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     });
     return lista;
   }
+
+
+
+  
  
 }
