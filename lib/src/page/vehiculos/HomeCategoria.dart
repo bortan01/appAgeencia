@@ -12,11 +12,10 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
   int posicionVehiculo = 0;
   List listaVehiculos;
   BoxDecoration boxDecorationFondo;
-  Color colorPrimary = Colors.transparent;
+
   Color colorCardView = Colors.white12;
   Color colorCardViewHorizontal = Colors.white10;
-  Color colorTitulo = Colors.white;
-  Color colorTextoCardview = Colors.white;
+
   AnimationController animateController;
   AnimationController animateController2;
 
@@ -94,7 +93,6 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
     return Container(
       decoration: boxDecorationFondo,
       child: Scaffold(
-        backgroundColor: colorPrimary,
         body: SafeArea(
           child: ListView(
             scrollDirection: Axis.vertical,
@@ -102,8 +100,8 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
               appBarCategorias(),
               vehiculosPopulares(),
               cardViewAutoView(
-                color: colorCardView,
-                colortexto: colorTextoCardview,
+                //color: colorCardView,
+                colortexto: Theme.of(context).bottomAppBarColor,
                 assetImage: listaVehiculos[posicionVehiculo]["assetImage"],
                 titulo: listaVehiculos[posicionVehiculo]["titulo"],
                 subtitulo: listaVehiculos[posicionVehiculo]["subtitulo"],
@@ -123,7 +121,6 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
           },
           label: Text('Ver autos'),
           icon: Icon(Icons.check),
-          backgroundColor: Colors.blue,
         ),
       ),
     );
@@ -144,7 +141,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
                 itemBuilder: (BuildContext context, int index) {
                   return cardViewAutoHorizontal(
                     color: colorCardViewHorizontal,
-                    colortexto: colorTextoCardview,
+                    colortexto: Theme.of(context).bottomAppBarColor,
                     index: index,
                     assetImage: listaVehiculos[index]["assetImage"],
                     titulo: listaVehiculos[index]["titulo"],

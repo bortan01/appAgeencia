@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ColorAgencia {
-  static const Color background = Color(0XFFFFFFFF);
-
   static const Color titleTextColor = const Color(0xff5a5d85);
   static const Color subTitleTextColor = const Color(0xff797878);
-
   static const Color bottonTitleTextColor = const Color(0xffd4d4ea);
-
   static const Color grey = Color(0xff9D99A7);
   static const Color darkgrey = Color(0xff625f6a);
-
   static const Color yellow = Color(0xfffbbd5c);
-
   static const Color orange = Color(0xfff96d5b);
   static const Color darkOrange = Color(0xfff46352);
   static const Color lightOrange = Color(0xfffa8e5c);
@@ -30,7 +24,7 @@ class ColorAgencia {
   static const Color silver = Color(0xffC0C0C0);
 
   //usaremos estos:
-
+  static const Color blanco = Color(0XFFFFFFFF);
   static const Color lightseeBlue = Color(0xffb9e6fc);
   static const Color seeBlue = Color(0xff73d4dd);
   static const Color darkseeBlue = Color(0xff63c4cf);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:peliculas/src/routes/routes.dart';
+import 'package:peliculas/src/page/Colores/Temas.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,27 +19,7 @@ class MyApp extends StatelessWidget {
       title: 'Agencia Martinez Travels y Tours',
       initialRoute: '/',
       routes: getAplicationRoute(),
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        textTheme: TextTheme(
-          headline1: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-          subtitle1: TextStyle(color: Colors.white54),
-          bodyText2: TextStyle(color: Colors.white54),
-          subtitle2: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 17,
-          ),
-          headline6: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-            fontSize: 19,
-          ),
-        ),
-      ),
+      theme: AppTheme.lightTheme,
     );
   }
 }

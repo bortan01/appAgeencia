@@ -1,35 +1,32 @@
 import 'package:flutter/material.dart';
-
 import 'ColoresAgencia.dart';
 
 class AppTheme {
   const AppTheme();
   static ThemeData lightTheme = ThemeData(
-    primarySwatch: Colors.blue,
-    backgroundColor: ColorAgencia.background,
-    primaryColor: ColorAgencia.purple,
-    accentColor: ColorAgencia.lightblack,
-    primaryColorDark: ColorAgencia.Darker,
-    primaryColorLight: ColorAgencia.brighter,
-    cardTheme: CardTheme(color: ColorAgencia.background),
-    textTheme: TextTheme(headline4: TextStyle(color: ColorAgencia.black)),
-    iconTheme: IconThemeData(color: ColorAgencia.lightblack),
-    bottomAppBarColor: ColorAgencia.background,
-    dividerColor: ColorAgencia.lightGrey,
-    colorScheme: ColorScheme(
-        primary: ColorAgencia.purple,
-        primaryVariant: ColorAgencia.purple,
-        secondary: ColorAgencia.lightBlue,
-        secondaryVariant: ColorAgencia.darkBlue,
-        surface: ColorAgencia.background,
-        background: ColorAgencia.background,
-        error: Colors.red,
-        onPrimary: ColorAgencia.Darker,
-        onSecondary: ColorAgencia.background,
-        onSurface: ColorAgencia.Darker,
-        onBackground: ColorAgencia.titleTextColor,
-        onError: ColorAgencia.titleTextColor,
-        brightness: Brightness.dark),
+    ///color del appbar
+    primaryColor: ColorAgencia.blue3,
+    //color blanco pra letras
+    bottomAppBarColor: ColorAgencia.blanco,
+
+    // primarySwatch: Colors.blue,
+    // iconTheme: IconThemeData(color: ColorAgencia.lightblack),
+    // dividerColor: ColorAgencia.lightGrey,
+    // colorScheme: ColorScheme(
+    //     primary: ColorAgencia.purple,
+    //     primaryVariant: ColorAgencia.purple,
+    //     ///color de los botones
+    //     secondary: ColorAgencia.blue4,
+    //     secondaryVariant: ColorAgencia.darkBlue,
+    //     surface: ColorAgencia.blanco,
+    //     background: ColorAgencia.blanco,
+    //     error: Colors.red,
+    //     onPrimary: ColorAgencia.Darker,
+    //     onSecondary: ColorAgencia.blanco,
+    //     onSurface: ColorAgencia.Darker,
+    //     onBackground: ColorAgencia.titleTextColor,
+    //     onError: ColorAgencia.titleTextColor,
+    //     brightness: Brightness.dark),
   );
 
   static TextStyle titleStyle =
