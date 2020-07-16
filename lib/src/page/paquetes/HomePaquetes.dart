@@ -1,168 +1,184 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/paquete_models.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:peliculas/src/providers/paquete_provider.dart';
-import 'package:peliculas/src/widget/horizontalPaquete.dart';
+import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
+import 'package:peliculas/src/providers/card_provider.dart';
+import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
+import 'package:peliculas/src/widget/card_view_widget.dart';
 
-class HomePaquetes extends StatelessWidget {
-  final PaqueteProvider peliculaProvider = new PaqueteProvider();
+class HomePaquetes extends StatefulWidget {
+  @override
+  _PagelistaVehiculostate createState() => _PagelistaVehiculostate();
+}
+
+class _PagelistaVehiculostate extends State<HomePaquetes> {
+  final cardProvi = new CardProvider();
+
+  List listaPaquete;
+  BoxDecoration boxDecorationFondo;
+  Color colorCardView = Colors.white12;
+  Color colorCardViewHorizontal = Colors.white10;
+
   @override
   Widget build(BuildContext context) {
-    peliculaProvider.getPopulares();
-    return Scaffold(
-      appBar: new AppBar(
-        title: new Text("Paquetes"),
-        actions: <Widget>[
-          new IconButton(
-              icon: new Icon(Icons.search),
-              onPressed: () {
-                //showSearch(context: context, delegate: DataSearch());
-              })
-        ],
-      ),
-      body: new Container(
-        //color: Colors.greenAccent,
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[_swiperTarjetas(context), _footer(context)],
-        ),
-      ),
-    );
-  }
+    //para inicializar en el valor 0
+    cardProvi.cambiarCard(0);
 
-  _swiperTarjetas(BuildContext context) {
-    ///estos son datos quemados
-    List<Paquete> paquetes = getPeliculaInventada();
-    final tamanioPantalla = MediaQuery.of(context).size;
-    print("el tamano es " + tamanioPantalla.height.toString());
+    boxDecorationFondo = Theme.of(context).brightness == Brightness.dark
+        ? BoxDecoration(
+            gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Theme.of(context).canvasColor,
+              Theme.of(context).canvasColor
+            ],
+          ))
+        : BoxDecoration(
+            gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
+            colors: [
+              Color.fromRGBO(253, 254, 254, 1.0),
+              Color.fromRGBO(214, 234, 248, 1.0)
+            ],
+          ));
+    listaPaquete = [
+      {
+        'posicion': 0,
+        'titulo': "Nacionales",
+        'subtitulo':
+            "Una característica clave en un sedán es la seguridad que aporta. Los frenos antibloqueo son la primera línea de defensa ante cualquier accidente. Al momento de la colisión, las bolsas de aire pueden salvar la vida de tus pasajeros.",
+        'assetImage': AssetImage("assets/img/paquete_internacional.png"),
+        'superficie': 'Auto Familiar',
+        'distancia': '0 km',
+      },
+      {
+        'posicion': 1,
+        'titulo': "Internacionales",
+        'subtitulo':
+            "Empleado generalmente para el transporte de mercancías, un término que hoy en día se aplica a veces informalmente a distintos tipos de automóviles, en concreto pickups, vehículos todoterreno, furgonetas, monovolúmenes, y familiares.",
+        'assetImage': AssetImage("assets/img/camioneta.png"),
+        'superficie': '74,8 millones km²',
+        'distancia': ' 57,91 millones km',
+      },
+      {
+        'posicion': 2,
+        'titulo': "Pickup",
+        'subtitulo':
+            "Empleado generalmente para el transporte de mercancías, y que tiene en su parte trasera una zona de carga descubierta (denominada caja, batea, balde, carrocería, platón, cama o palangana), en la cual se pueden colocar objetos grandes.",
+        'assetImage': AssetImage("assets/img/pickup.png"),
+        'superficie': '460,2 millones km²',
+        'distancia': '108,2 millones km',
+      },
+      {
+        'posicion': 3,
+        'titulo': "Microbus",
+        'subtitulo':
+            "Gran furgoneta que tiene asientos en la parte posterior para los pasajeros y ventanas a los lados.",
+        'assetImage': AssetImage("assets/img/1.png"),
+        'superficie': '510,1 millones km²',
+        'distancia': '149,6 millones km',
+      },
+      {
+        'posicion': 4,
+        'titulo': "Minivans",
+        'subtitulo':
+            "Ofrece características aptas para la familia, además de toda la tecnología que se podría desear en un paquete atractivo y a un precio muy conveniente.",
+        'assetImage': AssetImage("assets/img/1.png"),
+        'superficie': '144,8 millones km²',
+        'distancia': '227,9 millones km',
+      },
+    ];
 
     return Container(
-      //color: Colors.blue,
-      padding: EdgeInsets.only(top: 10.0),
-      child: Swiper(
-        layout: SwiperLayout.STACK,
-        itemWidth: tamanioPantalla.width * 0.8,
-        itemHeight: tamanioPantalla.height * 0.5,
-        itemBuilder: (BuildContext context, int index) {
-          paquetes[index].uniqueId = '${paquetes[index].id}-tarjeta';
-          return Container(
-            child: Hero(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: GestureDetector(
-                    child: GestureDetector(
-                      onTap: () {
-                        final tou = paquetes[index];
-
-                        Navigator.pushNamed(context, 'DetallePaquetes',
-                            arguments: tou);
-                      },
-                      child: FadeInImage(
-                        image: NetworkImage(paquetes[index].getPosterImg()),
-                        placeholder: AssetImage('assets/img/no-image.jpg'),
-                        fit: BoxFit.cover,
-                      ),
+      decoration: boxDecorationFondo,
+      child: Scaffold(
+        body: SafeArea(
+          child: ListView(
+            scrollDirection: Axis.vertical,
+            children: <Widget>[
+              appBarCategorias(),
+              vehiculosPopulares(),
+              ////aqui tengo que poner un streamBuilder
+              StreamBuilder(
+                stream: cardProvi.cardStreamX,
+                initialData: 0,
+                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+                  ///este es el principal que aparece en el centro
+                  int posicion = snapshot.data;
+                  print("redibujado en la posicion" + posicion.toString());
+                  return Container(
+                    child: CardViewAutoView(
+                      colortexto: Theme.of(context).bottomAppBarColor,
+                      assetImage: listaPaquete[posicion]["assetImage"],
+                      titulo: listaPaquete[posicion]["titulo"],
+                      subtitulo: listaPaquete[posicion]["subtitulo"],
+                      distancia: listaPaquete[posicion]["distancia"],
+                      superficie: listaPaquete[posicion]["superficie"],
                     ),
-                  )),
-              tag: paquetes[index].uniqueId,
-            ),
-          );
-        },
-        itemCount: paquetes.length,
-        // pagination: new SwiperPagination(),
-        // control: new SwiperControl(),
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => HomeVehiculos()),
+            );
+            // Add your onPressed code here!
+          },
+          label: Text('Ver autos'),
+          icon: Icon(Icons.check),
+        ),
       ),
     );
   }
-}
 
-Widget _footer(BuildContext context) {
-  List<Paquete> peliculasFicticias = getPeliculaInventada();
-  final tamanioPantalla = MediaQuery.of(context).size;
-  double espacioDisponible = (tamanioPantalla.height) * 0.28;
-  return new Container(
-    ///para que tome todo el espacio
-    width: double.infinity,
+  Widget vehiculosPopulares() {
+    return SizedBox(
+      height: 100.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
+            /* Iteramos la lista horizontal de los cuerpos del vehiculos */
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: listaPaquete.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CardViewAutoHorizontal(
+                    color: Colors.red,
+                    colortexto: Theme.of(context).bottomAppBarColor,
+                    index: listaPaquete[index]["posicion"],
+                    assetImage: listaPaquete[index]["assetImage"],
+                    titulo: listaPaquete[index]["titulo"],
+                    subtitulo: listaPaquete[index]["subtitulo"],
+                    distancia: listaPaquete[index]["distancia"],
+                    superficie: listaPaquete[index]["superficie"],
+                  );
+                }),
+          ),
+        ],
+      ),
+    );
+  }
 
-    child: new Column(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          child: new Text("Promociones",
-              style: Theme.of(context).textTheme.subtitle1),
-          padding: EdgeInsets.only(left: 25.0),
-        ),
-        new SizedBox(
-          height: 5.0,
-        ),
-        new HorizontalPaquete(
-            paquetes: peliculasFicticias,
-            especioDisponible: espacioDisponible,
-            siguientePagina: () {})
-      ],
-    ),
-  );
-}
-
-List<Paquete> getPeliculaInventada() {
-  List<Paquete> peliculasFicticias = new List<Paquete>();
-  //de momento ocuparemos valores ficticios asi que inventarlos
-  peliculasFicticias.add(
-    new Paquete(
-        posterPath:
-            "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=McZ61rvEjAIAX_yEGWH&_nc_ht=scontent-mia3-1.xx&oh=331ab5d816a2a2a79e034ffcf40b27ad&oe=5F1212A1",
-        title: "Macupichu",
-        originalTitle: "Machupichu",
-        backdropPath: "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=McZ61rvEjAIAX_yEGWH&_nc_ht=scontent-mia3-1.xx&oh=331ab5d816a2a2a79e034ffcf40b27ad&oe=5F1212A1",
-        id: 2312323123,
-        incluye: [
-          "Hotel",
-          "Desayuno",
-          "Transporte",
-          "Refrigerio",
-          "Gia Turistico"
-        ]),
-  );
-
-  peliculasFicticias.add(new Paquete(
-    posterPath:
-        "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/84811539_986682118399150_14819376632954880_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_ohc=j9--zEYgvzAAX8jEVHl&_nc_ht=scontent-mia3-2.xx&oh=e1997a49e898f0f4ccc973545d77ee63&oe=5F0FB3BE",
-    title: "Nicaragua",
-    originalTitle: "Nicaragua",
-    backdropPath:
-        "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/84811539_986682118399150_14819376632954880_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_ohc=j9--zEYgvzAAX8jEVHl&_nc_ht=scontent-mia3-2.xx&oh=e1997a49e898f0f4ccc973545d77ee63&oe=5F0FB3BE",
-    id: 435345534,
-  ));
-
-  peliculasFicticias.add(new Paquete(
-    posterPath:
-        "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/83469740_980152025718826_5435872388350738432_o.jpg?_nc_cat=104&_nc_sid=730e14&_nc_ohc=Q5xrv_l69pYAX8qiA3K&_nc_ht=scontent-mia3-1.xx&oh=da08867f63178a698d1c60ae8a281dfb&oe=5F0FDC9D",
-    title: "Volcan de Conchagua",
-    originalTitle: "Volcan de Conchagua",
-    backdropPath:
-        "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/83469740_980152025718826_5435872388350738432_o.jpg?_nc_cat=104&_nc_sid=730e14&_nc_ohc=Q5xrv_l69pYAX8qiA3K&_nc_ht=scontent-mia3-1.xx&oh=da08867f63178a698d1c60ae8a281dfb&oe=5F0FDC9D",
-    id: 3454374523,
-  ));
-
-  peliculasFicticias.add(new Paquete(
-    posterPath:
-        "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/83353671_979272542473441_6245999208600436736_o.jpg?_nc_cat=110&_nc_sid=730e14&_nc_ohc=VTpH_iWIZogAX9iLJ_f&_nc_ht=scontent-mia3-2.xx&oh=27e5e3323016fa931ff51e5df2a6d364&oe=5F108691",
-    title: "Panama",
-    originalTitle: "Panama",
-    backdropPath:
-        "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/83353671_979272542473441_6245999208600436736_o.jpg?_nc_cat=110&_nc_sid=730e14&_nc_ohc=VTpH_iWIZogAX9iLJ_f&_nc_ht=scontent-mia3-2.xx&oh=27e5e3323016fa931ff51e5df2a6d364&oe=5F108691",
-    id: 3454434523,
-  ));
-
-  peliculasFicticias.add(new Paquete(
-    posterPath:
-        "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/83024125_970138793386816_6359243176774991872_o.jpg?_nc_cat=101&_nc_sid=730e14&_nc_ohc=F-Z1W_fsV34AX9njbLb&_nc_ht=scontent-mia3-1.xx&oh=ba4047d0c69ac63b6c3be7711445baf9&oe=5F0F9424",
-    title: "Costa Rica",
-    originalTitle: "Costa Rica",
-    backdropPath:
-        "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/83024125_970138793386816_6359243176774991872_o.jpg?_nc_cat=101&_nc_sid=730e14&_nc_ohc=F-Z1W_fsV34AX9njbLb&_nc_ht=scontent-mia3-1.xx&oh=ba4047d0c69ac63b6c3be7711445baf9&oe=5F0F9424",
-    id: 34543477523,
-  ));
-
-  return peliculasFicticias;
+  Widget appBarCategorias() {
+    return AppBar(
+      leading: Builder(builder: (BuildContext context) {
+        return IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushNamed(context, '/');
+          },
+        );
+      }),
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Categoría de Vehiculos"),
+    );
+  }
 }
