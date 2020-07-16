@@ -350,7 +350,7 @@ class _PagelistaVehiculostate extends State<HomeCategoria> {
         return IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            Navigator.pushReplacementNamed(context, '/');
           },
         );
       }),

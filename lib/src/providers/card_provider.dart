@@ -5,7 +5,7 @@ class CardProvider {
   factory CardProvider() {
     return _singleton;
   }
-  CardProvider._internal() {}
+  CardProvider._internal();
 
   final _cardStream = StreamController<int>.broadcast();
 

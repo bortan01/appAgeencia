@@ -22,70 +22,31 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
     //para inicializar en el valor 0
     cardProvi.cambiarCard(0);
 
-    boxDecorationFondo = Theme.of(context).brightness == Brightness.dark
-        ? BoxDecoration(
-            gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Theme.of(context).canvasColor,
-              Theme.of(context).canvasColor
-            ],
-          ))
-        : BoxDecoration(
-            gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
-            colors: [
-              Color.fromRGBO(253, 254, 254, 1.0),
-              Color.fromRGBO(214, 234, 248, 1.0)
-            ],
-          ));
+    boxDecorationFondo = BoxDecoration(
+        gradient: LinearGradient(
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      colors: [Theme.of(context).canvasColor, Theme.of(context).canvasColor],
+    ));
+
     listaPaquete = [
       {
         'posicion': 0,
         'titulo': "Nacionales",
         'subtitulo':
-            "Una característica clave en un sedán es la seguridad que aporta. Los frenos antibloqueo son la primera línea de defensa ante cualquier accidente. Al momento de la colisión, las bolsas de aire pueden salvar la vida de tus pasajeros.",
+            "Haz realidad tus sueños con nuestros paquetes turísticos visitando los lugares mas hermonos de nuestro lindo El Salvador",
         'assetImage': AssetImage("assets/img/paquete_internacional.png"),
-        'superficie': 'Auto Familiar',
+        'superficie': 'Todo El Salvador',
         'distancia': '0 km',
       },
       {
         'posicion': 1,
         'titulo': "Internacionales",
         'subtitulo':
-            "Empleado generalmente para el transporte de mercancías, un término que hoy en día se aplica a veces informalmente a distintos tipos de automóviles, en concreto pickups, vehículos todoterreno, furgonetas, monovolúmenes, y familiares.",
-        'assetImage': AssetImage("assets/img/camioneta.png"),
-        'superficie': '74,8 millones km²',
+            "Ven y Haz realidad tus sueños con nuestros paquetes turísticos para Centro América, Sudamérica y Europa",
+        'assetImage': AssetImage("assets/img/internacional.png"),
+        'superficie': 'Sub-America y Europa',
         'distancia': ' 57,91 millones km',
-      },
-      {
-        'posicion': 2,
-        'titulo': "Pickup",
-        'subtitulo':
-            "Empleado generalmente para el transporte de mercancías, y que tiene en su parte trasera una zona de carga descubierta (denominada caja, batea, balde, carrocería, platón, cama o palangana), en la cual se pueden colocar objetos grandes.",
-        'assetImage': AssetImage("assets/img/pickup.png"),
-        'superficie': '460,2 millones km²',
-        'distancia': '108,2 millones km',
-      },
-      {
-        'posicion': 3,
-        'titulo': "Microbus",
-        'subtitulo':
-            "Gran furgoneta que tiene asientos en la parte posterior para los pasajeros y ventanas a los lados.",
-        'assetImage': AssetImage("assets/img/1.png"),
-        'superficie': '510,1 millones km²',
-        'distancia': '149,6 millones km',
-      },
-      {
-        'posicion': 4,
-        'titulo': "Minivans",
-        'subtitulo':
-            "Ofrece características aptas para la familia, además de toda la tecnología que se podría desear en un paquete atractivo y a un precio muy conveniente.",
-        'assetImage': AssetImage("assets/img/1.png"),
-        'superficie': '144,8 millones km²',
-        'distancia': '227,9 millones km',
       },
     ];
 
@@ -129,7 +90,7 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
             );
             // Add your onPressed code here!
           },
-          label: Text('Ver autos'),
+          label: Text('Ver Paquetes'),
           icon: Icon(Icons.check),
         ),
       ),
