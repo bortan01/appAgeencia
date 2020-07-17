@@ -9,7 +9,7 @@ class PaqueteProvider {
   String _apikey = '58ece4f5ea5201f6dc37d53153377fe5';
   String _url = "api.themoviedb.org";
   String _languaje = "es-ES";
-  int _populares_page = 0;
+  int _popularesPage = 0;
   bool _cargando = false;
   List<Paquete> _populares = new List();
 
@@ -43,12 +43,12 @@ class PaqueteProvider {
       return [];
     }
     _cargando = true;
-    _populares_page++;
+    _popularesPage++;
     print('cargando siguientes......');
     final url = Uri.https(_url, '3/movie/popular', {
       'api_key': _apikey,
       'language': _languaje,
-      'page': _populares_page.toString(),
+      'page': _popularesPage.toString(),
     });
     final resultado = await _procesarRespueta(url);
 

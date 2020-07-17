@@ -9,7 +9,7 @@ class PeliculaProvider {
   String _apikey = '58ece4f5ea5201f6dc37d53153377fe5';
   String _url = "api.themoviedb.org";
   String _languaje = "es-ES";
-  int _populares_page = 0;
+  int _popularesPage = 0;
   bool _cargando = false;
   List<Pelicula> _populares = new List();
 
@@ -39,22 +39,22 @@ class PeliculaProvider {
   }
 
   Future<List<Pelicula>> getPopulares() async {
-    if(_cargando){
+    if (_cargando) {
       return [];
     }
-    _cargando =true;
-    _populares_page++;
+    _cargando = true;
+    _popularesPage++;
     print('cargando siguientes......');
     final url = Uri.https(_url, '3/movie/popular', {
       'api_key': _apikey,
       'language': _languaje,
-      'page': _populares_page.toString(),
+      'page': _popularesPage.toString(),
     });
     final resultado = await _procesarRespueta(url);
 
     _populares.addAll(resultado);
     popularesSink(_populares);
-    _cargando= false;
+    _cargando = false;
     return resultado;
   }
 
@@ -68,28 +68,24 @@ class PeliculaProvider {
     return peliculas.items;
   }
 
-  Future<List<Actor>> getCast(String peliId) async{
-    final url = Uri.https(_url, '3/movie/$peliId/credits', {
-      'api_key'  : _apikey,
-      'language' : _languaje
-    });
+  Future<List<Actor>> getCast(String peliId) async {
+    final url = Uri.https(_url, '3/movie/$peliId/credits',
+        {'api_key': _apikey, 'language': _languaje});
 
     final resp = await http.get(url);
-    final decodedData = json.decode( resp.body );
+    final decodedData = json.decode(resp.body);
 
     final cast = new Cast.fromJsonList(decodedData['cast']);
 
     return cast.actores;
-
   }
 
   Future<List<Pelicula>> buscarPelicula(String query) async {
     final url = Uri.https(_url, '3/search/movie', {
       'api_key': _apikey,
       'language': _languaje,
-      'query' :query,
+      'query': query,
     });
     return await _procesarRespueta(url);
   }
-
 }

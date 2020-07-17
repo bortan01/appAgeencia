@@ -71,31 +71,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
             ],
           ),
         ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            switch (redireccionPagina) {
-              case 0:
-
-                ///lo ideal es crear una sola pagina y mandarle los argumentos
-                ///para que dibuje deacuerdo a lo que se le envia
-                ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'ListaPaquetes',
-                    arguments: "Nacionales");
-
-                break;
-              case 1:
-
-                ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaPaquetes',
-                    arguments: "Internacionales");
-
-                break;
-              default:
-            }
-          },
-          label: Text('Ver Paquetes'),
-          icon: Icon(Icons.check),
-        ),
+        floatingActionButton: _boton(context, redireccionPagina),
       ),
     );
   }
@@ -161,4 +137,33 @@ class _HomePaquetesState extends State<HomePaquetes> {
       title: Text("Categoría de Paquetes"),
     );
   }
+}
+
+Widget _boton(BuildContext context, int redireccionPagina) {
+  return FloatingActionButton.extended(
+    onPressed: () {
+      switch (redireccionPagina) {
+        case 0:
+
+          ///lo ideal es crear una sola pagina y mandarle los argumentos
+          ///para que dibuje deacuerdo a lo que se le envia
+
+          ///redirigir a paquetes nacionales
+          Navigator.pushNamed(context, 'ListaPaquetes',
+              arguments: "Nacionales");
+
+          break;
+        case 1:
+
+          ///redirigir a paquetes intercacionales
+          Navigator.pushNamed(context, 'ListaPaquetes',
+              arguments: "Internacionales");
+
+          break;
+        default:
+      }
+    },
+    label: Text('Ver Paquetes'),
+    icon: Icon(Icons.check),
+  );
 }

@@ -54,7 +54,7 @@ class CardViewAutoHorizontal extends StatelessWidget {
         ),
         child: InkWell(
           onTap: () {
-            print("el indice es " + index.toString());
+            //print("el indice es " + index.toString());
             cd.cambiarCard(index);
           },
           borderRadius: new BorderRadius.circular(8.0),

@@ -19,6 +19,7 @@ class _MenuProductosState extends State<MenuProductos> {
     super.initState();
   }
 
+  int redireccionPagina = 0;
   List listaPaquete;
   BoxDecoration boxDecorationFondo;
   Color colorCardView = Colors.white12;
@@ -38,52 +39,38 @@ class _MenuProductosState extends State<MenuProductos> {
     listaPaquete = [
       {
         'posicion': 0,
-        'titulo': "Nacionales",
+        'titulo': "Viajes",
         'subtitulo':
-            "Haz realidad tus sueños con nuestros paquetes turísticos visitando los lugares mas hermonos de nuestro lindo El Salvador",
+            "En esta seccion encontraras todos los viajes que haz realizado con nosotros is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
         'assetImage': AssetImage("assets/img/paquete-nacional.png"),
         'superficie': 'Todo El Salvador',
         'distancia': '0 km',
       },
       {
         'posicion': 1,
-        'titulo': "Internacionales",
+        'titulo': "Vehiculos",
         'subtitulo':
-            "Ven y Haz realidad tus sueños con nuestros paquetes turísticos para Centro América, Sudamérica y Europa",
-        'assetImage': AssetImage("assets/img/paquete-internacional.png"),
+            "En esta seccion encontraras todos los vehiculos que has rentado con la ayuda de nuestra agencia It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
+        'assetImage': AssetImage("assets/img/sedan1.png"),
         'superficie': 'Sub-America y Europa',
         'distancia': ' 57,91 millones km',
-      },
-      {
-        'posicion': 2,
-        'titulo': "Internacionales",
-        'subtitulo':
-            "Ven y Haz realidad tus sueños con nuestros paquetes turísticos para Centro América, Sudamérica y Europa",
-        'assetImage': AssetImage("assets/img/paquete-internacional.png"),
-        'superficie': 'Sub-America y Europa',
-        'distancia': ' 57,91 millones km',
-      },
+      }
     ];
 
     return Container(
       decoration: boxDecorationFondo,
       child: Scaffold(
-        body: SafeArea(
-          child: ListView(
-            scrollDirection: Axis.vertical,
-            children: <Widget>[
-              appBarCategorias(),
-              elementosHorizontal(),
-              elementoSeleccionado(),
-            ],
+          body: SafeArea(
+            child: ListView(
+              scrollDirection: Axis.vertical,
+              children: <Widget>[
+                appBarCategorias(),
+                elementosHorizontal(),
+                elementoSeleccionado(),
+              ],
+            ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
-          label: Text('Ver Paquetes'),
-          icon: Icon(Icons.check),
-        ),
-      ),
+          floatingActionButton: _boton(context, redireccionPagina)),
     );
   }
 
@@ -123,8 +110,8 @@ class _MenuProductosState extends State<MenuProductos> {
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         int posicion = snapshot.data;
-
-        print("creando objeto");
+        redireccionPagina = posicion;
+        //print("creando objeto");
         return Container(
           child: CardViewAutoView(
             colortexto: Theme.of(context).bottomAppBarColor,
@@ -144,6 +131,33 @@ class _MenuProductosState extends State<MenuProductos> {
       backgroundColor: Colors.blue,
       centerTitle: true,
       title: Text("Productos Adquiridos"),
+    );
+  }
+
+  Widget _boton(BuildContext context, int redireccionPagina) {
+    return FloatingActionButton.extended(
+      onPressed: () {
+        switch (redireccionPagina) {
+          case 0:
+
+            ///lo ideal es crear una sola pagina y mandarle los argumentos
+            ///para que dibuje deacuerdo a lo que se le envia
+
+            ///redirigir a paquetes nacionales
+            Navigator.pushNamed(context, 'carrosAlqui');
+
+            break;
+          case 1:
+
+            ///redirigir a paquetes intercacionales
+            Navigator.pushNamed(context, 'toursAsistidos');
+
+            break;
+          default:
+        }
+      },
+      label: Text('Ver Historial'),
+      icon: Icon(Icons.check),
     );
   }
 }

@@ -81,7 +81,7 @@ class VehiculoAlquilado extends StatelessWidget {
     );
   }
 
-  Widget _Listado() {
+  Widget _listado() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
@@ -336,7 +336,7 @@ class VehiculoAlquilado extends StatelessWidget {
         children: <Widget>[
           _encabezado(context),
           SizedBox(height: 20),
-          _Listado()
+          _listado()
         ],
       ),
     )));

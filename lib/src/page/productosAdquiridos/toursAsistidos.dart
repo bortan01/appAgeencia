@@ -77,7 +77,7 @@ class ToursAsistidos extends StatelessWidget {
     );
   }
 
-  Widget _Listado() {
+  Widget _listado() {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Container(
@@ -335,7 +335,7 @@ class ToursAsistidos extends StatelessWidget {
         children: <Widget>[
           _encabezado(context),
           SizedBox(height: 20),
-          _Listado()
+          _listado()
         ],
       ),
     )));
