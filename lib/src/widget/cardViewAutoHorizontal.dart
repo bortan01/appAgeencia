@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/providers/card_provider.dart';
 
 class CardViewAutoHorizontal extends StatelessWidget {
   final int index;
@@ -23,6 +24,7 @@ class CardViewAutoHorizontal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cd = new CardProvider();
     /* Imagen */
     final imagenVehiculo = new Container(
       margin: EdgeInsets.symmetric(vertical: 12.0),
@@ -51,7 +53,10 @@ class CardViewAutoHorizontal extends StatelessWidget {
           ], /* Aplica sombra */
         ),
         child: InkWell(
-          onTap: () {},
+          onTap: () {
+            print("el indice es " + index.toString());
+            cd.cambiarCard(index);
+          },
           borderRadius: new BorderRadius.circular(8.0),
           child: Container(
             margin: const EdgeInsets.only(

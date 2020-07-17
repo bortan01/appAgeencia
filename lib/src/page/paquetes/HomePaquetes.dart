@@ -6,28 +6,26 @@ import 'package:peliculas/src/widget/card_view_widget.dart';
 
 class HomePaquetes extends StatefulWidget {
   @override
-  _PagelistaVehiculostate createState() => _PagelistaVehiculostate();
+  _HomePaquetesState createState() => _HomePaquetesState();
 }
 
-class _PagelistaVehiculostate extends State<HomePaquetes> {
+class _HomePaquetesState extends State<HomePaquetes> {
   final cd = new CardProvider();
+
   @override
   void initState() {
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    cd.disposeStreams();
   }
 
   List listaPaquete;
   BoxDecoration boxDecorationFondo;
   Color colorCardView = Colors.white12;
   Color colorCardViewHorizontal = Colors.white10;
+
   @override
   Widget build(BuildContext context) {
+    cd.cambiarCard(0);
+
     boxDecorationFondo = BoxDecoration(
         gradient: LinearGradient(
       begin: Alignment.topRight,
@@ -41,7 +39,7 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
         'titulo': "Nacionales",
         'subtitulo':
             "Haz realidad tus sueños con nuestros paquetes turísticos visitando los lugares mas hermonos de nuestro lindo El Salvador",
-        'assetImage': AssetImage("assets/img/paquete_internacional.png"),
+        'assetImage': AssetImage("assets/img/paquete-nacional.png"),
         'superficie': 'Todo El Salvador',
         'distancia': '0 km',
       },
@@ -50,7 +48,7 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
         'titulo': "Internacionales",
         'subtitulo':
             "Ven y Haz realidad tus sueños con nuestros paquetes turísticos para Centro América, Sudamérica y Europa",
-        'assetImage': AssetImage("assets/img/internacional.png"),
+        'assetImage': AssetImage("assets/img/paquete-internacional.png"),
         'superficie': 'Sub-America y Europa',
         'distancia': ' 57,91 millones km',
       },
@@ -64,18 +62,8 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
             scrollDirection: Axis.vertical,
             children: <Widget>[
               appBarCategorias(),
-              //elementosHorizontal(),
-              elementoSeleccionado(0),
-              StreamBuilder(
-                stream: cd.cardStreamX,
-                initialData: 0,
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  print("imprimiendo");
-                  return Container(
-                    child: new Text(snapshot.data.toString()),
-                  );
-                },
-              ),
+              elementosHorizontal(),
+              elementoSeleccionado(),
             ],
           ),
         ),
@@ -118,16 +106,25 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
     );
   }
 
-  Widget elementoSeleccionado(int posicion) {
-    return Container(
-      child: CardViewAutoView(
-        colortexto: Theme.of(context).bottomAppBarColor,
-        assetImage: listaPaquete[posicion]["assetImage"],
-        titulo: listaPaquete[posicion]["titulo"],
-        subtitulo: listaPaquete[posicion]["subtitulo"],
-        distancia: listaPaquete[posicion]["distancia"],
-        superficie: listaPaquete[posicion]["superficie"],
-      ),
+  Widget elementoSeleccionado() {
+    return StreamBuilder(
+      stream: cd.cardStreamX,
+      initialData: 0,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        int posicion = snapshot.data;
+
+        print("creando objeto");
+        return Container(
+          child: CardViewAutoView(
+            colortexto: Theme.of(context).bottomAppBarColor,
+            assetImage: listaPaquete[posicion]["assetImage"],
+            titulo: listaPaquete[posicion]["titulo"],
+            subtitulo: listaPaquete[posicion]["subtitulo"],
+            distancia: listaPaquete[posicion]["distancia"],
+            superficie: listaPaquete[posicion]["superficie"],
+          ),
+        );
+      },
     );
   }
 
@@ -135,7 +132,7 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Categoría de Vehiculos"),
+      title: Text("Categoría de Paquetes"),
     );
   }
 }

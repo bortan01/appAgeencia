@@ -1,111 +1,149 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
-import 'package:peliculas/src/widget/drawerDefault.dart';
 
-class MenuProductos extends StatelessWidget {
+import 'package:peliculas/src/providers/card_provider.dart';
+import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
+import 'package:peliculas/src/widget/card_view_widget.dart';
+
+class MenuProductos extends StatefulWidget {
+  MenuProductos({Key key}) : super(key: key);
+
+  @override
+  _MenuProductosState createState() => _MenuProductosState();
+}
+
+class _MenuProductosState extends State<MenuProductos> {
+  final cd = new CardProvider();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  List listaPaquete;
+  BoxDecoration boxDecorationFondo;
+  Color colorCardView = Colors.white12;
+  Color colorCardViewHorizontal = Colors.white10;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        scrollDirection: Axis.vertical,
-        children: <Widget>[_pagina2(context)],
-      ),
-    );
-  }
+    cd.cambiarCard(0);
 
-  ///aqui empieza la page 2
-  Widget _pagina2(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: <Widget>[
-          // _fondoApp(),
-          new Container(
-            decoration: new BoxDecoration(
-              image: new DecorationImage(
-                image: new AssetImage("assets/img/1.png"),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: <Widget>[_titulos(), _botonesRedondeados(context)],
-            ),
-          )
-        ],
-      ),
-      appBar: new AppBar(
-        backgroundColor: Theme.of(context).accentColor.withOpacity(1.0),
-        title: Text('Martínez Travels & Tours',
-            style: TextStyle(
-                color: Colors.white,
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold)),
-      ),
-      drawer: getDrawerDefault(context),
-      //bottomNavigationBar: _bottomNavigationBar(context)
-    );
-  }
+    boxDecorationFondo = BoxDecoration(
+        gradient: LinearGradient(
+      begin: Alignment.topRight,
+      end: Alignment.bottomLeft,
+      colors: [Theme.of(context).canvasColor, Theme.of(context).canvasColor],
+    ));
 
-  ///elementos para page 2
+    listaPaquete = [
+      {
+        'posicion': 0,
+        'titulo': "Nacionales",
+        'subtitulo':
+            "Haz realidad tus sueños con nuestros paquetes turísticos visitando los lugares mas hermonos de nuestro lindo El Salvador",
+        'assetImage': AssetImage("assets/img/paquete-nacional.png"),
+        'superficie': 'Todo El Salvador',
+        'distancia': '0 km',
+      },
+      {
+        'posicion': 1,
+        'titulo': "Internacionales",
+        'subtitulo':
+            "Ven y Haz realidad tus sueños con nuestros paquetes turísticos para Centro América, Sudamérica y Europa",
+        'assetImage': AssetImage("assets/img/paquete-internacional.png"),
+        'superficie': 'Sub-America y Europa',
+        'distancia': ' 57,91 millones km',
+      },
+      {
+        'posicion': 2,
+        'titulo': "Internacionales",
+        'subtitulo':
+            "Ven y Haz realidad tus sueños con nuestros paquetes turísticos para Centro América, Sudamérica y Europa",
+        'assetImage': AssetImage("assets/img/paquete-internacional.png"),
+        'superficie': 'Sub-America y Europa',
+        'distancia': ' 57,91 millones km',
+      },
+    ];
 
-  Widget _titulos() {
-    return SafeArea(
-      child: Container(
-        padding: EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            SizedBox(height: 10.0),
-            Text('Servicos Adquiridos',
-                style: TextStyle(color: Colors.white, fontSize: 18.0)),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _botonesRedondeados(BuildContext context) {
-    return Table(
-      children: [
-        TableRow(children: [
-          _crearBotonRedondeado(Colors.blueAccent, Icons.directions_car,
-              'Autos Alquilados', context, "carrosAlqui"),
-          _crearBotonRedondeado(Colors.purpleAccent, Icons.beach_access,
-              'Tours Asitidos', context, "toursAsistidos"),
-        ]),
-      ],
-    );
-  }
-
-  Widget _crearBotonRedondeado(Color color, IconData icono, String texto,
-      BuildContext context, String ruta) {
-    return ClipRect(
-      child: GestureDetector(
-        onTap: () {
-          Navigator.of(context).pushNamed(ruta);
-        },
-        child: Container(
-          height: 180.0,
-          margin: EdgeInsets.all(15.0),
-          decoration: BoxDecoration(
-              color: Color.fromRGBO(62, 66, 107, 0.7),
-              borderRadius: BorderRadius.circular(20.0)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Container(
+      decoration: boxDecorationFondo,
+      child: Scaffold(
+        body: SafeArea(
+          child: ListView(
+            scrollDirection: Axis.vertical,
             children: <Widget>[
-              SizedBox(height: 5.0),
-              CircleAvatar(
-                backgroundColor: color,
-                radius: 35.0,
-                child: Icon(icono, color: Colors.white, size: 30.0),
-              ),
-              Text(texto, style: TextStyle(color: color)),
-              SizedBox(height: 5.0)
+              appBarCategorias(),
+              elementosHorizontal(),
+              elementoSeleccionado(),
             ],
           ),
         ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {},
+          label: Text('Ver Paquetes'),
+          icon: Icon(Icons.check),
+        ),
       ),
+    );
+  }
+
+  Widget elementosHorizontal() {
+    return SizedBox(
+      height: 100.0,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Flexible(
+            /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
+            /* Iteramos la lista horizontal de los cuerpos del vehiculos */
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: listaPaquete.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CardViewAutoHorizontal(
+                    color: Colors.red,
+                    colortexto: Theme.of(context).bottomAppBarColor,
+                    index: listaPaquete[index]["posicion"],
+                    assetImage: listaPaquete[index]["assetImage"],
+                    titulo: listaPaquete[index]["titulo"],
+                    subtitulo: listaPaquete[index]["subtitulo"],
+                    distancia: listaPaquete[index]["distancia"],
+                    superficie: listaPaquete[index]["superficie"],
+                  );
+                }),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget elementoSeleccionado() {
+    return StreamBuilder(
+      stream: cd.cardStreamX,
+      initialData: 0,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        int posicion = snapshot.data;
+
+        print("creando objeto");
+        return Container(
+          child: CardViewAutoView(
+            colortexto: Theme.of(context).bottomAppBarColor,
+            assetImage: listaPaquete[posicion]["assetImage"],
+            titulo: listaPaquete[posicion]["titulo"],
+            subtitulo: listaPaquete[posicion]["subtitulo"],
+            distancia: listaPaquete[posicion]["distancia"],
+            superficie: listaPaquete[posicion]["superficie"],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget appBarCategorias() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Productos Adquiridos"),
     );
   }
 }
