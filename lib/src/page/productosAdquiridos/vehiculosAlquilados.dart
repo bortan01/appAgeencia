@@ -8,6 +8,25 @@ class VehiculoAlquilado extends StatelessWidget {
 
   double width;
 
+  @override
+  Widget build(BuildContext context) {
+    width = MediaQuery.of(context).size.width;
+    return Scaffold(
+        appBar: new AppBar(
+          title: new Text("Vehiculos Alquilados"),
+        ),
+        body: SingleChildScrollView(
+            child: Container(
+          child: Column(
+            children: <Widget>[
+              //_encabezado(context),
+              SizedBox(height: 20),
+              _listado()
+            ],
+          ),
+        )));
+  }
+
   Widget _encabezado(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     return ClipRRect(
@@ -324,21 +343,5 @@ class VehiculoAlquilado extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
-    return Scaffold(
-        body: SingleChildScrollView(
-            child: Container(
-      child: Column(
-        children: <Widget>[
-          _encabezado(context),
-          SizedBox(height: 20),
-          _listado()
-        ],
-      ),
-    )));
   }
 }
