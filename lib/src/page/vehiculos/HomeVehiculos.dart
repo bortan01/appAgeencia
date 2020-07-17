@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/paquete_models.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:peliculas/src/providers/paquete_provider.dart';
+
 import 'package:peliculas/src/widget/horizontalPaquete.dart';
 
 class HomeVehiculos extends StatelessWidget {
-  final PaqueteProvider peliculaProvider = new PaqueteProvider();
   @override
   Widget build(BuildContext context) {
-    peliculaProvider.getPopulares();
     return Scaffold(
       appBar: new AppBar(
         title: new Text("Flota de Vehiculos"),

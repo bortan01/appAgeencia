@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
+
 import 'package:peliculas/src/providers/card_provider.dart';
 import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
 import 'package:peliculas/src/widget/card_view_widget.dart';
@@ -10,18 +10,24 @@ class HomePaquetes extends StatefulWidget {
 }
 
 class _PagelistaVehiculostate extends State<HomePaquetes> {
-  final cardProvi = new CardProvider();
+  final cd = new CardProvider();
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    cd.disposeStreams();
+  }
 
   List listaPaquete;
   BoxDecoration boxDecorationFondo;
   Color colorCardView = Colors.white12;
   Color colorCardViewHorizontal = Colors.white10;
-
   @override
   Widget build(BuildContext context) {
-    //para inicializar en el valor 0
-    cardProvi.cambiarCard(0);
-
     boxDecorationFondo = BoxDecoration(
         gradient: LinearGradient(
       begin: Alignment.topRight,
@@ -58,24 +64,15 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
             scrollDirection: Axis.vertical,
             children: <Widget>[
               appBarCategorias(),
-              vehiculosPopulares(),
-              ////aqui tengo que poner un streamBuilder
+              //elementosHorizontal(),
+              elementoSeleccionado(0),
               StreamBuilder(
-                stream: cardProvi.cardStreamX,
+                stream: cd.cardStreamX,
                 initialData: 0,
-                builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                  ///este es el principal que aparece en el centro
-                  int posicion = snapshot.data;
-                  print("redibujado en la posicion" + posicion.toString());
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  print("imprimiendo");
                   return Container(
-                    child: CardViewAutoView(
-                      colortexto: Theme.of(context).bottomAppBarColor,
-                      assetImage: listaPaquete[posicion]["assetImage"],
-                      titulo: listaPaquete[posicion]["titulo"],
-                      subtitulo: listaPaquete[posicion]["subtitulo"],
-                      distancia: listaPaquete[posicion]["distancia"],
-                      superficie: listaPaquete[posicion]["superficie"],
-                    ),
+                    child: new Text(snapshot.data.toString()),
                   );
                 },
               ),
@@ -83,13 +80,7 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeVehiculos()),
-            );
-            // Add your onPressed code here!
-          },
+          onPressed: () {},
           label: Text('Ver Paquetes'),
           icon: Icon(Icons.check),
         ),
@@ -97,7 +88,7 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
     );
   }
 
-  Widget vehiculosPopulares() {
+  Widget elementosHorizontal() {
     return SizedBox(
       height: 100.0,
       child: Column(
@@ -127,16 +118,21 @@ class _PagelistaVehiculostate extends State<HomePaquetes> {
     );
   }
 
+  Widget elementoSeleccionado(int posicion) {
+    return Container(
+      child: CardViewAutoView(
+        colortexto: Theme.of(context).bottomAppBarColor,
+        assetImage: listaPaquete[posicion]["assetImage"],
+        titulo: listaPaquete[posicion]["titulo"],
+        subtitulo: listaPaquete[posicion]["subtitulo"],
+        distancia: listaPaquete[posicion]["distancia"],
+        superficie: listaPaquete[posicion]["superficie"],
+      ),
+    );
+  }
+
   Widget appBarCategorias() {
     return AppBar(
-      leading: Builder(builder: (BuildContext context) {
-        return IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushNamed(context, '/');
-          },
-        );
-      }),
       backgroundColor: Colors.blue,
       centerTitle: true,
       title: Text("Categoría de Vehiculos"),

@@ -1,7 +1,6 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
-class CardViewAutoView extends StatefulWidget {
+class CardViewAutoView extends StatelessWidget {
   final String subtitulo;
   final String distancia;
   final String titulo;
@@ -9,8 +8,8 @@ class CardViewAutoView extends StatefulWidget {
   final String superficie;
   final Color color;
   final Color colortexto;
-
-  CardViewAutoView({
+  const CardViewAutoView({
+    Key key,
     @required this.assetImage,
     @required this.titulo,
     this.subtitulo,
@@ -18,22 +17,7 @@ class CardViewAutoView extends StatefulWidget {
     this.superficie,
     this.color = Colors.white10,
     this.colortexto = Colors.white10,
-  });
-
-  @override
-  _CardViewAutoViewState createState() => _CardViewAutoViewState();
-}
-
-class _CardViewAutoViewState extends State<CardViewAutoView> {
-  AnimationController animateController;
-  AnimationController animateController2;
-
-  @override
-  void dispose() {
-    animateController.dispose();
-    animateController2.dispose();
-    super.dispose();
-  }
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,23 +26,7 @@ class _CardViewAutoViewState extends State<CardViewAutoView> {
     final imagenVehiculo = new Container(
       margin: EdgeInsets.only(left: width * 0.27),
       alignment: FractionalOffset.centerLeft,
-      child: ElasticInDown(
-        /* ElasticInDown : animación */
-        manualTrigger: true,
-        /* (opcional) si es verdadero, no disparará la animación al cargar */
-        controller: (controller) => animateController = controller,
-        /* (opcional, pero obligatorio si usa manualTrigger: true) Esta devolución de llamada expone el AnimationController utilizado para la animación seleccionada. Luego puede llamar a animationController.forward () para activar la animación donde quiera manualmente. */
-        child: SpinPerfect(
-          /* SpinPerfect : animación */
-          manualTrigger: true,
-          /* (opcional) si es verdadero, no disparará la animación al cargar */
-          controller: (controller) => animateController2 = controller,
-          /* (opcional, pero obligatorio si usa manualTrigger: true) Esta devolución de llamada expone el AnimationController utilizado para la animación seleccionada. Luego puede llamar a animationController.forward () para activar la animación donde quiera manualmente. */
-          child: Image(image: widget.assetImage, height: 150.0, width: 150.0),
-          infinite: true,
-          animate: true,
-        ),
-      ),
+      child: Image(image: assetImage, height: 150.0, width: 150.0),
     );
     /* Tarjeta con detalles */
     final tarjetaDetalles = new Container(
@@ -86,15 +54,15 @@ class _CardViewAutoViewState extends State<CardViewAutoView> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              new Text(widget.titulo,
+              new Text(titulo,
                   style: TextStyle(
                       fontSize: 24.0,
                       fontWeight: FontWeight.bold,
-                      color: widget.colortexto),
+                      color: colortexto),
                   overflow: TextOverflow.ellipsis),
               new SizedBox(height: 5.0),
-              new Text(widget.subtitulo,
-                  style: TextStyle(fontSize: 14.0, color: widget.colortexto),
+              new Text(subtitulo,
+                  style: TextStyle(fontSize: 14.0, color: colortexto),
                   textAlign: TextAlign.center),
               new Divider(),
               new Row(
@@ -102,9 +70,8 @@ class _CardViewAutoViewState extends State<CardViewAutoView> {
                 children: <Widget>[
                   new Icon(Icons.brightness_7, size: 14.0, color: Colors.amber),
                   new SizedBox(width: 5.0),
-                  new Text(widget.distancia,
-                      style:
-                          TextStyle(fontSize: 12.0, color: widget.colortexto),
+                  new Text(distancia,
+                      style: TextStyle(fontSize: 12.0, color: colortexto),
                       overflow: TextOverflow.ellipsis),
                 ],
               ),
@@ -115,9 +82,8 @@ class _CardViewAutoViewState extends State<CardViewAutoView> {
                   new Icon(Icons.transfer_within_a_station,
                       size: 14.0, color: Colors.blueAccent),
                   new SizedBox(width: 5.0),
-                  new Text(widget.superficie,
-                      style:
-                          TextStyle(fontSize: 12.0, color: widget.colortexto),
+                  new Text(superficie,
+                      style: TextStyle(fontSize: 12.0, color: colortexto),
                       overflow: TextOverflow.ellipsis),
                 ],
               ),

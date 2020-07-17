@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/providers/card_provider.dart';
-import 'package:peliculas/src/widget/card_view_widget.dart';
 
-class CardViewAutoHorizontal extends StatefulWidget {
+class CardViewAutoHorizontal extends StatelessWidget {
   final int index;
   final String subtitulo;
   final String distancia;
@@ -11,33 +9,25 @@ class CardViewAutoHorizontal extends StatefulWidget {
   final String superficie;
   final Color color;
   final Color colortexto;
-  //final Function cambiar;
-
-  CardViewAutoHorizontal({
+  const CardViewAutoHorizontal({
+    Key key,
     @required this.index,
     @required this.assetImage,
     @required this.titulo,
     this.subtitulo,
     this.distancia,
     this.superficie,
-    //this.cambiar,
     this.color = Colors.white10,
     this.colortexto = Colors.white10,
-  });
+  }) : super(key: key);
 
   @override
-  _CardViewAutoHorizontalState createState() => _CardViewAutoHorizontalState();
-}
-
-class _CardViewAutoHorizontalState extends State<CardViewAutoHorizontal> {
-  @override
-  final cardProvi = CardProvider();
   Widget build(BuildContext context) {
     /* Imagen */
     final imagenVehiculo = new Container(
       margin: EdgeInsets.symmetric(vertical: 12.0),
       child: Image(
-        image: widget.assetImage,
+        image: assetImage,
         height: 75.0,
         width: 75.0,
         fit: BoxFit.cover,
@@ -61,21 +51,7 @@ class _CardViewAutoHorizontalState extends State<CardViewAutoHorizontal> {
           ], /* Aplica sombra */
         ),
         child: InkWell(
-          onTap: () {
-            // animateController.repeat();
-            // animateController2.repeat();
-
-            cardProvi.cambiarCard(widget.index);
-            new CardViewAutoView(
-              subtitulo: widget.subtitulo,
-              distancia: widget.distancia,
-              titulo: widget.titulo,
-              assetImage: widget.assetImage,
-              superficie: widget.superficie,
-              color: widget.color,
-              colortexto: widget.colortexto,
-            );
-          },
+          onTap: () {},
           borderRadius: new BorderRadius.circular(8.0),
           child: Container(
             margin: const EdgeInsets.only(
@@ -86,14 +62,14 @@ class _CardViewAutoHorizontalState extends State<CardViewAutoHorizontal> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                new Text(widget.titulo,
+                new Text(titulo,
                     style: TextStyle(
                         fontSize: 16.0,
                         fontWeight: FontWeight.bold,
-                        color: widget.colortexto),
+                        color: colortexto),
                     overflow: TextOverflow.ellipsis),
-                new Text(widget.subtitulo,
-                    style: TextStyle(fontSize: 12.0, color: widget.colortexto),
+                new Text(subtitulo,
+                    style: TextStyle(fontSize: 12.0, color: colortexto),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis),
               ],
