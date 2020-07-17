@@ -10,6 +10,7 @@ class HomePaquetes extends StatefulWidget {
 }
 
 class _HomePaquetesState extends State<HomePaquetes> {
+  //este es el stream para cambiar la imagen del centro
   final cd = new CardProvider();
 
   @override
@@ -21,6 +22,9 @@ class _HomePaquetesState extends State<HomePaquetes> {
   BoxDecoration boxDecorationFondo;
   Color colorCardView = Colors.white12;
   Color colorCardViewHorizontal = Colors.white10;
+  //con esto se hace un switch para saber a que
+  //pagina vamos a redirigir
+  int redireccionPagina = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +72,27 @@ class _HomePaquetesState extends State<HomePaquetes> {
           ),
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {},
+          onPressed: () {
+            switch (redireccionPagina) {
+              case 0:
+
+                ///lo ideal es crear una sola pagina y mandarle los argumentos
+                ///para que dibuje deacuerdo a lo que se le envia
+                ///redirigir a paquetes nacionales
+                Navigator.pushNamed(context, 'ListaPaquetes',
+                    arguments: "Nacionales");
+
+                break;
+              case 1:
+
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'ListaPaquetes',
+                    arguments: "Internacionales");
+
+                break;
+              default:
+            }
+          },
           label: Text('Ver Paquetes'),
           icon: Icon(Icons.check),
         ),
@@ -108,12 +132,14 @@ class _HomePaquetesState extends State<HomePaquetes> {
 
   Widget elementoSeleccionado() {
     return StreamBuilder(
+      //este es el stream al que se esta escuchando
       stream: cd.cardStreamX,
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         int posicion = snapshot.data;
+        //para cambiar la redireccion de la pagina
+        redireccionPagina = posicion;
 
-        print("creando objeto");
         return Container(
           child: CardViewAutoView(
             colortexto: Theme.of(context).bottomAppBarColor,
