@@ -37,6 +37,7 @@ import 'package:peliculas/src/page/usuarios/recuperarContrasena.dart';
 import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
+import 'package:peliculas/src/page/vehiculos/HomeSedan.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
@@ -64,6 +65,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     //MODULO VEHICULO
     'carritos': (BuildContext context) => HomeCategoria(),
     'HomeVehiculos': (BuildContext context) => HomeVehiculos(),
+    'HomeSedan': (BuildContext context) => HomeSedan(),
     'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(),
     'Alquiler': (BuildContext context) => Alquiler(),
     //MODULO ENCOMIENDA
