@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/paquete_models.dart';
+import 'package:peliculas/src/widget/app_bar_widget.dart';
 //import 'package:peliculas/src/providers/peliculas_provider.dart';
 
 class DetallePaquetes extends StatefulWidget {
@@ -13,54 +14,31 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
   @override
   Widget build(BuildContext context) {
     final Paquete paquete = ModalRoute.of(context).settings.arguments;
-    return Scaffold(
-        //backgroundColor: Colors.blueAccent,
-        body: CustomScrollView(
-      slivers: <Widget>[
-        _crearAppbar(paquete),
-        new SliverList(
-            delegate: new SliverChildListDelegate([
-          new SizedBox(
-            height: 10.0,
-          ),
-          _posterTitulo(paquete, context),
-          new SizedBox(height: 10.0),
+    return SafeArea(
+      child: Scaffold(
+          //backgroundColor: Colors.blueAccent,
+          body: CustomScrollView(
+        slivers: <Widget>[
+          AppBarWidget(
+              titulo: "Machupichu",
+              imagen:
+                  "https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/9593070784419/Big-Bus-Paris-Hop-On-Hop-Off-Tour-3d13f9f8-f228-4788-8c78-91a144a75431.jpeg?_src=imagekit&tr=q-60,c-at_max,w-720,h-512"),
+          new SliverList(
+              delegate: new SliverChildListDelegate([
+            new SizedBox(
+              height: 10.0,
+            ),
+            _posterTitulo(paquete, context),
+            new SizedBox(height: 10.0),
 
-          _incluye(paquete, context),
-          _noIncluye(paquete, context),
-          _requisitos(paquete, context),
-          _crearBoton(paquete, context)
-          //_crearCasting(pelicula)
-        ]))
-      ],
-    ));
-  }
-
-  Widget _crearAppbar(Paquete paquete) {
-    return SliverAppBar(
-      elevation: 2.0,
-      backgroundColor: Colors.black54,
-      expandedHeight: 200.0,
-      floating: false,
-      pinned: true,
-      flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-        centerTitle: true,
-        title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
-          child: Text(
-            paquete.title,
-            style: TextStyle(color: Colors.white, fontSize: 16.0),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        background: FadeInImage(
-          image: NetworkImage(paquete.getBackgroudImage()),
-          placeholder: AssetImage('assets/img/loading.gif'),
-          fadeInDuration: Duration(microseconds: 150000),
-          fit: BoxFit.cover,
-        ),
-      ),
+            _incluye(paquete, context),
+            _noIncluye(paquete, context),
+            _requisitos(paquete, context),
+            _crearBoton(paquete, context)
+            //_crearCasting(pelicula)
+          ]))
+        ],
+      )),
     );
   }
 
