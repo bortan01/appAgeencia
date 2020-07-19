@@ -24,7 +24,6 @@ class _HomePaquetesState extends State<HomePaquetes> {
   Color colorCardViewHorizontal = Colors.white10;
   //con esto se hace un switch para saber a que
   //pagina vamos a redirigir
-  int redireccionPagina = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +70,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
             ],
           ),
         ),
-        floatingActionButton: _boton(context, redireccionPagina),
+        floatingActionButton: _boton(),
       ),
     );
   }
@@ -113,8 +112,6 @@ class _HomePaquetesState extends State<HomePaquetes> {
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         int posicion = snapshot.data;
-        //para cambiar la redireccion de la pagina
-        redireccionPagina = posicion;
 
         return Container(
           child: CardViewAutoView(
@@ -137,33 +134,40 @@ class _HomePaquetesState extends State<HomePaquetes> {
       title: Text("Categoría de Paquetes"),
     );
   }
-}
 
-Widget _boton(BuildContext context, int redireccionPagina) {
-  return FloatingActionButton.extended(
-    onPressed: () {
-      switch (redireccionPagina) {
-        case 0:
+  Widget _boton() {
+    return StreamBuilder(
+      stream: cd.cardStreamX,
+      initialData: 0,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return FloatingActionButton.extended(
+          onPressed: () {
+            int posicion = snapshot.data;
+            switch (posicion) {
+              case 0:
 
-          ///lo ideal es crear una sola pagina y mandarle los argumentos
-          ///para que dibuje deacuerdo a lo que se le envia
+                ///lo ideal es crear una sola pagina y mandarle los argumentos
+                ///para que dibuje deacuerdo a lo que se le envia
 
-          ///redirigir a paquetes nacionales
-          Navigator.pushNamed(context, 'ListaPaquetes',
-              arguments: "Nacionales");
+                ///redirigir a paquetes nacionales
+                Navigator.pushNamed(context, 'ListaPaquetes',
+                    arguments: "Nacionales");
 
-          break;
-        case 1:
+                break;
+              case 1:
 
-          ///redirigir a paquetes intercacionales
-          Navigator.pushNamed(context, 'ListaPaquetes',
-              arguments: "Internacionales");
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'ListaPaquetes',
+                    arguments: "Internacionales");
 
-          break;
-        default:
-      }
-    },
-    label: Text('Ver Paquetes'),
-    icon: Icon(Icons.check),
-  );
+                break;
+              default:
+            }
+          },
+          label: Text('Ver Paquetes'),
+          icon: Icon(Icons.check),
+        );
+      },
+    );
+  }
 }

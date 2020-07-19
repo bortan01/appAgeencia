@@ -4,9 +4,10 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 class HomeSedan extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final String argumento = ModalRoute.of(context).settings.arguments;
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text('Categoria: Sedan'),
+        title: new Text('Categoria: ' + argumento),
       ),
       body: new StaggeredGridView.count(
         primary: false,

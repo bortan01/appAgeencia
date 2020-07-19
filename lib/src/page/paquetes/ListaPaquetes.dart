@@ -106,15 +106,16 @@ Widget _footer(BuildContext context) {
 }
 
 List<Paquete> getPeliculaInventada() {
+  String direccion =
+      'https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/9593070784419/Big-Bus-Paris-Hop-On-Hop-Off-Tour-3d13f9f8-f228-4788-8c78-91a144a75431.jpeg?_src=imagekit&tr=q-60,c-at_max,w-720,h-512';
   List<Paquete> peliculasFicticias = new List<Paquete>();
   //de momento ocuparemos valores ficticios asi que inventarlos
   peliculasFicticias.add(
     new Paquete(
-        posterPath:
-            "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=McZ61rvEjAIAX_yEGWH&_nc_ht=scontent-mia3-1.xx&oh=331ab5d816a2a2a79e034ffcf40b27ad&oe=5F1212A1",
+        posterPath: direccion,
         title: "Macupichu",
         originalTitle: "Machupichu",
-        backdropPath: "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=McZ61rvEjAIAX_yEGWH&_nc_ht=scontent-mia3-1.xx&oh=331ab5d816a2a2a79e034ffcf40b27ad&oe=5F1212A1",
+        backdropPath: direccion,
         id: 2312323123,
         incluye: [
           "Hotel",
@@ -126,42 +127,34 @@ List<Paquete> getPeliculaInventada() {
   );
 
   peliculasFicticias.add(new Paquete(
-    posterPath:
-        "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=McZ61rvEjAIAX_yEGWH&_nc_ht=scontent-mia3-1.xx&oh=331ab5d816a2a2a79e034ffcf40b27ad&oe=5F1212A1",
+    posterPath: direccion,
     title: "Nicaragua",
     originalTitle: "Nicaragua",
-    backdropPath:
-        "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/84811539_986682118399150_14819376632954880_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_ohc=j9--zEYgvzAAX8jEVHl&_nc_ht=scontent-mia3-2.xx&oh=e1997a49e898f0f4ccc973545d77ee63&oe=5F0FB3BE",
+    backdropPath: direccion,
     id: 435345534,
   ));
 
   peliculasFicticias.add(new Paquete(
-    posterPath:
-        "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=McZ61rvEjAIAX_yEGWH&_nc_ht=scontent-mia3-1.xx&oh=331ab5d816a2a2a79e034ffcf40b27ad&oe=5F1212A1",
+    posterPath: direccion,
     title: "Volcan de Conchagua",
     originalTitle: "Volcan de Conchagua",
-    backdropPath:
-        "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/84811539_986682118399150_14819376632954880_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_ohc=j9--zEYgvzAAX8jEVHl&_nc_ht=scontent-mia3-2.xx&oh=e1997a49e898f0f4ccc973545d77ee63&oe=5F0FB3BE",
+    backdropPath: direccion,
     id: 3454374523,
   ));
 
   peliculasFicticias.add(new Paquete(
-    posterPath:
-        "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=McZ61rvEjAIAX_yEGWH&_nc_ht=scontent-mia3-1.xx&oh=331ab5d816a2a2a79e034ffcf40b27ad&oe=5F1212A1",
+    posterPath: direccion,
     title: "Panama",
     originalTitle: "Panama",
-    backdropPath:
-        "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/84811539_986682118399150_14819376632954880_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_ohc=j9--zEYgvzAAX8jEVHl&_nc_ht=scontent-mia3-2.xx&oh=e1997a49e898f0f4ccc973545d77ee63&oe=5F0FB3BE",
+    backdropPath: direccion,
     id: 3454434523,
   ));
 
   peliculasFicticias.add(new Paquete(
-    posterPath:
-        "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=McZ61rvEjAIAX_yEGWH&_nc_ht=scontent-mia3-1.xx&oh=331ab5d816a2a2a79e034ffcf40b27ad&oe=5F1212A1",
+    posterPath: direccion,
     title: "Costa Rica",
     originalTitle: "Costa Rica",
-    backdropPath:
-        "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/84811539_986682118399150_14819376632954880_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_ohc=j9--zEYgvzAAX8jEVHl&_nc_ht=scontent-mia3-2.xx&oh=e1997a49e898f0f4ccc973545d77ee63&oe=5F0FB3BE",
+    backdropPath: direccion,
     id: 34543477523,
   ));
 

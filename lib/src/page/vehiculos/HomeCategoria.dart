@@ -24,7 +24,6 @@ class _HomeCategoriaState extends State<HomeCategoria> {
   Color colorCardViewHorizontal = Colors.white10;
   //con esto se hace un switch para saber a que
   //pagina vamos a redirigir
-  int redireccionPagina = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +97,7 @@ class _HomeCategoriaState extends State<HomeCategoria> {
             ],
           ),
         ),
-        floatingActionButton: _boton(context, redireccionPagina),
+        floatingActionButton: _boton(),
       ),
     );
   }
@@ -140,9 +139,6 @@ class _HomeCategoriaState extends State<HomeCategoria> {
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         int posicion = snapshot.data;
-        //para cambiar la redireccion de la pagina
-        redireccionPagina = posicion;
-
         return Container(
           child: CardViewAutoView(
             colortexto: Theme.of(context).bottomAppBarColor,
@@ -164,50 +160,59 @@ class _HomeCategoriaState extends State<HomeCategoria> {
       title: Text("Categoría de Paquetes"),
     );
   }
-}
 
-Widget _boton(BuildContext context, int redireccionPagina) {
-  return FloatingActionButton.extended(
-    onPressed: () {
-      switch (redireccionPagina) {
-        case 0:
+  Widget _boton() {
+    return StreamBuilder(
+      stream: cd.cardStreamX,
+      initialData: 0,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return FloatingActionButton.extended(
+          onPressed: () {
+            int posicion = snapshot.data;
+            switch (posicion) {
+              case 0:
 
-          ///lo ideal es crear una sola pagina y mandarle los argumentos
-          ///para que dibuje deacuerdo a lo que se le envia
+                ///lo ideal es crear una sola pagina y mandarle los argumentos
+                ///para que dibuje deacuerdo a lo que se le envia
 
-          ///redirigir a paquetes nacionales
-          Navigator.pushNamed(context, 'HomeSedan', arguments: "Sedan");
+                ///redirigir a paquetes nacionales
+                Navigator.pushNamed(context, 'HomeSedan', arguments: "Sedan");
 
-          break;
-        case 1:
+                break;
+              case 1:
 
-          ///redirigir a paquetes intercacionales
-          Navigator.pushNamed(context, 'HomeVehiculos',
-              arguments: "Camionetas");
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'HomeSedan',
+                    arguments: "Camionetas");
 
-          break;
-        case 2:
+                break;
+              case 2:
 
-          ///redirigir a paquetes intercacionales
-          Navigator.pushNamed(context, 'HomeVehiculos', arguments: "Pickup");
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'HomeSedan', arguments: "Pickup");
 
-          break;
-        case 3:
+                break;
+              case 3:
 
-          ///redirigir a paquetes intercacionales
-          Navigator.pushNamed(context, 'HomeVehiculos', arguments: "Microbus");
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'HomeSedan',
+                    arguments: "Microbus");
 
-          break;
-        case 4:
+                break;
+              case 4:
 
-          ///redirigir a paquetes intercacionales
-          Navigator.pushNamed(context, 'HomeVehiculos', arguments: "Minivans");
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'HomeSedan',
+                    arguments: "Minivans");
 
-          break;
-        default:
-      }
-    },
-    label: Text('Ver Flota de Vehículos'),
-    icon: Icon(Icons.check),
-  );
+                break;
+              default:
+            }
+          },
+          label: Text('Ver Flota de Vehículos'),
+          icon: Icon(Icons.check),
+        );
+      },
+    );
+  }
 }
