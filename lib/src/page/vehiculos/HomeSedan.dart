@@ -16,16 +16,16 @@ class HomeSedan extends StatelessWidget {
         crossAxisSpacing: 0.0,
         children: <Widget>[
           new _Imagen(
-              'https://http2.mlstatic.com/halogenos-neblineros-toyota-yaris-sedan-2009-2011-D_NQ_NP_766311-MEC20549309668_012016-F.jpg',
+              'https://www.kbb.com/wp-content/uploads/2019/10/01-2018-Honda-Accord-Exterior-BB-KBB.jpg',
               1),
           new _Imagen(
               'https://http2.mlstatic.com/halogenos-neblineros-toyota-yaris-sedan-2009-2011-D_NQ_NP_766311-MEC20549309668_012016-F.jpg',
               2),
           new _Imagen(
-              'https://http2.mlstatic.com/halogenos-neblineros-toyota-yaris-sedan-2009-2011-D_NQ_NP_766311-MEC20549309668_012016-F.jpg',
+              'https://the-drive.imgix.net/https%3A%2F%2Fapi.thedrive.com%2Fwp-content%2Fuploads%2F2017%2F11%2Fhonda-civic-si-featured.jpg%3Fquality%3D85?w=1440&auto=compress%2Cformat&ixlib=js-1.4.1&s=f19c120f9017e364e9431253656e7e17',
               3),
           new _Imagen(
-              'https://http2.mlstatic.com/halogenos-neblineros-toyota-yaris-sedan-2009-2011-D_NQ_NP_766311-MEC20549309668_012016-F.jpg',
+              'https://cdn.drivek.it/configurator-covermobile/cars/es/500/AUDI/RS3/31305_SEDAN-4-PUERTAS/audi-rs3-sedan-cover-mobile.jpg',
               4),
           new _Imagen(
               'https://http2.mlstatic.com/halogenos-neblineros-toyota-yaris-sedan-2009-2011-D_NQ_NP_766311-MEC20549309668_012016-F.jpg',
@@ -41,14 +41,13 @@ class HomeSedan extends StatelessWidget {
               8),
         ],
         staggeredTiles: const <StaggeredTile>[
-          const StaggeredTile.fit(2),
-          const StaggeredTile.fit(2),
-          const StaggeredTile.fit(1),
-          const StaggeredTile.fit(3),
-          const StaggeredTile.fit(3),
-          const StaggeredTile.fit(1),
-          const StaggeredTile.fit(2),
-          const StaggeredTile.fit(2),
+          const StaggeredTile.count(4, 3.5),
+          const StaggeredTile.count(2, 1.5),
+          const StaggeredTile.count(2, 1.5),
+          const StaggeredTile.count(4, 3),
+          const StaggeredTile.count(2, 1.5),
+          const StaggeredTile.count(2, 1.5),
+          const StaggeredTile.count(4, 2.5),
         ],
       ),
     );
@@ -68,11 +67,11 @@ class _Imagen extends StatelessWidget {
         children: <Widget>[
           new Image.network(source),
           new Padding(
-            padding: const EdgeInsets.all(4.0),
+            padding: const EdgeInsets.all(0.25),
             child: new Column(
               children: <Widget>[
                 new Text(
-                  'Imagen numbero $index',
+                  'Imagen $index',
                   style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
                 new Text(
