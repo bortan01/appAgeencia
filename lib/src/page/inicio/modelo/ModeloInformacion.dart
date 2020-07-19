@@ -4,38 +4,34 @@ class CourseModel {
   String tag1;
   String tag2;
 
-  CourseModel(
-      {this.nombre,
-      this.descripcion,
-      this.tag1,
-      this.tag2});
+  CourseModel({this.nombre, this.descripcion, this.tag1, this.tag2});
 }
 
 class CourseList {
   static List<CourseModel> list = [
     CourseModel(
-        nombre: "Paquetes",
+        nombre: "Nissan Versa 2016",
         descripcion:
-            "Te llevamos donde tu quieras! Tenemos para tí paquetes vacacionales especiales para que viajes cuando quieras a donde quieras.",
-        tag1: "Nacionales",
-        tag2: "Internacionales"),
+            "Está propulsado por un motor 1.6 litros de cuatro cilindros que entrega 109 caballos de fuerza y 107 libras-pie de torque.",
+        tag1: "Costo por dia en Dolares (USD)",
+        tag2: "28.50"),
     CourseModel(
-        nombre: "Tours",
+        nombre: "Mitsubishi Lancer 2012",
         descripcion:
-            "Encuentra los mejores tours y actividades en tu destino. Explora el mundo con nuestra Agencia y viaja sin preocupaciones.",
-        tag1: "Nacionales",
-        tag2: "Internacionales"),
+            "Bolsas de aire frontales multi-etapa para conductor y pasajero delantero, bolsa de aire de rodillas para conductor, cinturones de seguridad de tres puntos para todos los pasajeros, seguros en puertas traseras para niños, sistema de audio",
+        tag1: "Costo por dia en Dolares (USD)",
+        tag2: "28.50"),
     CourseModel(
-        nombre: "Vehículos",
+        nombre: "Toyota Corolla 2010",
         descripcion:
-            "Precio Más Bajo Garantizado! Reserva Online Ahora.",
-        tag1: "Aeropuerto",
-        tag2: "Entrega a domicilio"),
-        CourseModel(
-        nombre: "Encomiendas",
+            "El tipo de carrocería de este vehículo es sedán (berlina) con 4 puertas, 5 asientos y FWD (tracción delantera). ",
+        tag1: "Costo por dia en Dolares (USD)",
+        tag2: "28.50"),
+    CourseModel(
+        nombre: "Hyundai Elantra 2010",
         descripcion:
-            "Con el servicio de envío Puerta a Puerta reciba su encomienda en la comodidad de su hogar, o a la oficina más cercana a su residencia en El Salvador.",
-        tag1: "Cotización",
-        tag2: "Estado de Envío"),
+            "Es considerado un auto compacto de buen espacio interior y con un aspecto muy confortable en cada uno de los detalles interiores del habitáculo principal. ",
+        tag1: "Costo por dia en Dolares (USD)",
+        tag2: "28.50"),
   ];
 }

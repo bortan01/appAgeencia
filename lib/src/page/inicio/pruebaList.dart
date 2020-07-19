@@ -25,7 +25,7 @@ class PruebaList extends StatelessWidget {
               Positioned(
                   top: 10,
                   right: -120,
-                  child: _circulosContainer(300, Colors.blue)),
+                  child: _circulosContainer(600, Colors.blue)),
               Positioned(
                   top: -60,
                   left: -65,
@@ -85,29 +85,33 @@ class PruebaList extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             _courceInfo(
-                CourseList.list[0], _paquetes(Colors.blueAccent, -110, -85),
-                background: Colors.blue),
+              CourseList.list[0],
+              _paquetes(),
+            ),
             Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
             ),
-            _courceInfo(CourseList.list[1], _tours(), background: Colors.blue),
+            _courceInfo(CourseList.list[1], _tours()),
             Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
             ),
             _courceInfo(
-                CourseList.list[2], _vehiculos(Colors.blueAccent, -110, -85),
-                background: Colors.blue),
+              CourseList.list[2],
+              _vehiculos(),
+            ),
             Divider(
               thickness: 1,
               endIndent: 20,
               indent: 20,
             ),
-            _courceInfo(CourseList.list[3], _encomiendas(),
-                background: Colors.blue),
+            _courceInfo(
+              CourseList.list[3],
+              _encomiendas(),
+            ),
             Divider(
               thickness: 1,
               endIndent: 20,
@@ -176,7 +180,7 @@ class PruebaList extends StatelessWidget {
                 SizedBox(height: 15),
                 Text(model.descripcion,
                     style: AppTheme.h6Style
-                        .copyWith(fontSize: 12, color: Colors.purple)),
+                        .copyWith(fontSize: 12, color: Colors.blueGrey)),
                 SizedBox(height: 15),
                 Row(
                   children: <Widget>[
@@ -210,115 +214,51 @@ class PruebaList extends StatelessWidget {
     );
   }
 
-  Widget _paquetes(Color primaryColor, double top, double left) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: top,
-          left: left,
-          child: CircleAvatar(
-            radius: 100,
-            backgroundColor: Colors.blue,
-          ),
-        ),
-        Positioned(
-          top: -30,
-          right: -10,
-          child: _circulosContainer(80, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-        Positioned(
-          top: 110,
-          right: -50,
-          child: CircleAvatar(
-            radius: 60,
-            backgroundColor: Colors.blue,
-            child: CircleAvatar(radius: 40, backgroundColor: Colors.blue),
-          ),
-        ),
-      ],
+  Widget _paquetes() {
+    return Center(
+      child: Image(
+        height: 147,
+        width: 98,
+        fit: BoxFit.cover,
+        image: NetworkImage(
+            "https://imganuncios.mitula.net/nissan_versa_2016_gasolina_nissan_versa_advance_papeles_al_dia_motor_1600_1830096592573291157.jpg"),
+      ),
     );
   }
 
   Widget _tours() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: -65,
-          left: -65,
-          child: CircleAvatar(
-            radius: 70,
-            backgroundColor: Colors.blue,
-            child: CircleAvatar(radius: 30, backgroundColor: Colors.blue),
-          ),
-        ),
-        Positioned(
-            bottom: -35,
-            right: -40,
-            child: CircleAvatar(backgroundColor: Colors.blue, radius: 40)),
-        Positioned(
-          top: 50,
-          left: -40,
-          child: _circulosContainer(70, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-      ],
+    return Center(
+      child: Image(
+        height: 147,
+        width: 98,
+        fit: BoxFit.cover,
+        image: NetworkImage(
+            "https://imotorcarsearch.s3.amazonaws.com/vehicles/large/1144595_304039_2_133edf6fc3a9b362.jpg"),
+      ),
     );
   }
 
-  Widget _vehiculos(Color primaryColor, double top, double left) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: top,
-          left: left,
-          child: CircleAvatar(
-            radius: 100,
-            backgroundColor: Colors.blue,
-          ),
-        ),
-        Positioned(
-          top: -30,
-          right: -10,
-          child: _circulosContainer(80, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-        Positioned(
-          top: 110,
-          right: -50,
-          child: CircleAvatar(
-            radius: 60,
-            backgroundColor: Colors.blue,
-            child: CircleAvatar(radius: 40, backgroundColor: Colors.blue),
-          ),
-        ),
-      ],
+  Widget _vehiculos() {
+    return Center(
+      child: Image(
+        height: 147,
+        width: 98,
+        fit: BoxFit.cover,
+        image: NetworkImage(
+            "https://autosdeprimera.com/v2/wp-content/uploads/2011/08/toyota-corolla-xei-exterior-s.jpg"),
+      ),
     );
   }
 
   Widget _encomiendas() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: -65,
-          left: -65,
-          child: CircleAvatar(
-            radius: 70,
-            backgroundColor: Colors.blue,
-            child: CircleAvatar(radius: 30, backgroundColor: Colors.blue),
-          ),
-        ),
-        Positioned(
-            bottom: -35,
-            right: -40,
-            child: CircleAvatar(backgroundColor: Colors.blue, radius: 40)),
-        Positioned(
-          top: 50,
-          left: -40,
-          child: _circulosContainer(70, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-      ],
+    return Center(
+      child: Image(
+        height: 147,
+        width: 98,
+        fit: BoxFit.cover,
+        image: NetworkImage(
+            "https://static.cargurus.com/images/site/2009/10/08/13/12/2010_hyundai_elantra-pic-7842769328096699962-640x480.jpeg"),
+      ),
     );
   }
 
