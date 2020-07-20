@@ -9,89 +9,136 @@ class CarritoCompra extends StatefulWidget {
 
 class _CarritoCompraState extends State<CarritoCompra> {
   int pasoActual = 0;
-  String dropdownValueNinos = '0';
-  String dropdownValueAdultos = '0';
-  String dropdownValueAncianos = '0';
+  String _valueNinos = '0';
+  String _valueAdultos = '0';
+  String _valueAncianos = '0';
+  double screenHeight;
   @override
   Widget build(BuildContext context) {
-    final Paquete paquete = ModalRoute.of(context).settings.arguments;
+    screenHeight = MediaQuery.of(context).size.height;
+    //final lista = listaInventada();
     return Scaffold(
-        //backgroundColor: Colors.blueAccent,
-        appBar: new AppBar(
-          title: Text(
-            "Carrito de Compra",
-          ),
-        ),
-        body: CustomScrollView(
-          slivers: <Widget>[
-            //_crearAppbar(paquete),
-
-            new SliverList(
-                delegate: new SliverChildListDelegate([
-              new SizedBox(
-                height: 10.0,
-              ),
-              _posterTitulo(paquete, context),
-              new SizedBox(height: 10.0),
-              _dropdownNino(),
-              _dropdowAdulto(),
-              _dropdowAnciano(),
-              _totalPagp(),
-              new SizedBox(
-                height: 90.0,
-              ),
-              _crearBoton()
-            ]))
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            paginaFondo(),
+            imagenPortada(context),
+            cajaFormulario(context),
           ],
-        ));
+        ),
+      ),
+    );
   }
 
-  _posterTitulo(Paquete paquete, BuildContext context) {
-    //print(paquete.originalTitle);
-    return new Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+  Widget paginaFondo() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Hero(
-            child: ClipRRect(
-              child: new Image(
-                image: NetworkImage(paquete.getPosterImg()),
-                height: 150,
-              ),
-              borderRadius: new BorderRadius.circular(20.0),
+          Text(
+            "",
+            style: TextStyle(
+                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget cajaFormulario(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(top: screenHeight / 4),
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            tag: paquete.uniqueId,
-          ),
-          new SizedBox(
-            width: 20.0,
-          ),
-          new Flexible(
-              child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: new Text(
-                  paquete.title,
-                  style: Theme.of(context).textTheme.headline6,
-                  overflow:
-                      TextOverflow.ellipsis, //por si el titulo es muy grande
-                ),
-              ),
-              new Text(paquete.originalTitle,
-                  style: Theme.of(context).textTheme.subtitle2,
-                  overflow: TextOverflow.ellipsis),
-              new Row(
+            elevation: 8,
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  new Icon(Icons.attach_money),
-                  new Text(
-                    "695.00",
-                    style: Theme.of(context).textTheme.headline6,
+                  Align(
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      "Carrito de Compras",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _inputNino(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _inputAdulto(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _inputAnciano(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _totalPagp(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(),
+                      ),
+                      FlatButton(
+                        child: Text("Reservar"),
+                        color: Colors.blueAccent,
+                        textColor: Colors.white,
+                        padding: EdgeInsets.only(
+                            left: 38, right: 38, top: 15, bottom: 15),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(5)),
+                        onPressed: () {},
+                      )
+                    ],
                   )
                 ],
-              )
-            ],
-          ))
-        ],
+              ),
+            ),
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Puede completar datos adicionales en Pagina Web",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        )
+      ],
+    );
+  }
+
+  Widget imagenPortada(BuildContext context) {
+    return Container(
+      height: screenHeight / 2,
+      child: Image.asset(
+        'assets/img/portada.png',
+        fit: BoxFit.cover,
       ),
     );
   }
@@ -174,126 +221,57 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return myLista;
   }
 
-  Widget _dropdownNino() {
-    return new Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: new Text("Niños (Menores de 12 años)"),
-        ),
-        new Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: DropdownButton<String>(
-              value: dropdownValueNinos,
-              icon: Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              isExpanded: true,
-              style: TextStyle(color: Theme.of(context).accentColor),
-              underline: Container(
-                height: 2,
-                color: Theme.of(context).accentColor,
-              ),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownValueNinos = newValue;
-                });
-              },
-              items: <String>['0', '1', '2', '3', '4', '5']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Center(child: Text(value)),
-                );
-              }).toList(),
-            ),
-          ),
-        )
-      ],
+  Widget _inputNino() {
+    return new TextField(
+      // autofocus: true,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: 'Personas menores de 12 años',
+          labelText: 'Niños',
+          helperText: 'Debes digitar una cantidad valida',
+          suffixIcon: Icon(Icons.playlist_add_check)),
+
+      onChanged: (String valor) {
+        _valueNinos = valor;
+        setState(() {});
+      },
     );
   }
 
-  Widget _dropdowAdulto() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: new Text("Adultos (Entre 12 y 60 años)"),
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: DropdownButton<String>(
-              value: dropdownValueAdultos,
-              icon: Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              isExpanded: true,
-              style: TextStyle(color: Theme.of(context).accentColor),
-              underline: Container(
-                height: 2,
-                color: Theme.of(context).accentColor,
-              ),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownValueAdultos = newValue;
-                });
-              },
-              items: <String>['0', '1', '2', '3', '4', '5']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Center(child: Text(value)),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ],
+  Widget _inputAdulto() {
+    return new TextField(
+      // autofocus: true,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: 'Mayores de 12 años menores de 60',
+          labelText: 'Adultos',
+          helperText: 'Debes digitar una cantidad valida',
+          suffixIcon: Icon(Icons.playlist_add_check)),
+
+      onChanged: (String valor) {
+        _valueAdultos = valor;
+        setState(() {});
+      },
     );
   }
 
-  Widget _dropdowAnciano() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: new Text("Ancianos (Mayores de 60)"),
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: DropdownButton<String>(
-              value: dropdownValueAncianos,
-              icon: Icon(Icons.arrow_downward),
-              iconSize: 24,
-              elevation: 16,
-              isExpanded: true,
-              style: TextStyle(color: Theme.of(context).accentColor),
-              underline: Container(
-                height: 2,
-                color: Theme.of(context).accentColor,
-              ),
-              onChanged: (String newValue) {
-                setState(() {
-                  dropdownValueAncianos = newValue;
-                });
-              },
-              items: <String>['0', '1', '2', '3', '4', '5']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Center(child: Text(value)),
-                );
-              }).toList(),
-            ),
-          ),
-        ),
-      ],
+  Widget _inputAnciano() {
+    return new TextField(
+      // autofocus: true,
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: 'Mayores de 60',
+          labelText: 'Tercera edad',
+          helperText: 'Debes digitar una cantidad valida',
+          suffixIcon: Icon(Icons.playlist_add_check)),
+
+      onChanged: (String valor) {
+        _valueAncianos = valor;
+        setState(() {});
+      },
     );
   }
 
@@ -312,8 +290,8 @@ class _CarritoCompraState extends State<CarritoCompra> {
 
   Widget _totalPagp() {
     return new Container(
-      height: 80.0,
-      margin: EdgeInsets.all(15.0),
+      height: 90.0,
+      //margin: EdgeInsets.all(15.0),
       decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
           borderRadius: BorderRadius.circular(20.0)),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
@@ -7,14 +8,12 @@ import 'package:peliculas/src/widget/app_bar_widget.dart';
 class DetalleVehiculos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final CourseModel carro = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Colors.white,
       body: new CustomScrollView(
         slivers: <Widget>[
-          AppBarWidget(
-              titulo: "Elantra 2020",
-              imagen:
-                  "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQG356LIbLadfZO3JsJcNpCSwBrotB57G35xQ&usqp=CAU"),
+          AppBarWidget(titulo: carro.nombre, imagen: carro.imagen),
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(
@@ -29,9 +28,9 @@ class DetalleVehiculos extends StatelessWidget {
                 precio: "28.50",
                 id: "1000"),
             _botones(context),
+            _swiperTarjetas(context),
             _cuadros(),
             _adicional(),
-            _swiperTarjetas(context),
           ]))
         ],
       ),

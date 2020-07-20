@@ -11,7 +11,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   String _cantidad = "";
   String _direccion = "";
   String _destinoFinal = "";
-  String _total="35.50";
+  String _total = "35.50";
   String opcionSeleccionada = 'Producto';
   List<String> _productos = ['Producto', 'Medicamentos', 'Jeringas', 'otros'];
   @override
@@ -77,12 +77,12 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                   ),
                   SizedBox(
                     height: 15,
-                  ),    
+                  ),
                   _crearDropDown(),
                   SizedBox(
                     height: 20,
                   ),
-                   _crearInputCantidad(),
+                  _crearInputCantidad(),
                   SizedBox(
                     height: 20,
                   ),
@@ -99,7 +99,6 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                     height: 1,
                   ),
                   _createTotal(),
-                  
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
@@ -150,9 +149,6 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
- 
- 
-
   Widget _crearInputDir() {
     return new TextField(
       // autofocus: true,
@@ -182,7 +178,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
           labelText: 'Dirección final',
           helperText: 'Debes digitar la dirección',
           suffixIcon: Icon(Icons.add_location)),
-        
+
       onChanged: (String valor) {
         _destinoFinal = valor;
         setState(() {});
@@ -200,7 +196,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
           labelText: 'lbs',
           helperText: 'Debes digitar la cantidad de libras',
           suffixIcon: Icon(Icons.playlist_add_check)),
-         
+
       onChanged: (String valor) {
         _cantidad = valor;
         setState(() {});
@@ -213,7 +209,6 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       trailing: new Text(opcionSeleccionada),
       title: new Text("Direccion inicial: $_direccion"),
       subtitle: new Text("Direccón Final: $_destinoFinal"),
-     
     );
   }
 
@@ -223,7 +218,6 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       title: new Text("Su Total es:  $_total"),
     );
   }
-
 
   Widget _crearDropDown() {
     return new Row(
@@ -256,9 +250,4 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     });
     return lista;
   }
-
-
-
-  
- 
 }
