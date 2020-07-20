@@ -7,60 +7,11 @@ class PruebaList extends StatelessWidget {
 
   double width;
 
-  Widget _encabezado(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50)),
-      child: Container(
-          height: 120,
-          width: width,
-          decoration: BoxDecoration(
-            color: Colors.blue,
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            alignment: Alignment.center,
-            children: <Widget>[
-              Positioned(
-                  top: 10,
-                  right: -120,
-                  child: _circulosContainer(600, Colors.blue)),
-              Positioned(
-                  top: -60,
-                  left: -65,
-                  child: _circulosContainer(width * .5, Colors.blue)),
-              Positioned(
-                  top: -230,
-                  right: -30,
-                  child: _circulosContainer(width * .7, Colors.transparent,
-                      borderColor: Colors.white38)),
-              Positioned(
-                  top: 50,
-                  left: 0,
-                  child: Container(
-                      width: width,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(
-                            Icons.keyboard_arrow_left,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                          Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Servicios",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w500),
-                              ))
-                        ],
-                      ))),
-            ],
-          )),
+  Widget appBarCategorias() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Categoría: Sedan"),
     );
   }
 
@@ -269,11 +220,7 @@ class PruebaList extends StatelessWidget {
         body: SingleChildScrollView(
             child: Container(
       child: Column(
-        children: <Widget>[
-          _encabezado(context),
-          SizedBox(height: 20),
-          _listado()
-        ],
+        children: <Widget>[appBarCategorias(), _listado()],
       ),
     )));
   }
