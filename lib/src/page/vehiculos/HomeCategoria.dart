@@ -176,7 +176,7 @@ class _HomeCategoriaState extends State<HomeCategoria> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'HomeSedan', arguments: "Sedan");
+                Navigator.pushNamed(context, 'pruebas', arguments: "Sedan");
 
                 break;
               case 1:
