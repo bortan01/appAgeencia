@@ -9,12 +9,7 @@ class HomeSedan extends StatelessWidget {
   Widget build(BuildContext context) {
     final String argumento = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Container(
-      child: Column(
-        children: <Widget>[appBarCategorias(argumento), _listado(context)],
-      ),
-    )));
+        appBar: appBarCategorias(argumento), body: _listado(context));
   }
 
   Widget appBarCategorias(String argumento) {
@@ -27,15 +22,26 @@ class HomeSedan extends StatelessWidget {
 
   Widget _listado(BuildContext context) {
     //Posiblemente esto se convierta en futureBilder
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: _items(CourseList.list, context),
-        ),
-      ),
-    );
+    return ListView.builder(
+        itemCount: CourseList.list.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, "DetalleVehiculos",
+                  arguments: CourseList.list[index]);
+            },
+            child: Column(
+              children: <Widget>[
+                CourceInfoWidget(model: CourseList.list[index]),
+                Divider(
+                  thickness: 1,
+                  endIndent: 20,
+                  indent: 20,
+                )
+              ],
+            ),
+          );
+        });
   }
 
   List<Widget> _items(List<CourseModel> lista, BuildContext context) {
