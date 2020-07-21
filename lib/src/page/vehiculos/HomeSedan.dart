@@ -32,7 +32,9 @@ class HomeSedan extends StatelessWidget {
             },
             child: Column(
               children: <Widget>[
+                ///AQUI ES DONDE SE CREAN LAS IMAGENES
                 CourceInfoWidget(model: CourseList.list[index]),
+                //ESTA ES LA LINEA DE ABAJO
                 Divider(
                   thickness: 1,
                   endIndent: 20,

@@ -13,7 +13,7 @@ class DetalleVehiculos extends StatelessWidget {
       backgroundColor: Colors.white,
       body: new CustomScrollView(
         slivers: <Widget>[
-          AppBarWidget(titulo: carro.nombre, imagen: carro.imagen),
+          _appBar(titulo: carro.nombre, imagen: carro.imagen),
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(
@@ -33,6 +33,34 @@ class DetalleVehiculos extends StatelessWidget {
             _adicional(),
           ]))
         ],
+      ),
+    );
+  }
+
+  _appBar({String titulo, String imagen}) {
+    return SliverAppBar(
+      elevation: 2.0,
+      backgroundColor: Colors.black54,
+      expandedHeight: 200.0,
+      floating: false,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        titlePadding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+        centerTitle: true,
+        title: Container(
+          padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+          child: Text(
+            titulo,
+            style: TextStyle(color: Colors.white, fontSize: 16.0),
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        background: FadeInImage(
+          image: NetworkImage(imagen),
+          placeholder: AssetImage('assets/img/loading.gif'),
+          fadeInDuration: Duration(microseconds: 150000),
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }
