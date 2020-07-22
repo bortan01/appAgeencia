@@ -11,7 +11,7 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 2.0,
-      backgroundColor: Colors.blueAccent,
+      backgroundColor: Theme.of(context).accentColor,
       expandedHeight: 200.0,
       floating: false,
       pinned: true,

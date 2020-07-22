@@ -3,6 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
+import 'package:peliculas/src/widget/app_bar_widget.dart';
 
 class DetalleVehiculos extends StatelessWidget {
   @override
@@ -12,11 +13,10 @@ class DetalleVehiculos extends StatelessWidget {
       backgroundColor: Colors.white,
       body: new CustomScrollView(
         slivers: <Widget>[
-          _appBar(
-              context: context,
-              titulo: carro.nombre,
-              imagen: carro.imagen,
-              id: carro.id),
+          AppBarWidget(
+            titulo: carro.nombre,
+            imagen: carro.imagen,
+          ),
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(
@@ -26,8 +26,7 @@ class DetalleVehiculos extends StatelessWidget {
                 context: context,
                 titulo: carro.nombre,
                 subtitulo: carro.descripcion,
-                imagen:
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQG356LIbLadfZO3JsJcNpCSwBrotB57G35xQ&usqp=CAU",
+                imagen: carro.imagen,
                 precio: "28.50",
                 id: carro.id),
             _botones(context),
@@ -36,34 +35,6 @@ class DetalleVehiculos extends StatelessWidget {
             _swiperTarjetas(context),
           ]))
         ],
-      ),
-    );
-  }
-
-  _appBar({BuildContext context, String titulo, String imagen, int id}) {
-    return SliverAppBar(
-      elevation: 2.0,
-      backgroundColor: Theme.of(context).accentColor,
-      expandedHeight: 200.0,
-      floating: false,
-      pinned: true,
-      flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-        centerTitle: true,
-        title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          child: Text(
-            titulo,
-            style: TextStyle(color: Colors.white, fontSize: 16.0),
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        background: FadeInImage(
-          image: NetworkImage(imagen),
-          placeholder: AssetImage('assets/img/loading.gif'),
-          fadeInDuration: Duration(microseconds: 150000),
-          fit: BoxFit.cover,
-        ),
       ),
     );
   }
@@ -80,13 +51,16 @@ _posterTitulo(
     padding: EdgeInsets.symmetric(horizontal: 20.0),
     child: Row(
       children: <Widget>[
-        ClipRRect(
-          child: new Image(
-            image: NetworkImage(imagen),
-            height: 100,
-            width: 125,
+        Hero(
+          tag: id.toString(),
+          child: ClipRRect(
+            child: new Image(
+              image: NetworkImage(imagen),
+              height: 100,
+              width: 125,
+            ),
+            borderRadius: new BorderRadius.circular(20.0),
           ),
-          borderRadius: new BorderRadius.circular(20.0),
         ),
         new SizedBox(
           width: 20.0,
@@ -318,18 +292,16 @@ _swiperTarjetas(BuildContext context) {
       itemHeight: tamanioPantalla.height * 0.5,
       itemBuilder: (BuildContext context, int index) {
         return Container(
-          child: Hero(
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: FadeInImage(
-                      image: NetworkImage(lista[index]['imagen']),
-                      placeholder: AssetImage('assets/img/no-image.jpg'),
-                      fit: BoxFit.cover,
-                    ),
-                  )),
-              tag: lista[index]['posicion']),
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: GestureDetector(
+                onTap: () {},
+                child: FadeInImage(
+                  image: NetworkImage(lista[index]['imagen']),
+                  placeholder: AssetImage('assets/img/no-image.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              )),
         );
       },
       itemCount: lista.length,
