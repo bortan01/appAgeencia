@@ -3,7 +3,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
-import 'package:peliculas/src/widget/app_bar_widget.dart';
 
 class DetalleVehiculos extends StatelessWidget {
   @override
@@ -13,7 +12,11 @@ class DetalleVehiculos extends StatelessWidget {
       backgroundColor: Colors.white,
       body: new CustomScrollView(
         slivers: <Widget>[
-          _appBar(titulo: carro.nombre, imagen: carro.imagen),
+          _appBar(
+              context: context,
+              titulo: carro.nombre,
+              imagen: carro.imagen,
+              id: carro.id),
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(
@@ -21,34 +24,34 @@ class DetalleVehiculos extends StatelessWidget {
             ),
             _posterTitulo(
                 context: context,
-                titulo: "Hyundai Elantra 2020",
-                subtitulo: "Depósito de combustible lleno",
+                titulo: carro.nombre,
+                subtitulo: carro.descripcion,
                 imagen:
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQG356LIbLadfZO3JsJcNpCSwBrotB57G35xQ&usqp=CAU",
                 precio: "28.50",
-                id: "1000"),
+                id: carro.id),
             _botones(context),
-            _swiperTarjetas(context),
             _cuadros(),
             _adicional(),
+            _swiperTarjetas(context),
           ]))
         ],
       ),
     );
   }
 
-  _appBar({String titulo, String imagen}) {
+  _appBar({BuildContext context, String titulo, String imagen, int id}) {
     return SliverAppBar(
       elevation: 2.0,
-      backgroundColor: Colors.black54,
+      backgroundColor: Theme.of(context).accentColor,
       expandedHeight: 200.0,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+        titlePadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         centerTitle: true,
         title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
           child: Text(
             titulo,
             style: TextStyle(color: Colors.white, fontSize: 16.0),
@@ -72,22 +75,18 @@ _posterTitulo(
     String subtitulo,
     String precio,
     String imagen,
-    String id}) {
-  //print(paquete.originalTitle);
+    int id}) {
   return new Container(
     padding: EdgeInsets.symmetric(horizontal: 20.0),
     child: Row(
       children: <Widget>[
-        Hero(
-          child: ClipRRect(
-            child: new Image(
-              image: NetworkImage(imagen),
-              height: 100,
-              width: 125,
-            ),
-            borderRadius: new BorderRadius.circular(20.0),
+        ClipRRect(
+          child: new Image(
+            image: NetworkImage(imagen),
+            height: 100,
+            width: 125,
           ),
-          tag: id,
+          borderRadius: new BorderRadius.circular(20.0),
         ),
         new SizedBox(
           width: 20.0,
@@ -108,6 +107,7 @@ _posterTitulo(
               ),
             ),
             new Text(subtitulo,
+                //maxLines: 4,
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.blueAccent,

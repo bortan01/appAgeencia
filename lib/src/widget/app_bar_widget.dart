@@ -11,7 +11,7 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 2.0,
-      backgroundColor: Colors.black54,
+      backgroundColor: Colors.blueAccent,
       expandedHeight: 200.0,
       floating: false,
       pinned: true,
@@ -19,7 +19,7 @@ class AppBarWidget extends StatelessWidget {
         titlePadding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
         centerTitle: true,
         title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
           child: Text(
             titulo,
             style: TextStyle(color: Colors.white, fontSize: 16.0),

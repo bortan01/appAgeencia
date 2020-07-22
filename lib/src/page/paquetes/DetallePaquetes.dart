@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/paquete_models.dart';
+import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
 //import 'package:peliculas/src/providers/peliculas_provider.dart';
 
@@ -13,16 +14,21 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
 
   @override
   Widget build(BuildContext context) {
-    final Paquete paquete = ModalRoute.of(context).settings.arguments;
+    final CourseModel argumento = ModalRoute.of(context).settings.arguments;
+    final Paquete paquete = new Paquete();
+    paquete.adult = true;
+    paquete.backdropPath = argumento.imagen;
+    paquete.posterPath = argumento.imagen;
+    paquete.title = argumento.nombre;
+    paquete.originalTitle = argumento.nombre;
+    paquete.uniqueId = argumento.id.toString();
+
     return SafeArea(
       child: Scaffold(
           //backgroundColor: Colors.blueAccent,
           body: CustomScrollView(
         slivers: <Widget>[
-          AppBarWidget(
-              titulo: "Machupichu",
-              imagen:
-                  "https://ik.imagekit.io/tvlk/xpe-asset/AyJ40ZAo1DOyPyKLZ9c3RGQHTP2oT4ZXW+QmPVVkFQiXFSv42UaHGzSmaSzQ8DO5QIbWPZuF+VkYVRk6gh-Vg4ECbfuQRQ4pHjWJ5Rmbtkk=/9593070784419/Big-Bus-Paris-Hop-On-Hop-Off-Tour-3d13f9f8-f228-4788-8c78-91a144a75431.jpeg?_src=imagekit&tr=q-60,c-at_max,w-720,h-512"),
+          AppBarWidget(titulo: paquete.title, imagen: argumento.imagen),
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(
@@ -45,7 +51,7 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
   _posterTitulo(Paquete paquete, BuildContext context) {
     //print(paquete.originalTitle);
     return new Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0),
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
         children: <Widget>[
           Hero(
