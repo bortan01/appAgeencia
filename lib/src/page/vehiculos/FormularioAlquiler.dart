@@ -32,6 +32,7 @@ class _AlquilerPageState extends State<Alquiler> {
     screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: appBarAlquiler(),
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
@@ -41,6 +42,14 @@ class _AlquilerPageState extends State<Alquiler> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget appBarAlquiler() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Alquiler de Vehículos"),
     );
   }
 
@@ -78,9 +87,9 @@ class _AlquilerPageState extends State<Alquiler> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Align(
-                    alignment: Alignment.topLeft,
                     child: Text(
                       "Rerservar Vehículo",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 28,

@@ -18,6 +18,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     screenHeight = MediaQuery.of(context).size.height;
     //final lista = listaInventada();
     return Scaffold(
+      appBar: appBarCarrito(),
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
@@ -27,6 +28,14 @@ class _CarritoCompraState extends State<CarritoCompra> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget appBarCarrito() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Carrito de Compras"),
     );
   }
 
@@ -66,7 +75,8 @@ class _CarritoCompraState extends State<CarritoCompra> {
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
-                      "Carrito de Compras",
+                      "Rellene los siguientes Campos",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 28,

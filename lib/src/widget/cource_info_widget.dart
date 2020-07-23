@@ -5,7 +5,7 @@ import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 class CourceInfoWidget extends StatelessWidget {
   final CourseModel model;
 
-  const CourceInfoWidget({Key key, this.model}) : super(key: key);
+  const CourceInfoWidget({Key key, @required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

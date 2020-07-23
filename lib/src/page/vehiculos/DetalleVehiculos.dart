@@ -16,6 +16,7 @@ class DetalleVehiculos extends StatelessWidget {
           AppBarWidget(
               titulo: carro.nombre,
               imagen: carro.imagen,
+              //ES NECESARIO EL ID PARA LA ANIMACION
               id: carro.id.toString()),
           new SliverList(
               delegate: new SliverChildListDelegate([
