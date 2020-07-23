@@ -6,10 +6,10 @@ import 'package:peliculas/src/widget/card_view_widget.dart';
 
 class MenuEncomienda extends StatefulWidget {
   @override
-  _PagelistaInformaciontate createState() => _PagelistaInformaciontate();
+  _HomeCategoriaState createState() => _HomeCategoriaState();
 }
 
-class _PagelistaInformaciontate extends State<MenuEncomienda> {
+class _HomeCategoriaState extends State<MenuEncomienda> {
   //este es el stream para cambiar la imagen del centro
   final cd = new CardProvider();
 
@@ -112,7 +112,6 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         int posicion = snapshot.data;
-
         return Container(
           child: CardViewAutoView(
             colortexto: Theme.of(context).bottomAppBarColor,
@@ -131,7 +130,7 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Categoría de Paquetes"),
+      title: Text("Encomiendas"),
     );
   }
 
@@ -150,21 +149,22 @@ class _PagelistaInformaciontate extends State<MenuEncomienda> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'encomienda');
+                Navigator.pushNamed(context, 'encomienda',
+                    arguments: "Cotización");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'HistoEncomienda');
+                Navigator.pushNamed(context, 'HistoEncomienda',
+                    arguments: "Historial de Encomiendas");
 
                 break;
+
               default:
             }
           },
-          label: (snapshot.data == 1)
-              ? Text('Ver Historial')
-              : new Text("Cotizar"),
+          label: Text('Ver Encomiendas'),
           icon: Icon(Icons.check),
         );
       },
