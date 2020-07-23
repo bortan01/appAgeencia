@@ -23,33 +23,54 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
     paquete.originalTitle = argumento.nombre;
     paquete.uniqueId = argumento.id.toString();
 
-    return SafeArea(
-      child: Scaffold(
-          //backgroundColor: Colors.blueAccent,
-          body: CustomScrollView(
-        slivers: <Widget>[
-          AppBarWidget(
-            titulo: paquete.title,
-            imagen: argumento.imagen,
-            id: paquete.uniqueId,
+    return Scaffold(
+        //backgroundColor: Colors.blueAccent,
+        body: CustomScrollView(
+      slivers: <Widget>[
+        AppBarWidget(
+          titulo: paquete.title,
+          imagen: argumento.imagen,
+          id: paquete.uniqueId,
+        ),
+        new SliverList(
+            delegate: new SliverChildListDelegate([
+          new SizedBox(
+            height: 10.0,
           ),
-          new SliverList(
-              delegate: new SliverChildListDelegate([
-            new SizedBox(
-              height: 10.0,
-            ),
-            _posterTitulo(paquete, context),
-            new SizedBox(height: 10.0),
+          _posterTitulo(paquete, context),
+          new SizedBox(height: 10.0),
 
-            _incluye(paquete, context),
-            _noIncluye(paquete, context),
-            _requisitos(paquete, context),
-            _crearBoton(paquete, context)
-            //_crearCasting(pelicula)
-          ]))
-        ],
-      )),
-    );
+          listaHorizontal(
+              titulo: "El viaje incluye",
+              icono: Icons.add_circle,
+              color: Colors.blueAccent,
+              lista: ["Hotel", "Desayuno", "Transporte", "Refrigerio"]),
+          _incluye(paquete, context),
+          listaHorizontal(
+              titulo: "El viaje no incluye",
+              icono: Icons.cancel,
+              color: Colors.red,
+              lista: [
+                "Seguros de Viaje",
+                "Otros no especificados en el programa",
+                "Entrada a centros turisticos",
+                "Refrigerio"
+              ]),
+          listaHorizontal(
+              titulo: "Requisitos",
+              icono: Icons.report,
+              color: Colors.green,
+              lista: [
+                "Pasaporte Vigente",
+                "Vacuna contra la fiebre amarilla",
+                "Dui",
+              ]),
+
+          _crearBoton(paquete, context)
+          //_crearCasting(pelicula)
+        ]))
+      ],
+    ));
   }
 
   _posterTitulo(Paquete paquete, BuildContext context) {
@@ -100,120 +121,88 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
   }
 
   Widget _incluye(Paquete paquete, BuildContext context) {
-    return Column(
-      children: <Widget>[
-        new Text(
-          "El viaje Incluye",
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        SizedBox(height: 10.0),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Stepper(
+      currentStep: pasoActual,
+      physics:
+          new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
+      steps: listaDeElementos(paquete),
+      onStepContinue: () {
+        setState(() {
+          if (pasoActual < listaDeElementos(paquete).length - 1) {
+            pasoActual++;
+          }
+        });
+      },
+      onStepCancel: () {
+        setState(() {
+          if (pasoActual > 0) {
+            pasoActual--;
+          }
+        });
+      },
+      controlsBuilder: (BuildContext context,
+          {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+        return Row(
           children: <Widget>[
-            _elementos(
-                "Hotel",
-                new Icon(
-                  Icons.hotel,
-                  color: Colors.blueAccent,
-                )),
-            _elementos(
-                "Desayuno",
-                new Icon(
-                  Icons.free_breakfast,
-                  color: Colors.blueAccent,
-                )),
-            _elementos("Transporte",
-                new Icon(Icons.airport_shuttle, color: Colors.blueAccent)),
-            _elementos(
-                "Refrigerio",
-                new Icon(
-                  Icons.local_dining,
-                  color: Colors.blueAccent,
-                )),
+            FlatButton(
+              onPressed: onStepContinue,
+              color: (Theme.of(context).accentColor),
+              child: const Text(
+                'SIGUIENTE',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            SizedBox(
+              width: 5.0,
+            ),
+            FlatButton(
+              onPressed: onStepCancel,
+              color: (Theme.of(context).accentColor),
+              child: const Text(
+                'ATRAS',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ],
-        ),
-        new Stepper(
-          currentStep: pasoActual,
-          physics:
-              new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
-          steps: listaDeElementos(paquete),
-          onStepContinue: () {
-            setState(() {
-              if (pasoActual < listaDeElementos(paquete).length - 1) {
-                pasoActual++;
-              }
-            });
-          },
-          onStepCancel: () {
-            setState(() {
-              if (pasoActual > 0) {
-                pasoActual--;
-              }
-            });
-          },
-          controlsBuilder: (BuildContext context,
-              {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-            return Row(
-              children: <Widget>[
-                FlatButton(
-                  onPressed: onStepContinue,
-                  color: (Theme.of(context).accentColor),
-                  child: const Text(
-                    'SIGUIENTE',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-                SizedBox(
-                  width: 5.0,
-                ),
-                FlatButton(
-                  onPressed: onStepCancel,
-                  color: (Theme.of(context).accentColor),
-                  child: const Text(
-                    'ATRAS',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            );
-          },
-        )
-      ],
+        );
+      },
     );
   }
 
-  Widget _noIncluye(Paquete paquete, BuildContext context) {
-    return Column(
-      children: <Widget>[
-        new Text(
-          "El viaje no incluye",
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        SizedBox(height: 10.0),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _elementos(
-                "Seguros de Viaje",
-                new Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                )),
-            _elementos(
-                "Ni otros no especificados en el programa",
-                new Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                )),
-            _elementos(
-                "Entrada a centros turisticos",
-                new Icon(
-                  Icons.cancel,
-                  color: Colors.red,
-                )),
-          ],
-        ),
-      ],
+  Widget listaHorizontal(
+      {@required String titulo,
+      IconData icono,
+      Color color,
+      List<String> lista}) {
+    return Container(
+      height: 140.0,
+      child: Column(
+        children: <Widget>[
+          new Text(
+            titulo,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.headline6,
+          ),
+          SizedBox(
+            height: 15.0,
+          ),
+          Flexible(
+            /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
+            /* Iteramos la lista horizontal de los cuerpos del vehiculos */
+            child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: lista.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return _elementos(
+                      lista[index],
+                      new Icon(
+                        icono,
+                        color: color,
+                      ));
+                }),
+          ),
+        ],
+      ),
     );
   }
 
@@ -299,8 +288,9 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
     return Opacity(
       opacity: 0.7,
       child: new Container(
-        width: 100.0,
+        width: 110.0,
         height: 100.0,
+        margin: EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: <Widget>[
             new Container(
@@ -321,36 +311,6 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _requisitos(Paquete paquete, BuildContext context) {
-    return Column(
-      children: <Widget>[
-        SizedBox(height: 15.0),
-        new Text(
-          "Requisitos",
-          style: Theme.of(context).textTheme.headline6,
-        ),
-        SizedBox(height: 10.0),
-        new Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            _elementos(
-                "Pasaporte Vigente",
-                new Icon(
-                  Icons.report,
-                  color: Colors.green,
-                )),
-            _elementos(
-                "Vacuna contra la fiebre amarilla",
-                new Icon(
-                  Icons.report,
-                  color: Colors.green,
-                )),
-          ],
-        ),
-      ],
     );
   }
 
