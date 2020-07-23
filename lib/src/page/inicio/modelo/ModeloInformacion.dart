@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class CourseModel {
   String nombre;
   String descripcion;
@@ -6,12 +8,12 @@ class CourseModel {
   String imagen;
   int id;
   CourseModel(
-      {this.nombre,
-      this.descripcion,
+      {@required this.nombre,
+      @required this.descripcion,
       this.tag1,
       this.tag2,
-      this.imagen,
-      this.id});
+      @required this.imagen,
+      @required this.id});
 }
 
 class CourseList {

@@ -19,6 +19,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      appBar: appBarEncomienda(),
       body: SingleChildScrollView(
         child: Stack(
           children: <Widget>[
@@ -28,6 +29,14 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget appBarEncomienda() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Cotizador de Encomiendas"),
     );
   }
 
@@ -65,9 +74,9 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Align(
-                    alignment: Alignment.topLeft,
                     child: Text(
-                      "Cotizador de Encomienda",
+                      "Complete los Siguientes Campos",
+                      textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 28,

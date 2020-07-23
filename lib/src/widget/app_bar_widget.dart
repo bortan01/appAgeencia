@@ -16,9 +16,12 @@ class AppBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverAppBar(
       elevation: 2.0,
+      title: Center(
+        child: Text(titulo),
+      ),
       backgroundColor: Theme.of(context).accentColor,
       expandedHeight: 200.0,
-      floating: false,
+      floating: true,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
@@ -26,7 +29,8 @@ class AppBarWidget extends StatelessWidget {
         title: Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
           child: Text(
-            titulo,
+            ///AQUI DEBERIA DE IR UN TITULO
+            "",
             style: TextStyle(color: Colors.white, fontSize: 16.0),
             overflow: TextOverflow.ellipsis,
           ),
