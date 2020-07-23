@@ -1,135 +1,79 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
+import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/providers/paquete_provider.dart';
+import 'package:peliculas/src/widget/cource_info_widget.dart';
 
-class HistorialEncomienda extends StatefulWidget {
-  @override
-  HistorialEncomiendaState createState() {
-    return new HistorialEncomiendaState();
-  }
-}
-
-class HistorialEncomiendaState extends State<HistorialEncomienda> {
-  Widget bodyData() => DataTable(
-      onSelectAll: (b) {},
-      sortColumnIndex: 1,
-      sortAscending: true,
-      columnSpacing: 130,
-      columns: <DataColumn>[
-        DataColumn(
-          label: Text("Información",
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-          numeric: false,
-          onSort: (i, b) {
-            print("$i $b");
-            setState(() {
-              names.sort((a, b) => a.mensaje.compareTo(b.mensaje));
-            });
-          },
-          tooltip: "Para mostrar el producto",
-        ),
-        DataColumn(
-          label: Text("Fecha",
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.black)),
-          numeric: false,
-          onSort: (i, b) {
-            print("$i $b");
-            setState(() {
-              names.sort((a, b) => a.fecha.compareTo(b.fecha));
-            });
-          },
-          tooltip: "Para mostrar la fecha",
-        ),
-      ],
-      rows: names
-          .map(
-            (name) => DataRow(
-              cells: [
-                DataCell(
-                  Text(name.mensaje),
-                  showEditIcon: false,
-                  placeholder: false,
-                ),
-                DataCell(
-                  Text(name.fecha),
-                  showEditIcon: false,
-                  placeholder: false,
-                ),
-              ],
-            ),
-          )
-          .toList());
-
+class HistorialEncomienda extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Theme.of(context).accentColor.withOpacity(1.0),
-          title: Text('Historial Encomienda',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold)),
-        ),
-        body: new Stack(
-          children: <Widget>[
-            new Container(
-              decoration: new BoxDecoration(
-                image: new DecorationImage(
-                  image: new AssetImage("assets/img/fondoEnco.jpg"),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            SizedBox(height: 50.0),
-            SingleChildScrollView(
-              child: Column(
-                children: <Widget>[_titulos(), bodyData()],
-              ),
-            )
-          ],
+      appBar: appBarPaquete(),
+      body: _listado(context),
+    );
+  }
+
+  Widget appBarPaquete() {
+    return AppBar(
+        backgroundColor: Colors.blue,
+        centerTitle: true,
+        title: Text(
+          "Historial Encomienda",
         ));
   }
-}
 
-class Name {
-  String mensaje;
-  String fecha;
-
-  Name({this.mensaje, this.fecha});
-}
-
-var names = <Name>[
-  Name(mensaje: "Esta bien el envio", fecha: "20-07-2020"),
-  Name(mensaje: "Sigue  bien el envio", fecha: "25-07-2020"),
-  Name(mensaje: "creemos que Sigue bien el envio", fecha: "26-07-2020"),
-];
-
-Widget _titulos() {
-  return SafeArea(
-      child: Column(
-    children: <Widget>[
-      Padding(
-        padding: const EdgeInsets.all(11.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            MyIconButton(
-              buttonText: "Se recibió información",
-              buttonIcon: Icons.add_alert,
+  Widget _listado(BuildContext context) {
+    List<CourseModel> miListaPaquetes = listaInventada();
+    //Posiblemente esto se convierta en futureBilder
+    return ListView.builder(
+        itemCount: miListaPaquetes.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              ///
+            },
+            child: Column(
+              children: <Widget>[
+                ///AQUI ES DONDE SE CREAN LAS IMAGENES
+                CourceInfoWidget(model: miListaPaquetes[index]),
+                //ESTA ES LA LINEA DE ABAJO
+                Divider(
+                  thickness: 1,
+                  endIndent: 20,
+                  indent: 20,
+                )
+              ],
             ),
-            MyIconButton(
-              buttonText: "En tránsito",
-              buttonIcon: Icons.airport_shuttle,
-            ),
-            MyIconButton(
-              buttonText: "Entregado",
-              buttonIcon: Icons.cancel,
-            ),
-          ],
-        ),
-      )
-    ],
-  ));
+          );
+        });
+  }
+
+  List<CourseModel> listaInventada() {
+    final List<CourseModel> list = [
+      CourseModel(
+          id: 0,
+          nombre: "Se recibio la informacion",
+          descripcion: "esta bien el envio",
+          imagen:
+              "http://www.deasociety.com/pt/wp-content/uploads/sites/2/2016/10/logocontact-1.jpg",
+          tag1: "Fecha:",
+          tag2: "20-07-2020"),
+      CourseModel(
+          id: 1,
+          nombre: "En transito",
+          descripcion: "Siguie bien el envio",
+          tag1: "Fecha:",
+          tag2: "25-07-2020",
+          imagen:
+              "http://www.elsalvadorvida.com/uploads/1/0/3/6/10365923/published/3.png?1563650943"),
+      CourseModel(
+          id: 2,
+          nombre: "Entregado",
+          descripcion: "Creemos que sigue bien el envio",
+          tag1: "Fecha",
+          tag2: "26-07-2020",
+          imagen:
+              "https://image.freepik.com/foto-gratis/paquete-entregado-sonriente-joven-vendedor-dando-pulgar_13339-196060.jpg"),
+    ];
+    return list;
+  }
 }

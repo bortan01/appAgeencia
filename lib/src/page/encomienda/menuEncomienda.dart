@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:peliculas/src/page/encomienda/encomienda.dart';
 import 'package:peliculas/src/providers/card_provider.dart';
 import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
 import 'package:peliculas/src/widget/card_view_widget.dart';
