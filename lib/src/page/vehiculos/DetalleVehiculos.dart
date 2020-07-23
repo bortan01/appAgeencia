@@ -14,9 +14,9 @@ class DetalleVehiculos extends StatelessWidget {
       body: new CustomScrollView(
         slivers: <Widget>[
           AppBarWidget(
-            titulo: carro.nombre,
-            imagen: carro.imagen,
-          ),
+              titulo: carro.nombre,
+              imagen: carro.imagen,
+              id: carro.id.toString()),
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(
@@ -26,7 +26,8 @@ class DetalleVehiculos extends StatelessWidget {
                 context: context,
                 titulo: carro.nombre,
                 subtitulo: carro.descripcion,
-                imagen: carro.imagen,
+                imagen:
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQG356LIbLadfZO3JsJcNpCSwBrotB57G35xQ&usqp=CAU",
                 precio: "28.50",
                 id: carro.id),
             _botones(context),
@@ -51,16 +52,13 @@ _posterTitulo(
     padding: EdgeInsets.symmetric(horizontal: 20.0),
     child: Row(
       children: <Widget>[
-        Hero(
-          tag: id.toString(),
-          child: ClipRRect(
-            child: new Image(
-              image: NetworkImage(imagen),
-              height: 100,
-              width: 125,
-            ),
-            borderRadius: new BorderRadius.circular(20.0),
+        ClipRRect(
+          child: new Image(
+            image: NetworkImage(imagen),
+            height: 100,
+            width: 125,
           ),
+          borderRadius: new BorderRadius.circular(20.0),
         ),
         new SizedBox(
           width: 20.0,

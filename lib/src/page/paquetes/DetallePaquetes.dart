@@ -28,7 +28,11 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
           //backgroundColor: Colors.blueAccent,
           body: CustomScrollView(
         slivers: <Widget>[
-          AppBarWidget(titulo: paquete.title, imagen: argumento.imagen),
+          AppBarWidget(
+            titulo: paquete.title,
+            imagen: argumento.imagen,
+            id: paquete.uniqueId,
+          ),
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(
@@ -54,15 +58,12 @@ class _DetallePaquetesState extends State<DetallePaquetes> {
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
         children: <Widget>[
-          Hero(
-            child: ClipRRect(
-              child: new Image(
-                image: NetworkImage(paquete.getPosterImg()),
-                height: 150,
-              ),
-              borderRadius: new BorderRadius.circular(20.0),
+          ClipRRect(
+            child: new Image(
+              image: NetworkImage(paquete.getPosterImg()),
+              height: 150,
             ),
-            tag: paquete.uniqueId,
+            borderRadius: new BorderRadius.circular(20.0),
           ),
           new SizedBox(
             width: 20.0,

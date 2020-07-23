@@ -3,8 +3,13 @@ import 'package:flutter/material.dart';
 class AppBarWidget extends StatelessWidget {
   final String titulo;
   final String imagen;
+  final String id;
 
-  const AppBarWidget({Key key, @required this.titulo, @required this.imagen})
+  const AppBarWidget(
+      {Key key,
+      @required this.titulo,
+      @required this.imagen,
+      @required this.id})
       : super(key: key);
 
   @override
@@ -16,7 +21,7 @@ class AppBarWidget extends StatelessWidget {
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
-        titlePadding: EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+        titlePadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         centerTitle: true,
         title: Container(
           padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
@@ -26,11 +31,14 @@ class AppBarWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        background: FadeInImage(
-          image: NetworkImage(imagen),
-          placeholder: AssetImage('assets/img/loading.gif'),
-          fadeInDuration: Duration(microseconds: 150000),
-          fit: BoxFit.cover,
+        background: Hero(
+          tag: id,
+          child: FadeInImage(
+            image: NetworkImage(imagen),
+            placeholder: AssetImage('assets/img/loading.gif'),
+            fadeInDuration: Duration(microseconds: 150000),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
