@@ -102,6 +102,7 @@ class _LoginPageState extends State<Login> {
                     ],
                   ),
                   _inputOlvide(),
+                  _registrarme(),
                 ],
               ),
             ),
@@ -182,6 +183,18 @@ class _LoginPageState extends State<Login> {
       ),
       onPressed: () {
         Navigator.pushNamed(context, 'olvide');
+      },
+    );
+  }
+
+  Widget _registrarme() {
+    return new FlatButton(
+      child: Text(
+        '¿No estás registrado?',
+        style: TextStyle(color: Colors.black54),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, 'registro');
       },
     );
   }

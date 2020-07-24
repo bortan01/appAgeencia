@@ -36,6 +36,7 @@ import 'package:peliculas/src/page/usuarios/codigoVerificacion.dart';
 import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
 import 'package:peliculas/src/page/usuarios/recuperarContrasena.dart';
+import 'package:peliculas/src/page/usuarios/registro.dart';
 import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
@@ -82,11 +83,14 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     //MODULO DE CHAT ADMIN
     'chatAdmin': (BuildContext context) => WhatsAppHome(),
 
+    //Inicio de Sesion.
     'login': (BuildContext context) => Login(),
     'olvide': (BuildContext context) => Olvide(),
     'codigo': (BuildContext context) => Codigo(),
     'nuevaContra': (BuildContext context) => IngreseContra(),
+    'registro': (BuildContext context) => Registro(),
     'pruebas': (BuildContext context) => PruebaList(),
+
     //MODULO DE PRODUCTOS ADQUIRIDOS
     'menuProductos': (BuildContext context) => MenuProductos(),
     'toursAsistidos': (BuildContext context) => ToursAsistidos(),

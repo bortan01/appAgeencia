@@ -1,97 +1,167 @@
 import 'package:flutter/material.dart';
 
-
 class IngreseContra extends StatefulWidget {
-  static String tag = 'codigo-page';
-
-   @override
-   
+  @override
   _IngreseContraPageState createState() => _IngreseContraPageState();
-  
 }
-  class _IngreseContraPageState extends State<IngreseContra> {
+
+class _IngreseContraPageState extends State<IngreseContra> {
+  double screenHeight;
+
+  String _usuario = "";
+  String _contrasena = "";
+
   @override
   Widget build(BuildContext context) {
-   
-   final password_1 = TextFormField(
-      autofocus: false,
-      initialValue: 'Contraseña',
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Contraseña',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-   final password_2 = TextFormField(
-      autofocus: false,
-      initialValue: 'Contraseña',
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Contraseña',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-   
-    final enviarButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        onPressed: () {
-         
-          Navigator.pushNamed(context, 'bienvenidoos');
-        },
-        padding: EdgeInsets.all(12),
-        color: Colors.blue,
-        child: Text('Enviar', style: TextStyle(color: Colors.white)),
-      ),
-    );
-
-    final cancelarButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        onPressed: () {
-         
-          Navigator.pushNamed(context, 'bienvenidoos');
-        },
-        padding: EdgeInsets.all(12),
-        color: Colors.blueGrey,
-        child: Text('Cancelar', style: TextStyle(color: Colors.white)),
-      ),
-    );
-
+    screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: new Stack(
-      children: <Widget>[
-        new Container(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(image: new AssetImage("assets/img/nueva.jpeg"), fit: BoxFit.cover,),
-          ),
-        ),
-        new Center(
-         child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0),
-          children: <Widget>[   
-           SizedBox(height: 40.0),
-            password_1,
-            SizedBox(height: 30.0),
-            password_2,
-            SizedBox(height: 20.0),
-            enviarButton,
-            cancelarButton
+      appBar: appBarAlquiler(),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            paginaFondo(),
+            imagenPortada(context),
+            cajaFormulario(context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget appBarAlquiler() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Ingrese su nueva Contraseña"),
+    );
+  }
+
+  Widget paginaFondo() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "",
+            style: TextStyle(
+                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget cajaFormulario(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(top: screenHeight / 4),
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 8,
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    child: Text(
+                      "Nueva Contraseña",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _inputUsuario(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(),
+                      ),
+                      _inputBoton(),
+                    ],
+                  ),
+                  _inputOlvide(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[],
+        )
       ],
-    )
-  );
+    );
   }
+
+  Widget imagenPortada(BuildContext context) {
+    return Container(
+      height: screenHeight / 2,
+      child: Image.asset(
+        'assets/img/portada.png',
+        fit: BoxFit.cover,
+      ),
+    );
   }
+
+  Widget _inputUsuario() {
+    return new TextField(
+      textCapitalization: TextCapitalization.words,
+      keyboardType: TextInputType.text,
+      autofocus: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Digite su Nueva Contraseña',
+        labelText: 'Digite su Nueva Contraseña',
+        helperText: 'Nueva Contraseña',
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        suffixIcon: Icon(Icons.lock),
+      ),
+      onChanged: (String persona) {
+        _usuario = persona;
+        setState(() {});
+      },
+    );
+  }
+
+  Widget _inputOlvide() {
+    return new FlatButton(
+      child: Text(
+        '¡Se almacenara tu nueva contraseña!',
+        style: TextStyle(color: Colors.black54),
+      ),
+      onPressed: () {},
+    );
+  }
+
+  Widget _inputBoton() {
+    return new FlatButton(
+      child: Text("Guardar"),
+      color: Color(0xFF4B9DFE),
+      textColor: Colors.white,
+      padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      onPressed: () {
+        Navigator.pushNamed(context, 'login');
+      },
+    );
+  }
+}
