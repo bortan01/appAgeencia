@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/providers/paquete_provider.dart';
 import 'package:peliculas/src/widget/cource_info_widget.dart';
 
 class HistorialEncomienda extends StatelessWidget {

@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 
 class CardViewAutoView extends StatelessWidget {
@@ -22,14 +23,27 @@ class CardViewAutoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    /* Imagen */
-    final imagenVehiculo = new Container(
+    return Container(
+        margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+        child: new Stack(
+          alignment: Alignment.topCenter,
+          children: <Widget>[
+            _tarjetaDetalle(width),
+            _animacionImagen(width),
+          ],
+        ));
+  }
+
+  Widget _imagen(double width) {
+    return new Container(
       margin: EdgeInsets.only(left: width * 0.27),
       alignment: FractionalOffset.centerLeft,
       child: Image(image: assetImage, height: 150.0, width: 150.0),
     );
-    /* Tarjeta con detalles */
-    final tarjetaDetalles = new Container(
+  }
+
+  Widget _tarjetaDetalle(double width) {
+    return new Container(
         width: width,
         height: 300.0,
         /* Margen de la tarjeta */
@@ -90,15 +104,17 @@ class CardViewAutoView extends StatelessWidget {
             ],
           ),
         ));
-    /* Creamos una vista superpuesta  */
-    return Container(
-        margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-        child: new Stack(
-          alignment: Alignment.topCenter,
-          children: <Widget>[
-            tarjetaDetalles,
-            imagenVehiculo,
-          ],
-        ));
+  }
+
+  Widget _animacionImagen(double width) {
+    AnimationController animateController;
+    return ElasticInDown(
+      child: SpinPerfect(
+          // manualTrigger: true,
+
+          //(optional, but mandatory if you use manualTrigger:true) This callback exposes the AnimationController used for the selected animation. Then you can call animationController.forward() to trigger the animation wherever you like manually.
+          controller: (controller) => animateController = controller,
+          child: _imagen(width)),
+    );
   }
 }
