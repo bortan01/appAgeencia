@@ -24,12 +24,14 @@ import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
 
 import 'package:peliculas/src/page/inicio/pruebaList.dart';
 import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
+
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/ListaPaquetes.dart';
 import 'package:peliculas/src/page/productosAdquiridos/menuProductos.dart';
 import 'package:peliculas/src/page/productosAdquiridos/toursAsistidos.dart';
 import 'package:peliculas/src/page/productosAdquiridos/vehiculosAlquilados.dart';
+import 'package:peliculas/src/page/tours/cotizarTours.dart';
 import 'package:peliculas/src/page/usuarios/codigoVerificacion.dart';
 import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
@@ -62,6 +64,8 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'ListaPaquetes': (BuildContext context) => ListaPaquetes(),
     'DetallePaquetes': (BuildContext context) => DetallePaquetes(),
     'CarritoCompra': (BuildContext context) => CarritoCompra(),
+    //MODULO TOURS
+    'CotizarTours': (BuildContext context) => CotizarTours(),
     //MODULO VEHICULO
     'carritos': (BuildContext context) => HomeCategoria(),
     'HomeVehiculos': (BuildContext context) => HomeVehiculos(),
