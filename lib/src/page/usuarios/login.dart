@@ -1,92 +1,201 @@
 import 'package:flutter/material.dart';
 
-
 class Login extends StatefulWidget {
-  static String tag = 'login-page';
-
-   @override
-   
+  @override
   _LoginPageState createState() => _LoginPageState();
-  
 }
-  class _LoginPageState extends State<Login> {
+
+class _LoginPageState extends State<Login> {
+  double screenHeight;
+
+  String _usuario = "";
+  String _contrasena = "";
+
   @override
   Widget build(BuildContext context) {
-   
-    final email = TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      autofocus: false,
-      initialValue: 'pineverdi@gmail.com',
-      decoration: InputDecoration(
-        hintText: 'Correo Electronico',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final password = TextFormField(
-      autofocus: false,
-      initialValue: 'Contraseña',
-      obscureText: true,
-      decoration: InputDecoration(
-        hintText: 'Contraseña',
-        contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
-      ),
-    );
-
-    final loginButton = Padding(
-      padding: EdgeInsets.symmetric(vertical: 16.0),
-      child: RaisedButton(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(24),
-        ),
-        onPressed: () {
-         
-          Navigator.pushNamed(context, 'bienvenidoos');
-        },
-        padding: EdgeInsets.all(12),
-        color: Colors.blue,
-        child: Text('Iniciar Sesion', style: TextStyle(color: Colors.white)),
-      ),
-    );
-
-    final forgotLabel = FlatButton(
-      child: Text(
-      '¿Olvidastes tu contraseña?',
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {
-         Navigator.pushNamed(context, 'olvide');
-      },
-    );
+    screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: new Stack(
-      children: <Widget>[
-        new Container(
-          decoration: new BoxDecoration(
-            image: new DecorationImage(image: new AssetImage("assets/img/2.png"), fit: BoxFit.cover,),
-          ),
-        ),
-        new Center(
-         child: ListView(
-          shrinkWrap: true,
-          padding: EdgeInsets.only(left: 24.0, right: 24.0, top: 50.0),
-          children: <Widget>[   
-           
-            email,
-            SizedBox(height: 8.0),
-            password,
-            SizedBox(height: 10.0),
-            loginButton,
-            
-            forgotLabel
+      appBar: appBarAlquiler(),
+      body: SingleChildScrollView(
+        child: Stack(
+          children: <Widget>[
+            paginaFondo(),
+            imagenPortada(context),
+            cajaFormulario(context),
           ],
         ),
       ),
+    );
+  }
+
+  Widget appBarAlquiler() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Iniciar Sesión"),
+    );
+  }
+
+  Widget paginaFondo() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Text(
+            "",
+            style: TextStyle(
+                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget cajaFormulario(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(top: screenHeight / 4),
+          padding: EdgeInsets.only(left: 10, right: 10),
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            elevation: 8,
+            child: Padding(
+              padding: const EdgeInsets.all(30.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Align(
+                    child: Text(
+                      "Iniciar Sesión",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 28,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  _inputUsuario(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _inputContrasena(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Expanded(
+                        child: Container(),
+                      ),
+                      _inputBoton(),
+                    ],
+                  ),
+                  _inputOlvide(),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 40,
+            ),
+            Text(
+              "Puede completar datos adicionales en Pagina Web",
+              style: TextStyle(color: Colors.grey),
+            ),
+          ],
+        )
       ],
-    )
-  );
+    );
   }
+
+  Widget imagenPortada(BuildContext context) {
+    return Container(
+      height: screenHeight / 2,
+      child: Image.asset(
+        'assets/img/portada.png',
+        fit: BoxFit.cover,
+      ),
+    );
   }
+
+  Widget _inputUsuario() {
+    return new TextField(
+      textCapitalization: TextCapitalization.words,
+      keyboardType: TextInputType.emailAddress,
+      autofocus: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Digite su Nombre de Usuario',
+        labelText: 'Digite su Nombre de Usuario',
+        helperText: 'Usuario',
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        suffixIcon: Icon(Icons.supervised_user_circle),
+      ),
+      onChanged: (String persona) {
+        _usuario = persona;
+        setState(() {});
+      },
+    );
+  }
+
+  Widget _inputContrasena() {
+    return new TextField(
+      textCapitalization: TextCapitalization.words,
+      obscureText: true,
+      autofocus: false,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Digite su Contraseña',
+        labelText: 'Digite su Contraseña',
+        helperText: 'Contraseña',
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        suffixIcon: Icon(Icons.lock),
+      ),
+      onChanged: (String persona) {
+        _contrasena = persona;
+        setState(() {});
+      },
+    );
+  }
+
+  Widget _inputOlvide() {
+    return new FlatButton(
+      child: Text(
+        '¿Olvidastes tu contraseña?',
+        style: TextStyle(color: Colors.black54),
+      ),
+      onPressed: () {
+        Navigator.pushNamed(context, 'olvide');
+      },
+    );
+  }
+
+  Widget _inputBoton() {
+    return new FlatButton(
+      child: Text("Iniciar Sesión"),
+      color: Color(0xFF4B9DFE),
+      textColor: Colors.white,
+      padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      onPressed: () {
+        Navigator.pushNamed(context, '/');
+      },
+    );
+  }
+}
