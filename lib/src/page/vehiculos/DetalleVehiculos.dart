@@ -258,18 +258,18 @@ Widget _adicional() {
             descripcion:
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
         _item(
-            icono: Icons.wifi,
-            titulo: "Wifi",
+            icono: Icons.child_care,
+            titulo: "Silla para Bebé",
             descripcion:
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
         _item(
-            icono: Icons.volume_up,
-            titulo: "Sonido",
+            icono: Icons.security,
+            titulo: "Seguro de Viaje",
             descripcion:
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
         _item(
-            icono: Icons.toys,
-            titulo: "Aire Acondicionado",
+            icono: Icons.security,
+            titulo: "Seguro contra Robo",
             descripcion:
                 "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
       ],

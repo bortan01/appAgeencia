@@ -26,14 +26,14 @@ class CourseList {
         imagen:
             "https://imganuncios.mitula.net/nissan_versa_2016_gasolina_nissan_versa_advance_papeles_al_dia_motor_1600_1830096592573291157.jpg",
         tag1: "Costo por dia en Dolares (USD)",
-        tag2: "28.50"),
+        tag2: "\$\28.50"),
     CourseModel(
         id: 1,
         nombre: "Mitsubishi Lancer 2012",
         descripcion:
             "Bolsas de aire frontales multi-etapa para conductor y pasajero delantero, bolsa de aire de rodillas para conductor, cinturones de seguridad de tres puntos para todos los pasajeros, seguros en puertas traseras para niños, sistema de audio",
         tag1: "Costo por dia en Dolares (USD)",
-        tag2: "28.50",
+        tag2: "\$\28.50",
         imagen:
             "https://imotorcarsearch.s3.amazonaws.com/vehicles/large/1144595_304039_2_133edf6fc3a9b362.jpg"),
     CourseModel(
@@ -42,7 +42,7 @@ class CourseList {
         descripcion:
             "El tipo de carrocería de este vehículo es sedán (berlina) con 4 puertas, 5 asientos y FWD (tracción delantera). ",
         tag1: "Costo por dia en Dolares (USD)",
-        tag2: "28.50",
+        tag2: "\$\28.50",
         imagen:
             "https://autosdeprimera.com/v2/wp-content/uploads/2011/08/toyota-corolla-xei-exterior-s.jpg"),
     CourseModel(
@@ -51,7 +51,7 @@ class CourseList {
         descripcion:
             "Es considerado un auto compacto de buen espacio interior y con un aspecto muy confortable en cada uno de los detalles interiores del habitáculo principal. ",
         tag1: "Costo por dia en Dolares (USD)",
-        tag2: "28.50",
+        tag2: "\$\28.50",
         imagen:
             "https://static.cargurus.com/images/site/2009/10/08/13/12/2010_hyundai_elantra-pic-7842769328096699962-640x480.jpeg"),
   ];
