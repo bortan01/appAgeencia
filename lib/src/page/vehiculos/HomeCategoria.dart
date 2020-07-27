@@ -166,9 +166,9 @@ class _HomeCategoriaState extends State<HomeCategoria> {
       stream: cd.cardStreamX,
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        int posicion = snapshot.data;
         return FloatingActionButton.extended(
           onPressed: () {
-            int posicion = snapshot.data;
             switch (posicion) {
               case 0:
 
@@ -209,10 +209,21 @@ class _HomeCategoriaState extends State<HomeCategoria> {
               default:
             }
           },
-          label: Text('Ver Flota de Vehículos'),
+          label: nombreFlota(posicion),
           icon: Icon(Icons.check),
         );
       },
     );
+  }
+
+  Widget nombreFlota(int posicion) {
+    List<String> nombres = [
+      "Sedan",
+      "Camionetas",
+      "Pickup",
+      "Microbus",
+      "Minivans"
+    ];
+    return Text("Ver Flotta de " + nombres[posicion]);
   }
 }

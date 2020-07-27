@@ -139,9 +139,9 @@ class _HomePaquetesState extends State<HomePaquetes> {
       stream: cd.cardStreamX,
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        int posicion = snapshot.data;
         return FloatingActionButton.extended(
           onPressed: () {
-            int posicion = snapshot.data;
             switch (posicion) {
               case 0:
 
@@ -163,7 +163,9 @@ class _HomePaquetesState extends State<HomePaquetes> {
               default:
             }
           },
-          label: Text('Ver Paquetes'),
+          label: (posicion == 0)
+              ? Text('Ver Paquetes Nacionales')
+              : Text('Ver Paquetes Internacionales'),
           icon: Icon(Icons.check),
         );
       },

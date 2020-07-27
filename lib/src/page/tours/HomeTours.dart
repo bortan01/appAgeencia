@@ -148,9 +148,9 @@ class _HomeToursState extends State<HomeTours> {
       stream: cd.cardStreamX,
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        int posicion = snapshot.data;
         return FloatingActionButton.extended(
           onPressed: () {
-            int posicion = snapshot.data;
             switch (posicion) {
               case 0:
 
@@ -179,7 +179,12 @@ class _HomeToursState extends State<HomeTours> {
               default:
             }
           },
-          label: Text('Ver Tours'),
+
+          ///es un operador ternario para sabere cual elemento
+          ///ha sido seleccionado
+          label: (posicion == 0)
+              ? Text('Ver Tours Nacionales')
+              : Text('Ver Tours Internacionales'),
           icon: Icon(Icons.check),
         );
       },
