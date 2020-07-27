@@ -43,8 +43,10 @@ import 'package:peliculas/src/page/usuarios/registro.dart';
 import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/page/vehiculos/HomeCategoria.dart';
+import 'package:peliculas/src/page/vehiculos/HomeMenu.dart';
 import 'package:peliculas/src/page/vehiculos/HomeSedan.dart';
 import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
+import 'package:peliculas/src/page/vehiculos/cotizarVehiculo.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
   return <String, WidgetBuilder>{
@@ -74,11 +76,13 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'ListaTours': (BuildContext context) => ListaTours(),
     'DetalleTours': (BuildContext context) => DetalleTours(),
     //MODULO VEHICULO
+    'menuVehiculos': (BuildContext context) => HomeMenu(),
     'carritos': (BuildContext context) => HomeCategoria(),
     'HomeVehiculos': (BuildContext context) => HomeVehiculos(),
     'HomeSedan': (BuildContext context) => HomeSedan(),
     'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(),
     'Alquiler': (BuildContext context) => Alquiler(),
+    'CotizarAuto': (BuildContext context) => CotizarAuto(),
     //MODULO ENCOMIENDA
     'encomienda': (BuildContext context) => EncomiendaPage(),
     'menuEncomienda': (BuildContext context) => MenuEncomienda(),
