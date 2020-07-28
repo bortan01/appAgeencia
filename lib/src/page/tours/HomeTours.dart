@@ -182,12 +182,18 @@ class _HomeToursState extends State<HomeTours> {
 
           ///es un operador ternario para sabere cual elemento
           ///ha sido seleccionado
-          label: (posicion == 0)
-              ? Text('Ver Tours Nacionales')
-              : Text('Ver Tours Internacionales'),
-          icon: Icon(Icons.check),
+          label: nombreAccion(posicion),
         );
       },
     );
+  }
+
+  Widget nombreAccion(int posicion) {
+    List<String> nombres = [
+      "Ver Tours Nacionales",
+      "Ver Tours Internacionales'",
+      "Cotizar Tours"
+    ];
+    return Text(nombres[posicion]);
   }
 }

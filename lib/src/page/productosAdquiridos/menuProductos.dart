@@ -39,7 +39,7 @@ class _MenuProductosState extends State<MenuProductos> {
     listaPaquete = [
       {
         'posicion': 0,
-        'titulo': "Viajes",
+        'titulo': "Historial de Viajes",
         'subtitulo':
             "En esta seccion encontraras todos los viajes que haz realizado con nosotros is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
         'assetImage': AssetImage("assets/img/paquete-nacional.png"),
@@ -48,11 +48,20 @@ class _MenuProductosState extends State<MenuProductos> {
       },
       {
         'posicion': 1,
-        'titulo': "Vehiculos",
+        'titulo': "Historial de Vehiculos",
         'subtitulo':
             "En esta seccion encontraras todos los vehiculos que has rentado con la ayuda de nuestra agencia It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
         'assetImage': AssetImage("assets/img/sedan1.png"),
         'superficie': 'Sub-America y Europa',
+        'distancia': ' 57,91 millones km',
+      },
+      {
+        'posicion': 2,
+        'titulo': "Historial de Encomiendas",
+        'subtitulo':
+            "Usa esta sencilla herramienta para obtener el historial de encomiendas realizadas.",
+        'assetImage': AssetImage("assets/img/cotizar.png"),
+        'superficie': '74,8 millones km²',
         'distancia': ' 57,91 millones km',
       }
     ];
@@ -135,29 +144,51 @@ class _MenuProductosState extends State<MenuProductos> {
   }
 
   Widget _boton(BuildContext context, int redireccionPagina) {
-    return FloatingActionButton.extended(
-      onPressed: () {
-        switch (redireccionPagina) {
-          case 0:
+    return StreamBuilder(
+      stream: cd.cardStreamX,
+      initialData: 0,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        int posicion = snapshot.data;
+        return FloatingActionButton.extended(
+          onPressed: () {
+            switch (posicion) {
+              case 0:
 
-            ///lo ideal es crear una sola pagina y mandarle los argumentos
-            ///para que dibuje deacuerdo a lo que se le envia
+                ///lo ideal es crear una sola pagina y mandarle los argumentos
+                ///para que dibuje deacuerdo a lo que se le envia
 
-            ///redirigir a paquetes nacionales
-            Navigator.pushNamed(context, 'carrosAlqui');
+                ///redirigir a paquetes nacionales
+                Navigator.pushNamed(context, 'toursAsistidos');
 
-            break;
-          case 1:
+                break;
+              case 1:
 
-            ///redirigir a paquetes intercacionales
-            Navigator.pushNamed(context, 'toursAsistidos');
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'carrosAlqui');
 
-            break;
-          default:
-        }
+                break;
+
+              case 2:
+                Navigator.pushNamed(context, 'HistoEncomienda',
+                    arguments: "Historial de Encomiendas");
+
+                break;
+
+              default:
+            }
+          },
+          label: nombreHistorial(posicion),
+        );
       },
-      label: Text('Ver Historial'),
-      icon: Icon(Icons.check),
     );
+  }
+
+  Widget nombreHistorial(int posicion) {
+    List<String> nombres = [
+      "Ver historial de Viajes",
+      "Ver historial de Vehiculos",
+      "Ver historial de Encomiendas",
+    ];
+    return Text(nombres[posicion]);
   }
 }

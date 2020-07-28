@@ -128,25 +128,25 @@ class Home extends StatelessWidget {
         ]),
         TableRow(children: [
           _crearBotonRedondeado(
-              Colors.blueGrey, Icons.chat, 'Chat', context, "chat"),
-          _crearBotonRedondeado(Colors.lightBlueAccent, Icons.chat,
-              'Chat Admin', context, "chatAdmin"),
-        ]),
-        TableRow(children: [
-          _crearBotonRedondeado(
               Colors.deepPurpleAccent,
               Icons.add_shopping_cart,
               'Servicos Adquiridos',
               context,
               "menuProductos"),
-          _crearBotonRedondeado(Colors.lightBlueAccent, Icons.chat,
-              'disponible espacio', context, " "),
+          _crearBotonRedondeado(
+              Colors.green, Icons.cloud, 'Login', context, "login"),
+        ]),
+        TableRow(children: [
+          _crearBotonRedondeado(
+              Colors.purple, Icons.chat, 'Chat', context, "chat"),
+          _crearBotonRedondeado(
+              Colors.purple, Icons.chat, 'Chat Admin', context, "chatAdmin"),
         ]),
         TableRow(children: [
           _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter,
               'Pruebas', context, "pruebas"),
-          _crearBotonRedondeado(
-              Colors.green, Icons.cloud, 'Login', context, "login"),
+          _crearBotonRedondeado(Colors.lightBlueAccent, Icons.chat,
+              'disponible espacio', context, "/"),
         ]),
       ],
     );

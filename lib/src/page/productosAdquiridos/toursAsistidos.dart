@@ -1,346 +1,90 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/widget/cource_info_widget.dart';
 
 class ToursAsistidos extends StatelessWidget {
-  ToursAsistidos({Key key}) : super(key: key);
-
-  double width;
-
-    @override
+  @override
   Widget build(BuildContext context) {
-    width = MediaQuery.of(context).size.width;
     return Scaffold(
-        body: SingleChildScrollView(
-            child: Container(
-      child: Column(
-        children: <Widget>[
-          _encabezado(context),
-          SizedBox(height: 20),
-          _listado()
-        ],
-      ),
-    )));
-  }
-
-
-  Widget _encabezado(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    return ClipRRect(
-      borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(50), bottomRight: Radius.circular(50)),
-      child: Container(
-          height: 120,
-          width: width,
-          decoration: BoxDecoration(
-            color: Colors.blueAccent,
-          ),
-          child: Stack(
-            fit: StackFit.expand,
-            alignment: Alignment.center,
-            children: <Widget>[
-              Positioned(
-                  top: 10,
-                  right: -120,
-                  child: _circulosContainer(300, Colors.blue)),
-              Positioned(
-                  top: -60,
-                  left: -65,
-                  child: _circulosContainer(width * .5, Colors.blueAccent)),
-              Positioned(
-                  top: -230,
-                  right: -30,
-                  child: _circulosContainer(width * .7, Colors.transparent,
-                      borderColor: Colors.white38)),
-              Positioned(
-                  top: 50,
-                  left: 0,
-                  child: Container(
-                      width: width,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Stack(
-                        children: <Widget>[
-                          Icon(
-                            Icons.keyboard_arrow_left,
-                            color: Colors.white,
-                            size: 40,
-                          ),
-                          Align(
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Tours Asistidos",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500),
-                              ))
-                        ],
-                      ))),
-            ],
-          )),
+      appBar: appBarPaquete(),
+      body: _listado(context),
     );
   }
 
-  Widget _circulosContainer(double height, Color color,
-      {Color borderColor = Colors.transparent, double borderWidth = 2}) {
-    return Container(
-      height: height,
-      width: height,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: color,
-        border: Border.all(color: borderColor, width: borderWidth),
-      ),
+  Widget appBarPaquete() {
+    return AppBar(
+      backgroundColor: Colors.blue,
+      centerTitle: true,
+      title: Text("Historial de viajes"),
     );
   }
 
-  Widget _listado() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            _courceInfo(
-                CourseList.list[0], _paquetes(Colors.blueAccent, -110, -85),
-                background: Colors.blueAccent),
-            Divider(
-              thickness: 1,
-              endIndent: 20,
-              indent: 20,
-            ),
-            _courceInfo(CourseList.list[1], _tours(),
-                background: Colors.blueAccent),
-            Divider(
-              thickness: 1,
-              endIndent: 20,
-              indent: 20,
-            ),
-            _courceInfo(
-                CourseList.list[2], _vehiculos(Colors.blueAccent, -110, -85),
-                background: Colors.blueAccent),
-            Divider(
-              thickness: 1,
-              endIndent: 20,
-              indent: 20,
-            ),
-            _courceInfo(CourseList.list[3], _encomiendas(),
-                background: Colors.blueAccent),
-            Divider(
-              thickness: 1,
-              endIndent: 20,
-              indent: 20,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _card(
-      {Color primaryColor = Colors.blueAccent,
-      String imgPath,
-      Widget backWidget}) {
-    return Container(
-        height: 190,
-        width: width * .34,
-        margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-        decoration: BoxDecoration(
-            color: primaryColor,
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                  offset: Offset(0, 5),
-                  blurRadius: 10,
-                  color: Color(0x12000000))
-            ]),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(20)),
-          child: backWidget,
-        ));
-  }
-
-  Widget _courceInfo(CourseModel model, Widget decoration, {Color background}) {
-    return Container(
-        height: 170,
-        width: width - 20,
-        child: Row(
-          children: <Widget>[
-            AspectRatio(
-              aspectRatio: .7,
-              child: _card(primaryColor: background, backWidget: decoration),
-            ),
-            Expanded(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _listado(BuildContext context) {
+    List<CourseModel> miListaPaquetes = listaInventada();
+    //Posiblemente esto se convierta en futureBilder
+    return ListView.builder(
+        itemCount: miListaPaquetes.length,
+        itemBuilder: (BuildContext context, int index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, "DetallePaquetes",
+                  arguments: miListaPaquetes[index]);
+            },
+            child: Column(
               children: <Widget>[
-                SizedBox(height: 15),
-                Container(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: <Widget>[
-                      Expanded(
-                        child: Text(model.nombre,
-                            style: TextStyle(
-                                color: Colors.lightBlue,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold)),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      SizedBox(width: 10)
-                    ],
-                  ),
-                ),
-                SizedBox(height: 15),
-                Text(model.descripcion,
-                    style: AppTheme.h6Style
-                        .copyWith(fontSize: 12, color: Colors.purple)),
-                SizedBox(height: 15),
-                Row(
-                  children: <Widget>[
-                    _chip(model.tag1, Colors.green, height: 5),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    _chip(model.tag2, Colors.blue, height: 5),
-                  ],
+                ///AQUI ES DONDE SE CREAN LAS IMAGENES
+                CourceInfoWidget(model: miListaPaquetes[index]),
+                //ESTA ES LA LINEA DE ABAJO
+                Divider(
+                  thickness: 1,
+                  endIndent: 20,
+                  indent: 20,
                 )
               ],
-            ))
-          ],
-        ));
+            ),
+          );
+        });
   }
 
-  Widget _chip(String text, Color textColor,
-      {double height = 0, bool isPrimaryCard = false}) {
-    return Container(
-      alignment: Alignment.center,
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-        color: textColor.withAlpha(isPrimaryCard ? 200 : 50),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-            color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
-      ),
-    );
+  List<CourseModel> listaInventada() {
+    final List<CourseModel> list = [
+      CourseModel(
+          id: 0,
+          nombre: "!VAMONOS A COSTA RICA¡",
+          descripcion:
+              "Lorem Ipsum is simply dummy text of theSy. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has",
+          imagen:
+              "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=7C_YX7hStUoAX8L4gfs&_nc_ht=scontent-mia3-1.xx&oh=7011c279fc4440049946ee3885011486&oe=5F3D9421",
+          tag1: "DEL 4 AL 9 DE ABRIL 2019",
+          tag2: "\$\28.50"),
+      CourseModel(
+          id: 1,
+          nombre: "VÁMONOS A PANAMÁ (POR TIERRA)",
+          descripcion:
+              "It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. ",
+          tag1: "DEL 4 AL 12 DE ABRIL 2020",
+          tag2: "\$\348.50",
+          imagen:
+              "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/84811539_986682118399150_14819376632954880_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_ohc=DaYgZfeMq4IAX9LlsJz&_nc_oc=AQleHmuMwN8IEQ6XZ8qOp785dw0Dv7WovH8apQb2RmJkOG3tDaWlQweXn4MGH28-F4c&_nc_ht=scontent-mia3-2.xx&oh=ec094f10f32ce5e6a69f51fa668a4c0e&oe=5F3F29BE"),
+      CourseModel(
+          id: 2,
+          nombre: "¡¡VAMONOS A ORIENTE - VOLCAN DE CONCHAGUA!!!",
+          descripcion:
+              "Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature",
+          tag1: "22 DE FEBRERO DE 2020",
+          tag2: "\$\348.50",
+          imagen:
+              "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/83469740_980152025718826_5435872388350738432_o.jpg?_nc_cat=104&_nc_sid=730e14&_nc_ohc=C_36jJc6AzUAX_DXxQM&_nc_ht=scontent-mia3-1.xx&oh=3d06f03116be2b6e2298b4ed8f98f955&oe=5F3F529D"),
+      CourseModel(
+          id: 3,
+          nombre: "Hyundai Elantra 2010",
+          descripcion:
+              "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum,",
+          tag1: "DEL 4 AL 8 DE ABRIL 2020",
+          tag2: "\$\21.50",
+          imagen:
+              "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/83353671_979272542473441_6245999208600436736_o.jpg?_nc_cat=110&_nc_sid=730e14&_nc_ohc=cgSXXxAVhBEAX-ZsmDl&_nc_ht=scontent-mia3-2.xx&oh=2bd55e51f9fa0dc03ee5ac6b71f2767f&oe=5F3FFC91"),
+    ];
+    return list;
   }
-
-  Widget _paquetes(Color primaryColor, double top, double left) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: top,
-          left: left,
-          child: CircleAvatar(
-            radius: 100,
-            backgroundColor: Colors.blue,
-          ),
-        ),
-        Positioned(
-          top: -30,
-          right: -10,
-          child: _circulosContainer(80, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-        Positioned(
-          top: 110,
-          right: -50,
-          child: CircleAvatar(
-            radius: 60,
-            backgroundColor: Colors.blue,
-            child: CircleAvatar(radius: 40, backgroundColor: Colors.blueAccent),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _tours() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: -65,
-          left: -65,
-          child: CircleAvatar(
-            radius: 70,
-            backgroundColor: Colors.blue,
-            child: CircleAvatar(radius: 30, backgroundColor: Colors.blueAccent),
-          ),
-        ),
-        Positioned(
-            bottom: -35,
-            right: -40,
-            child: CircleAvatar(backgroundColor: Colors.blue, radius: 40)),
-        Positioned(
-          top: 50,
-          left: -40,
-          child: _circulosContainer(70, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-      ],
-    );
-  }
-
-  Widget _vehiculos(Color primaryColor, double top, double left) {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: top,
-          left: left,
-          child: CircleAvatar(
-            radius: 100,
-            backgroundColor: Colors.blue,
-          ),
-        ),
-        Positioned(
-          top: -30,
-          right: -10,
-          child: _circulosContainer(80, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-        Positioned(
-          top: 110,
-          right: -50,
-          child: CircleAvatar(
-            radius: 60,
-            backgroundColor: Colors.blue,
-            child: CircleAvatar(radius: 40, backgroundColor: Colors.blueAccent),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _encomiendas() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: -65,
-          left: -65,
-          child: CircleAvatar(
-            radius: 70,
-            backgroundColor: Colors.blue,
-            child: CircleAvatar(radius: 30, backgroundColor: Colors.blueAccent),
-          ),
-        ),
-        Positioned(
-            bottom: -35,
-            right: -40,
-            child: CircleAvatar(backgroundColor: Colors.blue, radius: 40)),
-        Positioned(
-          top: 50,
-          left: -40,
-          child: _circulosContainer(70, Colors.transparent,
-              borderColor: Colors.white),
-        ),
-      ],
-    );
-  }
-
-
 }

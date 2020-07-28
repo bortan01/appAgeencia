@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/chat/ChatMessage.dart';
 
 class ChatScreen extends StatefulWidget {
-  final String name='';
+  final String name = '';
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -18,21 +18,18 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: new AppBar(
-          backgroundColor: Colors.blueGrey,
+          backgroundColor: Theme.of(context).primaryColor,
           title: new Text('Agencia de viajes'),
         ),
         body: new Container(
           child: new Column(
             children: <Widget>[
               new Flexible(
-
                   child: new ListView.builder(
-
-                      itemBuilder: (_, int index) => _messages[index],
-                      itemCount: _messages.length,
-                      reverse: true ,
-
-                  )),
+                itemBuilder: (_, int index) => _messages[index],
+                itemCount: _messages.length,
+                reverse: true,
+              )),
               new Divider(height: 1.0),
               new Container(
                 // color: Colors.blueAccent,
@@ -57,7 +54,8 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                     _isTyped = t.length > 0;
                   });
                 },
-                    decoration: new InputDecoration.collapsed(hintText: "Enviar mensaje"),
+                decoration:
+                    new InputDecoration.collapsed(hintText: "Enviar mensaje"),
               )),
               new Container(
                 child: new IconButton(
@@ -82,7 +80,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
     setState(() {
       _messages.insert(0, message);
-      var data = messageDAta.firstWhere((t) =>t.name == widget.name );
+      var data = messageDAta.firstWhere((t) => t.name == widget.name);
       data.message = message.text;
     });
     message.animationController.forward();
