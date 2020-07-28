@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 import 'package:peliculas/src/widget/cource_info_widget.dart';
 
-class HomeSedan extends StatelessWidget {
-  HomeSedan({Key key}) : super(key: key);
+class ListaVehiculos extends StatelessWidget {
+  ListaVehiculos({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -42,10 +42,8 @@ import 'package:peliculas/src/page/usuarios/recuperarContrasena.dart';
 import 'package:peliculas/src/page/usuarios/registro.dart';
 import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
-import 'package:peliculas/src/page/vehiculos/CategoriasVehiculos.dart';
+import 'package:peliculas/src/page/vehiculos/ListaVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/Menu.dart';
-import 'package:peliculas/src/page/vehiculos/HomeSedan.dart';
-import 'package:peliculas/src/page/vehiculos/HomeVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/cotizarVehiculo.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
@@ -77,9 +75,8 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'DetalleTours': (BuildContext context) => DetalleTours(),
     //MODULO VEHICULO
     'menuVehiculos': (BuildContext context) => HomeMenu(),
-    'carritos': (BuildContext context) => HomeCategoria(),
-    'HomeVehiculos': (BuildContext context) => HomeVehiculos(),
-    'HomeSedan': (BuildContext context) => HomeSedan(),
+
+    'ListaVehiculos': (BuildContext context) => ListaVehiculos(),
     'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(),
     'Alquiler': (BuildContext context) => Alquiler(),
     'CotizarAuto': (BuildContext context) => CotizarAuto(),

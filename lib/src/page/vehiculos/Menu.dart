@@ -39,14 +39,51 @@ class _HomeMenuState extends State<HomeMenu> {
     listaPaquete = [
       {
         'posicion': 0,
-        'titulo': "Reservar Vehículo",
-        'subtitulo': "¡Vehículos con precios accesibles todos los días!",
+        'titulo': "Sedan",
+        'subtitulo':
+            "Una característica clave en un sedán es la seguridad que aporta. Los frenos antibloqueo son la primera línea de defensa ante cualquier accidente. Al momento de la colisión, las bolsas de aire pueden salvar la vida de tus pasajeros.",
         'assetImage': AssetImage("assets/img/sedan1.png"),
-        'superficie': 'Todo El Salvador',
+        'superficie': 'Auto Familiar',
         'distancia': '0 km',
       },
       {
         'posicion': 1,
+        'titulo': "Camionetas",
+        'subtitulo':
+            "Empleado generalmente para el transporte de mercancías, un término que hoy en día se aplica a veces informalmente a distintos tipos de automóviles, en concreto pickups, vehículos todoterreno, furgonetas, monovolúmenes, y familiares.",
+        'assetImage': AssetImage("assets/img/camioneta.png"),
+        'superficie': '74,8 millones km²',
+        'distancia': ' 57,91 millones km',
+      },
+      {
+        'posicion': 2,
+        'titulo': "Pickup",
+        'subtitulo':
+            "Empleado generalmente para el transporte de mercancías, y que tiene en su parte trasera una zona de carga descubierta (denominada caja, batea, balde, carrocería, platón, cama o palangana), en la cual se pueden colocar objetos grandes.",
+        'assetImage': AssetImage("assets/img/pickup.png"),
+        'superficie': '460,2 millones km²',
+        'distancia': '108,2 millones km',
+      },
+      {
+        'posicion': 3,
+        'titulo': "Microbus",
+        'subtitulo':
+            "Gran furgoneta que tiene asientos en la parte posterior para los pasajeros y ventanas a los lados.",
+        'assetImage': AssetImage("assets/img/microbus.png"),
+        'superficie': '510,1 millones km²',
+        'distancia': '149,6 millones km',
+      },
+      {
+        'posicion': 4,
+        'titulo': "Minivans",
+        'subtitulo':
+            "Ofrece características aptas para la familia, además de toda la tecnología que se podría desear en un paquete atractivo y a un precio muy conveniente.",
+        'assetImage': AssetImage("assets/img/minivan.png"),
+        'superficie': '144,8 millones km²',
+        'distancia': '227,9 millones km',
+      },
+      {
+        'posicion': 5,
         'titulo': "Cotizar Vehículo",
         'subtitulo': "Ven y Cotiza tu Vehículo",
         'assetImage': AssetImage("assets/img/cotizar-tours.png"),
@@ -137,9 +174,9 @@ class _HomeMenuState extends State<HomeMenu> {
       stream: cd.cardStreamX,
       initialData: 0,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
+        int posicion = snapshot.data;
         return FloatingActionButton.extended(
           onPressed: () {
-            int posicion = snapshot.data;
             switch (posicion) {
               case 0:
 
@@ -147,12 +184,44 @@ class _HomeMenuState extends State<HomeMenu> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'carritos', arguments: "Reservar");
+                Navigator.pushNamed(context, 'ListaVehiculos',
+                    arguments: "Sedan");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'ListaVehiculos',
+                    arguments: "Camionetas");
+
+                break;
+              case 2:
+
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'ListaVehiculos',
+                    arguments: "Pickup");
+
+                break;
+              case 3:
+
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'ListaVehiculos',
+                    arguments: "Microbus");
+
+                break;
+              case 4:
+
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'ListaVehiculos',
+                    arguments: "Minivans");
+
+                break;
+
+              case 5:
+
+                ///redirigir a paquetes intercacionales
+                ///redirigir a paquetes intercacionales
+                print("en el cotizador");
                 Navigator.pushNamed(context, 'CotizarAuto',
                     arguments: "Cotizar");
 
@@ -160,10 +229,22 @@ class _HomeMenuState extends State<HomeMenu> {
               default:
             }
           },
-          label: Text('Ver Vehiculos'),
+          label: nombreFlota(posicion),
           icon: Icon(Icons.check),
         );
       },
     );
+  }
+
+  Widget nombreFlota(int posicion) {
+    List<String> nombres = [
+      "Ver Flota de Sedan",
+      "Ver Flota de Camionetas",
+      " Ver Flota de Pickup",
+      "Ver Flota de Microbus",
+      "Ver Flota de Minivans",
+      "Cotizar Vehiculos"
+    ];
+    return Text(nombres[posicion]);
   }
 }

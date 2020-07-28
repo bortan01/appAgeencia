@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/page/vehiculos/CategoriasVehiculos.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
 
 class DetalleVehiculos extends StatelessWidget {
@@ -128,10 +127,7 @@ Container _botones(BuildContext context) {
             ],
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => HomeCategoria()),
-            );
+            Navigator.pop(context);
           },
         ),
         Container(
