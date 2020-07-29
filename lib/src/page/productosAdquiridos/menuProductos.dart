@@ -169,7 +169,7 @@ class _MenuProductosState extends State<MenuProductos> {
                 break;
 
               case 2:
-                Navigator.pushNamed(context, 'HistoEncomienda',
+                Navigator.pushNamed(context, 'envios',
                     arguments: "Historial de Encomiendas");
 
                 break;

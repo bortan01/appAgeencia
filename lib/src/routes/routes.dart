@@ -28,6 +28,7 @@ import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/ListaPaquetes.dart';
+import 'package:peliculas/src/page/productosAdquiridos/encomiendasRealizadas.dart';
 import 'package:peliculas/src/page/productosAdquiridos/menuProductos.dart';
 import 'package:peliculas/src/page/productosAdquiridos/toursAsistidos.dart';
 import 'package:peliculas/src/page/productosAdquiridos/vehiculosAlquilados.dart';
@@ -102,5 +103,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'menuProductos': (BuildContext context) => MenuProductos(),
     'toursAsistidos': (BuildContext context) => ToursAsistidos(),
     'carrosAlqui': (BuildContext context) => VehiculoAlquilado(),
+    'envios': (BuildContext context) => EncomiendasRealizadas(),
   };
 }
