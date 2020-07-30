@@ -11,7 +11,7 @@ class CourceInfoWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     return Container(
-        height: 170,
+        height: 200,
         width: width - 20,
         child: Row(
           children: <Widget>[_fotografia(width), _texto()],
@@ -83,11 +83,14 @@ class CourceInfoWidget extends StatelessWidget {
             style: AppTheme.h6Style
                 .copyWith(fontSize: 12, color: Colors.blueGrey)),
         SizedBox(height: 15),
-        Row(
+
+        ///para evitar problemas por si la pantalla es peque;a
+
+        Column(
           children: <Widget>[
             _chip(model.tag1, Colors.green, height: 5),
             SizedBox(
-              width: 10,
+              height: 5.0,
             ),
             _chip(model.tag2, Colors.blue, height: 5),
           ],
@@ -107,6 +110,7 @@ class CourceInfoWidget extends StatelessWidget {
       ),
       child: Text(
         text,
+        maxLines: 1,
         style: TextStyle(
             color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
       ),

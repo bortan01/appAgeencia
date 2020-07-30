@@ -85,7 +85,7 @@ class Home extends StatelessWidget {
         title: Text('Martínez Travels & Tours',
             style: TextStyle(
                 color: Colors.white,
-                fontSize: 24.0,
+                //fontSize: 24.0,
                 fontWeight: FontWeight.bold)),
       ),
       drawer: getDrawerDefault(context),
@@ -143,8 +143,8 @@ class Home extends StatelessWidget {
               Colors.purple, Icons.chat, 'Chat Admin', context, "chatAdmin"),
         ]),
         TableRow(children: [
-          _crearBotonRedondeado(Colors.blueAccent, Icons.movie_filter,
-              'Pruebas', context, "pruebas"),
+          _crearBotonRedondeado(
+              Colors.blueAccent, Icons.movie_filter, 'Pruebas', context, "/"),
           _crearBotonRedondeado(Colors.lightBlueAccent, Icons.chat,
               'disponible espacio', context, "/"),
         ]),

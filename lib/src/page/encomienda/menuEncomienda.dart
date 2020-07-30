@@ -156,7 +156,7 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'HistoEncomienda',
+                Navigator.pushNamed(context, 'envios',
                     arguments: "Historial de Encomiendas");
 
                 break;
