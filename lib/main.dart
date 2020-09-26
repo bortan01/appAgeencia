@@ -1,15 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:peliculas/src/providers/push_notification_provider.dart';
 import 'package:peliculas/src/routes/routes.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+    final pushProvider = new PushNotificationProvider();
+    pushProvider.iniciarNotificaciones();
+    pushProvider.mensajesStreams.listen((String argumento) {
+    print("argumento desde main $argumento");
+     navigatorKey.currentState.pushNamed(argumento);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      navigatorKey: navigatorKey,
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       supportedLocales: [
         const Locale('es', 'ES'), // American English
