@@ -2,8 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-//dVPpP65klCc:APA91bE89sOevN-Bxy4jVRXKwwkUrfAONFGL0xFeQA_R86hoem_OZaGQUVwB7LzEIzxE-M93cNksD32kueKyqxq0Hf8tHcHOnPXGqAa000Wj8V5PxCxXJwdq4THs5bFMOF2ERzzcarm0
-//eAArxu_cSFqgwWetIMn4vn:APA91bEFfBUTIPg407NVDvoYDBM-QTsYBfVtUn5swL2fM1lbYiWRjXF9PdQeO0ArTvvb9xVP8vmJcKp4wG0Y0GTmpwRDMHKone9mcyUG13hZGYLrGWsD1l54WVZ8iOF7YkZz4dGYO_sA
+//cg7jHTZxRmuLoLePCmVfR3:APA91bEaEaN0fw_iWrphfXd9uk1JcyIYBk0k3XAqh4ESLOKmzRmFCPx5umvhRKlsy4URu0n13ft_fyPI_cBoqTfxY7WNe9No69bz9ANvrVEjnU_dmrVsaLPGbuhQ3oYfwVPaUISHAChX
 class PushNotificationProvider {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
@@ -33,7 +32,7 @@ class PushNotificationProvider {
     final token = await _firebaseMessaging.getToken();
     print("el token es $token");
 
-//    await _firebaseMessaging.subscribeToTopic("TODOS_LOS_ANDROID");
+    await _firebaseMessaging.subscribeToTopic("TODOS_LOS_USUARIOS");
 
     _firebaseMessaging.configure(
       onMessage: onMessage,
