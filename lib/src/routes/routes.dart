@@ -23,6 +23,9 @@ import 'package:peliculas/src/page/encomienda/listaEncomienda.dart';
 import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
 
 import 'package:peliculas/src/page/inicio/pruebaList.dart';
+import 'package:peliculas/src/page/maps/acceso_gps_page.dart';
+import 'package:peliculas/src/page/maps/loading_gps_page.dart';
+import 'package:peliculas/src/page/maps/mapa_page.dart';
 import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
 
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
@@ -63,7 +66,11 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'list': (BuildContext context) => ListaPage(),
     'listaPeliculas': (BuildContext context) => ListaPeliculas(),
     //AQUI EMPIEZAN LOS NUESTROS
-    '/': (BuildContext context) => Home(),
+    // '/': (BuildContext context) => Home(),
+     '/': (BuildContext context) => LoadingPage(),
+     'loading': (BuildContext context) => LoadingPage(),
+     'mapa': (BuildContext context) => MapaPage(),
+     'acceso_gps': (BuildContext context) => AccesoGpsPage(),
     //MODULO PAQUETES
     'HomePaquetes': (BuildContext context) => HomePaquetes(),
     'ListaPaquetes': (BuildContext context) => ListaPaquetes(),
