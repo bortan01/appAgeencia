@@ -67,7 +67,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'listaPeliculas': (BuildContext context) => ListaPeliculas(),
     //AQUI EMPIEZAN LOS NUESTROS
     // '/': (BuildContext context) => Home(),
-     '/': (BuildContext context) => LoadingPage(),
+     '/': (BuildContext context) => AccesoGpsPage(),
      'loading': (BuildContext context) => LoadingPage(),
      'mapa': (BuildContext context) => MapaPage(),
      'acceso_gps': (BuildContext context) => AccesoGpsPage(),

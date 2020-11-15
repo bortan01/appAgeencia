@@ -1,8 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class AccesoGpsPage extends StatelessWidget {
-  // const name({Key key}) : super(key: key);
+class AccesoGpsPage extends StatefulWidget {
+  @override
+  _AccesoGpsPageState createState() => _AccesoGpsPageState();
+}
+
+class _AccesoGpsPageState extends State<AccesoGpsPage>
+    with WidgetsBindingObserver {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    ///PARA DETECTAR EL CAMBIO DE LA APLICACION
+    if (state == AppLifecycleState.resumed) {
+      if (await Permission.location.isGranted) {
+        Navigator.pushNamed(context, "loading");
+      }
+    }
+    super.didChangeAppLifecycleState(state);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +46,7 @@ class AccesoGpsPage extends StatelessWidget {
               shape: StadiumBorder(),
               onPressed: () async {
                 final status = await Permission.location.request();
-                this.accesoGPS(context ,status);
+                this.accesoGPS(context, status);
               },
             ),
           ],
