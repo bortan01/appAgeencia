@@ -10,8 +10,8 @@ class CourseModel {
   CourseModel(
       {@required this.nombre,
       @required this.descripcion,
-      this.tag1,
-      this.tag2,
+      @required this.tag1,
+      @required this.tag2,
       @required this.imagen,
       @required this.id});
 }

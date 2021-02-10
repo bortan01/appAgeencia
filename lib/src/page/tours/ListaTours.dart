@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/providers/paquete_provider.dart';
+import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/widget/cource_info_widget.dart';
 
 class ListaTours extends StatelessWidget {
-  final PaqueteProvider peliculaProvider = new PaqueteProvider();
+  final turServices = new TurServices();
   @override
   Widget build(BuildContext context) {
     final String argumento = ModalRoute.of(context).settings.arguments;
-    peliculaProvider.getPopulares();
     return Scaffold(
       appBar: appBarPaquete(argumento),
       body: _listado(context),
@@ -24,20 +23,53 @@ class ListaTours extends StatelessWidget {
   }
 
   Widget _listado(BuildContext context) {
-    List<CourseModel> miListaPaquetes = listaInventada();
+    //Posiblemente esto se convierta en futureBilder
+    return FutureBuilder(
+        future: turServices.obtenerTur(),
+        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              print('hecho');
+              return _creandoElementos(context, snapshot.data);
+            case ConnectionState.active:
+              print('activo');
+              return Text('activo');
+            case ConnectionState.waiting:
+              print('esperando');
+              return Center(child: CircularProgressIndicator());
+            default:
+              print('esperando');
+              return Text('ninguno');
+          }
+        });
+  }
+
+  Widget _creandoElementos(BuildContext context, List<dynamic> data) {
+    List<CourseModel> lista = [];
+
+    data.forEach((element) {
+      lista.add(new CourseModel(
+          id: int.parse(element['id_tours']),
+          nombre: element['nombreTours'],
+          descripcion: element['descripcion_tur'],
+          imagen: 'http://10.0.2.2:80/API-REST-PHP/uploads/225701202101229.jpg',
+          tag1: "tag1",
+          tag2: "tag2"));
+    });
+
     //Posiblemente esto se convierta en futureBilder
     return ListView.builder(
-        itemCount: miListaPaquetes.length,
+        itemCount: lista.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
               Navigator.pushNamed(context, "DetalleTours",
-                  arguments: miListaPaquetes[index]);
+                  arguments: lista[index]);
             },
             child: Column(
               children: <Widget>[
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
-                CourceInfoWidget(model: miListaPaquetes[index]),
+                CourceInfoWidget(model: lista[index]),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(
                   thickness: 1,
