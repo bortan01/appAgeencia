@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 import 'package:peliculas/src/services/turs_services.dart';
+import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/cource_info_widget.dart';
 
 class ListaTours extends StatelessWidget {
@@ -46,13 +47,12 @@ class ListaTours extends StatelessWidget {
 
   Widget _creandoElementos(BuildContext context, List<dynamic> data) {
     List<CourseModel> lista = [];
-
     data.forEach((element) {
       lista.add(new CourseModel(
           id: int.parse(element['id_tours']),
           nombre: element['nombreTours'],
           descripcion: element['descripcion_tur'],
-          imagen: 'http://10.0.2.2:80/API-REST-PHP/uploads/225701202101229.jpg',
+          imagen: transformarFoto(element['foto']),
           tag1: "tag1",
           tag2: "tag2"));
     });

@@ -4,6 +4,7 @@ import 'package:peliculas/src/services/conf.dart';
 
 class TurServices {
   Future<List<dynamic>> obtenerTur() async {
+    print('haciendo peticion obtener tur');
     final url = '${Conf.urlServidor}TurPaquete/show';
     final response = await http.get(url);
     if (response.statusCode == 200) {
