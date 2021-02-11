@@ -9,23 +9,24 @@ class CourceInfoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return Container(
-        height: 200,
-        width: width - 20,
-        child: Row(
-          children: <Widget>[_fotografia(width), _texto()],
+        height: 470,
+        child: Column(
+          children: <Widget>[
+            _titulo(),
+            _fotografia(),
+            _descripcion(),
+          ],
         ));
   }
 
-  AspectRatio _fotografia(double width) {
-    return AspectRatio(
-      aspectRatio: .7,
+  Widget _fotografia() {
+    return Container(
+      // aspectRatio: 1.2,
       child: Hero(
         tag: model.id.toString(),
         child: Container(
-            height: 190,
-            width: width * .34,
+            height: 290,
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
                 color: Colors.blueAccent,
@@ -48,51 +49,36 @@ class CourceInfoWidget extends StatelessWidget {
     );
   }
 
-  Expanded _texto() {
+  Expanded _descripcion() {
     return Expanded(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(height: 15),
         Container(
-          child: Row(
-            mainAxisSize: MainAxisSize.max,
-            children: <Widget>[
-              Expanded(
-                child: Text(model.nombre,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                        color: Colors.lightBlue,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold)),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              SizedBox(width: 10)
-            ],
-          ),
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: Text(model.descripcion,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 4,
+              textAlign: TextAlign.justify,
+              style: AppTheme.h6Style
+                  .copyWith(fontSize: 12, color: Colors.blueGrey)),
         ),
-        SizedBox(height: 15),
-        Text(model.descripcion,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 4,
-            textAlign: TextAlign.justify,
-            style: AppTheme.h6Style
-                .copyWith(fontSize: 12, color: Colors.blueGrey)),
         SizedBox(height: 15),
 
         ///para evitar problemas por si la pantalla es peque;a
 
         Column(
           children: <Widget>[
-            _chip(model.tag1, Colors.green, height: 5),
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                child: _chip(model.tag1, Colors.green, height: 5)),
             SizedBox(
               height: 5.0,
             ),
-            _chip(model.tag2, Colors.blue, height: 5),
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 15.0),
+                child: _chip(model.tag2, Colors.blue, height: 5)),
           ],
         )
       ],
@@ -113,6 +99,30 @@ class CourceInfoWidget extends StatelessWidget {
         maxLines: 1,
         style: TextStyle(
             color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
+      ),
+    );
+  }
+
+  Widget _titulo() {
+    return Container(
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Expanded(
+            child: Text(model.nombre,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+                style: TextStyle(
+                    color: Colors.lightBlue,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold)),
+          ),
+          SizedBox(
+            width: 5,
+          ),
+          SizedBox(width: 10)
+        ],
       ),
     );
   }
