@@ -341,35 +341,24 @@ class _DetalleToursState extends State<DetalleTours> {
   }
 
   _swiperTarjetas(BuildContext context, dynamic galeria) {
-    ///estos son datos quemados
-
-    final tamanioPantalla = MediaQuery.of(context).size;
-
     return Container(
-      //color: Colors.blue,
-      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: Swiper(
-        layout: SwiperLayout.STACK,
-        itemWidth: tamanioPantalla.width * 0.9,
-        itemHeight: tamanioPantalla.height * 0.3,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: GestureDetector(
-                  onTap: () {},
-                  child: FadeInImage(
-                    image: NetworkImage(transformarFoto(galeria[index])),
-                    placeholder: AssetImage('assets/img/no-image.jpg'),
-                    fit: BoxFit.fill,
-                  ),
-                )),
-          );
-        },
-        itemCount: galeria.length,
-        // pagination: new SwiperPagination(),
-        // control: new SwiperControl(),
-      ),
-    );
+        width: double.infinity,
+        height: 250.0,
+        padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+        child: new Swiper(
+          itemBuilder: (BuildContext context, int index) {
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: new FadeInImage(
+                image: NetworkImage(transformarFoto(galeria[index])),
+                placeholder: AssetImage('assets/img/no-image.jpg'),
+                fit: BoxFit.fill,
+              ),
+            );
+          },
+          itemCount: galeria.length,
+          pagination: new SwiperPagination(),
+          control: new SwiperControl(),
+        ));
   }
 }
