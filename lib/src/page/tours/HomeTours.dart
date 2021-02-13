@@ -73,7 +73,7 @@ class _HomeToursState extends State<HomeTours> {
           child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              appBarCategorias(),
+              appBarCategorias(context),
               elementosHorizontal(),
               elementoSeleccionado(),
             ],
@@ -135,9 +135,9 @@ class _HomeToursState extends State<HomeTours> {
     );
   }
 
-  Widget appBarCategorias() {
+  Widget appBarCategorias(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.blue,
+      backgroundColor: Theme.of(context).accentColor,
       centerTitle: true,
       title: Text("Categoría de Tours"),
     );
@@ -150,6 +150,7 @@ class _HomeToursState extends State<HomeTours> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         int posicion = snapshot.data;
         return FloatingActionButton.extended(
+          backgroundColor: Theme.of(context).accentColor,
           onPressed: () {
             switch (posicion) {
               case 0:

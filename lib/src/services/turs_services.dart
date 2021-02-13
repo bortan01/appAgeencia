@@ -14,4 +14,16 @@ class TurServices {
       return [];
     }
   }
+
+  Future<dynamic> obtenerInformacionAdicional(String idTur) async {
+    print('haciendo peticion informacion adicional');
+    final url = '${Conf.urlServidor}TurPaquete/showAdicional?id_tours=$idTur';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final jsonResponse = convert.jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      return null;
+    }
+  }
 }

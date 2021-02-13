@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/providers/push_notification_provider.dart';
 import 'package:peliculas/src/routes/routes.dart';
-import 'package:peliculas/src/theme/tema.dart';
+// import 'package:peliculas/src/theme/tema.dart';
 
 void main() => runApp(MyApp());
 
@@ -40,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Agencia Martinez Travels y Tours',
       initialRoute: '/',
       routes: getAplicationRoute(),
-      theme: miTema,
+      theme: AppTheme.lightTheme,
     );
   }
 }

@@ -21,8 +21,8 @@ class CourceInfoWidget extends StatelessWidget {
   }
 
   Widget _fotografia() {
-    return Container(
-      // aspectRatio: 1.2,
+    return AspectRatio(
+      aspectRatio: 1.4,
       child: Hero(
         tag: model.id.toString(),
         child: Container(

@@ -28,7 +28,7 @@ class CardViewAutoView extends StatelessWidget {
         child: new Stack(
           alignment: Alignment.topCenter,
           children: <Widget>[
-            _tarjetaDetalle(width),
+            _tarjetaDetalle(context, width),
             _animacionImagen(width),
           ],
         ));
@@ -42,7 +42,7 @@ class CardViewAutoView extends StatelessWidget {
     );
   }
 
-  Widget _tarjetaDetalle(double width) {
+  Widget _tarjetaDetalle(BuildContext context, double width) {
     return new Container(
         width: width,
         height: 300.0,

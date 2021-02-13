@@ -11,14 +11,14 @@ class ListaTours extends StatelessWidget {
   Widget build(BuildContext context) {
     final String argumento = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: appBarPaquete(argumento),
+      appBar: appBarPaquete(context, argumento),
       body: _listado(context),
     );
   }
 
-  Widget appBarPaquete(String argumento) {
+  Widget appBarPaquete(BuildContext context, String argumento) {
     return AppBar(
-      backgroundColor: Colors.blue,
+      backgroundColor: Theme.of(context).accentColor,
       centerTitle: true,
       title: Text("Tours: " + argumento),
     );
@@ -64,7 +64,8 @@ class ListaTours extends StatelessWidget {
               tag2: 'Fecha de Salida ' + fechaFormateada);
           return GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, "DetalleTours", arguments: tur);
+              Navigator.pushNamed(context, "DetalleTours",
+                  arguments: data[index]);
             },
             child: Column(
               children: <Widget>[
