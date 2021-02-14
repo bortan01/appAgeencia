@@ -3,7 +3,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/providers/push_notification_provider.dart';
 import 'package:peliculas/src/routes/routes.dart';
-// import 'package:peliculas/src/theme/tema.dart';
+import 'package:peliculas/src/services/turs_services.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
 
@@ -29,19 +30,26 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      localizationsDelegates: GlobalMaterialLocalizations.delegates,
-      supportedLocales: [
-        const Locale('es', 'ES'), // American English
-        const Locale('en', 'US'), // ESPAÑOL DE ESPAÑA A
-        // ...
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (BuildContext context) => new TurServices(),
+        )
       ],
-      title: 'Agencia Martinez Travels y Tours',
-      initialRoute: '/',
-      routes: getAplicationRoute(),
-      theme: AppTheme.lightTheme,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        navigatorKey: navigatorKey,
+        localizationsDelegates: GlobalMaterialLocalizations.delegates,
+        supportedLocales: [
+          const Locale('es', 'ES'), // American English
+          const Locale('en', 'US'), // ESPAÑOL DE ESPAÑA A
+          // ...
+        ],
+        title: 'Agencia Martinez Travels y Tours',
+        initialRoute: '/',
+        routes: getAplicationRoute(),
+        theme: AppTheme.lightTheme,
+      ),
     );
   }
 }

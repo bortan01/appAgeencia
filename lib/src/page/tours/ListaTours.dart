@@ -4,6 +4,7 @@ import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/cource_info_widget.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class ListaTours extends StatelessWidget {
   final turServices = new TurServices();
@@ -64,6 +65,7 @@ class ListaTours extends StatelessWidget {
               tag2: 'Fecha de Salida ' + fechaFormateada);
           return GestureDetector(
             onTap: () {
+              Provider.of<TurServices>(context, listen: false).increment();
               Navigator.pushNamed(context, "DetalleTours",
                   arguments: data[index]);
             },

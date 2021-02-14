@@ -4,6 +4,7 @@ import 'package:peliculas/src/models/paquete_models.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
+import 'package:provider/provider.dart';
 
 class DetalleTours extends StatefulWidget {
   @override
@@ -17,15 +18,16 @@ class _DetalleToursState extends State<DetalleTours> {
   @override
   void initState() {
     super.initState();
-    infoAdicional = _getInfoAdicional('3');
+    infoAdicional = _getInfoAdicional();
   }
 
-  Future<dynamic> _getInfoAdicional(dynamic idTours) async {
-    return await TurServices().obtenerInformacionAdicional(idTours);
+  Future<dynamic> _getInfoAdicional() async {
+    return await TurServices().obtenerInformacionAdicional('3');
   }
 
   @override
   Widget build(BuildContext context) {
+    Provider.of<TurServices>(context, listen: false);
     final dynamic tur = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(

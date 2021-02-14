@@ -1,8 +1,20 @@
 import 'dart:convert' as convert;
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:peliculas/src/services/conf.dart';
 
-class TurServices {
+class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
+  int _count = 0;
+
+  int get count => _count;
+
+  void increment() {
+    print("asignando el valor");
+    _count++;
+    notifyListeners();
+  }
+
   Future<List<dynamic>> obtenerTur() async {
     print('haciendo peticion obtener tur');
     final url = '${Conf.urlServidor}TurPaquete/show';
