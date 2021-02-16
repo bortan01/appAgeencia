@@ -7,6 +7,9 @@ import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:provider/provider.dart';
 
 class DetalleTours extends StatefulWidget {
+  final dynamic tur;
+  const DetalleTours({@required this.tur});
+
   @override
   _DetalleToursState createState() => _DetalleToursState();
 }
@@ -22,17 +25,18 @@ class _DetalleToursState extends State<DetalleTours> {
   }
 
   Future<dynamic> _getInfoAdicional() async {
-    return await TurServices().obtenerInformacionAdicional('3');
+    return await TurServices()
+        .obtenerInformacionAdicional(widget.tur['id_tours']);
   }
 
   @override
   Widget build(BuildContext context) {
     Provider.of<TurServices>(context, listen: false);
-    final dynamic tur = ModalRoute.of(context).settings.arguments;
+    // final dynamic tur = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
         //backgroundColor: Colors.blueAccent,
-        body: detalle(context, tur));
+        body: detalle(context, widget.tur));
   }
 
   Widget detalle(BuildContext context, dynamic tur) {
