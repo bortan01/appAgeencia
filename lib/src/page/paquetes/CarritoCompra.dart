@@ -8,11 +8,15 @@ class CarritoCompra extends StatefulWidget {
 }
 
 class _CarritoCompraState extends State<CarritoCompra> {
+  Color fondo = Colors.green;
   int pasoActual = 0;
   String _valueNinos = '0';
   String _valueAdultos = '0';
   String _valueAncianos = '0';
   double screenHeight;
+  // int filas;
+  // int asiento_derecho;
+  // int asiento_izquierdo;
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -72,6 +76,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  seleccionarAsiento(),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -139,6 +144,39 @@ class _CarritoCompraState extends State<CarritoCompra> {
             ),
           ],
         )
+      ],
+    );
+  }
+
+  Widget seleccionarAsiento() {
+    final scrimSize = MediaQuery.of(context).size;
+
+    final dimensiones = ((scrimSize.width * 0.8) - 88) / 8;
+    return Row(
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              print("click");
+              fondo = Colors.redAccent;
+            });
+          },
+          child: Container(
+            margin: EdgeInsets.all(2.0),
+            height: dimensiones,
+            width: dimensiones,
+            child: Container(
+                decoration: BoxDecoration(
+                    color: fondo,
+                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                padding: EdgeInsets.only(top: dimensiones / 3.5),
+                child: Text(
+                  "999",
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                )),
+          ),
+        ),
       ],
     );
   }

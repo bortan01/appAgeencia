@@ -335,7 +335,7 @@ class _DetalleToursState extends State<DetalleTours> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: new RaisedButton.icon(
-          label: new Text("Añadir a carrito"),
+          label: new Text("Reservar Tur"),
           icon: new Icon(Icons.shopping_cart),
           color: Theme.of(context).accentColor,
           textColor: Theme.of(context).bottomAppBarColor,

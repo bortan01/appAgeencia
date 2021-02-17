@@ -6,6 +6,10 @@ class CotizarTours extends StatefulWidget {
 }
 
 class _CotizarToursState extends State<CotizarTours> {
+  int asiento_izquierdo;
+  int asiento_derecho;
+  int filas;
+
   double screenHeight;
 
   String _nombre = "";
