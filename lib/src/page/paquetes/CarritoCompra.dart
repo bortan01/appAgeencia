@@ -76,7 +76,11 @@ class _CarritoCompraState extends State<CarritoCompra> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  seleccionarAsiento(),
+                  _crearBus(
+                      context: context,
+                      asientosDerecho: 3,
+                      asientosIzquierdos: 3,
+                      filas: 4),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -144,39 +148,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
             ),
           ],
         )
-      ],
-    );
-  }
-
-  Widget seleccionarAsiento() {
-    final scrimSize = MediaQuery.of(context).size;
-
-    final dimensiones = ((scrimSize.width * 0.8) - 88) / 8;
-    return Row(
-      children: <Widget>[
-        GestureDetector(
-          onTap: () {
-            setState(() {
-              print("click");
-              fondo = Colors.redAccent;
-            });
-          },
-          child: Container(
-            margin: EdgeInsets.all(2.0),
-            height: dimensiones,
-            width: dimensiones,
-            child: Container(
-                decoration: BoxDecoration(
-                    color: fondo,
-                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
-                padding: EdgeInsets.only(top: dimensiones / 3.5),
-                child: Text(
-                  "999",
-                  style: TextStyle(color: Colors.white),
-                  textAlign: TextAlign.center,
-                )),
-          ),
-        ),
       ],
     );
   }
@@ -368,6 +339,117 @@ class _CarritoCompraState extends State<CarritoCompra> {
           )
         ],
       ),
+    );
+  }
+
+  _crearBus(
+      {@required BuildContext context,
+      @required int asientosIzquierdos,
+      @required asientosDerecho,
+      @required filas}) {
+    int totalAsientos = asientosIzquierdos + asientosDerecho + 1;
+    final scrimSize = MediaQuery.of(context).size;
+    final dimensiones = ((scrimSize.width * 0.85) - 88) / totalAsientos;
+    List<Row> listaFilas = [];
+    //con labelAsiento sele ira colocando el numero que apparece dentro de los cuadros
+    int labelAsiento = 1;
+    //se va a hacer una vuelta por cada fila
+    for (var i = 1; i <= filas; i++) {
+      List<Widget> elementos = [];
+      //este es para dibujar los asientos izquierdos
+      for (var j = 1; j <= asientosIzquierdos; j++) {
+        elementos.add(Asiento(
+            context: context,
+            label: labelAsiento.toString(),
+            identificador: '${i.toString()}_${j.toString()}',
+            fondoActivo: Colors.blue,
+            fondoInactivo: Colors.red,
+            dimensiones: dimensiones));
+        labelAsiento++;
+      }
+      //este es para dibujar la columna que separa los derechos de los izquierdos
+      elementos.add(Asiento(
+          context: context,
+          label: "",
+          identificador:
+              '${i.toString()}_${(asientosIzquierdos + 1).toString()}',
+          fondoActivo: Colors.white,
+          fondoInactivo: Colors.white,
+          dimensiones: dimensiones));
+      //este es para dibujar los asidento derechos
+      for (var j = 2 + asientosIzquierdos;
+          j <= asientosDerecho + asientosIzquierdos + 1;
+          j++) {
+        elementos.add(Asiento(
+            context: context,
+            label: labelAsiento.toString(),
+            identificador: '${i.toString()}_${j.toString()}',
+            fondoActivo: Colors.blue,
+            fondoInactivo: Colors.red,
+            dimensiones: dimensiones));
+        labelAsiento++;
+      }
+
+      listaFilas.add(Row(
+          mainAxisAlignment: MainAxisAlignment.center, children: elementos));
+    }
+    return Column(children: listaFilas);
+  }
+}
+
+class Asiento extends StatefulWidget {
+  const Asiento({
+    Key key,
+    @required this.context,
+    @required this.label,
+    @required this.fondoActivo,
+    @required this.identificador,
+    @required this.fondoInactivo,
+    @required this.dimensiones,
+  }) : super(key: key);
+
+  final BuildContext context;
+  final String label;
+  final String identificador;
+  final Color fondoActivo;
+  final Color fondoInactivo;
+  final double dimensiones;
+
+  @override
+  _AsientoState createState() => _AsientoState();
+}
+
+class _AsientoState extends State<Asiento> {
+  bool select = true;
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        GestureDetector(
+          onTap: () {
+            print(widget.identificador);
+            setState(() {
+              select = !select;
+            });
+            // return null;
+          },
+          child: Container(
+            margin: EdgeInsets.all(2.0),
+            height: widget.dimensiones,
+            width: widget.dimensiones,
+            child: Container(
+                decoration: BoxDecoration(
+                    color: select ? widget.fondoActivo : widget.fondoInactivo,
+                    borderRadius: BorderRadius.all(Radius.circular(5.0))),
+                padding: EdgeInsets.only(top: widget.dimensiones / 3.5),
+                child: Text(
+                  widget.label,
+                  style: TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                )),
+          ),
+        ),
+      ],
     );
   }
 }
