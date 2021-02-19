@@ -9,6 +9,8 @@ class CarritoCompra extends StatefulWidget {
 
 class _CarritoCompraState extends State<CarritoCompra> {
   Color fondo = Colors.green;
+  List<String> asientosSeleccionados = [];
+  int contadorPrueba = 0;
   int pasoActual = 0;
   String _valueNinos = '0';
   String _valueAdultos = '0';
@@ -33,6 +35,16 @@ class _CarritoCompraState extends State<CarritoCompra> {
         ),
       ),
     );
+  }
+
+  void agregarAsiento(String identificadorAsiento) {
+    asientosSeleccionados.add(identificadorAsiento);
+    print(asientosSeleccionados.toString());
+  }
+
+  void eliminarAsiento(String identificadorAsiento) {
+    asientosSeleccionados.remove(identificadorAsiento);
+    print(asientosSeleccionados.toString());
   }
 
   Widget appBarCarrito() {
@@ -93,25 +105,15 @@ class _CarritoCompraState extends State<CarritoCompra> {
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  SizedBox(height: 15),
                   _inputNino(),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   _inputAdulto(),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   _inputAnciano(),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   _totalPagp(),
-                  SizedBox(
-                    height: 20,
-                  ),
+                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
@@ -294,18 +296,18 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
-  Widget _crearBoton() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-      child: new RaisedButton.icon(
-          label: new Text("Reservar"),
-          icon: new Icon(Icons.payment),
-          color: Theme.of(context).accentColor,
-          textColor: Theme.of(context).bottomAppBarColor,
-          shape: StadiumBorder(),
-          onPressed: () {}),
-    );
-  }
+  // Widget _crearBoton() {
+  //   return Container(
+  //     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+  //     child: new RaisedButton.icon(
+  //         label: new Text("Reservar"),
+  //         icon: new Icon(Icons.payment),
+  //         color: Theme.of(context).accentColor,
+  //         textColor: Theme.of(context).bottomAppBarColor,
+  //         shape: StadiumBorder(),
+  //         onPressed: () {}),
+  //   );
+  // }
 
   Widget _totalPagp() {
     return new Container(
@@ -347,9 +349,14 @@ class _CarritoCompraState extends State<CarritoCompra> {
       @required int asientosIzquierdos,
       @required asientosDerecho,
       @required filas}) {
-    int totalAsientos = asientosIzquierdos + asientosDerecho + 1;
+    final int totalAsientos = asientosIzquierdos + asientosDerecho + 1;
     final scrimSize = MediaQuery.of(context).size;
     final dimensiones = ((scrimSize.width * 0.85) - 88) / totalAsientos;
+    final List<String> asientosDeshabilitados = "1_1,11_6".split(",");
+    final List<String> ocupados = ["1_11", "4_7"];
+    final List<String> asientosNoDisponibles =
+        new List.from(asientosDeshabilitados)..addAll(ocupados);
+
     List<Row> listaFilas = [];
     //con labelAsiento sele ira colocando el numero que apparece dentro de los cuadros
     int labelAsiento = 1;
@@ -359,54 +366,82 @@ class _CarritoCompraState extends State<CarritoCompra> {
       //este es para dibujar los asientos izquierdos
       for (var j = 1; j <= asientosIzquierdos; j++) {
         elementos.add(Asiento(
-            context: context,
-            label: labelAsiento.toString(),
-            identificador: '${i.toString()}_${j.toString()}',
-            fondoActivo: Colors.blue,
-            fondoInactivo: Colors.red,
-            dimensiones: dimensiones));
+          context: context,
+          label: labelAsiento.toString(),
+          identificador: '${i.toString()}_${j.toString()}',
+          fondoActivo: Colors.blue,
+          fondoInactivo: Colors.red,
+          dimensiones: dimensiones,
+          asientosNoDisponibles: asientosNoDisponibles,
+          agregar: agregarAsiento,
+          eliminar: eliminarAsiento,
+        ));
         labelAsiento++;
       }
-      //este es para dibujar la columna que separa los derechos de los izquierdos
-      elementos.add(Asiento(
-          context: context,
-          label: "",
-          identificador:
-              '${i.toString()}_${(asientosIzquierdos + 1).toString()}',
-          fondoActivo: Colors.white,
-          fondoInactivo: Colors.white,
-          dimensiones: dimensiones));
+      //Agregamos una separacion entre los asientos derechos y izquierdos
+      elementos.add(Container(width: dimensiones, height: dimensiones));
       //este es para dibujar los asidento derechos
       for (var j = 2 + asientosIzquierdos;
           j <= asientosDerecho + asientosIzquierdos + 1;
           j++) {
         elementos.add(Asiento(
-            context: context,
-            label: labelAsiento.toString(),
-            identificador: '${i.toString()}_${j.toString()}',
-            fondoActivo: Colors.blue,
-            fondoInactivo: Colors.red,
-            dimensiones: dimensiones));
+          context: context,
+          label: labelAsiento.toString(),
+          identificador: '${i.toString()}_${j.toString()}',
+          fondoActivo: Colors.blue,
+          fondoInactivo: Colors.red,
+          asientosNoDisponibles: asientosNoDisponibles,
+          agregar: agregarAsiento,
+          dimensiones: dimensiones,
+          eliminar: eliminarAsiento,
+        ));
         labelAsiento++;
       }
+      //para agregar la fila trasera
 
       listaFilas.add(Row(
           mainAxisAlignment: MainAxisAlignment.center, children: elementos));
     }
-    return Column(children: listaFilas);
+    final espacio = Row(
+      children: <Widget>[SizedBox(width: 20.0, height: 20.0)],
+    );
+    final List<Widget> otraFila = [];
+    for (var i = 1; i <= asientosDerecho + asientosIzquierdos + 1; i++) {
+      otraFila.add(Asiento(
+        context: context,
+        label: labelAsiento.toString(),
+        identificador: '${(filas + 2).toString()}_${i.toString()}',
+        fondoActivo: Colors.blue,
+        fondoInactivo: Colors.red,
+        asientosNoDisponibles: asientosNoDisponibles,
+        agregar: agregarAsiento,
+        dimensiones: dimensiones,
+        eliminar: eliminarAsiento,
+      ));
+      labelAsiento++;
+    }
+    listaFilas.add(espacio);
+    listaFilas.add(new Row(
+        mainAxisAlignment: MainAxisAlignment.center, children: otraFila));
+    return Column(
+      children: listaFilas,
+    );
   }
 }
 
 class Asiento extends StatefulWidget {
-  const Asiento({
-    Key key,
-    @required this.context,
-    @required this.label,
-    @required this.fondoActivo,
-    @required this.identificador,
-    @required this.fondoInactivo,
-    @required this.dimensiones,
-  }) : super(key: key);
+  const Asiento(
+      {Key key,
+      @required this.context,
+      @required this.label,
+      @required this.fondoActivo,
+      @required this.identificador,
+      @required this.fondoInactivo,
+      @required this.dimensiones,
+      @required this.agregar,
+      @required this.eliminar,
+      @required this.asientosNoDisponibles})
+      : super(key: key);
 
   final BuildContext context;
   final String label;
@@ -414,6 +449,9 @@ class Asiento extends StatefulWidget {
   final Color fondoActivo;
   final Color fondoInactivo;
   final double dimensiones;
+  final Function agregar;
+  final Function eliminar;
+  final List<String> asientosNoDisponibles;
 
   @override
   _AsientoState createState() => _AsientoState();
@@ -421,16 +459,33 @@ class Asiento extends StatefulWidget {
 
 class _AsientoState extends State<Asiento> {
   bool select = true;
+  bool deshabilitado = false;
+
   @override
   Widget build(BuildContext context) {
+    //verificamos si el elemento identificador que recibimos existe en la lista
+    //de los asientos que ya han sido ocupados o estan hinabilitados
+    //y ocupamos el sentinela deshabilitado para manejarlo
+    widget.asientosNoDisponibles.forEach((element) {
+      if (widget.identificador == element) {
+        deshabilitado = true;
+        return;
+      }
+    });
     return Row(
       children: <Widget>[
         GestureDetector(
           onTap: () {
-            print(widget.identificador);
-            setState(() {
-              select = !select;
-            });
+            if (!deshabilitado) {
+              setState(() {
+                if (select) {
+                  widget.agregar(widget.identificador);
+                } else {
+                  widget.eliminar(widget.identificador);
+                }
+                select = !select;
+              });
+            }
             // return null;
           },
           child: Container(
@@ -439,7 +494,12 @@ class _AsientoState extends State<Asiento> {
             width: widget.dimensiones,
             child: Container(
                 decoration: BoxDecoration(
-                    color: select ? widget.fondoActivo : widget.fondoInactivo,
+                    //se verifica si el asiento esta deshabilitado
+                    color: !deshabilitado
+                        //sii esta habilitado se le coloca el color activo
+                        ? select ? widget.fondoActivo : widget.fondoInactivo
+                        //de lo contrario se le coloca un color negro
+                        : Colors.black,
                     borderRadius: BorderRadius.all(Radius.circular(5.0))),
                 padding: EdgeInsets.only(top: widget.dimensiones / 3.5),
                 child: Text(
