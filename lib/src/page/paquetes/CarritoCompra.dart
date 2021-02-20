@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/paquete_models.dart';
-//import 'package:peliculas/src/providers/peliculas_provider.dart';
+import 'package:peliculas/src/models/precios_model.dart';
 
 class CarritoCompra extends StatefulWidget {
   @override
@@ -12,13 +12,20 @@ class _CarritoCompraState extends State<CarritoCompra> {
   List<String> asientosSeleccionados = [];
   int contadorPrueba = 0;
   int pasoActual = 0;
-  String _valueNinos = '0';
-  String _valueAdultos = '0';
-  String _valueAncianos = '0';
   double screenHeight;
-  // int filas;
-  // int asiento_derecho;
-  // int asiento_izquierdo;
+
+  Precios _precioSeleccionado;
+  List<Precios> listaPrecios;
+  @override
+  void initState() {
+    super.initState();
+    listaPrecios = [
+      new Precios(asiento: 1, pasaje: 13.3, titulo: "asientos normal"),
+      new Precios(asiento: 1, pasaje: 21.5, titulo: "Niños menores de 5 años")
+    ];
+    _precioSeleccionado = listaPrecios[0];
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -35,16 +42,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
         ),
       ),
     );
-  }
-
-  void agregarAsiento(String identificadorAsiento) {
-    asientosSeleccionados.add(identificadorAsiento);
-    print(asientosSeleccionados.toString());
-  }
-
-  void eliminarAsiento(String identificadorAsiento) {
-    asientosSeleccionados.remove(identificadorAsiento);
-    print(asientosSeleccionados.toString());
   }
 
   Widget appBarCarrito() {
@@ -88,11 +85,15 @@ class _CarritoCompraState extends State<CarritoCompra> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  _crearBus(
-                      context: context,
-                      asientosDerecho: 3,
-                      asientosIzquierdos: 3,
-                      filas: 4),
+                  _crearDropdown(),
+                  _inputNino(),
+                  _botonAgregar(),
+                  _crearCarrito(),
+                  // _crearBus(
+                  //     context: context,
+                  //     asientosDerecho: 3,
+                  //     asientosIzquierdos: 3,
+                  //     filas: 3),
                   Align(
                     alignment: Alignment.topLeft,
                     child: Text(
@@ -106,12 +107,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
                     ),
                   ),
                   SizedBox(height: 15),
-                  _inputNino(),
-                  SizedBox(height: 20),
-                  _inputAdulto(),
-                  SizedBox(height: 20),
-                  _inputAnciano(),
-                  SizedBox(height: 20),
                   _totalPagp(),
                   SizedBox(height: 20),
                   Row(
@@ -164,151 +159,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
-  List<Step> listaDeElementos(Paquete paquete) {
-    List<Step> myLista = [
-      new Step(
-          title: new Text("Hotel"),
-          content: Column(
-            children: <Widget>[
-              new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  // height: especioDisponible,
-                  image: AssetImage(
-                    "assets/img/hotel.jpg",
-                  )),
-              new Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-            ],
-          ),
-          subtitle: new Text("Subtitulo"),
-          state: StepState.complete,
-          isActive: true),
-      new Step(
-          title: new Text("Desayuno"),
-          content: Column(
-            children: <Widget>[
-              new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  // height: especioDisponible,
-                  image: AssetImage(
-                    "assets/img/desayunos.jpg",
-                  )),
-              new Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-            ],
-          ),
-          subtitle: new Text("Subtitulo"),
-          state: StepState.complete,
-          isActive: true),
-      new Step(
-          title: new Text("Transporte"),
-          content: Column(
-            children: <Widget>[
-              new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  // height: especioDisponible,
-                  image: AssetImage(
-                    "assets/img/transporte.jpg",
-                  )),
-              new Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-            ],
-          ),
-          subtitle: new Text("Subtitulo"),
-          state: StepState.complete,
-          isActive: true),
-      new Step(
-          title: new Text("Refrigerio"),
-          content: Column(
-            children: <Widget>[
-              new FadeInImage(
-                  placeholder: AssetImage('assets/img/no-image.jpg'),
-                  fit: BoxFit.cover,
-                  // height: especioDisponible,
-                  image: AssetImage(
-                    "assets/img/refrigerio.jpg",
-                  )),
-              new Text(
-                  "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.")
-            ],
-          ),
-          subtitle: new Text("Subtitulo"),
-          state: StepState.complete,
-          isActive: true),
-    ];
-    return myLista;
-  }
-
-  Widget _inputNino() {
-    return new TextField(
-      // autofocus: true,
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          hintText: 'Personas menores de 12 años',
-          labelText: 'Niños',
-          helperText: 'Debes digitar una cantidad valida',
-          suffixIcon: Icon(Icons.playlist_add_check)),
-
-      onChanged: (String valor) {
-        _valueNinos = valor;
-        setState(() {});
-      },
-    );
-  }
-
-  Widget _inputAdulto() {
-    return new TextField(
-      // autofocus: true,
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          hintText: 'Mayores de 12 años menores de 60',
-          labelText: 'Adultos',
-          helperText: 'Debes digitar una cantidad valida',
-          suffixIcon: Icon(Icons.playlist_add_check)),
-
-      onChanged: (String valor) {
-        _valueAdultos = valor;
-        setState(() {});
-      },
-    );
-  }
-
-  Widget _inputAnciano() {
-    return new TextField(
-      // autofocus: true,
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          hintText: 'Mayores de 60',
-          labelText: 'Tercera edad',
-          helperText: 'Debes digitar una cantidad valida',
-          suffixIcon: Icon(Icons.playlist_add_check)),
-
-      onChanged: (String valor) {
-        _valueAncianos = valor;
-        setState(() {});
-      },
-    );
-  }
-
-  // Widget _crearBoton() {
-  //   return Container(
-  //     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-  //     child: new RaisedButton.icon(
-  //         label: new Text("Reservar"),
-  //         icon: new Icon(Icons.payment),
-  //         color: Theme.of(context).accentColor,
-  //         textColor: Theme.of(context).bottomAppBarColor,
-  //         shape: StadiumBorder(),
-  //         onPressed: () {}),
-  //   );
-  // }
-
   Widget _totalPagp() {
     return new Container(
       height: 90.0,
@@ -344,7 +194,112 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
-  _crearBus(
+  Widget _inputNino() {
+    return TextField(
+      // autofocus: true,
+      keyboardType: TextInputType.number,
+      textAlign: TextAlign.center,
+      decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          labelText: 'ingrese numero de asientos'),
+      onChanged: (String valor) {},
+    );
+  }
+
+  Widget _botonAgregar() {
+    return RaisedButton(
+      child: Container(
+          width: double.infinity,
+          child: Text(
+            "Agregar a mi carrito",
+            textAlign: TextAlign.center,
+          )),
+      color: Colors.blue,
+      textColor: Colors.white,
+      focusColor: Colors.red,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      onPressed: () {
+        print(_precioSeleccionado.pasaje);
+      },
+    );
+  }
+
+  Widget _crearDropdown() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        children: <Widget>[
+          Text("Seleccione el tipo de asientos que desea"),
+          DropdownButtonFormField(
+              isExpanded: true,
+              decoration: InputDecoration(
+                  hintText: "name",
+                  border: OutlineInputBorder(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(20.0)))),
+              icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
+              value: listaPrecios[0],
+              items: opcionesDropdown(),
+              onChanged: (opt) {
+                print(opt);
+                setState(() {
+                  _precioSeleccionado = opt;
+                });
+              }),
+        ],
+      ),
+    );
+  }
+
+  Widget _crearCarrito() {
+    List<Precios> miLista = [
+      new Precios(
+          asiento: 1, pasaje: 13.3, titulo: "asientos normal", cantidad: 3),
+      new Precios(
+          asiento: 1,
+          pasaje: 21.5,
+          titulo: "Niños menores de 5 años",
+          cantidad: 2)
+    ];
+
+    List<Widget> listaIttem = [];
+    miLista.forEach((element) {
+      listaIttem.add(_crearItemCarrito(element));
+      miLista.last != element
+          ? listaIttem.add(Divider(height: 5))
+          : Container();
+    });
+    return Container(
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.black12),
+          borderRadius: BorderRadius.circular(20.0)),
+      child: Column(
+        children: listaIttem,
+      ),
+    );
+  }
+
+  Widget _crearItemCarrito(Precios precioSeleccionado) {
+    return Dismissible(
+      key: UniqueKey(),
+      background: Container(
+        decoration: BoxDecoration(
+            color: Colors.black12, borderRadius: BorderRadius.circular(20.0)),
+      ),
+      child: ListTile(
+        title: Text(
+          '${precioSeleccionado.cantidad.toString()} ${precioSeleccionado.titulo} (\$${precioSeleccionado.pasaje.toString()} c/u)',
+          textAlign: TextAlign.center,
+        ),
+        subtitle: Text(
+          'subTotal \$${(precioSeleccionado.cantidad * precioSeleccionado.pasaje).toStringAsFixed(2)}',
+          textAlign: TextAlign.center,
+        ),
+      ),
+    );
+  }
+
+  Widget _crearBus(
       {@required BuildContext context,
       @required int asientosIzquierdos,
       @required asientosDerecho,
@@ -369,7 +324,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
           context: context,
           label: labelAsiento.toString(),
           identificador: '${i.toString()}_${j.toString()}',
-          fondoActivo: Colors.blue,
+          fondoActivo: Colors.green,
           fondoInactivo: Colors.red,
           dimensiones: dimensiones,
           asientosNoDisponibles: asientosNoDisponibles,
@@ -388,7 +343,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
           context: context,
           label: labelAsiento.toString(),
           identificador: '${i.toString()}_${j.toString()}',
-          fondoActivo: Colors.blue,
+          fondoActivo: Colors.green,
           fondoInactivo: Colors.red,
           asientosNoDisponibles: asientosNoDisponibles,
           agregar: agregarAsiento,
@@ -411,7 +366,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
         context: context,
         label: labelAsiento.toString(),
         identificador: '${(filas + 2).toString()}_${i.toString()}',
-        fondoActivo: Colors.blue,
+        fondoActivo: Colors.green,
         fondoInactivo: Colors.red,
         asientosNoDisponibles: asientosNoDisponibles,
         agregar: agregarAsiento,
@@ -426,6 +381,34 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return Column(
       children: listaFilas,
     );
+  }
+
+  List<DropdownMenuItem<Precios>> opcionesDropdown() {
+    List<DropdownMenuItem<Precios>> lista = new List();
+    listaPrecios.forEach((precioItem) {
+      lista.add(DropdownMenuItem(
+          child: Row(
+            children: <Widget>[
+              Text(
+                '${precioItem.titulo} \$${precioItem.pasaje.toString()}',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
+          ),
+          value: precioItem));
+    });
+    return lista;
+  }
+
+  void agregarAsiento(String identificadorAsiento) {
+    asientosSeleccionados.add(identificadorAsiento);
+    print(asientosSeleccionados.toString());
+  }
+
+  void eliminarAsiento(String identificadorAsiento) {
+    asientosSeleccionados.remove(identificadorAsiento);
+    print(asientosSeleccionados.toString());
   }
 }
 
@@ -463,6 +446,7 @@ class _AsientoState extends State<Asiento> {
 
   @override
   Widget build(BuildContext context) {
+    print("dibuejando asientos");
     //verificamos si el elemento identificador que recibimos existe en la lista
     //de los asientos que ya han sido ocupados o estan hinabilitados
     //y ocupamos el sentinela deshabilitado para manejarlo
