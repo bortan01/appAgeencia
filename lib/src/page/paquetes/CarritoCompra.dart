@@ -93,6 +93,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
                   SizedBox(height: 4.0),
                   _crearCarrito(),
                   SizedBox(height: 5.0),
+                  _labelTotal(),
                   _botonContinuar()
                 ],
               ),
@@ -159,6 +160,18 @@ class _CarritoCompraState extends State<CarritoCompra> {
       onChanged: (String valor) {
         cantidadSeleccionada = int.parse(valor);
       },
+    );
+  }
+
+  Widget _labelTotal() {
+    return Row(
+      children: <Widget>[
+        Text("Total:",
+            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
+        Spacer(),
+        Text("\$33",
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
+      ],
     );
   }
 
@@ -275,14 +288,20 @@ class _CarritoCompraState extends State<CarritoCompra> {
         ),
       ),
       child: ListTile(
+        leading: CircleAvatar(
+          child: Text(
+            '${precioSeleccionado.cantidad.toString()}',
+            style: TextStyle(fontSize: 14.0),
+          ),
+        ),
         title: Text(
-          '${precioSeleccionado.cantidad.toString()} ${precioSeleccionado.titulo} (\$${precioSeleccionado.pasaje.toString()} c/u)',
-          textAlign: TextAlign.center,
+          '${precioSeleccionado.titulo}',
+          textAlign: TextAlign.right,
           style: TextStyle(fontSize: 14.0, color: Colors.white),
         ),
         subtitle: Text(
           'subTotal \$${(precioSeleccionado.cantidad * precioSeleccionado.pasaje).toStringAsFixed(2)}',
-          textAlign: TextAlign.center,
+          textAlign: TextAlign.right,
           style: TextStyle(fontSize: 13.0, color: Colors.white),
         ),
       ),
