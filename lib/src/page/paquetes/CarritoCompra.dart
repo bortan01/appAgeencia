@@ -88,7 +88,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
                   _crearDropdown(),
                   _inputCantidad(),
                   _botonAgregar(),
-                  _totalPagp(),
                   _crearCarrito(),
                   // _crearBus(
                   //     context: context,
@@ -280,14 +279,10 @@ class _CarritoCompraState extends State<CarritoCompra> {
     List<Widget> listaIttem = [];
     asientosPrecio.forEach((element) {
       listaIttem.add(_crearItemCarrito(element));
-      asientosPrecio.last != element
-          ? listaIttem.add(Divider(height: 5))
-          : Container();
     });
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.black12),
-          borderRadius: BorderRadius.circular(20.0)),
+          color: Colors.blue, borderRadius: BorderRadius.circular(20.0)),
       child: Column(
         children: listaIttem,
       ),
@@ -301,19 +296,18 @@ class _CarritoCompraState extends State<CarritoCompra> {
         eliminarCarrito(precioSeleccionado.id);
       },
       background: Container(
-        decoration: BoxDecoration(
-            color: Colors.black12, borderRadius: BorderRadius.circular(20.0)),
+        decoration: BoxDecoration(color: Colors.black12),
       ),
       child: ListTile(
         title: Text(
           '${precioSeleccionado.cantidad.toString()} ${precioSeleccionado.titulo} (\$${precioSeleccionado.pasaje.toString()} c/u)',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 13.0),
+          style: TextStyle(fontSize: 14.0, color: Colors.white),
         ),
         subtitle: Text(
           'subTotal \$${(precioSeleccionado.cantidad * precioSeleccionado.pasaje).toStringAsFixed(2)}',
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 13.0),
+          style: TextStyle(fontSize: 13.0, color: Colors.white),
         ),
       ),
     );
