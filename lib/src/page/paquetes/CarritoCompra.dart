@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/paquete_models.dart';
 import 'package:peliculas/src/models/precios_model.dart';
 
 class CarritoCompra extends StatefulWidget {
@@ -13,9 +12,10 @@ class _CarritoCompraState extends State<CarritoCompra> {
   int contadorPrueba = 0;
   int pasoActual = 0;
   double screenHeight;
-
   Precios _precioSeleccionado;
   List<Precios> listaPrecios;
+  List<Precios> asientosPrecio = [];
+  int cantidadSeleccionada = 1;
   @override
   void initState() {
     super.initState();
@@ -86,8 +86,9 @@ class _CarritoCompraState extends State<CarritoCompra> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   _crearDropdown(),
-                  _inputNino(),
+                  _inputCantidad(),
                   _botonAgregar(),
+                  _totalPagp(),
                   _crearCarrito(),
                   // _crearBus(
                   //     context: context,
@@ -107,7 +108,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
                     ),
                   ),
                   SizedBox(height: 15),
-                  _totalPagp(),
+
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -194,15 +195,17 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
-  Widget _inputNino() {
-    return TextField(
-      // autofocus: true,
+  Widget _inputCantidad() {
+    return TextFormField(
+      initialValue: "1",
       keyboardType: TextInputType.number,
       textAlign: TextAlign.center,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
           labelText: 'ingrese numero de asientos'),
-      onChanged: (String valor) {},
+      onChanged: (String valor) {
+        cantidadSeleccionada = int.parse(valor);
+      },
     );
   }
 
@@ -219,9 +222,31 @@ class _CarritoCompraState extends State<CarritoCompra> {
       focusColor: Colors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       onPressed: () {
-        print(_precioSeleccionado.pasaje);
+        setState(() {
+          agregarACarrito();
+        });
       },
     );
+  }
+
+  void agregarACarrito() {
+    final encontrado =
+        asientosPrecio.indexWhere((pre) => pre.id == _precioSeleccionado.id);
+    if (encontrado == -1) {
+      _precioSeleccionado.cantidad = cantidadSeleccionada;
+      asientosPrecio.add(_precioSeleccionado);
+    } else {
+      asientosPrecio.forEach((element) {
+        if (element.id == _precioSeleccionado.id) {
+          element.cantidad = cantidadSeleccionada;
+          return;
+        }
+      });
+    }
+  }
+
+  void eliminarCarrito(id) {
+    asientosPrecio.removeWhere((element) => element.id == id);
   }
 
   Widget _crearDropdown() {
@@ -252,20 +277,10 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   Widget _crearCarrito() {
-    List<Precios> miLista = [
-      new Precios(
-          asiento: 1, pasaje: 13.3, titulo: "asientos normal", cantidad: 3),
-      new Precios(
-          asiento: 1,
-          pasaje: 21.5,
-          titulo: "Niños menores de 5 años",
-          cantidad: 2)
-    ];
-
     List<Widget> listaIttem = [];
-    miLista.forEach((element) {
+    asientosPrecio.forEach((element) {
       listaIttem.add(_crearItemCarrito(element));
-      miLista.last != element
+      asientosPrecio.last != element
           ? listaIttem.add(Divider(height: 5))
           : Container();
     });
@@ -282,6 +297,9 @@ class _CarritoCompraState extends State<CarritoCompra> {
   Widget _crearItemCarrito(Precios precioSeleccionado) {
     return Dismissible(
       key: UniqueKey(),
+      onDismissed: (direction) {
+        eliminarCarrito(precioSeleccionado.id);
+      },
       background: Container(
         decoration: BoxDecoration(
             color: Colors.black12, borderRadius: BorderRadius.circular(20.0)),
@@ -290,10 +308,12 @@ class _CarritoCompraState extends State<CarritoCompra> {
         title: Text(
           '${precioSeleccionado.cantidad.toString()} ${precioSeleccionado.titulo} (\$${precioSeleccionado.pasaje.toString()} c/u)',
           textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 13.0),
         ),
         subtitle: Text(
           'subTotal \$${(precioSeleccionado.cantidad * precioSeleccionado.pasaje).toStringAsFixed(2)}',
           textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 13.0),
         ),
       ),
     );

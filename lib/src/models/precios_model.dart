@@ -8,6 +8,7 @@ class Precios {
   @required
   double pasaje;
   int cantidad;
+  UniqueKey id = UniqueKey();
 
   Precios({this.titulo, this.asiento, this.pasaje, this.cantidad});
 
