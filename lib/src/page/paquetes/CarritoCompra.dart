@@ -88,26 +88,18 @@ class _CarritoCompraState extends State<CarritoCompra> {
                   _crearDropdown(),
                   _inputCantidad(),
                   _botonAgregar(),
+                  crearTitulo("Mi Carrito"),
+                  crearSubTitulo("(Mueva a los lados para eliminar)"),
+                  SizedBox(height: 4.0),
                   _crearCarrito(),
-                  // _crearBus(
-                  //     context: context,
-                  //     asientosDerecho: 3,
-                  //     asientosIzquierdos: 3,
-                  //     filas: 3),
-                  Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      "Rellene los siguientes Campos",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 15),
-
+                  crearTitulo("Elija sus Asientos"),
+                  crearSubTitulo("(Asientos color verde)"),
+                  SizedBox(height: 4.0),
+                  _crearBus(
+                      context: context,
+                      asientosDerecho: 3,
+                      asientosIzquierdos: 3,
+                      filas: 3),
                   SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -116,7 +108,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
                         child: Container(),
                       ),
                       FlatButton(
-                        child: Text("Reservar"),
+                        child: Text("Continuar"),
                         color: Colors.blueAccent,
                         textColor: Colors.white,
                         padding: EdgeInsets.only(
@@ -253,7 +245,10 @@ class _CarritoCompraState extends State<CarritoCompra> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         children: <Widget>[
-          Text("Seleccione el tipo de asientos que desea"),
+          crearTitulo("Seleccione el tipo de asiento"),
+          SizedBox(
+            height: 3.0,
+          ),
           DropdownButtonFormField(
               isExpanded: true,
               decoration: InputDecoration(
@@ -275,12 +270,29 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
+  Text crearTitulo(String tiulo) {
+    return Text(
+      tiulo,
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Text crearSubTitulo(String tiulo) {
+    return Text(
+      tiulo,
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal),
+    );
+  }
+
   Widget _crearCarrito() {
     List<Widget> listaIttem = [];
     asientosPrecio.forEach((element) {
       listaIttem.add(_crearItemCarrito(element));
     });
     return Container(
+      width: double.infinity,
       decoration: BoxDecoration(
           color: Colors.blue, borderRadius: BorderRadius.circular(20.0)),
       child: Column(
@@ -296,7 +308,9 @@ class _CarritoCompraState extends State<CarritoCompra> {
         eliminarCarrito(precioSeleccionado.id);
       },
       background: Container(
-        decoration: BoxDecoration(color: Colors.black12),
+        decoration: BoxDecoration(
+          color: Colors.black12,
+        ),
       ),
       child: ListTile(
         title: Text(
