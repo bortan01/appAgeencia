@@ -38,4 +38,17 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
       return null;
     }
   }
+
+  Future<dynamic> obtenerInfomacionToReserva(String idTur) async {
+    print('haciendo peticion informacion de reserva');
+    final url =
+        '${Conf.urlServidor}TurPaquete/showReserva?id_tours=$idTur&tipo=tur';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final jsonResponse = convert.jsonDecode(response.body);
+      return jsonResponse;
+    } else {
+      return null;
+    }
+  }
 }

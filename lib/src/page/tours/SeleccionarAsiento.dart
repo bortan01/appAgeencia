@@ -11,6 +11,7 @@ class SeleccionarAsiento extends StatefulWidget {
 class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
   double screenHeight;
   List<String> asientosSeleccionados = [];
+  int toSelect = 2;
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -71,7 +72,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  crearTitulo("Elija 3 Asiento(s)"),
+                  crearTitulo('Elija ${toSelect.toString()} Asiento(s)'),
                   crearSubTitulo("(Asientos color verde)"),
                   SizedBox(height: 4.0),
                   _crearBus(
@@ -95,24 +96,26 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
                         onPressed: () {
-                          Alert(
-                            context: context,
-                            type: AlertType.success,
-                            title: "RFLUTTER ALERT",
-                            desc:
-                                "Flutter is more awesome with RFlutter Alert.",
-                            buttons: [
-                              DialogButton(
-                                child: Text(
-                                  "FLAT",
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20),
-                                ),
-                                onPressed: () => Navigator.pop(context),
-                                color: Color.fromRGBO(0, 179, 134, 1.0),
-                              )
-                            ],
-                          ).show();
+                          asientosSeleccionados.length != toSelect
+                              ? Alert(
+                                  context: context,
+                                  type: AlertType.warning,
+                                  title: "Oops",
+                                  desc:
+                                      "Debe de seleccionar ${toSelect.toString()} asientos",
+                                  buttons: [
+                                    DialogButton(
+                                      child: Text(
+                                        "Cerrar",
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                      ),
+                                      onPressed: () => Navigator.pop(context),
+                                      color: Color.fromRGBO(0, 179, 134, 1.0),
+                                    )
+                                  ],
+                                ).show()
+                              : print("Correcto");
                         },
                       )
                     ],

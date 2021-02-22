@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/precios_model.dart';
 import 'package:peliculas/src/page/tours/seleccionarAsiento.dart';
+import 'package:peliculas/src/services/turs_services.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CarritoCompra extends StatefulWidget {
   @override
@@ -8,23 +10,21 @@ class CarritoCompra extends StatefulWidget {
 }
 
 class _CarritoCompraState extends State<CarritoCompra> {
+  Future infoReserva;
   Color fondo = Colors.green;
-
-  int contadorPrueba = 0;
-  int pasoActual = 0;
   double screenHeight;
   Precios _precioSeleccionado;
-  List<Precios> listaPrecios;
+  List<Precios> listaPrecios = [];
   List<Precios> asientosPrecio = [];
   int cantidadSeleccionada = 1;
   @override
   void initState() {
     super.initState();
-    listaPrecios = [
-      new Precios(asiento: 1, pasaje: 13.3, titulo: "asientos normal"),
-      new Precios(asiento: 1, pasaje: 21.5, titulo: "Niños menores de 5 años")
-    ];
-    _precioSeleccionado = listaPrecios[0];
+    infoReserva = _getInfoReserva();
+  }
+
+  Future<dynamic> _getInfoReserva() async {
+    return await TurServices().obtenerInfomacionToReserva('3');
   }
 
   @override
@@ -32,14 +32,35 @@ class _CarritoCompraState extends State<CarritoCompra> {
     screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: appBarCarrito(),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            paginaFondo(),
-            imagenPortada(context),
-            cajaFormulario(context),
-          ],
-        ),
+      body: FutureBuilder(
+          future: infoReserva,
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                inicializarData(snapshot.data);
+                return scrollView(context);
+              case ConnectionState.active:
+                print('activo');
+                return Text('activo');
+              case ConnectionState.waiting:
+                print('esperando');
+                return Center(child: CircularProgressIndicator());
+              default:
+                print('esperando');
+                return Text('ninguno');
+            }
+          }),
+    );
+  }
+
+  SingleChildScrollView scrollView(BuildContext context) {
+    return SingleChildScrollView(
+      child: Stack(
+        children: <Widget>[
+          paginaFondo(),
+          imagenPortada(context),
+          cajaFormulario(context),
+        ],
       ),
     );
   }
@@ -118,8 +139,27 @@ class _CarritoCompraState extends State<CarritoCompra> {
           padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => SeleccionarAsiento()));
+            asientosPrecio.length == 0
+                ? Alert(
+                    context: context,
+                    type: AlertType.warning,
+                    title: "Oops",
+                    desc: "El carrito esta vacio.",
+                    buttons: [
+                      DialogButton(
+                        child: Text(
+                          "Cerrar",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                        color: Color.fromRGBO(0, 179, 134, 1.0),
+                      )
+                    ],
+                  ).show()
+                : Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => SeleccionarAsiento()));
           },
         )
       ],
@@ -272,7 +312,9 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
-        eliminarCarrito(precioSeleccionado.id);
+        setState(() {
+          eliminarCarrito(precioSeleccionado.id);
+        });
       },
       background: Container(
         decoration: BoxDecoration(
@@ -315,6 +357,22 @@ class _CarritoCompraState extends State<CarritoCompra> {
           ),
           value: precioItem));
     });
+
     return lista;
+  }
+
+  void inicializarData(dynamic data) {
+    double precioNormal = double.parse(data['precio']);
+    listaPrecios
+        .add(Precios(asiento: 1, pasaje: precioNormal, titulo: "Normal"));
+    List<dynamic> promociones = data['promociones'].toList();
+    promociones.forEach((element) {
+      listaPrecios.add(new Precios(
+          titulo: element['titulo'],
+          asiento: int.parse(element['asiento']),
+          pasaje: double.parse(element['pasaje'])));
+    });
+
+    _precioSeleccionado = listaPrecios[0];
   }
 }
