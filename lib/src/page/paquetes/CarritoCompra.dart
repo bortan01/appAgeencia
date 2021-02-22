@@ -100,19 +100,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
             ),
           ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Puede completar datos adicionales en Pagina Web",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        )
       ],
     );
   }
@@ -164,12 +151,17 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   Widget _labelTotal() {
+    double total = 0.00;
+    asientosPrecio.forEach((element) {
+      total += (element.cantidad) * (element.pasaje);
+    });
+
     return Row(
       children: <Widget>[
         Text("Total:",
             style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
         Spacer(),
-        Text("\$33",
+        Text("\$${total.toStringAsFixed(2)}",
             style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
       ],
     );

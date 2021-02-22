@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SeleccionarAsiento extends StatefulWidget {
   SeleccionarAsiento({Key key}) : super(key: key);
@@ -70,7 +71,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  crearTitulo("Elija sus Asientos"),
+                  crearTitulo("Elija 3 Asiento(s)"),
                   crearSubTitulo("(Asientos color verde)"),
                   SizedBox(height: 4.0),
                   _crearBus(
@@ -93,7 +94,26 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
                             left: 38, right: 38, top: 15, bottom: 15),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {},
+                        onPressed: () {
+                          Alert(
+                            context: context,
+                            type: AlertType.success,
+                            title: "RFLUTTER ALERT",
+                            desc:
+                                "Flutter is more awesome with RFlutter Alert.",
+                            buttons: [
+                              DialogButton(
+                                child: Text(
+                                  "FLAT",
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20),
+                                ),
+                                onPressed: () => Navigator.pop(context),
+                                color: Color.fromRGBO(0, 179, 134, 1.0),
+                              )
+                            ],
+                          ).show();
+                        },
                       )
                     ],
                   )
@@ -102,19 +122,6 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
             ),
           ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Puede completar datos adicionales en Pagina Web",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        )
       ],
     );
   }
