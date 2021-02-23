@@ -17,6 +17,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
   List<Precios> listaPrecios = [];
   List<Precios> asientosPrecio = [];
   int cantidadSeleccionada = 1;
+  int cupos = 0;
   @override
   void initState() {
     super.initState();
@@ -139,27 +140,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
           padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
           onPressed: () {
-            asientosPrecio.length == 0
-                ? Alert(
-                    context: context,
-                    type: AlertType.warning,
-                    title: "Oops",
-                    desc: "El carrito esta vacio.",
-                    buttons: [
-                      DialogButton(
-                        child: Text(
-                          "Cerrar",
-                          style: TextStyle(color: Colors.white, fontSize: 20),
-                        ),
-                        onPressed: () => Navigator.pop(context),
-                        color: Color.fromRGBO(0, 179, 134, 1.0),
-                      )
-                    ],
-                  ).show()
-                : Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => SeleccionarAsiento()));
+            continuar();
           },
         )
       ],
@@ -347,11 +328,20 @@ class _CarritoCompraState extends State<CarritoCompra> {
     listaPrecios.forEach((precioItem) {
       lista.add(DropdownMenuItem(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                '${precioItem.titulo} \$${precioItem.pasaje.toString()}',
+                '${precioItem.titulo}',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Text(
+                  '\$${precioItem.pasaje.toString()}',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
             ],
           ),
@@ -362,6 +352,8 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   void inicializarData(dynamic data) {
+    cupos = int.parse(data['cupos']);
+    listaPrecios = [];
     double precioNormal = double.parse(data['precio']);
     listaPrecios
         .add(Precios(asiento: 1, pasaje: precioNormal, titulo: "Normal"));
@@ -374,5 +366,53 @@ class _CarritoCompraState extends State<CarritoCompra> {
     });
 
     _precioSeleccionado = listaPrecios[0];
+  }
+
+  void continuar() {
+    int cuposSolicitados = 0;
+    if (asientosPrecio.length == 0) {
+      Alert(
+        context: context,
+        type: AlertType.warning,
+        title: "Oops",
+        desc: "El carrito esta vacio.",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Cerrar",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            color: Color.fromRGBO(0, 179, 134, 1.0),
+          )
+        ],
+      ).show();
+    } else {
+      asientosPrecio.forEach((element) {
+        cuposSolicitados += element.cantidad;
+      });
+
+      if (cuposSolicitados > cupos) {
+        Alert(
+          context: context,
+          type: AlertType.warning,
+          title: "Oops",
+          desc: "Solo hay $cupos asientos disponibles",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "Cerrar",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () => Navigator.pop(context),
+              color: Color.fromRGBO(0, 179, 134, 1.0),
+            )
+          ],
+        ).show();
+      } else {
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => SeleccionarAsiento()));
+      }
+    }
   }
 }
