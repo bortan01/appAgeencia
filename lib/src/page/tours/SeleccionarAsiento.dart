@@ -1,10 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/turs/detalleTur_model.dart';
 import 'package:peliculas/src/models/turs/transporte_model.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SeleccionarAsiento extends StatefulWidget {
   final DetalleTurModel detalle;
@@ -156,6 +155,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
 
       final dynamic resultado =
           await turServices.guardarReserva(widget.detalle);
+      String url = resultado['urlEnlace'];
       Alert(
         context: context,
         type: AlertType.success,
@@ -167,11 +167,24 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
               "ok",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              redireccionar(url);
+            },
             color: Color.fromRGBO(0, 179, 134, 1.0),
           )
         ],
       ).show();
+    }
+  }
+
+  redireccionar(url) async {
+    // url = 'https://www.marca.com/';
+    if (await canLaunch(url)) {
+      await launch(url);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
+    } else {
+      throw 'Could not launch $url';
     }
   }
 
