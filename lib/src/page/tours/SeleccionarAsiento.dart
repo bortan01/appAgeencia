@@ -1,23 +1,36 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/turs/detalleTur_model.dart';
+import 'package:peliculas/src/models/turs/transporte_model.dart';
+import 'package:peliculas/src/services/turs_services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SeleccionarAsiento extends StatefulWidget {
-  SeleccionarAsiento({Key key}) : super(key: key);
+  final DetalleTurModel detalle;
+  final TransporteModel transporte;
+  SeleccionarAsiento({
+    Key key,
+    @required this.detalle,
+    this.transporte,
+  }) : super(key: key);
 
   @override
   _SeleccionarAsientoState createState() => _SeleccionarAsientoState();
 }
 
 class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
+  final fcaffolKey = GlobalKey<ScaffoldState>();
+  final turServices = new TurServices();
   double screenHeight;
   List<String> asientosSeleccionados = [];
-  int toSelect = 2;
+  List<String> labelAsientos = [];
+  bool _guardando = false;
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
-
-    //final lista = listaInventada();
     return Scaffold(
+      key: fcaffolKey,
       appBar: appBar(),
       body: SingleChildScrollView(
         child: Stack(
@@ -72,54 +85,22 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  crearTitulo('Elija ${toSelect.toString()} Asiento(s)'),
+                  crearTitulo(
+                      'Elija ${widget.detalle.cantidadAsientos.toString()} Asiento(s)'),
                   crearSubTitulo("(Asientos color verde)"),
                   SizedBox(height: 4.0),
                   _crearBus(
                       context: context,
-                      asientosDerecho: 3,
-                      asientosIzquierdos: 3,
-                      filas: 3),
+                      asientosDerecho:
+                          int.parse(widget.transporte.asientoDerecho),
+                      asientosIzquierdos:
+                          int.parse(widget.transporte.asientoIzquierdo),
+                      filas: int.parse(widget.transporte.filas),
+                      deshabilitados: widget.transporte.asientosDeshabilitados,
+                      ocupados: widget.transporte.ocupados,
+                      filaTrasera: widget.transporte.filaTrasera),
                   SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
-                      FlatButton(
-                        child: Text("Continuar"),
-                        color: Colors.blueAccent,
-                        textColor: Colors.white,
-                        padding: EdgeInsets.only(
-                            left: 38, right: 38, top: 15, bottom: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {
-                          asientosSeleccionados.length != toSelect
-                              ? Alert(
-                                  context: context,
-                                  type: AlertType.warning,
-                                  title: "Oops",
-                                  desc:
-                                      "Debe de seleccionar ${toSelect.toString()} asientos",
-                                  buttons: [
-                                    DialogButton(
-                                      child: Text(
-                                        "Cerrar",
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                      ),
-                                      onPressed: () => Navigator.pop(context),
-                                      color: Color.fromRGBO(0, 179, 134, 1.0),
-                                    )
-                                  ],
-                                ).show()
-                              : print("Correcto");
-                        },
-                      )
-                    ],
-                  )
+                  _botonPagar(context)
                 ],
               ),
             ),
@@ -127,6 +108,79 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
         ),
       ],
     );
+  }
+
+  Row _botonPagar(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: <Widget>[
+        Expanded(
+          child: Container(),
+        ),
+        FlatButton(
+          child: (_guardando) ? Text("Por favor espere...") : Text("Continuar"),
+          color: Colors.blueAccent,
+          textColor: Colors.white,
+          padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          onPressed: (_guardando) ? null : _reservar,
+        )
+      ],
+    );
+  }
+
+  void _reservar() async {
+    if (asientosSeleccionados.length != widget.detalle.cantidadAsientos) {
+      Alert(
+        context: context,
+        type: AlertType.warning,
+        title: "Oops",
+        desc:
+            "Debe de seleccionar ${widget.detalle.cantidadAsientos.toString()} asiento(s)",
+        buttons: [
+          DialogButton(
+            child: Text(
+              "Cerrar",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            color: Color.fromRGBO(0, 179, 134, 1.0),
+          )
+        ],
+      ).show();
+    } else {
+      setState(() {
+        print("redibujando");
+        _guardando = true;
+      });
+
+      final dynamic resultado =
+          await turServices.guardarReserva(widget.detalle);
+      Alert(
+        context: context,
+        type: AlertType.success,
+        title: "Listo",
+        desc: 'Será redirigido a nuestra pasarela de pago',
+        buttons: [
+          DialogButton(
+            child: Text(
+              "ok",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () => Navigator.pop(context),
+            color: Color.fromRGBO(0, 179, 134, 1.0),
+          )
+        ],
+      ).show();
+    }
+  }
+
+  void mostrarSnackbar(String mensaje) {
+    final snack = SnackBar(
+      content: Text(mensaje),
+      duration: Duration(seconds: 2),
+    );
+    fcaffolKey.currentState.showSnackBar(snack);
   }
 
   Widget imagenPortada(BuildContext context) {
@@ -158,13 +212,15 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
   Widget _crearBus(
       {@required BuildContext context,
       @required int asientosIzquierdos,
-      @required asientosDerecho,
-      @required filas}) {
+      @required int asientosDerecho,
+      @required int filas,
+      @required String deshabilitados,
+      @required List<String> ocupados,
+      @required String filaTrasera}) {
     final int totalAsientos = asientosIzquierdos + asientosDerecho + 1;
     final scrimSize = MediaQuery.of(context).size;
     final dimensiones = ((scrimSize.width * 0.85) - 88) / totalAsientos;
-    final List<String> asientosDeshabilitados = "1_1,11_6".split(",");
-    final List<String> ocupados = ["1_11", "4_7"];
+    final List<String> asientosDeshabilitados = deshabilitados.split(",");
     final List<String> asientosNoDisponibles =
         new List.from(asientosDeshabilitados)..addAll(ocupados);
 
@@ -216,37 +272,41 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
     final espacio = Row(
       children: <Widget>[SizedBox(width: 20.0, height: 20.0)],
     );
-    final List<Widget> otraFila = [];
-    for (var i = 1; i <= asientosDerecho + asientosIzquierdos + 1; i++) {
-      otraFila.add(Asiento(
-        context: context,
-        label: labelAsiento.toString(),
-        identificador: '${(filas + 2).toString()}_${i.toString()}',
-        fondoActivo: Colors.green,
-        fondoInactivo: Colors.red,
-        asientosNoDisponibles: asientosNoDisponibles,
-        agregar: agregarAsiento,
-        dimensiones: dimensiones,
-        eliminar: eliminarAsiento,
-      ));
-      labelAsiento++;
+
+    if (filaTrasera == "1") {
+      final List<Widget> otraFila = [];
+      for (var i = 1; i <= asientosDerecho + asientosIzquierdos + 1; i++) {
+        otraFila.add(Asiento(
+          context: context,
+          label: labelAsiento.toString(),
+          identificador: '${(filas + 2).toString()}_${i.toString()}',
+          fondoActivo: Colors.green,
+          fondoInactivo: Colors.red,
+          asientosNoDisponibles: asientosNoDisponibles,
+          agregar: agregarAsiento,
+          dimensiones: dimensiones,
+          eliminar: eliminarAsiento,
+        ));
+        labelAsiento++;
+      }
+      listaFilas.add(espacio);
+      listaFilas.add(new Row(
+          mainAxisAlignment: MainAxisAlignment.center, children: otraFila));
     }
-    listaFilas.add(espacio);
-    listaFilas.add(new Row(
-        mainAxisAlignment: MainAxisAlignment.center, children: otraFila));
+
     return Column(
       children: listaFilas,
     );
   }
 
-  void agregarAsiento(String identificadorAsiento) {
+  void agregarAsiento(String identificadorAsiento, String label) {
     asientosSeleccionados.add(identificadorAsiento);
-    print(asientosSeleccionados.toString());
+    labelAsientos.add(label);
   }
 
-  void eliminarAsiento(String identificadorAsiento) {
+  void eliminarAsiento(String identificadorAsiento, String label) {
     asientosSeleccionados.remove(identificadorAsiento);
-    print(asientosSeleccionados.toString());
+    labelAsientos.remove(label);
   }
 }
 
@@ -301,9 +361,9 @@ class _AsientoState extends State<Asiento> {
             if (!deshabilitado) {
               setState(() {
                 if (select) {
-                  widget.agregar(widget.identificador);
+                  widget.agregar(widget.identificador, widget.label);
                 } else {
-                  widget.eliminar(widget.identificador);
+                  widget.eliminar(widget.identificador, widget.label);
                 }
                 select = !select;
               });

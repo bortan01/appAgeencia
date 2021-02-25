@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/precios_model.dart';
+import 'package:peliculas/src/models/turs/detalleTur_model.dart';
+import 'package:peliculas/src/models/turs/transporte_model.dart';
 import 'package:peliculas/src/page/tours/seleccionarAsiento.dart';
 import 'package:peliculas/src/services/turs_services.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CarritoCompra extends StatefulWidget {
@@ -18,6 +21,14 @@ class _CarritoCompraState extends State<CarritoCompra> {
   List<Precios> asientosPrecio = [];
   int cantidadSeleccionada = 1;
   int cupos = 0;
+  double total = 0.00;
+  int cuposSolicitados = 0;
+  String descripcion;
+  String nombre;
+  DetalleTurModel detalle = new DetalleTurModel();
+  TransporteModel transporte;
+
+  final formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -104,20 +115,23 @@ class _CarritoCompraState extends State<CarritoCompra> {
             elevation: 8,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  _crearDropdown(),
-                  _inputCantidad(),
-                  _botonAgregar(),
-                  crearTitulo("Mi Carrito"),
-                  crearSubTitulo("(Mueva a los lados para eliminar)"),
-                  SizedBox(height: 4.0),
-                  _crearCarrito(),
-                  SizedBox(height: 5.0),
-                  _labelTotal(),
-                  _botonContinuar()
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    _crearDropdown(),
+                    _inputCantidad(),
+                    _botonAgregar(),
+                    crearTitulo("Mi Carrito"),
+                    crearSubTitulo("(Mueva a los lados para eliminar)"),
+                    SizedBox(height: 4.0),
+                    _crearCarrito(),
+                    SizedBox(height: 5.0),
+                    _labelTotal(),
+                    _botonContinuar()
+                  ],
+                ),
               ),
             ),
           ),
@@ -160,19 +174,27 @@ class _CarritoCompraState extends State<CarritoCompra> {
   Widget _inputCantidad() {
     return TextFormField(
       initialValue: "1",
-      keyboardType: TextInputType.number,
+      keyboardType:
+          TextInputType.numberWithOptions(decimal: false, signed: false),
       textAlign: TextAlign.center,
+      validator: (value) {
+        if (helper.isNumeric(value)) {
+          return null;
+        } else {
+          return "solo numeros";
+        }
+      },
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
           labelText: 'ingrese numero de asientos'),
-      onChanged: (String valor) {
+      onSaved: (String valor) {
         cantidadSeleccionada = int.parse(valor);
       },
     );
   }
 
   Widget _labelTotal() {
-    double total = 0.00;
+    total = 0.00;
     asientosPrecio.forEach((element) {
       total += (element.cantidad) * (element.pasaje);
     });
@@ -189,21 +211,21 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   Widget _botonAgregar() {
-    return RaisedButton(
-      child: Container(
-          width: double.infinity,
-          child: Text(
-            "Agregar a mi carrito",
-            textAlign: TextAlign.center,
-          )),
+    return RaisedButton.icon(
+      icon: Icon(Icons.shopping_cart),
+      label: Text("Agregar a mi carrito"),
       color: Colors.blue,
       textColor: Colors.white,
       focusColor: Colors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       onPressed: () {
-        setState(() {
-          agregarACarrito();
-        });
+        if (formKey.currentState.validate()) {
+          //para ejecutar el on save
+          formKey.currentState.save();
+          setState(() {
+            agregarACarrito();
+          });
+        }
       },
     );
   }
@@ -245,12 +267,12 @@ class _CarritoCompraState extends State<CarritoCompra> {
                       borderRadius:
                           const BorderRadius.all(Radius.circular(20.0)))),
               icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
-              value: listaPrecios[0],
+              value: _precioSeleccionado,
               items: opcionesDropdown(),
               onChanged: (opt) {
-                print(opt);
                 setState(() {
                   _precioSeleccionado = opt;
+                  print(_precioSeleccionado.id.toString());
                 });
               }),
         ],
@@ -352,24 +374,32 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   void inicializarData(dynamic data) {
-    cupos = int.parse(data['cupos']);
-    listaPrecios = [];
-    double precioNormal = double.parse(data['precio']);
-    listaPrecios
-        .add(Precios(asiento: 1, pasaje: precioNormal, titulo: "Normal"));
-    List<dynamic> promociones = data['promociones'].toList();
-    promociones.forEach((element) {
-      listaPrecios.add(new Precios(
-          titulo: element['titulo'],
-          asiento: int.parse(element['asiento']),
-          pasaje: double.parse(element['pasaje'])));
-    });
-
-    _precioSeleccionado = listaPrecios[0];
+    if (_precioSeleccionado == null) {
+      print("inicializando");
+      //el detalle sera enviado a la siguiente pantalla
+      nombre = data['nombre'];
+      descripcion = data['descripcion_tur'];
+      transporte = new TransporteModel.fromJson(data['transporte']);
+      //inicializaremos los datos para el dropdown
+      cupos = int.parse(data['cupos']);
+      listaPrecios = [];
+      double precioNormal = double.parse(data['precio']);
+      listaPrecios
+          .add(Precios(asiento: 1, pasaje: precioNormal, titulo: "Normal"));
+      List<dynamic> promociones = data['promociones'].toList();
+      promociones.forEach((element) {
+        listaPrecios.add(new Precios(
+            titulo: element['titulo'],
+            asiento: int.parse(element['asiento']),
+            pasaje: double.parse(element['pasaje'])));
+      });
+      _precioSeleccionado = listaPrecios[0];
+    }
   }
 
   void continuar() {
-    int cuposSolicitados = 0;
+    String descAdicional = "";
+    cuposSolicitados = 0;
     if (asientosPrecio.length == 0) {
       Alert(
         context: context,
@@ -390,7 +420,12 @@ class _CarritoCompraState extends State<CarritoCompra> {
     } else {
       asientosPrecio.forEach((element) {
         cuposSolicitados += element.cantidad;
+        String subTotal =
+            (element.cantidad * element.pasaje).toStringAsFixed(2);
+        descAdicional +=
+            '${element.cantidad.toString()} X ${element.titulo} \$$subTotal \n';
       });
+      descAdicional += '\n';
 
       if (cuposSolicitados > cupos) {
         Alert(
@@ -410,8 +445,17 @@ class _CarritoCompraState extends State<CarritoCompra> {
           ],
         ).show();
       } else {
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => SeleccionarAsiento()));
+        detalle.idTours = 1;
+        detalle.idCliente = 3;
+        detalle.nombreProducto = nombre;
+        detalle.descripcionProducto = descAdicional + descripcion;
+        detalle.total = total;
+        detalle.cantidadAsientos = cuposSolicitados;
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => SeleccionarAsiento(
+                    detalle: detalle, transporte: transporte)));
       }
     }
   }
