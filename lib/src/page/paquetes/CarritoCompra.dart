@@ -8,6 +8,8 @@ import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CarritoCompra extends StatefulWidget {
+  final String idTur;
+  const CarritoCompra({Key key, this.idTur}) : super(key: key);
   @override
   _CarritoCompraState createState() => _CarritoCompraState();
 }
@@ -36,7 +38,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   Future<dynamic> _getInfoReserva() async {
-    return await TurServices().obtenerInfomacionToReserva('3');
+    return await TurServices().obtenerInfomacionToReserva(widget.idTur);
   }
 
   @override

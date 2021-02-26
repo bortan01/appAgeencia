@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:peliculas/src/models/paquete_models.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
+import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
 import 'package:provider/provider.dart';
 
 class DetalleTours extends StatefulWidget {
@@ -331,7 +331,6 @@ class _DetalleToursState extends State<DetalleTours> {
   }
 
   Widget _crearBoton(BuildContext context) {
-    final paquete = new Paquete();
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: new RaisedButton.icon(
@@ -341,7 +340,11 @@ class _DetalleToursState extends State<DetalleTours> {
           textColor: Theme.of(context).bottomAppBarColor,
           shape: StadiumBorder(),
           onPressed: () {
-            Navigator.pushNamed(context, 'CarritoCompra', arguments: paquete);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        CarritoCompra(idTur: widget.tur['id_tours'])));
           }),
     );
   }

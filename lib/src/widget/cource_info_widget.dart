@@ -10,7 +10,7 @@ class CourceInfoWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        height: 470,
+        height: 570,
         child: Column(
           children: <Widget>[
             _titulo(),
@@ -21,36 +21,38 @@ class CourceInfoWidget extends StatelessWidget {
   }
 
   Widget _fotografia() {
-    return AspectRatio(
-      aspectRatio: 1.4,
-      child: Hero(
-        tag: model.id.toString(),
-        child: Container(
-            height: 290,
-            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            decoration: BoxDecoration(
-                color: Colors.blueAccent,
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                boxShadow: <BoxShadow>[
-                  BoxShadow(
-                      offset: Offset(0, 5),
-                      blurRadius: 10,
-                      color: Color(0x12000000))
-                ]),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                child: new FadeInImage(
-                  placeholder: AssetImage("assets/gif/loading.gif"),
-                  image: NetworkImage(model.imagen),
-                  fadeInDuration: Duration(milliseconds: 200),
-                  fit: BoxFit.cover,
-                ))),
+    return Expanded(
+      child: AspectRatio(
+        aspectRatio: 1.8,
+        child: Hero(
+          tag: model.id.toString(),
+          child: Container(
+              height: 390,
+              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              decoration: BoxDecoration(
+                  color: Colors.blueAccent,
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  boxShadow: <BoxShadow>[
+                    BoxShadow(
+                        offset: Offset(0, 5),
+                        blurRadius: 10,
+                        color: Color(0x12000000))
+                  ]),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  child: new FadeInImage(
+                    placeholder: AssetImage("assets/gif/loading.gif"),
+                    image: NetworkImage(model.imagen),
+                    fadeInDuration: Duration(milliseconds: 200),
+                    fit: BoxFit.cover,
+                  ))),
+        ),
       ),
     );
   }
 
-  Expanded _descripcion() {
-    return Expanded(
+  Widget _descripcion() {
+    return Container(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -59,7 +61,7 @@ class CourceInfoWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           child: Text(model.descripcion,
               overflow: TextOverflow.ellipsis,
-              maxLines: 4,
+              maxLines: 10,
               textAlign: TextAlign.justify,
               style: AppTheme.h6Style
                   .copyWith(fontSize: 12, color: Colors.blueGrey)),
