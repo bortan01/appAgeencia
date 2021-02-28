@@ -62,7 +62,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'list': (BuildContext context) => ListaPage(),
     'listaPeliculas': (BuildContext context) => ListaPeliculas(),
     //AQUI EMPIEZAN LOS NUESTROS
-    '/': (BuildContext context) => Home(),
     'home': (BuildContext context) => Home(),
     //MODULO PAQUETES
     'HomePaquetes': (BuildContext context) => HomePaquetes(),

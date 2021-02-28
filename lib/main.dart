@@ -46,7 +46,7 @@ class _MyAppState extends State<MyApp> {
           // ...
         ],
         title: 'Agencia Martinez Travels y Tours',
-        initialRoute: '/',
+        initialRoute: 'login',
         routes: getAplicationRoute(),
         theme: AppTheme.lightTheme,
       ),
