@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/usuarios/signUp_model.dart';
 
 class Registro extends StatefulWidget {
   @override
@@ -9,9 +10,11 @@ class _RegistroPageState extends State<Registro> {
   double screenHeight;
 
   String _nombre = "";
-  String _usuario = "";
   String _correo = "";
-  String _contrasena = "";
+  String _password = "";
+  String _password2 = "";
+  String _celular = "";
+  String _dui = "";
 
   @override
   Widget build(BuildContext context) {
@@ -90,15 +93,15 @@ class _RegistroPageState extends State<Registro> {
                   SizedBox(
                     height: 20,
                   ),
-                  _inputUsuario(),
+                  _inputCorreo(),
                   SizedBox(
                     height: 20,
                   ),
-                  _inputEmail(),
+                  _inputPassword(),
                   SizedBox(
                     height: 20,
                   ),
-                  _inputContrasena(),
+                  _inputRepetirPassoword(),
                   SizedBox(
                     height: 20,
                   ),
@@ -164,7 +167,7 @@ class _RegistroPageState extends State<Registro> {
     );
   }
 
-  Widget _inputUsuario() {
+  Widget _inputCorreo() {
     return new TextField(
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.text,
@@ -177,18 +180,19 @@ class _RegistroPageState extends State<Registro> {
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.supervised_user_circle),
       ),
-      onChanged: (String persona) {
-        _usuario = persona;
+      onChanged: (String value) {
+        _correo = value;
         setState(() {});
       },
     );
   }
 
-  Widget _inputEmail() {
+  Widget _inputPassword() {
     return new TextField(
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
+      obscureText: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Correo Electronico',
@@ -204,7 +208,7 @@ class _RegistroPageState extends State<Registro> {
     );
   }
 
-  Widget _inputContrasena() {
+  Widget _inputRepetirPassoword() {
     return new TextField(
       textCapitalization: TextCapitalization.words,
       obscureText: true,
@@ -217,8 +221,8 @@ class _RegistroPageState extends State<Registro> {
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.lock),
       ),
-      onChanged: (String persona) {
-        _contrasena = persona;
+      onChanged: (String value) {
+        _password2 = value;
         setState(() {});
       },
     );
@@ -227,7 +231,7 @@ class _RegistroPageState extends State<Registro> {
   Widget _inputLogin() {
     return new FlatButton(
       child: Text(
-        '¿Ya estoy registrado?',
+        '¿Ya tienes cuenta?',
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
@@ -244,7 +248,15 @@ class _RegistroPageState extends State<Registro> {
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       onPressed: () {
+        final signUp = new SignUpModel(
+            nombre: _nombre,
+            correo: _correo,
+            password: _password,
+            celular: _celular,
+            dui: _dui,
+            nivel: 'CLIENTE');
         Navigator.pushNamed(context, 'login');
+        print(signUp);
       },
     );
   }
