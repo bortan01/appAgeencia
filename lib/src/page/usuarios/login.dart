@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
+import 'package:peliculas/src/utils/helper.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -11,9 +13,10 @@ class _LoginPageState extends State<Login> {
   double screenHeight;
 
   String _usuario;
-  String _contrasena = "";
+  String _contrasena;
   UserServices userServices;
   bool _guardando = false;
+  bool _ocultarPassword = true;
   @override
   void initState() {
     super.initState();
@@ -106,9 +109,6 @@ class _LoginPageState extends State<Login> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
                       _inputBoton(),
                     ],
                   ),
@@ -125,10 +125,6 @@ class _LoginPageState extends State<Login> {
           children: <Widget>[
             SizedBox(
               height: 40,
-            ),
-            Text(
-              "Puede completar datos adicionales en Pagina Web",
-              style: TextStyle(color: Colors.grey),
             ),
           ],
         )
@@ -159,9 +155,10 @@ class _LoginPageState extends State<Login> {
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.supervised_user_circle),
       ),
-      onChanged: (String persona) {
-        _usuario = persona;
-        setState(() {});
+      onChanged: (String value) {
+        setState(() {
+          _usuario = value;
+        });
       },
     );
   }
@@ -169,7 +166,7 @@ class _LoginPageState extends State<Login> {
   Widget _inputContrasena() {
     return new TextField(
       textCapitalization: TextCapitalization.words,
-      obscureText: true,
+      obscureText: _ocultarPassword,
       autofocus: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -177,11 +174,19 @@ class _LoginPageState extends State<Login> {
         labelText: 'Digite su Contraseña',
         helperText: 'Contraseña',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.lock),
+        suffixIcon: GestureDetector(
+          child: Icon(Icons.remove_red_eye),
+          onTap: () {
+            setState(() {
+              _ocultarPassword = !_ocultarPassword;
+            });
+          },
+        ),
       ),
-      onChanged: (String persona) {
-        _contrasena = persona;
-        setState(() {});
+      onChanged: (String value) {
+        setState(() {
+          _contrasena = value;
+        });
       },
     );
   }
@@ -212,7 +217,8 @@ class _LoginPageState extends State<Login> {
 
   Widget _inputBoton() {
     return new FlatButton(
-      child: Text("Iniciar Sesión"),
+      child:
+          (_guardando) ? Text("Espere por favor...") : Text("Iniciar Sesión"),
       color: Color(0xFF4B9DFE),
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
@@ -225,18 +231,23 @@ class _LoginPageState extends State<Login> {
     setState(() {
       _guardando = true;
     });
-    final respuesta = await userServices.loginCliente(new LoginModel(
-        password: "test105@gmail.com", username: "test105@gmail.com"));
+    final respuesta = await userServices.loginCliente(
+        new LoginModel(password: _contrasena, username: _usuario));
+
     if (!respuesta['err']) {
-      String token = (respuesta['token']);
+      String token = respuesta['token'];
       bool existInFirebase = await userServices.signByToken(token);
       if (existInFirebase) {
         print("yes, existe");
       } else {
-        print("no, no existe");
+        mostrarMensanjeError(context, respuesta['mensaje']);
       }
+      setState(() {});
+      _guardando = false;
     } else {
-      print(respuesta['mensaje']);
+      mostrarMensanjeError(context, respuesta['mensaje']);
+      setState(() {});
+      _guardando = false;
     }
   }
 }

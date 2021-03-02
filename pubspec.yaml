@@ -33,6 +33,7 @@ dependencies:
    provider: ^4.3.2
    url_launcher: ^5.0.2
    rflutter_alert: ^1.1.0
+   shared_preferences:
 
    flutter_localizations:
       sdk: flutter
