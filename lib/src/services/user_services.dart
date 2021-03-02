@@ -1,13 +1,14 @@
 // import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/conf.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
 class UserServices {
   final FirebaseAuth _firebaseAuth;
-
+  PreferenciasUsuario _usuarioPref = new PreferenciasUsuario();
   //Constructor
   UserServices({FirebaseAuth firebaseAuth})
       : this._firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
@@ -65,5 +66,15 @@ class UserServices {
         return {"err": true, "mensaje": "Credenciales no validas"};
       }
     }
+  }
+
+  void guardarPreferencias(Map<String, dynamic> data) {
+    _usuarioPref.nombre = data['nombre'];
+    _usuarioPref.uid = data['user_uuid'];
+    _usuarioPref.idCliente = data['id_cliente'];
+    _usuarioPref.correo = data['correo'];
+    _usuarioPref.celular = data['celular'];
+    _usuarioPref.dui = data['dui'];
+    _usuarioPref.foto = data['foto'];
   }
 }

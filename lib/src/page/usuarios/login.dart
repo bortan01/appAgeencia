@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -17,6 +16,7 @@ class _LoginPageState extends State<Login> {
   UserServices userServices;
   bool _guardando = false;
   bool _ocultarPassword = true;
+
   @override
   void initState() {
     super.initState();
@@ -149,9 +149,9 @@ class _LoginPageState extends State<Login> {
       autofocus: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Nombre de Usuario',
-        labelText: 'Digite su Nombre de Usuario',
-        helperText: 'Usuario',
+        hintText: 'Digite su Correo Electronico',
+        labelText: 'Digite su Correo Electronico',
+        helperText: 'Correo',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.supervised_user_circle),
       ),
@@ -229,16 +229,22 @@ class _LoginPageState extends State<Login> {
 
   verificarCredenciales() async {
     setState(() {
+      //para bloquear el boton guardar
       _guardando = true;
     });
+    //primera consulta es solo para obtener el token
     final respuesta = await userServices.loginCliente(
         new LoginModel(password: _contrasena, username: _usuario));
-
+    //verificamos si todo esta bien
     if (!respuesta['err']) {
       String token = respuesta['token'];
+      //inicializamos el usuaario de firebase con el token recibido
       bool existInFirebase = await userServices.signByToken(token);
       if (existInFirebase) {
-        print("yes, existe");
+        //si el usuario firebase fue identificado procedemos a guardar las preferencias
+        userServices.guardarPreferencias(respuesta);
+        //redireccionamos y reemplazamos la ruta
+        Navigator.pushReplacementNamed(context, "home");
       } else {
         mostrarMensanjeError(context, respuesta['mensaje']);
       }
