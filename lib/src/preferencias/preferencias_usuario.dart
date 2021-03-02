@@ -91,12 +91,12 @@ class PreferenciasUsuario {
     _prefs.setString('foto', value);
   }
 
-  // GET y SET de la última página
-  get ultimaPagina {
-    return _prefs.getString('ultimaPagina') ?? 'login';
+  // GET y SET de la pagina de incio
+  get paginaInicio {
+    return _prefs.getString('paginaInicio') ?? 'login';
   }
 
-  set ultimaPagina(String value) {
-    _prefs.setString('ultimaPagina', value);
+  set paginaInicio(String value) {
+    _prefs.setString('paginaInicio', value);
   }
 }

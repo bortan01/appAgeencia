@@ -38,6 +38,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    final pref = PreferenciasUsuario();
+    print(pref.paginaInicio);
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
@@ -54,7 +56,8 @@ class _MyAppState extends State<MyApp> {
           // ...
         ],
         title: 'Agencia Martinez Travels y Tours',
-        initialRoute: 'login',
+        // initialRoute: 'login',
+        initialRoute: pref.paginaInicio,
         routes: getAplicationRoute(),
         theme: AppTheme.lightTheme,
       ),

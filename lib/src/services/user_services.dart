@@ -76,5 +76,17 @@ class UserServices {
     _usuarioPref.celular = data['celular'];
     _usuarioPref.dui = data['dui'];
     _usuarioPref.foto = data['foto'];
+    _usuarioPref.paginaInicio = "home";
+  }
+
+  void eliminarPreferencias() {
+    _usuarioPref.nombre = "";
+    _usuarioPref.uid = "";
+    _usuarioPref.idCliente = "";
+    _usuarioPref.correo = "";
+    _usuarioPref.celular = "";
+    _usuarioPref.dui = "";
+    _usuarioPref.foto = "";
+    _usuarioPref.paginaInicio = "login";
   }
 }
