@@ -13,9 +13,15 @@ class UserServices {
       : this._firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   //signIn with custom Token
-  Future<User> signIn(String token) async {
-    await _firebaseAuth.signInWithCustomToken(token);
-    return _firebaseAuth.currentUser;
+  Future<bool> signByToken(String token) async {
+    try {
+      await _firebaseAuth.signInWithCustomToken(token);
+      return true;
+      // return _firebaseAuth.currentUser;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
   }
 
   //signOut
@@ -34,16 +40,30 @@ class UserServices {
     return (_firebaseAuth.currentUser.email);
   }
 
-  Future<dynamic> loginCliente(LoginModel login) async {
+  Future<Map<String, dynamic>> loginCliente(LoginModel login) async {
     print("haciendo peticion de login cliente");
 
     final url = '${Conf.urlServidor}Usuario/loginUser';
     final response = await http.post(url, body: login.toJson());
+    Map<String, dynamic> resp = convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
-      final jsonResponse = convert.jsonDecode(response.body);
-      return jsonResponse;
+      if (resp['nivel'] == 'CLIENTE') {
+        return resp;
+      } else {
+        return {"err": true, "mensaje": "Utilice otro Correo"};
+      }
     } else {
-      return null;
+      if (resp['err']) {
+        if (resp["mensaje"] == 'EMAIL_NOT_FOUND') {
+          return {"err": true, "mensaje": "Correo electrónico no registrado"};
+        } else if (resp["mensaje"] == 'INVALID_EMAIL') {
+          return {"err": true, "mensaje": "Correo electrónico no valido"};
+        } else {
+          return {"err": true, "mensaje": "Credenciales no validas"};
+        }
+      } else {
+        return {"err": true, "mensaje": "Credenciales no validas"};
+      }
     }
   }
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
 
 class Login extends StatefulWidget {
@@ -9,12 +10,20 @@ class Login extends StatefulWidget {
 class _LoginPageState extends State<Login> {
   double screenHeight;
 
-  String _usuario = "";
+  String _usuario;
   String _contrasena = "";
+  UserServices userServices;
+  bool _guardando = false;
+  @override
+  void initState() {
+    super.initState();
+    userServices = new UserServices();
+    _usuario = "";
+    _contrasena = "";
+  }
 
   @override
   Widget build(BuildContext context) {
-    final userServices = new UserServices();
     screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
@@ -208,9 +217,26 @@ class _LoginPageState extends State<Login> {
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      onPressed: () {
-        Navigator.pushNamed(context, '/');
-      },
+      onPressed: (_guardando) ? null : verificarCredenciales,
     );
+  }
+
+  verificarCredenciales() async {
+    setState(() {
+      _guardando = true;
+    });
+    final respuesta = await userServices.loginCliente(new LoginModel(
+        password: "test105@gmail.com", username: "test105@gmail.com"));
+    if (!respuesta['err']) {
+      String token = (respuesta['token']);
+      bool existInFirebase = await userServices.signByToken(token);
+      if (existInFirebase) {
+        print("yes, existe");
+      } else {
+        print("no, no existe");
+      }
+    } else {
+      print(respuesta['mensaje']);
+    }
   }
 }
