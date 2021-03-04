@@ -155,9 +155,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
           textColor: Colors.white,
           padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          onPressed: () {
-            continuar();
-          },
+          onPressed: continuar,
         )
       ],
     );
@@ -179,13 +177,8 @@ class _CarritoCompraState extends State<CarritoCompra> {
       keyboardType:
           TextInputType.numberWithOptions(decimal: false, signed: false),
       textAlign: TextAlign.center,
-      validator: (value) {
-        if (helper.isNumeric(value)) {
-          return null;
-        } else {
-          return "solo numeros";
-        }
-      },
+      //envia un paramettro inplicito
+      validator: helper.isNumeric,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
           labelText: 'ingrese numero de asientos'),
@@ -400,6 +393,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   void continuar() {
+    formKey.currentState.validate();
     String descAdicional = "";
     cuposSolicitados = 0;
     if (asientosPrecio.length == 0) {

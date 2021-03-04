@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class Registro extends StatefulWidget {
   @override
@@ -16,6 +17,9 @@ class _RegistroPageState extends State<Registro> {
   String _password2 = "";
   String _celular = "";
   String _dui = "";
+  bool _ocultarPassword1 = true;
+  bool _ocultarPassword2 = true;
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -73,58 +77,61 @@ class _RegistroPageState extends State<Registro> {
             elevation: 8,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    child: Text(
-                      "Crear Cuenta",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Align(
+                      child: Text(
+                        "Crear Cuenta",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 28,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  _inputDui(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputNombre(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputCorreo(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputPassword(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputRepetirPassoword(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputCelular(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
-                      _inputBoton(),
-                    ],
-                  ),
-                  _inputLogin(),
-                ],
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _inputNombre(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _inputCorreo(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _inputPassword(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _inputRepetirPassoword(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    _inputCelular(),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    _inputDui(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(),
+                        ),
+                        _inputBoton(),
+                      ],
+                    ),
+                    _inputLogin(),
+                  ],
+                ),
               ),
             ),
           ),
@@ -157,10 +164,12 @@ class _RegistroPageState extends State<Registro> {
   }
 
   Widget _inputNombre() {
-    return new TextField(
+    return new TextFormField(
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.text,
       autofocus: false,
+      //envia un paramettro inplicito
+      validator: (value) => helper.betweenLengthRequired(value, 40, 3),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Nombre Completo',
@@ -177,7 +186,9 @@ class _RegistroPageState extends State<Registro> {
   }
 
   Widget _inputCorreo() {
-    return new TextField(
+    return new TextFormField(
+      //envia un paramettro inplicito
+      validator: (value) => helper.isMailRequired(value),
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
@@ -197,36 +208,52 @@ class _RegistroPageState extends State<Registro> {
   }
 
   Widget _inputPassword() {
-    return new TextField(
+    return new TextFormField(
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
-      obscureText: true,
+      obscureText: _ocultarPassword1,
+      validator: (value) => helper.betweenLengthRequired(value, 20, 8),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Password',
         labelText: 'Digite su Password',
         helperText: 'Password',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.remove_red_eye),
+        suffixIcon: GestureDetector(
+          child: Icon(Icons.remove_red_eye),
+          onTap: () {
+            setState(() {
+              _ocultarPassword1 = !_ocultarPassword1;
+            });
+          },
+        ),
       ),
-      onChanged: (String persona) {
-        _correo = persona;
+      onChanged: (String value) {
+        _password = value;
         setState(() {});
       },
     );
   }
 
   Widget _inputRepetirPassoword() {
-    return new TextField(
-      obscureText: true,
+    return new TextFormField(
+      obscureText: _ocultarPassword2,
       autofocus: false,
+      validator: (value) => helper.repeatPassword(_password, _password2),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Repita su Password',
         labelText: 'Repita su Password',
         helperText: 'Password',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.remove_red_eye),
+        suffixIcon: GestureDetector(
+          child: Icon(Icons.remove_red_eye),
+          onTap: () {
+            setState(() {
+              _ocultarPassword2 = !_ocultarPassword2;
+            });
+          },
+        ),
       ),
       onChanged: (String value) {
         _password2 = value;
@@ -236,17 +263,18 @@ class _RegistroPageState extends State<Registro> {
   }
 
   Widget _inputDui() {
-    var maskFormatter = new MaskTextInputFormatter(
-        mask: '###-##-##',
-        filter: {"#": RegExp(r'[0-9]')},
-        initialText: '123-45-67');
+    // var maskFormatter = new MaskTextInputFormatter(
+    //     mask: '########-#',
+    //     filter: {"#": RegExp(r'[0-9]')},
+    //     initialText: '12345678-9');
 
     return new TextFormField(
-      inputFormatters: [maskFormatter],
+      // inputFormatters: [maskFormatter],
       keyboardType: TextInputType.number,
+      validator: (value) => helper.minLength(value, 10),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: '123-45-67',
+        hintText: '12345678-9',
         labelText: 'Digite su Dui (opcional)',
         helperText: 'Contraseña',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
@@ -260,10 +288,10 @@ class _RegistroPageState extends State<Registro> {
   }
 
   Widget _inputCelular() {
-    return new TextField(
+    return new TextFormField(
       keyboardType:
           TextInputType.numberWithOptions(decimal: false, signed: false),
-      obscureText: true,
+      validator: (value) => helper.minLength(value, 8),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Célular (opcional)',
@@ -273,7 +301,7 @@ class _RegistroPageState extends State<Registro> {
         suffixIcon: Icon(Icons.phone),
       ),
       onChanged: (String value) {
-        _password2 = value;
+        _celular = value;
         setState(() {});
       },
     );
@@ -299,14 +327,21 @@ class _RegistroPageState extends State<Registro> {
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
       onPressed: () {
-        final signUp = new SignUpModel(
-            nombre: _nombre,
-            correo: _correo,
-            password: _password,
-            celular: _celular,
-            dui: _dui,
-            nivel: 'CLIENTE');
-        print(signUp);
+        if (formKey.currentState.validate()) {
+          //para ejecutar el on save
+          formKey.currentState.save();
+          setState(() {
+            final signUp = new SignUpModel(
+                nombre: _nombre,
+                correo: _correo,
+                password: _password,
+                celular: _celular,
+                dui: _dui,
+                nivel: 'CLIENTE');
+            print(signUp);
+          });
+        }
+
         // Navigator.pushNamed(context, 'login');
       },
     );
