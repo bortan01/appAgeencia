@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
-import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/user_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 
@@ -210,7 +209,7 @@ class _LoginPageState extends State<Login> {
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, 'registro');
+        Navigator.pushReplacementNamed(context, 'registro');
       },
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
 
 class Registro extends StatefulWidget {
@@ -38,7 +39,7 @@ class _RegistroPageState extends State<Registro> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Registrarme"),
+      title: Text("Crear Cuenta"),
     );
   }
 
@@ -77,7 +78,7 @@ class _RegistroPageState extends State<Registro> {
                 children: <Widget>[
                   Align(
                     child: Text(
-                      "Registrarme",
+                      "Crear Cuenta",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -88,6 +89,10 @@ class _RegistroPageState extends State<Registro> {
                   ),
                   SizedBox(
                     height: 15,
+                  ),
+                  _inputDui(),
+                  SizedBox(
+                    height: 20,
                   ),
                   _inputNombre(),
                   SizedBox(
@@ -102,6 +107,10 @@ class _RegistroPageState extends State<Registro> {
                     height: 20,
                   ),
                   _inputRepetirPassoword(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  _inputCelular(),
                   SizedBox(
                     height: 20,
                   ),
@@ -170,15 +179,15 @@ class _RegistroPageState extends State<Registro> {
   Widget _inputCorreo() {
     return new TextField(
       textCapitalization: TextCapitalization.words,
-      keyboardType: TextInputType.text,
+      keyboardType: TextInputType.emailAddress,
       autofocus: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Nombre de Usuario',
-        labelText: 'Digite su Nombre de Usuario',
-        helperText: 'Usuario',
+        hintText: 'Digite su Email',
+        labelText: 'Digite su Email',
+        helperText: 'Email',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.supervised_user_circle),
+        suffixIcon: Icon(Icons.email),
       ),
       onChanged: (String value) {
         _correo = value;
@@ -189,17 +198,16 @@ class _RegistroPageState extends State<Registro> {
 
   Widget _inputPassword() {
     return new TextField(
-      textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       obscureText: true,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Correo Electronico',
-        labelText: 'Digite su Correo Electronico',
-        helperText: 'Correo Electronico',
+        hintText: 'Digite su Password',
+        labelText: 'Digite su Password',
+        helperText: 'Password',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.email),
+        suffixIcon: Icon(Icons.remove_red_eye),
       ),
       onChanged: (String persona) {
         _correo = persona;
@@ -210,16 +218,59 @@ class _RegistroPageState extends State<Registro> {
 
   Widget _inputRepetirPassoword() {
     return new TextField(
-      textCapitalization: TextCapitalization.words,
       obscureText: true,
       autofocus: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Contraseña',
-        labelText: 'Digite su Contraseña',
+        hintText: 'Repita su Password',
+        labelText: 'Repita su Password',
+        helperText: 'Password',
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        suffixIcon: Icon(Icons.remove_red_eye),
+      ),
+      onChanged: (String value) {
+        _password2 = value;
+        setState(() {});
+      },
+    );
+  }
+
+  Widget _inputDui() {
+    var maskFormatter = new MaskTextInputFormatter(
+        mask: '###-##-##',
+        filter: {"#": RegExp(r'[0-9]')},
+        initialText: '123-45-67');
+
+    return new TextFormField(
+      inputFormatters: [maskFormatter],
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: '123-45-67',
+        labelText: 'Digite su Dui (opcional)',
         helperText: 'Contraseña',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.lock),
+        suffixIcon: Icon(Icons.credit_card),
+      ),
+      onChanged: (String value) {
+        _dui = value;
+        setState(() {});
+      },
+    );
+  }
+
+  Widget _inputCelular() {
+    return new TextField(
+      keyboardType:
+          TextInputType.numberWithOptions(decimal: false, signed: false),
+      obscureText: true,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+        hintText: 'Digite su Célular (opcional)',
+        labelText: 'Digite su Célular (opcional)',
+        helperText: 'Contraseña',
+        floatingLabelBehavior: FloatingLabelBehavior.auto,
+        suffixIcon: Icon(Icons.phone),
       ),
       onChanged: (String value) {
         _password2 = value;
@@ -235,14 +286,14 @@ class _RegistroPageState extends State<Registro> {
         style: TextStyle(color: Colors.black54),
       ),
       onPressed: () {
-        Navigator.pushNamed(context, 'login');
+        Navigator.pushReplacementNamed(context, 'login');
       },
     );
   }
 
   Widget _inputBoton() {
     return new FlatButton(
-      child: Text("Registrarme"),
+      child: Text("Crear Cuenta"),
       color: Color(0xFF4B9DFE),
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
@@ -255,8 +306,8 @@ class _RegistroPageState extends State<Registro> {
             celular: _celular,
             dui: _dui,
             nivel: 'CLIENTE');
-        Navigator.pushNamed(context, 'login');
         print(signUp);
+        // Navigator.pushNamed(context, 'login');
       },
     );
   }
