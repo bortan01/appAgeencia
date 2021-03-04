@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
+import 'package:peliculas/src/services/user_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class Registro extends StatefulWidget {
@@ -20,7 +20,7 @@ class _RegistroPageState extends State<Registro> {
   bool _ocultarPassword1 = true;
   bool _ocultarPassword2 = true;
   final formKey = GlobalKey<FormState>();
-
+  UserServices _userServices = new UserServices();
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -326,24 +326,26 @@ class _RegistroPageState extends State<Registro> {
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      onPressed: () {
-        if (formKey.currentState.validate()) {
-          //para ejecutar el on save
-          formKey.currentState.save();
-          setState(() {
-            final signUp = new SignUpModel(
-                nombre: _nombre,
-                correo: _correo,
-                password: _password,
-                celular: _celular,
-                dui: _dui,
-                nivel: 'CLIENTE');
-            print(signUp);
-          });
-        }
-
-        // Navigator.pushNamed(context, 'login');
-      },
+      onPressed: _guardar,
     );
+  }
+
+  void _guardar() async {
+    if (formKey.currentState.validate()) {
+      //para ejecutar el on save
+      formKey.currentState.save();
+      final signUp = new SignUpModel(
+          nombre: _nombre.trim(),
+          correo: _correo.trim(),
+          password: _password.trim(),
+          celular: _celular.trim(),
+          dui: _dui.toString(),
+          nivel: 'CLIENTE');
+      var respuesta = await _userServices.registrarUsuario(signUp);
+      print(respuesta);
+      setState(() {});
+    }
+
+    // Navigator.pushNamed(context, 'login');
   }
 }

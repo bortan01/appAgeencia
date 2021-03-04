@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/conf.dart';
+import 'package:peliculas/src/models/usuarios/signUp_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -88,5 +89,28 @@ class UserServices {
     _usuarioPref.dui = "";
     _usuarioPref.foto = "";
     _usuarioPref.paginaInicio = "login";
+  }
+
+  Future<Map<String, dynamic>> registrarUsuario(SignUpModel signUp) async {
+    print("haciendo peticion de guardar usuario");
+    final url = '${Conf.urlServidor}Usuario/registroUser';
+    final data = signUp.toJson();
+    final response = await http.post(url, body: data);
+    switch (response.statusCode) {
+      case 200:
+        final jsonResponse = convert.jsonDecode(response.body);
+        return jsonResponse;
+        break;
+      case 400:
+        final jsonResponse = convert.jsonDecode(response.body);
+        return jsonResponse;
+        break;
+      case 500:
+        return {"err": true, "mensaje": "erro de servidor"};
+        break;
+      default:
+        return {"err": true, "mensaje": "por favor intente más tarde"};
+        break;
+    }
   }
 }
