@@ -103,6 +103,13 @@ class UserServices {
         break;
       case 400:
         final jsonResponse = convert.jsonDecode(response.body);
+        if (jsonResponse["mensaje"] ==
+            "The email address is already in use by another account.") {
+          return {
+            "err": true,
+            "mensaje": "Correo Electrónico ya esta registrado"
+          };
+        }
         return jsonResponse;
         break;
       case 500:

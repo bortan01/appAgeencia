@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class Registro extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _RegistroPageState extends State<Registro> {
   String _password2 = "";
   String _celular = "";
   String _dui = "";
+  bool _guardando = false;
   bool _ocultarPassword1 = true;
   bool _ocultarPassword2 = true;
   final formKey = GlobalKey<FormState>();
@@ -321,18 +323,21 @@ class _RegistroPageState extends State<Registro> {
 
   Widget _inputBoton() {
     return new FlatButton(
-      child: Text("Crear Cuenta"),
+      child: (_guardando) ? Text("Por favor espere...") : Text("Crear Cuenta"),
       color: Color(0xFF4B9DFE),
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      onPressed: _guardar,
+      onPressed: (_guardando) ? null : _guardar,
     );
   }
 
   void _guardar() async {
     if (formKey.currentState.validate()) {
       //para ejecutar el on save
+      setState(() {
+        _guardando = true;
+      });
       formKey.currentState.save();
       final signUp = new SignUpModel(
           nombre: _nombre.trim(),
@@ -342,10 +347,48 @@ class _RegistroPageState extends State<Registro> {
           dui: _dui.toString(),
           nivel: 'CLIENTE');
       var respuesta = await _userServices.registrarUsuario(signUp);
-      print(respuesta);
-      setState(() {});
+      setState(() {
+        _guardando = false;
+      });
+      if (respuesta['err']) {
+        ///si hay errores los imprimiremos con el Alert
+        helper.mostrarMensanjeError(context, respuesta['mensaje']);
+      } else {
+        //si se guardo redireccionaremos al login
+        _limpiar();
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Listo",
+          desc: respuesta['mensaje'],
+          closeFunction: () => Navigator.pushReplacementNamed(context, 'login'),
+          buttons: [
+            DialogButton(
+              child: Text(
+                "ok",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pushReplacementNamed(context, 'login');
+              },
+              color: Color.fromRGBO(0, 179, 134, 1.0),
+            )
+          ],
+        ).show();
+      }
     }
 
     // Navigator.pushNamed(context, 'login');
+  }
+
+  void _limpiar() {
+    setState(() {
+      _nombre = "";
+      _correo = "";
+      _password = "";
+      _password2 = "";
+      _celular = "";
+      _dui = "";
+    });
   }
 }
