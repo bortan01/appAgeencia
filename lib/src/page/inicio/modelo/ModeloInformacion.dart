@@ -7,13 +7,16 @@ class CourseModel {
   String tag2;
   String imagen;
   int id;
+  List<dynamic> fotos;
+
   CourseModel(
       {@required this.nombre,
       @required this.descripcion,
       @required this.tag1,
       @required this.tag2,
       @required this.imagen,
-      @required this.id});
+      @required this.id,
+      this.fotos});
 }
 
 class CourseList {

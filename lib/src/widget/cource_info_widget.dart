@@ -1,59 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/widget/galeria.dart';
 
 class CourceInfoWidget extends StatelessWidget {
   final CourseModel model;
-
   const CourceInfoWidget({Key key, @required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        height: 570,
-        child: Column(
-          children: <Widget>[
-            _titulo(),
-            _fotografia(),
-            _descripcion(),
-          ],
-        ));
-  }
-
-  Widget _fotografia() {
-    return Expanded(
-      child: AspectRatio(
-        aspectRatio: 1.8,
-        child: Hero(
-          tag: model.id.toString(),
-          child: Container(
-              height: 390,
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                  color: Colors.blueAccent,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        offset: Offset(0, 5),
-                        blurRadius: 10,
-                        color: Color(0x12000000))
-                  ]),
-              child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  child: new FadeInImage(
-                    placeholder: AssetImage("assets/gif/loading.gif"),
-                    image: NetworkImage(model.imagen),
-                    fadeInDuration: Duration(milliseconds: 200),
-                    fit: BoxFit.cover,
-                  ))),
-        ),
-      ),
+    return Column(
+      children: <Widget>[
+        _titulo(),
+        _poster(),
+        _descripcion(),
+      ],
     );
   }
 
-  Widget _descripcion() {
+  Widget _poster() {
     return Container(
-        child: Column(
+        height: 320,
+        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        child: Galeria(galeria: model.fotos));
+  }
+
+  Widget _descripcion() {
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         SizedBox(height: 15),
@@ -61,10 +34,10 @@ class CourceInfoWidget extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           child: Text(model.descripcion,
               overflow: TextOverflow.ellipsis,
-              maxLines: 10,
+              maxLines: 50,
               textAlign: TextAlign.justify,
               style: AppTheme.h6Style
-                  .copyWith(fontSize: 12, color: Colors.blueGrey)),
+                  .copyWith(fontSize: 15, color: Colors.blueGrey)),
         ),
         SizedBox(height: 15),
 
@@ -84,7 +57,7 @@ class CourceInfoWidget extends StatelessWidget {
           ],
         )
       ],
-    ));
+    );
   }
 
   Widget _chip(String text, Color textColor,

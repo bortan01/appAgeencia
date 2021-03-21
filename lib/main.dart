@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -11,6 +12,8 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  FirebaseFirestore.instance.settings = Settings(
+      host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefs();
   runApp(MyApp());

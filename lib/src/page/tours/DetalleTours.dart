@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
+import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
 
 class DetalleTours extends StatefulWidget {
@@ -79,25 +79,28 @@ class _DetalleToursState extends State<DetalleTours> {
           _posterTitulo(
               context: context, title: tur['nombreTours'], fecha: tur['start']),
           new SizedBox(height: 10.0),
-
+          new Divider(
+            color: Colors.grey,
+            height: 20.0,
+          ),
           listaHorizontal(
-              titulo: "El viaje incluye",
+              titulo: "EL VIAJE INCLUYE",
               icono: Icons.check_circle,
               color: Colors.green,
               lista: tur['incluye']),
           _incluye(context, informacionAdicional),
           listaHorizontal(
-              titulo: "El viaje no incluye",
+              titulo: "EL NO VIAJE INCLUYE",
               icono: Icons.cancel,
               color: Colors.redAccent,
               lista: tur['no_incluye']),
           listaHorizontal(
-              titulo: "Requisitos",
+              titulo: "REQUISITOS",
               icono: Icons.report,
               color: Colors.orange,
               lista: tur['requisitos']),
           listaHorizontal(
-              titulo: "Lugares de Salida",
+              titulo: "LUGARES DE SALIDA",
               icono: Icons.local_car_wash,
               color: Colors.blue,
               lista: tur['lugar_salida']),
@@ -131,27 +134,15 @@ class _DetalleToursState extends State<DetalleTours> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                child: new Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline6,
-                  overflow:
-                      //por si el titulo es muy grande
-                      TextOverflow.ellipsis,
-                ),
+                child: new Text(title,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                        color: Colors.lightBlue,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold)),
               ),
-              new Text(fecha,
-                  style: Theme.of(context).textTheme.subtitle2,
-                  overflow: TextOverflow.ellipsis),
-              new Row(
-                children: <Widget>[
-                  new Icon(Icons.attach_money),
-                  new Text(
-                    "695.00",
-                    style: Theme.of(context).textTheme.headline6,
-                  )
-                ],
-              )
             ],
           ))
         ],
@@ -217,10 +208,20 @@ class _DetalleToursState extends State<DetalleTours> {
       height: 220.0,
       child: Column(
         children: <Widget>[
-          new Text(
-            titulo,
-            textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6,
+          Container(
+            padding: EdgeInsets.all(7.0),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+            ),
+            child: new Text(
+              titulo,
+              textAlign: TextAlign.center,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(fontSize: 16, color: Colors.white),
+            ),
           ),
           SizedBox(
             height: 15.0,
@@ -255,7 +256,7 @@ class _DetalleToursState extends State<DetalleTours> {
                   item['descripcion_sitio'],
                   textAlign: TextAlign.justify,
                 ),
-                _swiperTarjetas(context, item['galeria']),
+                Galeria(galeria: item['galeria']),
               ],
             ),
             state: StepState.complete,
@@ -273,7 +274,9 @@ class _DetalleToursState extends State<DetalleTours> {
                   item['descripcion_servicio'],
                   textAlign: TextAlign.justify,
                 ),
-                _swiperTarjetas(context, item['galeria']),
+                Galeria(
+                  galeria: item['galeria'],
+                ),
               ],
             ),
             state: StepState.complete,
@@ -347,27 +350,5 @@ class _DetalleToursState extends State<DetalleTours> {
                         CarritoCompra(idTur: widget.tur['id_tours'])));
           }),
     );
-  }
-
-  _swiperTarjetas(BuildContext context, dynamic galeria) {
-    return Container(
-        width: double.infinity,
-        height: 250.0,
-        padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
-        child: new Swiper(
-          itemBuilder: (BuildContext context, int index) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(20.0),
-              child: new FadeInImage(
-                image: NetworkImage(transformarFoto(galeria[index])),
-                placeholder: AssetImage('assets/img/no-image.jpg'),
-                fit: BoxFit.fill,
-              ),
-            );
-          },
-          itemCount: galeria.length,
-          pagination: new SwiperPagination(),
-          control: new SwiperControl(),
-        ));
   }
 }

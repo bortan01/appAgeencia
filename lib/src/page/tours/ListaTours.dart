@@ -62,13 +62,14 @@ class ListaTours extends StatelessWidget {
               descripcion: data[index]['descripcionForApp'],
               imagen: transformarFoto(data[index]['foto']),
               tag1: "Precio \$" + data[index]['precio'],
-              tag2: 'Fecha de Salida ' + fechaFormateada);
+              tag2: 'Fecha de Salida ' + fechaFormateada,
+              fotos:  data[index]['galeria']
+              );
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-
                     ///redireccionamos y mandamos como variable el tur
                     builder: (context) => DetalleTours(tur: data[index])),
               );

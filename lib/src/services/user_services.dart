@@ -1,4 +1,5 @@
 // import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
@@ -10,6 +11,8 @@ import 'dart:convert' as convert;
 class UserServices {
   final FirebaseAuth _firebaseAuth;
   PreferenciasUsuario _usuarioPref = new PreferenciasUsuario();
+  Query query = FirebaseFirestore.instance.collection("chat");
+
   //Constructor
   UserServices({FirebaseAuth firebaseAuth})
       : this._firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;

@@ -18,7 +18,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<List<dynamic>> obtenerTur() async {
     print('haciendo peticion obtener tur');
-    final url = '${Conf.urlServidor}TurPaquete/show';
+    final url = '${Conf.urlServidor}TurPaquete/show?estado=1';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
