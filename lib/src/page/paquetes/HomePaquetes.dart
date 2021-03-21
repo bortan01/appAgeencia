@@ -151,14 +151,14 @@ class _HomePaquetesState extends State<HomePaquetes> {
 
                 ///redirigir a paquetes nacionales
                 Navigator.pushNamed(context, 'ListaTours',
-                    arguments: "Tour Nacional");
+                    arguments: "Paquete Nacional");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
                 Navigator.pushNamed(context, 'ListaTours',
-                    arguments: "Tour Internacional");
+                    arguments: "Paquete Internacional");
 
                 break;
               case 2:
