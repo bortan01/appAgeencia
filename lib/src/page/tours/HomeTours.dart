@@ -35,8 +35,7 @@ class _HomeToursState extends State<HomeTours> {
       end: Alignment.bottomLeft,
       colors: [Theme.of(context).canvasColor, Theme.of(context).canvasColor],
     ));
-
-    listaPaquete = [
+listaPaquete = [
       {
         'posicion': 0,
         'titulo': "Nacionales",
@@ -160,14 +159,14 @@ class _HomeToursState extends State<HomeTours> {
 
                 ///redirigir a paquetes nacionales
                 Navigator.pushNamed(context, 'ListaTours',
-                    arguments: "Nacionales");
+                    arguments: "Tour Nacional");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
                 Navigator.pushNamed(context, 'ListaTours',
-                    arguments: "Internacionales");
+                    arguments: "Tour Internacional");
 
                 break;
               case 2:

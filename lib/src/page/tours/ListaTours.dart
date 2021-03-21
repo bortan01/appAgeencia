@@ -13,22 +13,22 @@ class ListaTours extends StatelessWidget {
     final String argumento = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: appBarPaquete(context, argumento),
-      body: _listado(context),
+      body: _listado(context, argumento),
     );
   }
 
-  Widget appBarPaquete(BuildContext context, String argumento) {
+  Widget appBarPaquete(BuildContext context, String titulo) {
     return AppBar(
       backgroundColor: Theme.of(context).accentColor,
       centerTitle: true,
-      title: Text("Tours: " + argumento),
+      title: Text(titulo),
     );
   }
 
-  Widget _listado(BuildContext context) {
+  Widget _listado(BuildContext context,String tipo) {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
-        future: turServices.obtenerTur(),
+        future: turServices.obtenerViaje(tipo),
         builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:

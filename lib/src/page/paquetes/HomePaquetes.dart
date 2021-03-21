@@ -64,7 +64,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
           child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              appBarCategorias(),
+              appBarCategorias(context),
               elementosHorizontal(),
               elementoSeleccionado(),
             ],
@@ -126,11 +126,11 @@ class _HomePaquetesState extends State<HomePaquetes> {
     );
   }
 
-  Widget appBarCategorias() {
+  Widget appBarCategorias(BuildContext context) {
     return AppBar(
-      backgroundColor: Colors.blue,
+      backgroundColor: Theme.of(context).accentColor,
       centerTitle: true,
-      title: Text("Categoría de Paquetes"),
+      title: Text("Categoría de Tours"),
     );
   }
 
@@ -141,6 +141,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         int posicion = snapshot.data;
         return FloatingActionButton.extended(
+          backgroundColor: Theme.of(context).accentColor,
           onPressed: () {
             switch (posicion) {
               case 0:
@@ -149,26 +150,42 @@ class _HomePaquetesState extends State<HomePaquetes> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'ListaPaquetes',
-                    arguments: "Nacionales");
+                Navigator.pushNamed(context, 'ListaTours',
+                    arguments: "Tour Nacional");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaPaquetes',
-                    arguments: "Internacionales");
+                Navigator.pushNamed(context, 'ListaTours',
+                    arguments: "Tour Internacional");
+
+                break;
+              case 2:
+
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'CotizarTours',
+                    arguments: "Cotización");
 
                 break;
               default:
             }
           },
-          label: (posicion == 0)
-              ? Text('Ver Paquetes Nacionales')
-              : Text('Ver Paquetes Internacionales'),
-          icon: Icon(Icons.check),
+
+          ///es un operador ternario para sabere cual elemento
+          ///ha sido seleccionado
+          label: nombreAccion(posicion),
         );
       },
     );
+  }
+
+  Widget nombreAccion(int posicion) {
+    List<String> nombres = [
+      "Ver Tours Nacionales",
+      "Ver Tours Internacionales'",
+      "Cotizar Tours"
+    ];
+    return Text(nombres[posicion]);
   }
 }
