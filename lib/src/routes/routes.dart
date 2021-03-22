@@ -27,7 +27,6 @@ import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
 
 import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
-import 'package:peliculas/src/page/paquetes/ListaPaquetes.dart';
 import 'package:peliculas/src/page/productosAdquiridos/encomiendasRealizadas.dart';
 import 'package:peliculas/src/page/productosAdquiridos/menuProductos.dart';
 import 'package:peliculas/src/page/productosAdquiridos/toursAsistidos.dart';
@@ -65,8 +64,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'home': (BuildContext context) => Home(),
     //MODULO PAQUETES
     'HomePaquetes': (BuildContext context) => HomePaquetes(),
-    'ListaPaquetes': (BuildContext context) => ListaPaquetes(),
-    'DetallePaquetes': (BuildContext context) => DetallePaquetes(),
     'CarritoCompra': (BuildContext context) => CarritoCompra(),
     //MODULO TOURS
     'CotizarTours': (BuildContext context) => CotizarTours(),

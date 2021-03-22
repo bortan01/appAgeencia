@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
 import 'package:peliculas/src/page/tours/DetalleTours.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
@@ -25,7 +26,7 @@ class ListaTours extends StatelessWidget {
     );
   }
 
-  Widget _listado(BuildContext context,String tipo) {
+  Widget _listado(BuildContext context, String tipo) {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
         future: turServices.obtenerViaje(tipo),
@@ -63,16 +64,23 @@ class ListaTours extends StatelessWidget {
               imagen: transformarFoto(data[index]['foto']),
               tag1: "Precio \$" + data[index]['precio'],
               tag2: 'Fecha de Salida ' + fechaFormateada,
-              fotos:  data[index]['galeria']
-              );
+              fotos: data[index]['galeria']);
+          final String tipo = data[index]['tipo'];
           return GestureDetector(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    ///redireccionamos y mandamos como variable el tur
-                    builder: (context) => DetalleTours(tur: data[index])),
-              );
+              if (tipo == 'Paquete Nacional' || tipo == 'Paquete Internacional')
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          DetallePaquete(paquete: data[index])),
+                );
+              else
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetalleTours(tur: data[index])),
+                );
             },
             child: Column(
               children: <Widget>[

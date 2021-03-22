@@ -130,7 +130,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
     return AppBar(
       backgroundColor: Theme.of(context).accentColor,
       centerTitle: true,
-      title: Text("Categoría de Tours"),
+      title: Text("Categoría de Paquetes"),
     );
   }
 

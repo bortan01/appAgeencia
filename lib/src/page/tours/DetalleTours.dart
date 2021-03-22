@@ -88,7 +88,6 @@ class _DetalleToursState extends State<DetalleTours> {
               icono: Icons.check_circle,
               color: Colors.green,
               lista: tur['incluye']),
-          _incluye(context, informacionAdicional),
           listaHorizontal(
               titulo: "EL NO VIAJE INCLUYE",
               icono: Icons.cancel,
