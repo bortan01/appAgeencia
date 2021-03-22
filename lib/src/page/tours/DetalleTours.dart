@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
@@ -83,6 +84,7 @@ class _DetalleToursState extends State<DetalleTours> {
             color: Colors.grey,
             height: 20.0,
           ),
+          _descripcion(tur['descripcionForApp']),
           listaHorizontal(
               titulo: "EL VIAJE INCLUYE",
               icono: Icons.check_circle,
@@ -146,55 +148,6 @@ class _DetalleToursState extends State<DetalleTours> {
           ))
         ],
       ),
-    );
-  }
-
-  Widget _incluye(BuildContext context, dynamic informacionAdicional) {
-    return Stepper(
-      currentStep: pasoActual,
-      physics:
-          new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
-      steps: listaDeElementos(informacionAdicional),
-      onStepContinue: () {
-        setState(() {
-          if (pasoActual < listaDeElementos(informacionAdicional).length - 1) {
-            pasoActual++;
-          }
-        });
-      },
-      onStepCancel: () {
-        setState(() {
-          if (pasoActual > 0) {
-            pasoActual--;
-          }
-        });
-      },
-      controlsBuilder: (BuildContext context,
-          {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
-        return Row(
-          children: <Widget>[
-            FlatButton(
-              onPressed: onStepContinue,
-              color: (Theme.of(context).accentColor),
-              child: const Text(
-                'SIGUIENTE',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            SizedBox(
-              width: 5.0,
-            ),
-            FlatButton(
-              onPressed: onStepCancel,
-              color: (Theme.of(context).accentColor),
-              child: const Text(
-                'ATRAS',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 
@@ -348,6 +301,24 @@ class _DetalleToursState extends State<DetalleTours> {
                     builder: (context) =>
                         CarritoCompra(idTur: widget.tur['id_tours'])));
           }),
+    );
+  }
+
+  Widget _descripcion(String descripcion) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 15),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: Text(descripcion,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 50,
+              textAlign: TextAlign.justify,
+              style: AppTheme.h6Style
+                  .copyWith(fontSize: 15, color: Colors.blueGrey)),
+        ),
+      ],
     );
   }
 }

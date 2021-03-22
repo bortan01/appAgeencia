@@ -17,7 +17,7 @@ class AppBarWidget extends StatelessWidget {
     return SliverAppBar(
       elevation: 2.0,
       backgroundColor: Theme.of(context).accentColor,
-      expandedHeight: 200.0,
+      expandedHeight: 250,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
