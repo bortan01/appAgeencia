@@ -42,8 +42,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<dynamic> obtenerInfomacionToReserva(String idTur) async {
     print('haciendo peticion informacion de reserva');
-    final url =
-        '${Conf.urlServidor}TurPaquete/showReserva?id_tours=$idTur&tipo=tur';
+    final url = '${Conf.urlServidor}TurPaquete/showReserva?id_tours=$idTur';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);

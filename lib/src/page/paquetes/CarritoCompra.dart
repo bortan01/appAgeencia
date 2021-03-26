@@ -54,7 +54,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
                 inicializarData(snapshot.data);
                 return scrollView(context);
               case ConnectionState.active:
-                print('activo');
                 return Text('activo');
               case ConnectionState.waiting:
                 print('esperando');
@@ -347,16 +346,22 @@ class _CarritoCompraState extends State<CarritoCompra> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                '${precioItem.titulo}',
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '${precioItem.titulo}',
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ),
-              Padding(
+              Container(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Text(
                   '\$${precioItem.pasaje.toString()}',
-                  maxLines: 1,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -372,7 +377,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     if (_precioSeleccionado == null) {
       print("inicializando");
       //el detalle sera enviado a la siguiente pantalla
-      nombre = data['nombre'];
+      nombre = data['nombreTours'];
       descripcion = data['descripcion_tur'];
       transporte = new TransporteModel.fromJson(data['transporte']);
       //inicializaremos los datos para el dropdown
