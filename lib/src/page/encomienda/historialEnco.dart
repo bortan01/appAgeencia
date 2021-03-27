@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/widget/cource_info_widget.dart';
+import 'package:peliculas/src/widget/Lista.dart';
 
 class HistorialEncomienda extends StatelessWidget {
   @override
@@ -21,7 +21,7 @@ class HistorialEncomienda extends StatelessWidget {
   }
 
   Widget _listado(BuildContext context) {
-    List<CourseModel> miListaPaquetes = listaInventada();
+    List<ListaModel> miListaPaquetes = listaInventada();
     //Posiblemente esto se convierta en futureBilder
     return ListView.builder(
         itemCount: miListaPaquetes.length,
@@ -33,7 +33,7 @@ class HistorialEncomienda extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
-                CourceInfoWidget(model: miListaPaquetes[index]),
+                Lista(model: miListaPaquetes[index]),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(
                   thickness: 1,
@@ -46,9 +46,9 @@ class HistorialEncomienda extends StatelessWidget {
         });
   }
 
-  List<CourseModel> listaInventada() {
-    final List<CourseModel> list = [
-      CourseModel(
+  List<ListaModel> listaInventada() {
+    final List<ListaModel> list = [
+      ListaModel(
           id: 0,
           nombre: "Se recibio la informacion",
           descripcion: "esta bien el envio",
@@ -56,7 +56,7 @@ class HistorialEncomienda extends StatelessWidget {
               "http://www.deasociety.com/pt/wp-content/uploads/sites/2/2016/10/logocontact-1.jpg",
           tag1: "Fecha:",
           tag2: "20-07-2020"),
-      CourseModel(
+      ListaModel(
           id: 1,
           nombre: "En transito",
           descripcion: "Siguie bien el envio",
@@ -64,7 +64,7 @@ class HistorialEncomienda extends StatelessWidget {
           tag2: "25-07-2020",
           imagen:
               "http://www.elsalvadorvida.com/uploads/1/0/3/6/10365923/published/3.png?1563650943"),
-      CourseModel(
+      ListaModel(
           id: 2,
           nombre: "Entregado",
           descripcion: "Creemos que sigue bien el envio",

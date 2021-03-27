@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/precios_model.dart';
-import 'package:peliculas/src/models/turs/detalleTur_model.dart';
-import 'package:peliculas/src/models/turs/transporte_model.dart';
-import 'package:peliculas/src/page/tours/seleccionarAsiento.dart';
+import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
+import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:rflutter_alert/rflutter_alert.dart';
@@ -15,29 +14,25 @@ class CarritoCompra extends StatefulWidget {
 }
 
 class _CarritoCompraState extends State<CarritoCompra> {
-  Future infoReserva;
+  Future<InfoReservaModel> futureInfoReserva;
   Color fondo = Colors.green;
   double screenHeight;
   Precios _precioSeleccionado;
   List<Precios> listaPrecios = [];
   List<Precios> asientosPrecio = [];
   int cantidadSeleccionada = 1;
-  int cupos = 0;
-  double total = 0.00;
   int cuposSolicitados = 0;
-  String descripcion;
-  String nombre;
-  DetalleTurModel detalle = new DetalleTurModel();
+  double total = 0.0;
   TransporteModel transporte;
-
+  InfoReservaModel infoReservaModel;
   final formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
-    infoReserva = _getInfoReserva();
+    futureInfoReserva = _getInfoReserva();
   }
 
-  Future<dynamic> _getInfoReserva() async {
+  Future<InfoReservaModel> _getInfoReserva() async {
     return await TurServices().obtenerInfomacionToReserva(widget.idTur);
   }
 
@@ -47,12 +42,18 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return Scaffold(
       appBar: appBarCarrito(),
       body: FutureBuilder(
-          future: infoReserva,
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          future: futureInfoReserva,
+          builder:
+              (BuildContext context, AsyncSnapshot<InfoReservaModel> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
-                inicializarData(snapshot.data);
-                return scrollView(context);
+                if (snapshot.hasData) {
+                  inicializarData(snapshot.data);
+                }
+
+                return scrollView(context, snapshot.data);
+
+                break;
               case ConnectionState.active:
                 return Text('activo');
               case ConnectionState.waiting:
@@ -66,7 +67,8 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
-  SingleChildScrollView scrollView(BuildContext context) {
+  SingleChildScrollView scrollView(
+      BuildContext context, InfoReservaModel info) {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -373,21 +375,20 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return lista;
   }
 
-  void inicializarData(dynamic data) {
-    if (_precioSeleccionado == null) {
+  void inicializarData(InfoReservaModel info) {
+    if (infoReservaModel == null) {
       print("inicializando");
+      infoReservaModel = info;
       //el detalle sera enviado a la siguiente pantalla
-      nombre = data['nombreTours'];
-      descripcion = data['descripcion_tur'];
-      transporte = new TransporteModel.fromJson(data['transporte']);
+
       //inicializaremos los datos para el dropdown
-      cupos = int.parse(data['cupos']);
+
       listaPrecios = [];
-      double precioNormal = double.parse(data['precio']);
+
       listaPrecios
-          .add(Precios(asiento: 1, pasaje: precioNormal, titulo: "Normal"));
-      List<dynamic> promociones = data['promociones'].toList();
-      promociones.forEach((element) {
+          .add(Precios(asiento: 1, pasaje: info.precio, titulo: "Normal"));
+
+      info.promociones.forEach((element) {
         listaPrecios.add(new Precios(
             titulo: element['titulo'],
             asiento: int.parse(element['asiento']),
@@ -428,12 +429,12 @@ class _CarritoCompraState extends State<CarritoCompra> {
       });
       descAdicional += '\n';
 
-      if (cuposSolicitados > cupos) {
+      if (cuposSolicitados > infoReservaModel.cupos) {
         Alert(
           context: context,
           type: AlertType.warning,
           title: "Oops",
-          desc: "Solo hay $cupos asientos disponibles",
+          desc: "Solo hay ${infoReservaModel.cupos} asientos disponibles",
           buttons: [
             DialogButton(
               child: Text(
@@ -446,17 +447,18 @@ class _CarritoCompraState extends State<CarritoCompra> {
           ],
         ).show();
       } else {
-        detalle.idTours = 1;
-        detalle.idCliente = 3;
-        detalle.nombreProducto = nombre;
-        detalle.descripcionProducto = descAdicional + descripcion;
-        detalle.total = total;
-        detalle.cantidadAsientos = cuposSolicitados;
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => SeleccionarAsiento(
-                    detalle: detalle, transporte: transporte)));
+        //   DetalleTurModel detalle = new DetalleTurModel();
+        // detalle.idTours = 1;
+        // detalle.idCliente = 3;
+        // detalle.nombreProducto = nombre;
+        // detalle.descripcionProducto = descAdicional + descripcion;
+        // detalle.total = total;
+        // detalle.cantidadAsientos = cuposSolicitados;
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //         builder: (context) => SeleccionarAsiento(
+        //             detalle: detalle, transporte: transporte)));
       }
     }
   }

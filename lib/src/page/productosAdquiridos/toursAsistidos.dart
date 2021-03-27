@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/widget/cource_info_widget.dart';
+import 'package:peliculas/src/widget/Lista.dart';
 
 class ToursAsistidos extends StatelessWidget {
   @override
@@ -20,7 +20,7 @@ class ToursAsistidos extends StatelessWidget {
   }
 
   Widget _listado(BuildContext context) {
-    List<CourseModel> miListaPaquetes = listaInventada();
+    List<ListaModel> miListaPaquetes = listaInventada();
     //Posiblemente esto se convierta en futureBilder
     return ListView.builder(
         itemCount: miListaPaquetes.length,
@@ -33,7 +33,7 @@ class ToursAsistidos extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
-                CourceInfoWidget(model: miListaPaquetes[index]),
+                Lista(model: miListaPaquetes[index]),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(
                   thickness: 1,
@@ -46,9 +46,9 @@ class ToursAsistidos extends StatelessWidget {
         });
   }
 
-  List<CourseModel> listaInventada() {
-    final List<CourseModel> list = [
-      CourseModel(
+  List<ListaModel> listaInventada() {
+    final List<ListaModel> list = [
+      ListaModel(
           id: 0,
           nombre: "!VAMONOS A COSTA RICA¡",
           descripcion:
@@ -57,7 +57,7 @@ class ToursAsistidos extends StatelessWidget {
               "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/86437795_990747354659293_6900039684588568576_o.jpg?_nc_cat=111&_nc_sid=8bfeb9&_nc_ohc=7C_YX7hStUoAX8L4gfs&_nc_ht=scontent-mia3-1.xx&oh=7011c279fc4440049946ee3885011486&oe=5F3D9421",
           tag1: "DEL 4 AL 9 DE ABRIL 2019",
           tag2: "\$\28.50"),
-      CourseModel(
+      ListaModel(
           id: 1,
           nombre: "VÁMONOS A PANAMÁ (POR TIERRA)",
           descripcion:
@@ -66,7 +66,7 @@ class ToursAsistidos extends StatelessWidget {
           tag2: "\$\348.50",
           imagen:
               "https://scontent-mia3-2.xx.fbcdn.net/v/t1.0-9/84811539_986682118399150_14819376632954880_o.jpg?_nc_cat=110&_nc_sid=8bfeb9&_nc_ohc=DaYgZfeMq4IAX9LlsJz&_nc_oc=AQleHmuMwN8IEQ6XZ8qOp785dw0Dv7WovH8apQb2RmJkOG3tDaWlQweXn4MGH28-F4c&_nc_ht=scontent-mia3-2.xx&oh=ec094f10f32ce5e6a69f51fa668a4c0e&oe=5F3F29BE"),
-      CourseModel(
+      ListaModel(
           id: 2,
           nombre: "¡¡VAMONOS A ORIENTE - VOLCAN DE CONCHAGUA!!!",
           descripcion:
@@ -75,7 +75,7 @@ class ToursAsistidos extends StatelessWidget {
           tag2: "\$\348.50",
           imagen:
               "https://scontent-mia3-1.xx.fbcdn.net/v/t1.0-9/83469740_980152025718826_5435872388350738432_o.jpg?_nc_cat=104&_nc_sid=730e14&_nc_ohc=C_36jJc6AzUAX_DXxQM&_nc_ht=scontent-mia3-1.xx&oh=3d06f03116be2b6e2298b4ed8f98f955&oe=5F3F529D"),
-      CourseModel(
+      ListaModel(
           id: 3,
           nombre: "Hyundai Elantra 2010",
           descripcion:

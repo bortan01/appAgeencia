@@ -23,17 +23,15 @@ import 'package:peliculas/src/page/encomienda/listaEncomienda.dart';
 import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
 
 import 'package:peliculas/src/page/inicio/pruebaList.dart';
-import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
-
-import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
-import 'package:peliculas/src/page/paquetes/HomePaquetes.dart';
+import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
+import 'package:peliculas/src/page/tourPaquete/HomePaquetes.dart';
 import 'package:peliculas/src/page/productosAdquiridos/encomiendasRealizadas.dart';
 import 'package:peliculas/src/page/productosAdquiridos/menuProductos.dart';
 import 'package:peliculas/src/page/productosAdquiridos/toursAsistidos.dart';
 import 'package:peliculas/src/page/productosAdquiridos/vehiculosAlquilados.dart';
-import 'package:peliculas/src/page/tours/HomeTours.dart';
-import 'package:peliculas/src/page/tours/ListaTours.dart';
-import 'package:peliculas/src/page/tours/cotizarTours.dart';
+import 'package:peliculas/src/page/tourPaquete/HomeTours.dart';
+import 'package:peliculas/src/page/tourPaquete/ListaTourPaquete.dart';
+import 'package:peliculas/src/page/tourPaquete/cotizarTours.dart';
 import 'package:peliculas/src/page/usuarios/codigoVerificacion.dart';
 import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';

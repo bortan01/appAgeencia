@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
-import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
+import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
 import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
 
@@ -90,20 +90,20 @@ class _DetallePaqueteState extends State<DetallePaquete> {
               lista: tur['incluye']),
           _incluye(context, informacionAdicional),
           listaHorizontal(
-              titulo: "EL NO VIAJE INCLUYE",
-              icono: Icons.cancel,
-              color: Colors.redAccent,
-              lista: tur['no_incluye']),
+              titulo: "LUGARES DE SALIDA",
+              icono: Icons.local_car_wash,
+              color: Colors.blue,
+              lista: tur['lugar_salida']),
           listaHorizontal(
               titulo: "REQUISITOS",
               icono: Icons.report,
               color: Colors.orange,
               lista: tur['requisitos']),
           listaHorizontal(
-              titulo: "LUGARES DE SALIDA",
-              icono: Icons.local_car_wash,
-              color: Colors.blue,
-              lista: tur['lugar_salida']),
+              titulo: "EL NO VIAJE INCLUYE",
+              icono: Icons.cancel,
+              color: Colors.redAccent,
+              lista: tur['no_incluye']),
           // (tur['promociones'].length > 0)
           //     ? listaHorizontal(
           //         titulo: "Promociones",
@@ -337,7 +337,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: new RaisedButton.icon(
-          label: new Text("Reservar Tur"),
+          label: new Text("Reservar Paquete"),
           icon: new Icon(Icons.shopping_cart),
           color: Theme.of(context).accentColor,
           textColor: Theme.of(context).bottomAppBarColor,

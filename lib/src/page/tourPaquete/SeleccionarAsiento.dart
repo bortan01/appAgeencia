@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/turs/detalleTur_model.dart';
-import 'package:peliculas/src/models/turs/transporte_model.dart';
+import 'package:peliculas/src/models/TourPaquete/detalleTur_model.dart';
+import 'package:peliculas/src/models/TourPaquete/transporte_model.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';

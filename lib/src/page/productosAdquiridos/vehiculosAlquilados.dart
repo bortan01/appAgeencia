@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/widget/cource_info_widget.dart';
+import 'package:peliculas/src/widget/Lista.dart';
 
 class VehiculoAlquilado extends StatelessWidget {
   VehiculoAlquilado({Key key}) : super(key: key);
@@ -31,7 +31,7 @@ class VehiculoAlquilado extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
-                CourceInfoWidget(model: CourseList.list[index]),
+                Lista(model: CourseList.list[index]),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(
                   thickness: 1,

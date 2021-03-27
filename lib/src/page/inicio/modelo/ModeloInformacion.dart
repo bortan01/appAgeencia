@@ -1,15 +1,15 @@
 import 'package:flutter/cupertino.dart';
 
-class CourseModel {
+class ListaModel {
+  int id;
   String nombre;
   String descripcion;
   String tag1;
   String tag2;
   String imagen;
-  int id;
   List<dynamic> fotos;
 
-  CourseModel(
+  ListaModel(
       {@required this.nombre,
       @required this.descripcion,
       @required this.tag1,
@@ -20,8 +20,8 @@ class CourseModel {
 }
 
 class CourseList {
-  static List<CourseModel> list = [
-    CourseModel(
+  static List<ListaModel> list = [
+    ListaModel(
         id: 0,
         nombre: "Nissan Versa 2016",
         descripcion:
@@ -30,7 +30,7 @@ class CourseList {
             "https://imganuncios.mitula.net/nissan_versa_2016_gasolina_nissan_versa_advance_papeles_al_dia_motor_1600_1830096592573291157.jpg",
         tag1: "Costo por dia en Dolares (USD)",
         tag2: "\$\28.50"),
-    CourseModel(
+    ListaModel(
         id: 1,
         nombre: "Mitsubishi Lancer 2012",
         descripcion:
@@ -39,7 +39,7 @@ class CourseList {
         tag2: "\$\28.50",
         imagen:
             "https://imotorcarsearch.s3.amazonaws.com/vehicles/large/1144595_304039_2_133edf6fc3a9b362.jpg"),
-    CourseModel(
+    ListaModel(
         id: 2,
         nombre: "Toyota Corolla 2010",
         descripcion:
@@ -48,7 +48,7 @@ class CourseList {
         tag2: "\$\28.50",
         imagen:
             "https://autosdeprimera.com/v2/wp-content/uploads/2011/08/toyota-corolla-xei-exterior-s.jpg"),
-    CourseModel(
+    ListaModel(
         id: 3,
         nombre: "Hyundai Elantra 2010",
         descripcion:

@@ -6,7 +6,7 @@ import 'package:peliculas/src/widget/app_bar_widget.dart';
 class DetalleVehiculos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final CourseModel carro = ModalRoute.of(context).settings.arguments;
+    final ListaModel carro = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       backgroundColor: Colors.white,
       body: new CustomScrollView(

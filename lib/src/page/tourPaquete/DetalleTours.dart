@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
-import 'package:peliculas/src/page/paquetes/CarritoCompra.dart';
+import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
 import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
 
 class DetalleTours extends StatefulWidget {
-  final dynamic tur;
-  const DetalleTours({@required this.tur});
+  final TourPaqueteModel tourPaquete;
+  const DetalleTours({@required this.tourPaquete});
 
   @override
   _DetalleToursState createState() => _DetalleToursState();
@@ -27,7 +28,7 @@ class _DetalleToursState extends State<DetalleTours> {
 
   Future<dynamic> _getInfoAdicional() async {
     return await TurServices()
-        .obtenerInformacionAdicional(widget.tur['id_tours']);
+        .obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
   }
 
   @override
@@ -37,10 +38,10 @@ class _DetalleToursState extends State<DetalleTours> {
 
     return Scaffold(
         //backgroundColor: Colors.blueAccent,
-        body: detalle(context, widget.tur));
+        body: detalle(context));
   }
 
-  Widget detalle(BuildContext context, dynamic tur) {
+  Widget detalle(BuildContext context) {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
         future: infoAdicional,
@@ -49,7 +50,7 @@ class _DetalleToursState extends State<DetalleTours> {
             case ConnectionState.done:
               print('hecho');
               final informacionAcicional = snapshot.data;
-              return scrollView(context, tur, informacionAcicional);
+              return scrollView(context, informacionAcicional);
             case ConnectionState.active:
               print('activo');
               return Text('activo');
@@ -63,14 +64,13 @@ class _DetalleToursState extends State<DetalleTours> {
         });
   }
 
-  Widget scrollView(
-      BuildContext context, dynamic tur, dynamic informacionAdicional) {
+  Widget scrollView(BuildContext context, dynamic informacionAdicional) {
     return CustomScrollView(
       slivers: <Widget>[
         AppBarWidget(
-          titulo: tur['nombreTours'],
-          imagen: transformarFoto(tur['foto']),
-          id: tur['id_tours'],
+          titulo: widget.tourPaquete.nombreTours,
+          imagen: transformarFoto(widget.tourPaquete.foto),
+          id: widget.tourPaquete.idTours.toString(),
         ),
         new SliverList(
             delegate: new SliverChildListDelegate([
@@ -78,33 +78,35 @@ class _DetalleToursState extends State<DetalleTours> {
             height: 10.0,
           ),
           _posterTitulo(
-              context: context, title: tur['nombreTours'], fecha: tur['start']),
+              context: context,
+              title: widget.tourPaquete.nombreTours,
+              fecha: widget.tourPaquete.start.toString()),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
             height: 20.0,
           ),
-          _descripcion(tur['descripcionForApp']),
+          _descripcion(widget.tourPaquete.descripcionForApp),
           listaHorizontal(
               titulo: "EL VIAJE INCLUYE",
               icono: Icons.check_circle,
               color: Colors.green,
-              lista: tur['incluye']),
-          listaHorizontal(
-              titulo: "EL NO VIAJE INCLUYE",
-              icono: Icons.cancel,
-              color: Colors.redAccent,
-              lista: tur['no_incluye']),
-          listaHorizontal(
-              titulo: "REQUISITOS",
-              icono: Icons.report,
-              color: Colors.orange,
-              lista: tur['requisitos']),
+              lista: widget.tourPaquete.incluye),
           listaHorizontal(
               titulo: "LUGARES DE SALIDA",
               icono: Icons.local_car_wash,
               color: Colors.blue,
-              lista: tur['lugar_salida']),
+              lista: widget.tourPaquete.lugarSalida),
+          listaHorizontal(
+              titulo: "REQUISITOS",
+              icono: Icons.report,
+              color: Colors.orange,
+              lista: widget.tourPaquete.requisitos),
+          listaHorizontal(
+              titulo: "EL NO VIAJE INCLUYE",
+              icono: Icons.cancel,
+              color: Colors.redAccent,
+              lista: widget.tourPaquete.noIncluye),
           // (tur['promociones'].length > 0)
           //     ? listaHorizontal(
           //         titulo: "Promociones",
@@ -112,7 +114,6 @@ class _DetalleToursState extends State<DetalleTours> {
           //         color: Colors.deepPurple,
           //         lista: tur['promociones'])
           //     : Container(),
-
           _crearBoton(context)
         ]))
       ],
@@ -289,7 +290,7 @@ class _DetalleToursState extends State<DetalleTours> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: new RaisedButton.icon(
-          label: new Text("Reservar Tur"),
+          label: new Text("Reservar Tour"),
           icon: new Icon(Icons.shopping_cart),
           color: Theme.of(context).accentColor,
           textColor: Theme.of(context).bottomAppBarColor,
@@ -298,8 +299,8 @@ class _DetalleToursState extends State<DetalleTours> {
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) =>
-                        CarritoCompra(idTur: widget.tur['id_tours'])));
+                    builder: (context) => CarritoCompra(
+                        idTur: widget.tourPaquete.idTours.toString())));
           }),
     );
   }

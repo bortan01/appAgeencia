@@ -2,7 +2,8 @@ import 'dart:convert' as convert;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:peliculas/src/models/turs/detalleTur_model.dart';
+import 'package:peliculas/src/models/TourPaquete/detalleTur_model.dart';
+import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
 import 'package:peliculas/src/services/conf.dart';
 
 class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
@@ -28,25 +29,28 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  Future<dynamic> obtenerInformacionAdicional(String idTur) async {
+  Future<InfoReservaModel> obtenerInformacionAdicional(String idTur) async {
     print('haciendo peticion informacion adicional');
     final url = '${Conf.urlServidor}TurPaquete/showAdicional?id_tours=$idTur';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
-      return jsonResponse;
+      final res = InfoReservaModel.fromJson(jsonResponse);
+      return res;
     } else {
       return null;
     }
   }
 
-  Future<dynamic> obtenerInfomacionToReserva(String idTur) async {
-    print('haciendo peticion informacion de reserva');
+  Future<InfoReservaModel> obtenerInfomacionToReserva(String idTur) async {
+    print('haciendo peticion informacion de reserva 3');
     final url = '${Conf.urlServidor}TurPaquete/showReserva?id_tours=$idTur';
+    print(url);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
-      return jsonResponse;
+      final res = InfoReservaModel.fromJson(jsonResponse);
+      return res;
     } else {
       return null;
     }

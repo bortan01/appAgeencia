@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/page/paquetes/DetallePaquetes.dart';
-import 'package:peliculas/src/page/tours/DetalleTours.dart';
+import 'package:peliculas/src/page/tourPaquete/DetallePaquetes.dart';
+import 'package:peliculas/src/page/tourPaquete/DetalleTours.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
-import 'package:peliculas/src/widget/cource_info_widget.dart';
+import 'package:peliculas/src/widget/Lista.dart';
 import 'package:intl/intl.dart';
 
 class ListaTours extends StatelessWidget {
@@ -54,21 +55,12 @@ class ListaTours extends StatelessWidget {
     return ListView.builder(
         itemCount: data.length,
         itemBuilder: (BuildContext context, int index) {
-          final fecha = DateTime.parse(data[index]['start']);
+          final myTourPaquete = new TourPaqueteModel.fromJson(data[index]);
           final DateFormat formatter = DateFormat('dd/MM/yyyy');
-          final String fechaFormateada = formatter.format(fecha);
-          final tur = new CourseModel(
-              id: int.parse(data[index]['id_tours']),
-              nombre: data[index]['nombreTours'],
-              descripcion: data[index]['descripcionForApp'],
-              imagen: transformarFoto(data[index]['foto']),
-              tag1: "Precio \$" + data[index]['precio'],
-              tag2: 'Fecha de Salida ' + fechaFormateada,
-              fotos: data[index]['galeria']);
-          final String tipo = data[index]['tipo'];
           return GestureDetector(
             onTap: () {
-              if (tipo == 'Paquete Nacional' || tipo == 'Paquete Internacional')
+              if (myTourPaquete.tipo == 'Paquete Nacional' ||
+                  myTourPaquete.tipo == 'Paquete Internacional')
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -79,7 +71,8 @@ class ListaTours extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => DetalleTours(tur: data[index])),
+                      builder: (context) =>
+                          DetalleTours(tourPaquete: myTourPaquete)),
                 );
             },
             child: Column(
@@ -87,7 +80,17 @@ class ListaTours extends StatelessWidget {
                 SizedBox(height: 15.0),
 
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
-                CourceInfoWidget(model: tur),
+                Lista(
+                  model: new ListaModel(
+                      nombre: myTourPaquete.nombreTours,
+                      descripcion: myTourPaquete.descripcionForApp,
+                      tag1: 'Precio \$${myTourPaquete.precio.toString()}',
+                      tag2: 'Fecha de Salida ' +
+                          formatter.format(myTourPaquete.start),
+                      imagen: transformarFoto(myTourPaquete.foto),
+                      fotos: myTourPaquete.galeria,
+                      id: myTourPaquete.idTours),
+                ),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(
                   thickness: 1,

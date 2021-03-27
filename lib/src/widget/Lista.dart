@@ -3,9 +3,9 @@ import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 import 'package:peliculas/src/widget/galeria.dart';
 
-class CourceInfoWidget extends StatelessWidget {
-  final CourseModel model;
-  const CourceInfoWidget({Key key, @required this.model}) : super(key: key);
+class Lista extends StatelessWidget {
+  final ListaModel model;
+  const Lista({Key key, @required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -71,9 +71,9 @@ class CourceInfoWidget extends StatelessWidget {
       ),
       child: Text(
         text,
-        maxLines: 1,
+        maxLines: 3,
         style: TextStyle(
-            color: isPrimaryCard ? Colors.white : textColor, fontSize: 12),
+            color: isPrimaryCard ? Colors.white : textColor, fontSize: 15),
       ),
     );
   }

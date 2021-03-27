@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/widget/cource_info_widget.dart';
+import 'package:peliculas/src/widget/Lista.dart';
 
 class EncomiendasRealizadas extends StatelessWidget {
   @override
@@ -20,7 +20,7 @@ class EncomiendasRealizadas extends StatelessWidget {
   }
 
   Widget _listado(BuildContext context) {
-    List<CourseModel> miListaPaquetes = listaInventada();
+    List<ListaModel> miListaPaquetes = listaInventada();
     //Posiblemente esto se convierta en futureBilder
     return ListView.builder(
         itemCount: miListaPaquetes.length,
@@ -33,7 +33,7 @@ class EncomiendasRealizadas extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
-                CourceInfoWidget(model: miListaPaquetes[index]),
+                Lista(model: miListaPaquetes[index]),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(
                   thickness: 1,
@@ -46,9 +46,9 @@ class EncomiendasRealizadas extends StatelessWidget {
         });
   }
 
-  List<CourseModel> listaInventada() {
-    final List<CourseModel> list = [
-      CourseModel(
+  List<ListaModel> listaInventada() {
+    final List<ListaModel> list = [
+      ListaModel(
           id: 0,
           nombre: "KIT DE MEDICAMENTOS",
           descripcion:
@@ -57,7 +57,7 @@ class EncomiendasRealizadas extends StatelessWidget {
               "https://i.pinimg.com/originals/a9/b5/5f/a9b55fbd087786cb95a7c1cf14de338b.jpg",
           tag1: "Fecha: 02-03-2020",
           tag2: "Precio: \$\28.50"),
-      CourseModel(
+      ListaModel(
           id: 1,
           nombre: "INSULINA",
           descripcion:
@@ -66,7 +66,7 @@ class EncomiendasRealizadas extends StatelessWidget {
           tag2: "Precio: \$\348.50",
           imagen:
               "https://cofatuc.org.ar/wordpress/wp-content/uploads/2017/10/insulina.jpg"),
-      CourseModel(
+      ListaModel(
           id: 2,
           nombre: "GLUCOMETRO",
           descripcion:
@@ -75,7 +75,7 @@ class EncomiendasRealizadas extends StatelessWidget {
           tag2: "Precio: \$\348.50",
           imagen:
               "https://www.revistaneo.com/sites/default/files/2019-11/Nuevo%20sistema%20de%20administraci%C3%B3n%20de%20insulina.jpg"),
-      CourseModel(
+      ListaModel(
           id: 3,
           nombre: "DOCUMENTOS PERSONALES",
           descripcion:
