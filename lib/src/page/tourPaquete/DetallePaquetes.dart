@@ -28,8 +28,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
   }
 
   Future<InformacionAdicional> _getInfoAdicional() async {
-    return await TurServices()
-        .obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
+    return await TurServices().obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
   }
 
   @override
@@ -45,8 +44,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
         future: infoAdicional,
-        builder: (BuildContext context,
-            AsyncSnapshot<InformacionAdicional> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<InformacionAdicional> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               print('hecho');
@@ -65,8 +63,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
         });
   }
 
-  Widget scrollView(
-      BuildContext context, InformacionAdicional informacionAdicional) {
+  Widget scrollView(BuildContext context, InformacionAdicional informacionAdicional) {
     return CustomScrollView(
       slivers: <Widget>[
         AppBarWidget(
@@ -80,9 +77,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
             height: 10.0,
           ),
           _posterTitulo(
-              context: context,
-              title: widget.tourPaquete.nombreTours,
-              fecha: widget.tourPaquete.start.toString()),
+              context: context, title: widget.tourPaquete.nombreTours, fecha: widget.tourPaquete.start.toString()),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
@@ -100,10 +95,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
               color: Colors.blue,
               lista: widget.tourPaquete.lugarSalida),
           listaHorizontal(
-              titulo: "REQUISITOS",
-              icono: Icons.report,
-              color: Colors.orange,
-              lista: widget.tourPaquete.requisitos),
+              titulo: "REQUISITOS", icono: Icons.report, color: Colors.orange, lista: widget.tourPaquete.requisitos),
           listaHorizontal(
               titulo: "EL NO VIAJE INCLUYE",
               icono: Icons.cancel,
@@ -123,10 +115,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     );
   }
 
-  _posterTitulo(
-      {@required BuildContext context,
-      @required String title,
-      @required String fecha}) {
+  _posterTitulo({@required BuildContext context, @required String title, @required String fecha}) {
     return new Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
@@ -143,10 +132,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style: TextStyle(
-                        color: Colors.lightBlue,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold)),
+                    style: TextStyle(color: Colors.lightBlue, fontSize: 18, fontWeight: FontWeight.bold)),
               ),
             ],
           ))
@@ -155,12 +141,10 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     );
   }
 
-  Widget _incluye(
-      BuildContext context, InformacionAdicional informacionAdicional) {
+  Widget _incluye(BuildContext context, InformacionAdicional informacionAdicional) {
     return Stepper(
       currentStep: pasoActual,
-      physics:
-          new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
+      physics: new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
       steps: listaDeElementos(informacionAdicional),
       onStepContinue: () {
         setState(() {
@@ -176,8 +160,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
           }
         });
       },
-      controlsBuilder: (BuildContext context,
-          {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
+      controlsBuilder: (BuildContext context, {VoidCallback onStepContinue, VoidCallback onStepCancel}) {
         return Row(
           children: <Widget>[
             FlatButton(
@@ -205,11 +188,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     );
   }
 
-  Widget listaHorizontal(
-      {@required String titulo,
-      IconData icono,
-      Color color,
-      List<dynamic> lista}) {
+  Widget listaHorizontal({@required String titulo, IconData icono, Color color, List<dynamic> lista}) {
     return Container(
       height: 220.0,
       child: Column(
@@ -223,10 +202,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
             child: new Text(
               titulo,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(fontSize: 16, color: Colors.white),
+              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16, color: Colors.white),
             ),
           ),
           SizedBox(
@@ -240,9 +216,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
                 itemCount: lista.length,
                 itemBuilder: (BuildContext context, int index) {
                   return _elementos(
-                      texto: lista[index],
-                      colorFondo: color,
-                      icono: new Icon(icono, color: Colors.white));
+                      texto: lista[index], colorFondo: color, icono: new Icon(icono, color: Colors.white));
                 }),
           ),
         ],
@@ -293,10 +267,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     return myLista;
   }
 
-  Widget _elementos(
-      {@required String texto,
-      @required Icon icono,
-      @required Color colorFondo}) {
+  Widget _elementos({@required String texto, @required Icon icono, @required Color colorFondo}) {
     return Opacity(
       opacity: 0.9,
       child: new Container(
@@ -304,9 +275,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
             color: colorFondo,
-            boxShadow: [
-              BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0)
-            ]),
+            boxShadow: [BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0)]),
         height: 210.0,
         width: 140.0,
         child: Column(
@@ -315,9 +284,8 @@ class _DetallePaqueteState extends State<DetallePaquete> {
               margin: EdgeInsets.all(8.0),
               padding: EdgeInsets.all(10.0),
               child: (icono),
-              decoration: new BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(40.0)),
+              decoration:
+                  new BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(40.0)),
             ),
             new SizedBox(height: 7.0),
             new Container(
@@ -325,10 +293,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: new Text(
                   texto,
-                  style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   maxLines: 6,
@@ -350,10 +315,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
           shape: StadiumBorder(),
           onPressed: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        CarritoCompra(tourPaqueteModel: widget.tourPaquete)));
+                context, MaterialPageRoute(builder: (context) => CarritoCompra(tourPaqueteModel: widget.tourPaquete)));
           }),
     );
   }

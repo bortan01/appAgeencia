@@ -13,8 +13,7 @@ import 'package:peliculas/src/utils/helper.dart' as helper;
 class CarritoCompra extends StatefulWidget {
   final TourPaqueteModel tourPaqueteModel;
 
-  const CarritoCompra({Key key, @required this.tourPaqueteModel})
-      : super(key: key);
+  const CarritoCompra({Key key, @required this.tourPaqueteModel}) : super(key: key);
   @override
   _CarritoCompraState createState() => _CarritoCompraState();
 }
@@ -32,6 +31,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
   InfoReservaModel infoReservaModel;
   bool creandoEnlace = false;
   final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
@@ -39,8 +39,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   Future<InfoReservaModel> _getInfoReserva() async {
-    return await TurServices()
-        .obtenerInfomacionToReserva(widget.tourPaqueteModel.idTours.toString());
+    return await TurServices().obtenerInfomacionToReserva(widget.tourPaqueteModel.idTours.toString());
   }
 
   @override
@@ -50,8 +49,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
       appBar: appBarCarrito(),
       body: FutureBuilder(
           future: futureInfoReserva,
-          builder:
-              (BuildContext context, AsyncSnapshot<InfoReservaModel> snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<InfoReservaModel> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.hasData) {
@@ -74,8 +72,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
-  SingleChildScrollView scrollView(
-      BuildContext context, InfoReservaModel info) {
+  SingleChildScrollView scrollView(BuildContext context, InfoReservaModel info) {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -104,8 +101,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
         children: <Widget>[
           Text(
             "",
-            style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
           )
         ],
       ),
@@ -158,8 +154,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
           child: Container(),
         ),
         FlatButton(
-          child:
-              (creandoEnlace) ? Text("Espere por Favor...") : Text("Continuar"),
+          child: (creandoEnlace) ? Text("Espere por Favor...") : Text("Continuar"),
           color: Colors.blueAccent,
           textColor: Colors.white,
           padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
@@ -183,8 +178,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
   Widget _inputCantidad() {
     return TextFormField(
       initialValue: "1",
-      keyboardType:
-          TextInputType.numberWithOptions(decimal: false, signed: false),
+      keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
       textAlign: TextAlign.center,
       //envia un paramettro inplicito
       validator: helper.isNumeric,
@@ -205,11 +199,9 @@ class _CarritoCompraState extends State<CarritoCompra> {
 
     return Row(
       children: <Widget>[
-        Text("Total:",
-            style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
+        Text("Total:", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
         Spacer(),
-        Text("\$${total.toStringAsFixed(2)}",
-            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
+        Text("\$${total.toStringAsFixed(2)}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
       ],
     );
   }
@@ -235,8 +227,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   void agregarACarrito() {
-    final encontrado =
-        asientosPrecio.indexWhere((pre) => pre.id == _precioSeleccionado.id);
+    final encontrado = asientosPrecio.indexWhere((pre) => pre.id == _precioSeleccionado.id);
     if (encontrado == -1) {
       _precioSeleccionado.cantidad = cantidadSeleccionada;
       asientosPrecio.add(_precioSeleccionado);
@@ -267,9 +258,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
               isExpanded: true,
               decoration: InputDecoration(
                   hintText: "name",
-                  border: OutlineInputBorder(
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(20.0)))),
+                  border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
               icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
               value: _precioSeleccionado,
               items: opcionesDropdown(),
@@ -307,8 +296,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     });
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-          color: Colors.blue, borderRadius: BorderRadius.circular(20.0)),
+      decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(20.0)),
       child: Column(
         children: listaIttem,
       ),
@@ -390,8 +378,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
 
       //OCUPAREMES ESTA LISTA DE PRECIOS PARA LLENAR EL SELECT
       listaPrecios = [];
-      listaPrecios
-          .add(Precios(asiento: 1, pasaje: info.precio, titulo: "Normal"));
+      listaPrecios.add(Precios(asiento: 1, pasaje: info.precio, titulo: "Normal"));
       //AGREMAMOS LAS PROMOCIONES EXISTENTES SI LAS EXISTE
       info.promociones.forEach((element) {
         listaPrecios.add(new Precios(
@@ -403,38 +390,42 @@ class _CarritoCompraState extends State<CarritoCompra> {
     }
   }
 
-   continuar() async {
+  continuar() async {
     formKey.currentState.validate();
-    String descAdicional = "";
+    String descripcionProducto = "";
+    total = 0.0;
     int cantidadAsientos = 0;
     if (asientosPrecio.length == 0) {
       helper.mostrarMensanjeError(context, "El carrito esta vacio.");
       return;
     }
+
     asientosPrecio.forEach((element) {
+      double subTotal = (element.cantidad * element.pasaje);
+      total += subTotal;
       cantidadAsientos += element.cantidad;
-      String subTotal = (element.cantidad * element.pasaje).toStringAsFixed(2);
-      descAdicional +=
-          '${element.cantidad.toString()} X ${element.titulo} \$$subTotal \n';
+      descripcionProducto +=
+          '${element.cantidad.toString()} X Asiento(s) ${element.titulo} \$${element.pasaje} c/u, Sub Total \$$subTotal\n';
     });
+    descripcionProducto += '\n  Total: \$$total \n';
     if (cantidadAsientos > infoReservaModel.cupos) {
-      helper.mostrarMensanjeError(
-          context, "Solo hay ${infoReservaModel.cupos} asientos disponibles");
+      helper.mostrarMensanjeError(context, "Solo hay ${infoReservaModel.cupos} asientos disponibles");
       return;
     }
-    _desicionTipo(descAdicional, cantidadAsientos);
+    _desicionTipo(descripcionProducto, cantidadAsientos);
   }
 
-  _desicionTipo(String descAdicional, int cantidadAsientos) async {
+  _desicionTipo(String descripcionProducto, int cantidadAsientos) async {
     final detalle = new DetalleTurModel(
-        idTours: widget.tourPaqueteModel.idTours,
         idCliente: 7,
+        idTours: widget.tourPaqueteModel.idTours,
         nombreProducto: widget.tourPaqueteModel.nombreTours,
-        descripcionProducto: '$descAdicional}',
+        descripcionProducto: '$descripcionProducto',
+        descripcionTurPaquete: widget.tourPaqueteModel.descripcionTur,
         cantidadAsientos: cantidadAsientos,
         total: total,
-        asientosSeleccionados: '',
-        labelAsiento: '');
+        asientosSeleccionados: 'NO_SELECCIONADO',
+        labelAsiento: 'NO_LABEL');
     String tipo = widget.tourPaqueteModel.tipo;
     if (tipo == 'Paquete Internacional' || tipo == 'Paquete Nacional') {
       //SI ES UN TUR REDIRECCIONAMOS PARA QUE SELECCIONE EL PAQUETE
@@ -460,6 +451,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     // helper.redireccionar(context, wompiModel.urlEnlace);
     creandoEnlace = false;
     setState(() {});
+    print(wompiModel.urlEnlace);
     return wompiModel;
   }
 }

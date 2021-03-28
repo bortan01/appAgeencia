@@ -63,9 +63,6 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     print("haciendo peticion de guardar reserva");
 
     final url = '${Conf.urlServidor}DetalleTour/saveByClient';
-    reserva.asientosSeleccionados = "1_3,1_4";
-    reserva.labelAsiento = "13,41";
-    reserva.descripcionProducto = "algo";
     final response = await http.post(url, body: reserva.toJson());
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
