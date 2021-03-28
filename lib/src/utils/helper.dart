@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
+import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 String necesario = "campo necesario";
 String transformarFoto(url) {
@@ -94,3 +97,16 @@ void mostrarMensanjeError(BuildContext context, String mensaje) {
     ],
   ).show();
 }
+
+redireccionar(BuildContext context, String url) async {
+    // url = 'https://www.marca.com/';
+    if (await canLaunch(url)) {
+      await launch(url);
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  

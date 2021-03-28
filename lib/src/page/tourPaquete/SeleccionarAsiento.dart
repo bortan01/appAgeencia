@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/TourPaquete/detalleTur_model.dart';
-import 'package:peliculas/src/models/TourPaquete/transporte_model.dart';
+
+
+import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
+import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
+import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+
 
 class SeleccionarAsiento extends StatefulWidget {
   final DetalleTurModel detalle;
@@ -153,9 +158,9 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
         _guardando = true;
       });
 
-      final dynamic resultado =
+      final WompiModel resultado =
           await turServices.guardarReserva(widget.detalle);
-      String url = resultado['urlEnlace'];
+      String url = resultado.urlEnlace;
       Alert(
         context: context,
         type: AlertType.success,
@@ -168,7 +173,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             onPressed: () {
-              redireccionar(url);
+             helper.redireccionar(context, url);
             },
             color: Color.fromRGBO(0, 179, 134, 1.0),
           )
@@ -177,16 +182,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
     }
   }
 
-  redireccionar(url) async {
-    // url = 'https://www.marca.com/';
-    if (await canLaunch(url)) {
-      await launch(url);
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+  
 
   void mostrarSnackbar(String mensaje) {
     final snack = SnackBar(

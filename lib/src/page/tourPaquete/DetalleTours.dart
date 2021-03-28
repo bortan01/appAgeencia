@@ -300,7 +300,8 @@ class _DetalleToursState extends State<DetalleTours> {
                 context,
                 MaterialPageRoute(
                     builder: (context) => CarritoCompra(
-                        idTur: widget.tourPaquete.idTours.toString())));
+                          tourPaqueteModel: widget.tourPaquete,
+                        )));
           }),
     );
   }

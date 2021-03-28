@@ -65,7 +65,7 @@ class ListaTours extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) =>
-                          DetallePaquete(paquete: data[index])),
+                          DetallePaquete(tourPaquete: myTourPaquete)),
                 );
               else
                 Navigator.push(

@@ -2,8 +2,10 @@ import 'dart:convert' as convert;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:peliculas/src/models/TourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
+import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
+import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
+import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/services/conf.dart';
 
 class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
@@ -29,13 +31,14 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  Future<InfoReservaModel> obtenerInformacionAdicional(String idTur) async {
+  Future<InformacionAdicional> obtenerInformacionAdicional(
+      String idTur) async {
     print('haciendo peticion informacion adicional');
     final url = '${Conf.urlServidor}TurPaquete/showAdicional?id_tours=$idTur';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
-      final res = InfoReservaModel.fromJson(jsonResponse);
+      final res = InformacionAdicional.fromJson(jsonResponse);
       return res;
     } else {
       return null;
@@ -56,7 +59,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  Future<dynamic> guardarReserva(DetalleTurModel reserva) async {
+  Future<WompiModel> guardarReserva(DetalleTurModel reserva) async {
     print("haciendo peticion de guardar reserva");
 
     final url = '${Conf.urlServidor}DetalleTour/saveByClient';
@@ -66,7 +69,8 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     final response = await http.post(url, body: reserva.toJson());
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
-      return jsonResponse;
+      final res = WompiModel.fromJson(jsonResponse);
+      return res;
     } else {
       return null;
     }

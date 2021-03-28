@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/precios_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
+import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
+import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
+import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';
+
+import 'package:peliculas/src/page/tourPaquete/SeleccionarAsiento.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CarritoCompra extends StatefulWidget {
-  final String idTur;
-  const CarritoCompra({Key key, this.idTur}) : super(key: key);
+  final TourPaqueteModel tourPaqueteModel;
+
+  const CarritoCompra({Key key, @required this.tourPaqueteModel})
+      : super(key: key);
   @override
   _CarritoCompraState createState() => _CarritoCompraState();
 }
@@ -21,10 +27,10 @@ class _CarritoCompraState extends State<CarritoCompra> {
   List<Precios> listaPrecios = [];
   List<Precios> asientosPrecio = [];
   int cantidadSeleccionada = 1;
-  int cuposSolicitados = 0;
   double total = 0.0;
   TransporteModel transporte;
   InfoReservaModel infoReservaModel;
+  bool creandoEnlace = false;
   final formKey = GlobalKey<FormState>();
   @override
   void initState() {
@@ -33,7 +39,8 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   Future<InfoReservaModel> _getInfoReserva() async {
-    return await TurServices().obtenerInfomacionToReserva(widget.idTur);
+    return await TurServices()
+        .obtenerInfomacionToReserva(widget.tourPaqueteModel.idTours.toString());
   }
 
   @override
@@ -151,12 +158,13 @@ class _CarritoCompraState extends State<CarritoCompra> {
           child: Container(),
         ),
         FlatButton(
-          child: Text("Continuar"),
+          child:
+              (creandoEnlace) ? Text("Espere por Favor...") : Text("Continuar"),
           color: Colors.blueAccent,
           textColor: Colors.white,
           padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          onPressed: continuar,
+          onPressed: (creandoEnlace) ? null : continuar,
         )
       ],
     );
@@ -379,15 +387,12 @@ class _CarritoCompraState extends State<CarritoCompra> {
     if (infoReservaModel == null) {
       print("inicializando");
       infoReservaModel = info;
-      //el detalle sera enviado a la siguiente pantalla
 
-      //inicializaremos los datos para el dropdown
-
+      //OCUPAREMES ESTA LISTA DE PRECIOS PARA LLENAR EL SELECT
       listaPrecios = [];
-
       listaPrecios
           .add(Precios(asiento: 1, pasaje: info.precio, titulo: "Normal"));
-
+      //AGREMAMOS LAS PROMOCIONES EXISTENTES SI LAS EXISTE
       info.promociones.forEach((element) {
         listaPrecios.add(new Precios(
             titulo: element['titulo'],
@@ -398,68 +403,63 @@ class _CarritoCompraState extends State<CarritoCompra> {
     }
   }
 
-  void continuar() {
+   continuar() async {
     formKey.currentState.validate();
     String descAdicional = "";
-    cuposSolicitados = 0;
+    int cantidadAsientos = 0;
     if (asientosPrecio.length == 0) {
-      Alert(
-        context: context,
-        type: AlertType.warning,
-        title: "Oops",
-        desc: "El carrito esta vacio.",
-        buttons: [
-          DialogButton(
-            child: Text(
-              "Cerrar",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            onPressed: () => Navigator.pop(context),
-            color: Color.fromRGBO(0, 179, 134, 1.0),
-          )
-        ],
-      ).show();
-    } else {
-      asientosPrecio.forEach((element) {
-        cuposSolicitados += element.cantidad;
-        String subTotal =
-            (element.cantidad * element.pasaje).toStringAsFixed(2);
-        descAdicional +=
-            '${element.cantidad.toString()} X ${element.titulo} \$$subTotal \n';
-      });
-      descAdicional += '\n';
-
-      if (cuposSolicitados > infoReservaModel.cupos) {
-        Alert(
-          context: context,
-          type: AlertType.warning,
-          title: "Oops",
-          desc: "Solo hay ${infoReservaModel.cupos} asientos disponibles",
-          buttons: [
-            DialogButton(
-              child: Text(
-                "Cerrar",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: () => Navigator.pop(context),
-              color: Color.fromRGBO(0, 179, 134, 1.0),
-            )
-          ],
-        ).show();
-      } else {
-        //   DetalleTurModel detalle = new DetalleTurModel();
-        // detalle.idTours = 1;
-        // detalle.idCliente = 3;
-        // detalle.nombreProducto = nombre;
-        // detalle.descripcionProducto = descAdicional + descripcion;
-        // detalle.total = total;
-        // detalle.cantidadAsientos = cuposSolicitados;
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => SeleccionarAsiento(
-        //             detalle: detalle, transporte: transporte)));
-      }
+      helper.mostrarMensanjeError(context, "El carrito esta vacio.");
+      return;
     }
+    asientosPrecio.forEach((element) {
+      cantidadAsientos += element.cantidad;
+      String subTotal = (element.cantidad * element.pasaje).toStringAsFixed(2);
+      descAdicional +=
+          '${element.cantidad.toString()} X ${element.titulo} \$$subTotal \n';
+    });
+    if (cantidadAsientos > infoReservaModel.cupos) {
+      helper.mostrarMensanjeError(
+          context, "Solo hay ${infoReservaModel.cupos} asientos disponibles");
+      return;
+    }
+    _desicionTipo(descAdicional, cantidadAsientos);
+  }
+
+  _desicionTipo(String descAdicional, int cantidadAsientos) async {
+    final detalle = new DetalleTurModel(
+        idTours: widget.tourPaqueteModel.idTours,
+        idCliente: 7,
+        nombreProducto: widget.tourPaqueteModel.nombreTours,
+        descripcionProducto: '$descAdicional}',
+        cantidadAsientos: cantidadAsientos,
+        total: total,
+        asientosSeleccionados: '',
+        labelAsiento: '');
+    String tipo = widget.tourPaqueteModel.tipo;
+    if (tipo == 'Paquete Internacional' || tipo == 'Paquete Nacional') {
+      //SI ES UN TUR REDIRECCIONAMOS PARA QUE SELECCIONE EL PAQUETE
+      TransporteModel transporteModel = infoReservaModel.transporte;
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => SeleccionarAsiento(
+                    detalle: detalle,
+                    transporte: transporteModel,
+                  )));
+    }
+    //SINO CREAMOS ENLACE DE PAGO Y LO REDIRECCIONAMOS A LA PASARELA
+    await _crearEnlacePago(detalle);
+  }
+
+  Future<WompiModel> _crearEnlacePago(DetalleTurModel detalle) async {
+    creandoEnlace = true;
+    setState(() {});
+    final turServices = new TurServices();
+
+    final WompiModel wompiModel = await turServices.guardarReserva(detalle);
+    // helper.redireccionar(context, wompiModel.urlEnlace);
+    creandoEnlace = false;
+    setState(() {});
+    return wompiModel;
   }
 }

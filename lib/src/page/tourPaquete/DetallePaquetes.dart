@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
+import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
@@ -7,8 +9,9 @@ import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
 
 class DetallePaquete extends StatefulWidget {
-  final dynamic paquete;
-  const DetallePaquete({@required this.paquete});
+  final TourPaqueteModel tourPaquete;
+
+  const DetallePaquete({@required this.tourPaquete});
 
   @override
   _DetallePaqueteState createState() => _DetallePaqueteState();
@@ -16,7 +19,7 @@ class DetallePaquete extends StatefulWidget {
 
 class _DetallePaqueteState extends State<DetallePaquete> {
   int pasoActual = 0;
-  Future infoAdicional;
+  Future<InformacionAdicional> infoAdicional;
 
   @override
   void initState() {
@@ -24,31 +27,31 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     infoAdicional = _getInfoAdicional();
   }
 
-  Future<dynamic> _getInfoAdicional() async {
+  Future<InformacionAdicional> _getInfoAdicional() async {
     return await TurServices()
-        .obtenerInformacionAdicional(widget.paquete['id_tours']);
+        .obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     Provider.of<TurServices>(context, listen: false);
-    // final dynamic tur = ModalRoute.of(context).settings.arguments;
 
     return Scaffold(
         //backgroundColor: Colors.blueAccent,
-        body: detalle(context, widget.paquete));
+        body: detalle(context, widget.tourPaquete));
   }
 
   Widget detalle(BuildContext context, dynamic tur) {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
         future: infoAdicional,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+        builder: (BuildContext context,
+            AsyncSnapshot<InformacionAdicional> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               print('hecho');
               final informacionAcicional = snapshot.data;
-              return scrollView(context, tur, informacionAcicional);
+              return scrollView(context, informacionAcicional);
             case ConnectionState.active:
               print('activo');
               return Text('activo');
@@ -63,13 +66,13 @@ class _DetallePaqueteState extends State<DetallePaquete> {
   }
 
   Widget scrollView(
-      BuildContext context, dynamic tur, dynamic informacionAdicional) {
+      BuildContext context, InformacionAdicional informacionAdicional) {
     return CustomScrollView(
       slivers: <Widget>[
         AppBarWidget(
-          titulo: 'Detalle paquete' + tur['nombreTours'],
-          imagen: transformarFoto(tur['foto']),
-          id: tur['id_tours'],
+          titulo: 'Detalle paquete' + widget.tourPaquete.nombreTours,
+          imagen: transformarFoto(widget.tourPaquete.foto),
+          id: widget.tourPaquete.idTours.toString(),
         ),
         new SliverList(
             delegate: new SliverChildListDelegate([
@@ -77,7 +80,9 @@ class _DetallePaqueteState extends State<DetallePaquete> {
             height: 10.0,
           ),
           _posterTitulo(
-              context: context, title: tur['nombreTours'], fecha: tur['start']),
+              context: context,
+              title: widget.tourPaquete.nombreTours,
+              fecha: widget.tourPaquete.start.toString()),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
@@ -87,23 +92,23 @@ class _DetallePaqueteState extends State<DetallePaquete> {
               titulo: "EL VIAJE INCLUYE",
               icono: Icons.check_circle,
               color: Colors.green,
-              lista: tur['incluye']),
+              lista: widget.tourPaquete.incluye),
           _incluye(context, informacionAdicional),
           listaHorizontal(
               titulo: "LUGARES DE SALIDA",
               icono: Icons.local_car_wash,
               color: Colors.blue,
-              lista: tur['lugar_salida']),
+              lista: widget.tourPaquete.lugarSalida),
           listaHorizontal(
               titulo: "REQUISITOS",
               icono: Icons.report,
               color: Colors.orange,
-              lista: tur['requisitos']),
+              lista: widget.tourPaquete.requisitos),
           listaHorizontal(
               titulo: "EL NO VIAJE INCLUYE",
               icono: Icons.cancel,
               color: Colors.redAccent,
-              lista: tur['no_incluye']),
+              lista: widget.tourPaquete.noIncluye),
           // (tur['promociones'].length > 0)
           //     ? listaHorizontal(
           //         titulo: "Promociones",
@@ -150,7 +155,8 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     );
   }
 
-  Widget _incluye(BuildContext context, dynamic informacionAdicional) {
+  Widget _incluye(
+      BuildContext context, InformacionAdicional informacionAdicional) {
     return Stepper(
       currentStep: pasoActual,
       physics:
@@ -244,19 +250,19 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     );
   }
 
-  List<Step> listaDeElementos(dynamic informacionAdicional) {
+  List<Step> listaDeElementos(InformacionAdicional informacionAdicional) {
     List<Step> myLista = [];
-    informacionAdicional['sitiosTuristicos'].forEach((item) {
+    informacionAdicional.sitiosTuristicos.forEach((item) {
       myLista.add(
         new Step(
-            title: new Text(item['nombre_sitio']),
+            title: new Text(item.nombreSitio),
             content: Column(
               children: <Widget>[
                 new Text(
-                  item['descripcion_sitio'],
+                  item.descripcionSitio,
                   textAlign: TextAlign.justify,
                 ),
-                Galeria(galeria: item['galeria']),
+                Galeria(galeria: item.galeria),
               ],
             ),
             state: StepState.complete,
@@ -264,18 +270,18 @@ class _DetallePaqueteState extends State<DetallePaquete> {
       );
     });
 
-    informacionAdicional['serviciosAdicionales'].forEach((item) {
+    informacionAdicional.serviciosAdicionales.forEach((item) {
       myLista.add(
         new Step(
-            title: new Text(item['nombre_servicio']),
+            title: new Text(item.nombreServicio),
             content: Column(
               children: <Widget>[
                 new Text(
-                  item['descripcion_servicio'],
+                  item.descripcionServicio,
                   textAlign: TextAlign.justify,
                 ),
                 Galeria(
-                  galeria: item['galeria'],
+                  galeria: item.galeria,
                 ),
               ],
             ),
@@ -347,7 +353,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        CarritoCompra(idTur: widget.paquete['id_tours'])));
+                        CarritoCompra(tourPaqueteModel: widget.tourPaquete)));
           }),
     );
   }
