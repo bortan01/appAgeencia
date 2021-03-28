@@ -437,9 +437,11 @@ class _CarritoCompraState extends State<CarritoCompra> {
                     detalle: detalle,
                     transporte: transporteModel,
                   )));
-    }
+      return;
+    } else {
     //SINO CREAMOS ENLACE DE PAGO Y LO REDIRECCIONAMOS A LA PASARELA
     await _crearEnlacePago(detalle);
+    }
   }
 
   Future<WompiModel> _crearEnlacePago(DetalleTurModel detalle) async {

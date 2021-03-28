@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-
-
 
 class SeleccionarAsiento extends StatefulWidget {
   final DetalleTurModel detalle;
@@ -65,8 +62,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
         children: <Widget>[
           Text(
             "",
-            style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
           )
         ],
       ),
@@ -89,16 +85,13 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  crearTitulo(
-                      'Elija ${widget.detalle.cantidadAsientos.toString()} Asiento(s)'),
+                  crearTitulo('Elija ${widget.detalle.cantidadAsientos.toString()} Asiento(s)'),
                   crearSubTitulo("(Asientos color verde)"),
                   SizedBox(height: 4.0),
                   _crearBus(
                       context: context,
-                      asientosDerecho:
-                          int.parse(widget.transporte.asientoDerecho),
-                      asientosIzquierdos:
-                          int.parse(widget.transporte.asientoIzquierdo),
+                      asientosDerecho: int.parse(widget.transporte.asientoDerecho),
+                      asientosIzquierdos: int.parse(widget.transporte.asientoIzquierdo),
                       filas: int.parse(widget.transporte.filas),
                       deshabilitados: widget.transporte.asientosDeshabilitados,
                       ocupados: widget.transporte.ocupados,
@@ -135,31 +128,18 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
 
   void _reservar() async {
     if (asientosSeleccionados.length != widget.detalle.cantidadAsientos) {
-      Alert(
-        context: context,
-        type: AlertType.warning,
-        title: "Oops",
-        desc:
-            "Debe de seleccionar ${widget.detalle.cantidadAsientos.toString()} asiento(s)",
-        buttons: [
-          DialogButton(
-            child: Text(
-              "Cerrar",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            onPressed: () => Navigator.pop(context),
-            color: Color.fromRGBO(0, 179, 134, 1.0),
-          )
-        ],
-      ).show();
+      helper.mostrarMensanjeError(
+          context, 'Debe de seleccionar ${widget.detalle.cantidadAsientos.toString()} asiento(s)');
     } else {
       setState(() {
         print("redibujando");
         _guardando = true;
       });
-
-      final WompiModel resultado =
-          await turServices.guardarReserva(widget.detalle);
+      String strIdAsientos = asientosSeleccionados.toString();
+      String strLabelAsientos = labelAsientos.toString();
+      widget.detalle.asientosSeleccionados = strIdAsientos.substring(1, strIdAsientos.length - 1);
+      widget.detalle.labelAsiento = strLabelAsientos.substring(1, strLabelAsientos.length - 1);
+      final WompiModel resultado = await turServices.guardarReserva(widget.detalle);
       String url = resultado.urlEnlace;
       Alert(
         context: context,
@@ -173,7 +153,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             onPressed: () {
-             helper.redireccionar(context, url);
+              //helper.redireccionar(context, url);
             },
             color: Color.fromRGBO(0, 179, 134, 1.0),
           )
@@ -181,8 +161,6 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
       ).show();
     }
   }
-
-  
 
   void mostrarSnackbar(String mensaje) {
     final snack = SnackBar(
@@ -230,8 +208,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
     final scrimSize = MediaQuery.of(context).size;
     final dimensiones = ((scrimSize.width * 0.85) - 88) / totalAsientos;
     final List<String> asientosDeshabilitados = deshabilitados.split(",");
-    final List<String> asientosNoDisponibles =
-        new List.from(asientosDeshabilitados)..addAll(ocupados);
+    final List<String> asientosNoDisponibles = new List.from(asientosDeshabilitados)..addAll(ocupados);
 
     List<Row> listaFilas = [];
     //con labelAsiento sele ira colocando el numero que apparece dentro de los cuadros
@@ -257,9 +234,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
       //Agregamos una separacion entre los asientos derechos y izquierdos
       elementos.add(Container(width: dimensiones, height: dimensiones));
       //este es para dibujar los asidento derechos
-      for (var j = 2 + asientosIzquierdos;
-          j <= asientosDerecho + asientosIzquierdos + 1;
-          j++) {
+      for (var j = 2 + asientosIzquierdos; j <= asientosDerecho + asientosIzquierdos + 1; j++) {
         elementos.add(Asiento(
           context: context,
           label: labelAsiento.toString(),
@@ -275,8 +250,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
       }
       //para agregar la fila trasera
 
-      listaFilas.add(Row(
-          mainAxisAlignment: MainAxisAlignment.center, children: elementos));
+      listaFilas.add(Row(mainAxisAlignment: MainAxisAlignment.center, children: elementos));
     }
     final espacio = Row(
       children: <Widget>[SizedBox(width: 20.0, height: 20.0)],
@@ -299,8 +273,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
         labelAsiento++;
       }
       listaFilas.add(espacio);
-      listaFilas.add(new Row(
-          mainAxisAlignment: MainAxisAlignment.center, children: otraFila));
+      listaFilas.add(new Row(mainAxisAlignment: MainAxisAlignment.center, children: otraFila));
     }
 
     return Column(
