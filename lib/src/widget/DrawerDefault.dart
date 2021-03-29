@@ -5,27 +5,25 @@ Widget getDrawerDefault(BuildContext context) {
   final colorBase = Theme.of(context).bottomAppBarColor;
   final estiloLetra = new TextStyle(color: colorBase);
   return Theme(
-    data: Theme.of(context)
-        .copyWith(canvasColor: Theme.of(context).primaryColor.withOpacity(0.5)),
+    data: Theme.of(context).copyWith(canvasColor: Theme.of(context).primaryColor.withOpacity(0.5)),
     child: new Drawer(
       child: new ListView(
         children: <Widget>[
           new DrawerHeader(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/img/header.png"),
-                    fit: BoxFit.cover)),
+            decoration:
+                BoxDecoration(image: DecorationImage(image: AssetImage("assets/img/header.png"), fit: BoxFit.cover)),
             child: Text(""),
           ),
           new ListTile(
             title: new Text(
-              "Home",
+              "Foto de Perfil",
               style: estiloLetra,
             ),
             trailing: new Icon(
               Icons.local_movies,
               color: colorBase,
             ),
+            onTap: () => Navigator.of(context).pushNamed('subirImagenes'),
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(
