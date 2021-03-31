@@ -37,6 +37,7 @@ dependencies:
    shared_preferences:
    mask_text_input_formatter: ^1.2.1
    image_picker: ^0.6.7+22
+   mime_type: ^0.3.2
 
    flutter_localizations:
       sdk: flutter

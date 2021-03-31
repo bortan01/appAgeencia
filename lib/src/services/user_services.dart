@@ -1,10 +1,14 @@
 // import 'dart:async';
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mime_type/mime_type.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/conf.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
@@ -14,8 +18,7 @@ class UserServices {
   Query query = FirebaseFirestore.instance.collection("chat");
 
   //Constructor
-  UserServices({FirebaseAuth firebaseAuth})
-      : this._firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+  UserServices({FirebaseAuth firebaseAuth}) : this._firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
 
   //signIn with custom Token
   Future<bool> signByToken(String token) async {
@@ -106,12 +109,8 @@ class UserServices {
         break;
       case 400:
         final jsonResponse = convert.jsonDecode(response.body);
-        if (jsonResponse["mensaje"] ==
-            "The email address is already in use by another account.") {
-          return {
-            "err": true,
-            "mensaje": "Correo Electrónico ya esta registrado"
-          };
+        if (jsonResponse["mensaje"] == "The email address is already in use by another account.") {
+          return {"err": true, "mensaje": "Correo Electrónico ya esta registrado"};
         }
         return jsonResponse;
         break;
@@ -122,5 +121,32 @@ class UserServices {
         return {"err": true, "mensaje": "por favor intente más tarde"};
         break;
     }
+  }
+
+  Future<void> subirFotoPerfil(File foto) async {
+    Map<String, String> qParams = {'identificador': '5', 'tipo': 'usuario_perfil'};
+    final url = Uri.parse('${Conf.urlServidor}/Imagen/save');
+
+    final mimeType = mime(foto.path).split('/');
+
+    final imageUploadRequest = http.MultipartRequest(
+      'POST',
+      url,
+    );
+    //mimeType[0] es la imagen mimeType[1] es la extencion
+    final file = await http.MultipartFile.fromPath('foto', foto.path, contentType: MediaType(mimeType[0], mimeType[1]));
+    imageUploadRequest.files.add(file);
+    imageUploadRequest.fields.addAll(qParams);
+
+    //ejecutamos la peticion
+    final streamResponse = await imageUploadRequest.send();
+    final res = await http.Response.fromStream(streamResponse);
+
+    if (res.statusCode != 200 && res.statusCode != 201) {
+      print("algo salio mal");
+    }
+    //extraemos el url de la respuesta
+    final respData = convert.jsonDecode(res.body);
+    print(respData);
   }
 }
