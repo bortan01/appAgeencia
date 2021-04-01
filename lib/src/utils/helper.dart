@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
-import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 String necesario = "campo necesario";
 String transformarFoto(url) {
   //replace substring of the given string
-  return url.replaceAll(
-      "http://localhost/API-REST-PHP/", "http://10.0.2.2:80/API-REST-PHP/");
+  return url.replaceAll("http://localhost/API-REST-PHP/", "http://10.0.2.2:80/API-REST-PHP/");
 }
 
 String isNumeric(String s) {
@@ -59,17 +56,13 @@ String betweenLengthRequired(String s, int max, int min) {
 }
 
 String isMail(String s) {
-  bool emailValid = RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(s);
+  bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(s);
   if (s.isEmpty) return null;
   return (!emailValid) ? "Ingrese un Email valido" : null;
 }
 
 String isMailRequired(String s) {
-  bool emailValid = RegExp(
-          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(s);
+  bool emailValid = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(s);
   if (s.isEmpty) return necesario;
   return (!emailValid) ? "Ingrese un Email valido" : null;
 }
@@ -98,15 +91,31 @@ void mostrarMensanjeError(BuildContext context, String mensaje) {
   ).show();
 }
 
-redireccionar(BuildContext context, String url) async {
-    // url = 'https://www.marca.com/';
-    if (await canLaunch(url)) {
-      await launch(url);
-      Navigator.of(context)
-          .pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+void mensanjeOkRedireccionar(BuildContext context, String mensaje, String ruta) {
+  Alert(
+    context: context,
+    type: AlertType.success,
+    title: "Listo",
+    desc: mensaje,
+    buttons: [
+      DialogButton(
+        child: Text(
+          "ok",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+        onPressed: () => Navigator.of(context).pushReplacementNamed(ruta),
+        color: Color.fromRGBO(0, 179, 134, 1.0),
+      )
+    ],
+  ).show();
+}
 
-  
+redireccionar(BuildContext context, String url) async {
+  // url = 'https://www.marca.com/';
+  if (await canLaunch(url)) {
+    await launch(url);
+    Navigator.of(context).pushNamedAndRemoveUntil('home', (Route<dynamic> route) => false);
+  } else {
+    throw 'Could not launch $url';
+  }
+}

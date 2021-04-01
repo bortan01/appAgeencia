@@ -123,9 +123,9 @@ class UserServices {
     }
   }
 
-  Future<void> subirFotoPerfil(File foto) async {
+  Future<bool> subirFotoPerfil(File foto) async {
     Map<String, String> qParams = {'identificador': '5', 'tipo': 'usuario_perfil'};
-    final url = Uri.parse('${Conf.urlServidor}/Imagen/save');
+    final url = Uri.parse('${Conf.urlServidor}/Imagen/savePhotoPerfil');
 
     final mimeType = mime(foto.path).split('/');
 
@@ -144,9 +144,11 @@ class UserServices {
 
     if (res.statusCode != 200 && res.statusCode != 201) {
       print("algo salio mal");
+      return false;
     }
     //extraemos el url de la respuesta
     final respData = convert.jsonDecode(res.body);
     print(respData);
+    return true;
   }
 }

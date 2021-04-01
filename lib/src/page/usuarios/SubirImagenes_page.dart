@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/image/imagen_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class SubirImagenes extends StatefulWidget {
   @override
@@ -39,7 +40,7 @@ class _SubirImagenesState extends State<SubirImagenes> {
               child: new Column(
                 children: <Widget>[
                   _mostrarFoto(),
-                  crearBotton(),
+                  crearBotton(context),
                 ],
               )),
         )));
@@ -87,7 +88,7 @@ class _SubirImagenesState extends State<SubirImagenes> {
         child: (_foto == null)
             ?
             //si la imagen no existe se carga una imagen por defecto
-            Image(image: AssetImage('assets/img/no-image.png'), height: 300.0, fit: BoxFit.cover)
+            Image(image: AssetImage('assets/img/avatar.png'), height: 300.0, fit: BoxFit.cover)
             :
             //de lo contrario se carga la imagen cargda
             Image.file(_foto, height: 300.0, fit: BoxFit.cover),
@@ -95,20 +96,23 @@ class _SubirImagenesState extends State<SubirImagenes> {
     }
   }
 
-  crearBotton() {
+  crearBotton(BuildContext context) {
     return RaisedButton.icon(
-      onPressed: submit,
+      onPressed: () => submit(context),
       icon: new Icon(Icons.save),
       label: Text("guardar"),
       shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      color: Colors.deepPurpleAccent,
+      color: Colors.blue,
       textColor: Colors.white,
     );
   }
 
-  submit() async {
+  submit(BuildContext context) async {
     if (_foto != null) {
-      await _userServices.subirFotoPerfil(_foto);
+      bool respuesta = await _userServices.subirFotoPerfil(_foto);
+      respuesta
+          ? helper.mensanjeOkRedireccionar(context, "Foto de perfil acualizada", "home")
+          : helper.mostrarMensanjeError(context, "Foto de perfil no actualizada");
     }
   }
 }
