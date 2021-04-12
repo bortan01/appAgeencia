@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/home.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -90,7 +91,7 @@ void mostrarMensanjeError(BuildContext context, String mensaje) {
     ],
   ).show();
 }
-
+//REDIRECCIONA SOLAMENTE AL HOME
 void mensanjeOkRedireccionar(BuildContext context, String mensaje, String ruta) {
   Alert(
     context: context,
@@ -103,7 +104,8 @@ void mensanjeOkRedireccionar(BuildContext context, String mensaje, String ruta) 
           "ok",
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
-        onPressed: () => Navigator.of(context).pushReplacementNamed(ruta),
+        onPressed: () => Navigator.pushAndRemoveUntil(
+            context, MaterialPageRoute(builder: (context) => Home()), ModalRoute.withName("home")),
         color: Color.fromRGBO(0, 179, 134, 1.0),
       )
     ],

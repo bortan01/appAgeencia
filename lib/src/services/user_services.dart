@@ -125,7 +125,9 @@ class UserServices {
   }
 
   Future<bool> subirFotoPerfil(File foto) async {
-    Map<String, String> qParams = {'identificador': '5', 'tipo': 'usuario_perfil'};
+    final PreferenciasUsuario _preferenciasUsuario = new PreferenciasUsuario();
+
+    Map<String, String> qParams = {'identificador': _preferenciasUsuario.idCliente, 'tipo': 'usuario_perfil'};
     final url = Uri.parse('${Conf.urlServidor}/Imagen/savePhotoPerfil');
     final mimeType = mime(foto.path).split('/');
     final imageUploadRequest = http.MultipartRequest(
@@ -147,7 +149,7 @@ class UserServices {
     }
     //extraemos el url de la respuesta
     final respData = convert.jsonDecode(res.body);
-    // _usuarioPref.foto = respData[''];
+    _usuarioPref.foto = respData['path'];
     print(respData);
     return true;
   }
