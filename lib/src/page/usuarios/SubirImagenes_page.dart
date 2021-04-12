@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/image/imagen_model.dart';
+// import 'package:peliculas/src/models/image/imagen_model.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/user_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
@@ -15,18 +16,19 @@ class SubirImagenes extends StatefulWidget {
 class _SubirImagenesState extends State<SubirImagenes> {
   final picker = ImagePicker();
   File _foto;
-  final _imagenModel = new ImagenModel();
+  // final _imagenModel = new ImagenModel();
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final UserServices _userServices = new UserServices();
-
+  final PreferenciasUsuario _preferenciasUsuario = new PreferenciasUsuario();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldKey,
         appBar: AppBar(
-          title: Text('Home'),
+          title: Text('Seleccione su foto'),
+          centerTitle: true,
           actions: <Widget>[
             new IconButton(icon: new Icon(Icons.photo_size_select_actual), onPressed: _seleccionarFoto),
             new IconButton(icon: new Icon(Icons.camera), onPressed: _tomarFoto),
@@ -48,52 +50,40 @@ class _SubirImagenesState extends State<SubirImagenes> {
 
   void _seleccionarFoto() async {
     final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      _imagenModel.fotoUrl = null;
-    }
-
-    setState(() {
-      _foto = File(pickedFile.path);
-    });
+    _foto = (pickedFile != null) ? File(pickedFile.path) : null;
+    setState(() {});
   }
 
   void _tomarFoto() async {
     final pickedFile = await picker.getImage(source: ImageSource.camera);
-
-    if (pickedFile != null) {
-      _imagenModel.fotoUrl = null;
-    }
-    setState(() {
-      _foto = File(pickedFile.path);
-    });
+    _foto = (pickedFile != null) ? File(pickedFile.path) : null;
+    setState(() {});
   }
 
   Widget _mostrarFoto() {
-    if (_imagenModel.fotoUrl != null) {
+    if (_foto != null) {
+      return Center(
+        //pregunta si existe la imagen
+        child: Image.file(_foto, height: 300.0, fit: BoxFit.cover),
+      );
+    }
+
+    if (_preferenciasUsuario.foto != '') {
       return Container(
         ///esto es para evitar problema si no existe el id del producto, como cuando no se a creado
 
         child: new FadeInImage(
           placeholder: new AssetImage('assets/gif/loading.gif'),
-          image: NetworkImage(_imagenModel.fotoUrl),
+          image: NetworkImage(helper.transformarFoto(_preferenciasUsuario.foto)),
           height: 300.0,
           width: double.infinity,
           fit: BoxFit.contain,
         ),
       );
-    } else {
-      return Center(
-        //pregunta si existe la imagen
-        child: (_foto == null)
-            ?
-            //si la imagen no existe se carga una imagen por defecto
-            Image(image: AssetImage('assets/img/avatar.png'), height: 300.0, fit: BoxFit.cover)
-            :
-            //de lo contrario se carga la imagen cargda
-            Image.file(_foto, height: 300.0, fit: BoxFit.cover),
-      );
     }
+    return Center(
+        //pregunta si existe la imagen
+        child: Image(image: AssetImage('assets/img/avatar.png'), height: 300.0, fit: BoxFit.cover));
   }
 
   crearBotton(BuildContext context) {

@@ -38,7 +38,6 @@ dependencies:
    mask_text_input_formatter: ^1.2.1
    image_picker: ^0.6.7+22
    mime_type: ^0.3.2
-
    flutter_localizations:
       sdk: flutter
 
@@ -48,8 +47,14 @@ dependencies:
    flutter_swiper: ^1.1.6
 
 dev_dependencies:
+   flutter_launcher_icons: "^0.8.0"
    flutter_test:
       sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/img/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following src.page: https://dart.dev/tools/pub/pubspec

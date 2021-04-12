@@ -83,6 +83,7 @@ class UserServices {
     _usuarioPref.celular = data['celular'];
     _usuarioPref.dui = data['dui'];
     _usuarioPref.foto = data['foto'];
+    print(data['foto']);
     _usuarioPref.paginaInicio = "home";
   }
 
@@ -126,9 +127,7 @@ class UserServices {
   Future<bool> subirFotoPerfil(File foto) async {
     Map<String, String> qParams = {'identificador': '5', 'tipo': 'usuario_perfil'};
     final url = Uri.parse('${Conf.urlServidor}/Imagen/savePhotoPerfil');
-
     final mimeType = mime(foto.path).split('/');
-
     final imageUploadRequest = http.MultipartRequest(
       'POST',
       url,
@@ -148,6 +147,7 @@ class UserServices {
     }
     //extraemos el url de la respuesta
     final respData = convert.jsonDecode(res.body);
+    // _usuarioPref.foto = respData[''];
     print(respData);
     return true;
   }

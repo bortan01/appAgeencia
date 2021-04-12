@@ -59,8 +59,7 @@ class _LoginPageState extends State<Login> {
         children: <Widget>[
           Text(
             "",
-            style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
           )
         ],
       ),
@@ -216,8 +215,7 @@ class _LoginPageState extends State<Login> {
 
   Widget _inputBoton() {
     return new FlatButton(
-      child:
-          (_guardando) ? Text("Espere por favor...") : Text("Iniciar Sesión"),
+      child: (_guardando) ? Text("Espere por favor...") : Text("Iniciar Sesión"),
       color: Color(0xFF4B9DFE),
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
@@ -232,8 +230,7 @@ class _LoginPageState extends State<Login> {
       _guardando = true;
     });
     //primera consulta es solo para obtener el token
-    final respuesta = await userServices.loginCliente(
-        new LoginModel(password: _contrasena, username: _usuario));
+    final respuesta = await userServices.loginCliente(new LoginModel(password: _contrasena, username: _usuario));
     //verificamos si todo esta bien
     if (!respuesta['err']) {
       String token = respuesta['token'];

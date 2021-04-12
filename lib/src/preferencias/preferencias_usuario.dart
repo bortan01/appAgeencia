@@ -13,8 +13,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 */
 
 class PreferenciasUsuario {
-  static final PreferenciasUsuario _instancia =
-      new PreferenciasUsuario._internal();
+  static final PreferenciasUsuario _instancia = new PreferenciasUsuario._internal();
 
   factory PreferenciasUsuario() {
     return _instancia;
