@@ -96,10 +96,17 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   }
 
   getData() async {
-    Query chatCollection = FirebaseFirestore.instance.collection('chat');
-    await chatCollection.get().then((snapshop) {
-      print("SNAPSHOPXXXXXXXXXXXXXXXXXXX");
-      print(snapshop.docs[0].data());
+    FirebaseFirestore.instance
+        .collection('chat')
+        .where('chat_uuid', isEqualTo: '00173220210413')
+        .orderBy('time', descending: true)
+        .limit(9)
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        _handledSubmit(doc['message']);
+        print(doc['message']);
+      });
     });
   }
 }
