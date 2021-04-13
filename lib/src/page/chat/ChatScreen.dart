@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/services/user_services.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ChatScreen extends StatefulWidget {
   final String name = "Servicio al Cliente";
@@ -30,17 +31,14 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
                       _isTyped = (text.trim()).length > 0;
                     });
                   },
-                  decoration:
-                      new InputDecoration.collapsed(hintText: "Enviar mensaje"),
+                  decoration: new InputDecoration.collapsed(hintText: "Enviar mensaje"),
                 ),
               ),
             ),
             new Container(
               child: new IconButton(
                 icon: new Icon(Icons.send),
-                onPressed: _isTyped
-                    ? () => _handledSubmit(_textController.text.trim())
-                    : null,
+                onPressed: _isTyped ? () => _handledSubmit(_textController.text.trim()) : null,
               ),
             )
           ]),
@@ -56,8 +54,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     ChatMessage message = new ChatMessage(
       text: text,
       emisor: _emisorTest,
-      animationController: new AnimationController(
-          duration: new Duration(milliseconds: 700), vsync: this),
+      animationController: new AnimationController(duration: new Duration(milliseconds: 700), vsync: this),
       name: widget.name,
     );
 
@@ -72,9 +69,11 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    getData();
     return new Scaffold(
         appBar: new AppBar(
           title: new Text(widget.name),
+          centerTitle: true,
         ),
         body: new Container(
           child: new Column(
@@ -95,6 +94,14 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
           ),
         ));
   }
+
+  getData() async {
+    Query chatCollection = FirebaseFirestore.instance.collection('chat');
+    await chatCollection.get().then((snapshop) {
+      print("SNAPSHOPXXXXXXXXXXXXXXXXXXX");
+      print(snapshop.docs[0].data());
+    });
+  }
 }
 
 class ChatMessage extends StatelessWidget {
@@ -106,8 +113,7 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new SizeTransition(
-      sizeFactor: new CurvedAnimation(
-          parent: animationController, curve: Curves.easeOut),
+      sizeFactor: new CurvedAnimation(parent: animationController, curve: Curves.easeOut),
       child: new Container(
         margin: const EdgeInsets.symmetric(vertical: 2.0),
         child: new Row(
@@ -115,16 +121,12 @@ class ChatMessage extends StatelessWidget {
           children: <Widget>[
             new Expanded(
               child: new Column(
-                crossAxisAlignment: (emisor)
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
+                crossAxisAlignment: (emisor) ? CrossAxisAlignment.end : CrossAxisAlignment.start,
                 children: <Widget>[
                   new Container(
                     decoration: BoxDecoration(
-                        color: (emisor) ? Colors.blue : Colors.grey,
-                        borderRadius: BorderRadius.circular(40.0)),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                        color: (emisor) ? Colors.blue : Colors.grey, borderRadius: BorderRadius.circular(40.0)),
+                    padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                     child: new Text(
                       text,
                       style: TextStyle(color: Colors.white, fontSize: 15.0),

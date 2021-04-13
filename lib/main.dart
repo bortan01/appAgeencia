@@ -1,3 +1,4 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,8 +13,6 @@ import 'package:provider/provider.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  FirebaseFirestore.instance.settings = Settings(
-      host: 'localhost:8080', sslEnabled: false, persistenceEnabled: false);
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefs();
   runApp(MyApp());
@@ -25,8 +24,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final GlobalKey<NavigatorState> navigatorKey =
-      new GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -34,7 +32,7 @@ class _MyAppState extends State<MyApp> {
     final pushProvider = new PushNotificationProvider();
     pushProvider.iniciarNotificaciones();
     pushProvider.mensajesStreams.listen((String argumento) {
-      print("argumento desde main $argumento");
+      // print("argumento desde main $argumento");
       navigatorKey.currentState.pushNamed(argumento);
     });
   }
