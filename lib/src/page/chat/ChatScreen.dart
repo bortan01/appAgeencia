@@ -15,6 +15,59 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
   bool _emisorTest = true;
   bool _isTyped = false;
   UserServices userServices = new UserServices();
+  Future<dynamic> dataChat;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Query chatCollection = FirebaseFirestore.instance
+        .collection('chat')
+        .where('chat_uuid', isEqualTo: '00173220210413')
+        .orderBy('time', descending: true)
+        .limit(9);
+
+    return StreamBuilder<QuerySnapshot>(
+      stream: chatCollection.snapshots(),
+      // initialData: initialData ,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print("Error en Snapshot Chat");
+          return Container(child: Text("Error en Snapshot Chat"));
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Container(child: Text("Cargando"));
+        }
+
+        return new Scaffold(
+            appBar: new AppBar(
+              title: new Text(widget.name),
+              centerTitle: true,
+            ),
+            body: new Container(
+              child: new Column(
+                children: <Widget>[
+                  new Flexible(
+                    child: new ListView.builder(
+                      padding: new EdgeInsets.all(8.0),
+                      reverse: true,
+                      itemBuilder: (_, int index) => _messages[index],
+                      itemCount: _messages.length,
+                    ),
+                  ),
+                  new Divider(height: 1.0),
+                  new Container(
+                    child: _buildTextComposer(),
+                  )
+                ],
+              ),
+            ));
+      },
+    );
+  }
 
   Widget _buildTextComposer() {
     return new IconTheme(
@@ -65,49 +118,6 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     });
     message.animationController.forward();
     print(text);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    getData();
-    return new Scaffold(
-        appBar: new AppBar(
-          title: new Text(widget.name),
-          centerTitle: true,
-        ),
-        body: new Container(
-          child: new Column(
-            children: <Widget>[
-              new Flexible(
-                child: new ListView.builder(
-                  padding: new EdgeInsets.all(8.0),
-                  reverse: true,
-                  itemBuilder: (_, int index) => _messages[index],
-                  itemCount: _messages.length,
-                ),
-              ),
-              new Divider(height: 1.0),
-              new Container(
-                child: _buildTextComposer(),
-              )
-            ],
-          ),
-        ));
-  }
-
-  getData() async {
-    FirebaseFirestore.instance
-        .collection('chat')
-        .where('chat_uuid', isEqualTo: '00173220210413')
-        .orderBy('time', descending: true)
-        .limit(9)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
-      querySnapshot.docs.forEach((doc) {
-        _handledSubmit(doc['message']);
-        print(doc['message']);
-      });
-    });
   }
 }
 
