@@ -12,4 +12,21 @@ class ChatServices {
         .snapshots()
         .transform(helper.transformer(ChatFirebase.desdeJson));
   }
+
+  Future<void> addMessage(String message,String user1 ,String user2, String uuid ) {
+    // Call the user's CollectionReference to add a new user
+    CollectionReference chatreference = FirebaseFirestore.instance.collection('chat');
+    return chatreference
+        .add({
+          "message": message,
+          "user_1_uuid": user1,
+          "user_2_uuid": user2,
+          "chat_uuid": uuid,
+          "user_1_isView": 0,
+          "user_2_isView": 0,
+          "time": new DateTime.now(),
+        })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
 }

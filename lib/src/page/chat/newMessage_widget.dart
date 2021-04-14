@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/page/chat/message_widget.dart';
-
+import 'package:peliculas/src/services/chat_services.dart';
 
 class NewMessageWidget extends StatefulWidget {
   NewMessageWidget({Key key}) : super(key: key);
@@ -10,15 +9,15 @@ class NewMessageWidget extends StatefulWidget {
 }
 
 class _NewMessageWidgetState extends State<NewMessageWidget> with TickerProviderStateMixin {
-
-    final TextEditingController _textController = new TextEditingController();
+  final TextEditingController _textController = new TextEditingController();
 
   bool _emisorTest = true;
   bool _isTyped = false;
-  
+  ChatServices _chatServices = new ChatServices();
+
   @override
   Widget build(BuildContext context) {
-     return new IconTheme(
+    return new IconTheme(
         data: new IconThemeData(color: Theme.of(context).accentColor),
         child: new Container(
           child: new Row(children: <Widget>[
@@ -44,25 +43,15 @@ class _NewMessageWidgetState extends State<NewMessageWidget> with TickerProvider
             )
           ]),
         ));
-  
   }
 
-    void _handledSubmit(String text) {
+  void _handledSubmit(String text) {
     _emisorTest = !_emisorTest;
     _textController.clear();
     setState(() {
       _isTyped = false;
     });
-    MessageWidget message = new MessageWidget(
-      text: text,
-      emisor: _emisorTest,
-      animationController: new AnimationController(duration: new Duration(milliseconds: 700), vsync: this),
-      name: "Servicio al Cliente",
-    );
-
-  
-    message.animationController.forward();
+    _chatServices.addMessage(text, "RQjLWk34VddV8v2IVjNZfkwIEm33", "28TK1JZ3yWRf2DT5TzdRd5hT0L43", "00173220210413");
     print(text);
   }
-
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/chat/chatFirebase_model.dart';
 import 'package:peliculas/src/page/chat/message_widget.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/chat_services.dart';
 
 class MessagesWidget extends StatefulWidget {
@@ -11,6 +12,8 @@ class MessagesWidget extends StatefulWidget {
 }
 
 class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStateMixin {
+  PreferenciasUsuario preferencias = new PreferenciasUsuario();
+
   @override
   Widget build(BuildContext context) {
     ChatServices chatServices = new ChatServices();
@@ -22,27 +25,24 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
             return Center(child: CircularProgressIndicator());
           default:
             if (snapshot.hasError) {
-              return buildText('Something Went Wrong Try later');
+              return buildText('Intente Mas tarde');
             } else {
               List<ChatFirebase> messages = snapshot.data;
 
               return messages.isEmpty
-                  ? buildText('Say Hi..')
+                  ? buildText('No hay mensajes todavía...')
                   : ListView.builder(
                       padding: new EdgeInsets.all(8.0),
                       reverse: true,
                       itemCount: messages.length,
                       itemBuilder: (BuildContext context, int index) {
-                        print(messages[index].message);
-
                         return MessageWidget(
                           text: messages[index].message,
-                          emisor: true,
+                          emisor: preferencias.uid == messages[index].user1Uuid,
                           animationController:
                               new AnimationController(duration: new Duration(milliseconds: 700), vsync: this),
                           name: "Servicio al Cliente",
                         );
-              
                       });
             }
         }
