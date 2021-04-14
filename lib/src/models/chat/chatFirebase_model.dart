@@ -48,4 +48,15 @@ class ChatFirebase {
         "user_2_isView": user2IsView,
         "user_2_uuid": user2Uuid,
       };
+
+
+    static ChatFirebase  desdeJson(Map<String, dynamic> json) => ChatFirebase(
+        chatUuid: json["chat_uuid"],
+        message: json["message"],
+        time: json["time"],
+        user1IsView: json["user_1_isView"],
+        user1Uuid: json["user_1_uuid"],
+        user2IsView: json["user_2_isView"],
+        user2Uuid: json["user_2_uuid"],
+      );
 }

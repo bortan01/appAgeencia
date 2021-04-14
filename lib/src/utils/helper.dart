@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/home.dart';
@@ -112,6 +115,17 @@ void mensanjeOkRedireccionar(BuildContext context, String mensaje, String ruta) 
   ).show();
 }
 
+ transformer<T>(
+          T Function(Map<String, dynamic> json) fromJson) =>
+      StreamTransformer<QuerySnapshot, List<T>>.fromHandlers(
+        handleData: (QuerySnapshot data, EventSink<List<T>> sink) {
+          final snaps = data.docs.map((doc) => doc.data()).toList();
+          final chats = snaps.map((json) => fromJson(json)).toList();
+
+          sink.add(chats);
+        },
+      );
+
 redireccionar(BuildContext context, String url) async {
   // url = 'https://www.marca.com/';
   if (await canLaunch(url)) {
@@ -120,4 +134,6 @@ redireccionar(BuildContext context, String url) async {
   } else {
     throw 'Could not launch $url';
   }
+
+ 
 }
