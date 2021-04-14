@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/chat/chatFirebase_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -41,6 +42,12 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Container(child: Text("Cargando"));
         }
+        final List<ChatFirebase> milista = [];
+        snapshot.data.docs.map((DocumentSnapshot document) {
+          final chatFiriebaseModel = new ChatFirebase.fromJson(document.data());
+          milista.add(chatFiriebaseModel);
+        }).toList();
+        print(milista.length);
 
         return new Scaffold(
             appBar: new AppBar(
