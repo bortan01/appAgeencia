@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/chat/chatFirebase_model.dart';
+import 'package:peliculas/src/page/chat/message_widget.dart';
 import 'package:peliculas/src/services/chat_services.dart';
 
-class MessagesWidget extends StatelessWidget {
+class MessagesWidget extends StatefulWidget {
   const MessagesWidget({Key key}) : super(key: key);
 
+  @override
+  _MessagesWidgetState createState() => _MessagesWidgetState();
+}
+
+class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     ChatServices chatServices = new ChatServices();
@@ -27,9 +33,16 @@ class MessagesWidget extends StatelessWidget {
                       reverse: true,
                       itemCount: messages.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          child: new Text("desde acaaa"),
+                        print(messages[index].message);
+
+                        return MessageWidget(
+                          text: messages[index].message,
+                          emisor: true,
+                          animationController:
+                              new AnimationController(duration: new Duration(milliseconds: 700), vsync: this),
+                          name: "Servicio al Cliente",
                         );
+              
                       });
             }
         }
