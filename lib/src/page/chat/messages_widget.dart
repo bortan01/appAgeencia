@@ -15,6 +15,7 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
   PreferenciasUsuario preferencias = new PreferenciasUsuario();
   List<ChatFirebase> listaMensajes;
   Future<List<ChatFirebase>> mensajesInicialesFurute;
+  bool primeraVez = true;
 
   @override
   void initState() {
@@ -64,7 +65,10 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
             } else {
               List<ChatFirebase> messagesNuevos = snapshot.data;
               print(listMensajesIniciales.length);
-              listMensajesIniciales.insertAll(0, messagesNuevos);
+              if (!primeraVez) {
+                listMensajesIniciales.insertAll(0, messagesNuevos);
+              }
+              primeraVez = false;
               return listaMensajes.isEmpty
                   ? buildText('No hay mensajes todavía...')
                   : ListView.builder(
@@ -86,10 +90,5 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
     );
   }
 
-  Widget buildText(String text) => Center(
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 24),
-        ),
-      );
+  Widget buildText(String text) => Center(child: Text(text, style: TextStyle(fontSize: 24)));
 }
