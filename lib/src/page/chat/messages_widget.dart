@@ -13,6 +13,8 @@ class MessagesWidget extends StatefulWidget {
 
 class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStateMixin {
   PreferenciasUsuario preferencias = new PreferenciasUsuario();
+  List<ChatFirebase> listaMensajes = [];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +29,19 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
             if (snapshot.hasError) {
               return buildText('Intente Mas tarde');
             } else {
-              List<ChatFirebase> messages = snapshot.data;
-
-              return messages.isEmpty
+              List<ChatFirebase> messagesNuevos = snapshot.data;
+              print(listaMensajes.length);
+              listaMensajes.insertAll(0, messagesNuevos);
+              return listaMensajes.isEmpty
                   ? buildText('No hay mensajes todavía...')
                   : ListView.builder(
                       padding: new EdgeInsets.all(8.0),
                       reverse: true,
-                      itemCount: messages.length,
+                      itemCount: listaMensajes.length,
                       itemBuilder: (BuildContext context, int index) {
                         return MessageWidget(
-                          text: messages[index].message,
-                          emisor: preferencias.uid == messages[index].user1Uuid,
+                          text: listaMensajes[index].message,
+                          emisor: preferencias.uid == listaMensajes[index].user1Uuid,
                           animationController:
                               new AnimationController(duration: new Duration(milliseconds: 700), vsync: this),
                           name: "Servicio al Cliente",
