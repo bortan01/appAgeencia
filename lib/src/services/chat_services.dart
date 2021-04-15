@@ -3,20 +3,30 @@ import 'package:peliculas/src/models/chat/chatFirebase_model.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class ChatServices {
-  //LA PRIMERA VEZ QUE SE CONSTRULLE LOS MENSAJES 
-  Stream<List<ChatFirebase>> getMessagesFirtTime() {
-    return FirebaseFirestore.instance
+  //LA PRIMERA VEZ QUE SE CONSTRULLE LOS MENSAJES
+  Future<List<ChatFirebase>> getMessagesFirtTime() async {
+    List<ChatFirebase> listaChats = [];
+
+    FirebaseFirestore.instance
         .collection('chat')
         .where('chat_uuid', isEqualTo: '00173220210413')
         .orderBy('time', descending: true)
         .limit(9)
-        .snapshots()
-        .transform(helper.transformer(ChatFirebase.desdeJson));
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        listaChats.add(new ChatFirebase(
+            chatUuid: doc['chat_uuid'],
+            message: doc['message'],
+            user1Uuid: doc['user_1_uuid'],
+            user2Uuid: doc['user_2_uuid']));
+      });
+    });
+    return listaChats;
   }
-  
-  
+
   //ESTA FUNCION SERA ACTIVADA CUANDO SE ENVIE UN NUEVO MENSAJE
-  Stream<List<ChatFirebase>> getMessages() {
+  Stream<List<ChatFirebase>> getMessagesListener() {
     return FirebaseFirestore.instance
         .collection('chat')
         .where('chat_uuid', isEqualTo: '00173220210413')

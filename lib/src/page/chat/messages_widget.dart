@@ -13,14 +13,47 @@ class MessagesWidget extends StatefulWidget {
 
 class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStateMixin {
   PreferenciasUsuario preferencias = new PreferenciasUsuario();
-  List<ChatFirebase> listaMensajes = [];
-  
+  List<ChatFirebase> listaMensajes;
+  Future<List<ChatFirebase>> mensajesInicialesFurute;
+
+  @override
+  void initState() {
+    super.initState();
+    mensajesInicialesFurute = _getMensajesIniciales();
+  }
+
+  Future<List<ChatFirebase>> _getMensajesIniciales() async {
+    return await ChatServices().getMessagesFirtTime();
+  }
 
   @override
   Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: mensajesInicialesFurute,
+      builder: (BuildContext context, AsyncSnapshot<List<ChatFirebase>> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.active:
+            print('activo');
+            return Center(child: CircularProgressIndicator());
+          case ConnectionState.waiting:
+            print('esperando');
+            return Center(child: CircularProgressIndicator());
+          case ConnectionState.done:
+            listaMensajes = snapshot.data;
+            print(listaMensajes.length);
+            return mensajeListener(listaMensajes);
+          default:
+            print('esperando');
+            return Center(child: CircularProgressIndicator());
+        }
+      },
+    );
+  }
+
+  StreamBuilder<List<ChatFirebase>> mensajeListener(List<ChatFirebase> listMensajesIniciales) {
     ChatServices chatServices = new ChatServices();
     return StreamBuilder<List<ChatFirebase>>(
-      stream: chatServices.getMessages(),
+      stream: chatServices.getMessagesListener(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -30,8 +63,8 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
               return buildText('Intente Mas tarde');
             } else {
               List<ChatFirebase> messagesNuevos = snapshot.data;
-              print(listaMensajes.length);
-              listaMensajes.insertAll(0, messagesNuevos);
+              print(listMensajesIniciales.length);
+              listMensajesIniciales.insertAll(0, messagesNuevos);
               return listaMensajes.isEmpty
                   ? buildText('No hay mensajes todavía...')
                   : ListView.builder(
