@@ -11,7 +11,7 @@ class ChatServices {
         .collection('chat')
         .where('chat_uuid', isEqualTo: '00173220210413')
         .orderBy('time', descending: true)
-        .limit(9);
+        .limit(20);
 
     await instance.get().then((QuerySnapshot querySnapshot) async {
       querySnapshot.docs.forEach((doc) {

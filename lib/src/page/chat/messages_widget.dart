@@ -41,7 +41,6 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
             return Center(child: CircularProgressIndicator());
           case ConnectionState.done:
             listaMensajes = snapshot.data;
-            print(listaMensajes.length);
             return mensajeListener(listaMensajes);
           default:
             print('esperando');
@@ -64,7 +63,6 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
               return buildText('Intente Mas tarde');
             } else {
               List<ChatFirebase> messagesNuevos = snapshot.data;
-              print(listMensajesIniciales.length);
               if (!primeraVez) {
                 listMensajesIniciales.insertAll(0, messagesNuevos);
               }
