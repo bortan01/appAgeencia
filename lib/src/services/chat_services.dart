@@ -7,13 +7,13 @@ class ChatServices {
   Future<List<ChatFirebase>> getMessagesFirtTime() async {
     List<ChatFirebase> listaChats = [];
 
-    FirebaseFirestore.instance
+    final instance = FirebaseFirestore.instance
         .collection('chat')
         .where('chat_uuid', isEqualTo: '00173220210413')
         .orderBy('time', descending: true)
-        .limit(9)
-        .get()
-        .then((QuerySnapshot querySnapshot) {
+        .limit(9);
+
+    await instance.get().then((QuerySnapshot querySnapshot) async {
       querySnapshot.docs.forEach((doc) {
         listaChats.add(new ChatFirebase(
             chatUuid: doc['chat_uuid'],
@@ -22,6 +22,7 @@ class ChatServices {
             user2Uuid: doc['user_2_uuid']));
       });
     });
+
     return listaChats;
   }
 
