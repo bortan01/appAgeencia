@@ -94,6 +94,7 @@ void mostrarMensanjeError(BuildContext context, String mensaje) {
     ],
   ).show();
 }
+
 //REDIRECCIONA SOLAMENTE AL HOME
 void mensanjeOkRedireccionar(BuildContext context, String mensaje, String ruta) {
   Alert(
@@ -115,16 +116,15 @@ void mensanjeOkRedireccionar(BuildContext context, String mensaje, String ruta) 
   ).show();
 }
 
- transformer<T>(
-          T Function(Map<String, dynamic> json) fromJson) =>
-      StreamTransformer<QuerySnapshot, List<T>>.fromHandlers(
-        handleData: (QuerySnapshot data, EventSink<List<T>> sink) {
-          final snaps = data.docs.map((doc) => doc.data()).toList();
-          final chats = snaps.map((json) => fromJson(json)).toList();
+transformer<T>(T Function(Map<String, dynamic> json) fromJson) =>
+    StreamTransformer<QuerySnapshot, List<T>>.fromHandlers(
+      handleData: (QuerySnapshot data, EventSink<List<T>> sink) {
+        final snaps = data.docs.map((doc) => doc.data()).toList();
+        final chats = snaps.map((json) => fromJson(json)).toList();
 
-          sink.add(chats);
-        },
-      );
+        sink.add(chats);
+      },
+    );
 
 redireccionar(BuildContext context, String url) async {
   // url = 'https://www.marca.com/';
@@ -134,6 +134,8 @@ redireccionar(BuildContext context, String url) async {
   } else {
     throw 'Could not launch $url';
   }
+}
 
- 
+Widget noData() {
+  return Container( child: Center(child: Text("No hay datos que mostrar")));
 }

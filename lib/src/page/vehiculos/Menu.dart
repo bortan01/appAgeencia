@@ -39,7 +39,7 @@ class _HomeMenuState extends State<HomeMenu> {
     listaPaquete = [
       {
         'posicion': 0,
-        'titulo': "Sedan",
+        'titulo': "Todos",
         'subtitulo':
             "Una característica clave en un sedán es la seguridad que aporta. Los frenos antibloqueo son la primera línea de defensa ante cualquier accidente. Al momento de la colisión, las bolsas de aire pueden salvar la vida de tus pasajeros.",
         'assetImage': AssetImage("assets/img/sedan1.png"),
@@ -184,36 +184,31 @@ class _HomeMenuState extends State<HomeMenu> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'ListaVehiculos',
-                    arguments: "Sedan");
+                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Sedan");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaVehiculos',
-                    arguments: "Camionetas");
+                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Camionetas");
 
                 break;
               case 2:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaVehiculos',
-                    arguments: "Pickup");
+                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Pickup");
 
                 break;
               case 3:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaVehiculos',
-                    arguments: "Microbus");
+                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Microbus");
 
                 break;
               case 4:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaVehiculos',
-                    arguments: "Minivans");
+                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Minivans");
 
                 break;
 
@@ -222,8 +217,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 ///redirigir a paquetes intercacionales
                 ///redirigir a paquetes intercacionales
                 print("en el cotizador");
-                Navigator.pushNamed(context, 'CotizarAuto',
-                    arguments: "Cotizar");
+                Navigator.pushNamed(context, 'CotizarAuto', arguments: "Cotizar");
 
                 break;
               default:
