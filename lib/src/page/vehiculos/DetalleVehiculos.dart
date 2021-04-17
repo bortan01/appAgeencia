@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
+import 'package:peliculas/src/page/Temas/Temas.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class DetalleVehiculos extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final ListaModel carro = ModalRoute.of(context).settings.arguments;
+    final Auto carro = ModalRoute.of(context).settings.arguments;
+    final String myTitulo = '${carro.marca} ${carro.modelo} ${carro.anio}';
     return Scaffold(
       backgroundColor: Colors.white,
       body: new CustomScrollView(
         slivers: <Widget>[
           AppBarWidget(
-              titulo: carro.nombre,
-              imagen: carro.imagen,
+              titulo: myTitulo,
+              imagen: helper.transformarFoto(carro.foto),
               //ES NECESARIO EL ID PARA LA ANIMACION
-              id: carro.id.toString()),
+              id: carro.idvehiculo),
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(
@@ -23,16 +26,17 @@ class DetalleVehiculos extends StatelessWidget {
             ),
             _posterTitulo(
                 context: context,
-                titulo: carro.nombre,
+                titulo: myTitulo,
                 subtitulo: carro.descripcion,
                 imagen:
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQG356LIbLadfZO3JsJcNpCSwBrotB57G35xQ&usqp=CAU",
                 precio: "28.50",
-                id: carro.id),
+                id: int.parse(carro.idvehiculo)),
+            _descripcion(carro.descripcion),
+            _cuadros(carro),
             _botones(context),
-            _cuadros(),
             _adicional(),
-            _swiperTarjetas(context),
+            _swiperTarjetas(context, carro.galeria),
           ]))
         ],
       ),
@@ -40,60 +44,51 @@ class DetalleVehiculos extends StatelessWidget {
   }
 }
 
-_posterTitulo(
-    {BuildContext context,
-    String titulo,
-    String subtitulo,
-    String precio,
-    String imagen,
-    int id}) {
+_posterTitulo({BuildContext context, String titulo, String subtitulo, String precio, String imagen, int id}) {
   return new Container(
-    padding: EdgeInsets.symmetric(horizontal: 20.0),
     child: Row(
       children: <Widget>[
-        ClipRRect(
-          child: new Image(
-            image: NetworkImage(imagen),
-            height: 100,
-            width: 125,
-          ),
-          borderRadius: new BorderRadius.circular(20.0),
-        ),
+        // ClipRRect(
+        //   child: new Image(
+        //     image: NetworkImage(imagen),
+        //     height: 100,
+        //     width: 125,
+        //   ),
+        //   borderRadius: new BorderRadius.circular(20.0),
+        // ),
         new SizedBox(
-          width: 20.0,
+          width: 10.0,
         ),
         new Flexible(
             child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Container(
-              child: new Text(
-                titulo,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                ),
-                overflow:
-                    TextOverflow.ellipsis, //por si el titulo es muy grande
-              ),
-            ),
-            new Text(subtitulo,
-                //maxLines: 4,
-                style: TextStyle(
-                  fontSize: 12,
-                  color: Colors.blueAccent,
-                ),
-                overflow: TextOverflow.ellipsis),
+            // new Text(
+            //   titulo,
+            //   style: TextStyle(
+            //     fontSize: 20,
+            //     color: Colors.black,
+            //   ),
+            //   overflow: TextOverflow.ellipsis, //por si el titulo es muy grande
+            // ),
+
+            // new Text(subtitulo,
+            //     //maxLines: 4,
+            //     style: TextStyle(
+            //       fontSize: 12,
+            //       color: Colors.blueAccent,
+            //     ),
+            //     overflow: TextOverflow.ellipsis),
             new Row(
               children: <Widget>[
-                new Icon(Icons.attach_money),
                 new Text(
-                  precio,
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black,
-                  ),
-                )
+                  '\$$precio',
+                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w800),
+                ),
+                new Text(
+                  '/Día',
+                  style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.w500),
+                ),
               ],
             )
           ],
@@ -164,7 +159,24 @@ Container _botones(BuildContext context) {
   );
 }
 
-Widget _cuadros() {
+Widget _descripcion(String descripcion) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: <Widget>[
+      SizedBox(height: 15),
+      Container(
+        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        child: Text(descripcion,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 50,
+            textAlign: TextAlign.justify,
+            style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey)),
+      ),
+    ],
+  );
+}
+
+Widget _cuadros(Auto carro) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
@@ -181,19 +193,19 @@ Widget _cuadros() {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               MyIconButton(
-                buttonText: "Gasolina",
+                buttonText: carro.tipoCombustible,
+                buttonIcon: Icons.games,
+              ),
+              MyIconButton(
+                buttonText: carro.transmision,
                 buttonIcon: Icons.drive_eta,
               ),
               MyIconButton(
-                buttonText: "Automatico",
-                buttonIcon: Icons.drive_eta,
-              ),
-              MyIconButton(
-                buttonText: "4 Puertas",
+                buttonText: '${carro.puertas} Puertas',
                 buttonIcon: Icons.home,
               ),
               MyIconButton(
-                buttonText: "5 Pasajeros",
+                buttonText: '${carro.pasajeros} Pasajeros',
                 buttonIcon: Icons.event_seat,
               ),
             ],
@@ -237,44 +249,16 @@ Widget _adicional() {
             ),
           ],
         ),
-        _item(
-            icono: Icons.wifi,
-            titulo: "Wifi",
-            descripcion:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
-        _item(
-            icono: Icons.volume_up,
-            titulo: "Sonido",
-            descripcion:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
-        _item(
-            icono: Icons.toys,
-            titulo: "Aire Acondicionado",
-            descripcion:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
-        _item(
-            icono: Icons.child_care,
-            titulo: "Silla para Bebé",
-            descripcion:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
-        _item(
-            icono: Icons.security,
-            titulo: "Seguro de Viaje",
-            descripcion:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
-        _item(
-            icono: Icons.security,
-            titulo: "Seguro contra Robo",
-            descripcion:
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, enim hic."),
+        _item(icono: Icons.check_circle, titulo: "Wifi", descripcion: ""),
+        _item(icono: Icons.check_circle, titulo: "Sonido", descripcion: ""),
+        _item(icono: Icons.check_circle, titulo: "Otro", descripcion: ""),
       ],
     ),
   );
 }
 
-_swiperTarjetas(BuildContext context) {
+_swiperTarjetas(BuildContext context, List<String> galery) {
   ///estos son datos quemados
-  final lista = listaInventada();
   final tamanioPantalla = MediaQuery.of(context).size;
 
   return Container(
@@ -291,14 +275,14 @@ _swiperTarjetas(BuildContext context) {
               child: GestureDetector(
                 onTap: () {},
                 child: FadeInImage(
-                  image: NetworkImage(lista[index]['imagen']),
+                  image: NetworkImage(helper.transformarFoto(galery[index])),
                   placeholder: AssetImage('assets/img/no-image.jpg'),
                   fit: BoxFit.cover,
                 ),
               )),
         );
       },
-      itemCount: lista.length,
+      itemCount: galery.length,
       // pagination: new SwiperPagination(),
       // control: new SwiperControl(),
     ),
@@ -342,8 +326,7 @@ List listaInventada() {
     {
       'posicion': 3,
       'titulo': "Microbus",
-      'subtitulo':
-          "Gran furgoneta que tiene asientos en la parte posterior para los pasajeros y ventanas a los lados.",
+      'subtitulo': "Gran furgoneta que tiene asientos en la parte posterior para los pasajeros y ventanas a los lados.",
       'imagen': imagen,
       'superficie': '510,1 millones km²',
       'distancia': '149,6 millones km',
@@ -402,8 +385,7 @@ Widget _item({IconData icono, String titulo, String descripcion}) {
 class MyIconButton extends StatelessWidget {
   final String buttonText;
   final IconData buttonIcon;
-  const MyIconButton({Key key, this.buttonText, this.buttonIcon})
-      : super(key: key);
+  const MyIconButton({Key key, this.buttonText, this.buttonIcon}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(

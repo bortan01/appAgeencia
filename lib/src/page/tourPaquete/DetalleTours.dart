@@ -7,6 +7,7 @@ import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
 import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class DetalleTours extends StatefulWidget {
   final TourPaqueteModel tourPaquete;
@@ -27,8 +28,7 @@ class _DetalleToursState extends State<DetalleTours> {
   }
 
   Future<dynamic> _getInfoAdicional() async {
-    return await TurServices()
-        .obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
+    return await TurServices().obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
   }
 
   @override
@@ -49,7 +49,10 @@ class _DetalleToursState extends State<DetalleTours> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               print('hecho');
+            if (snapshot.data == null) return helper.noData();
+              
               final informacionAcicional = snapshot.data;
+
               return scrollView(context, informacionAcicional);
             case ConnectionState.active:
               print('activo');
@@ -78,9 +81,7 @@ class _DetalleToursState extends State<DetalleTours> {
             height: 10.0,
           ),
           _posterTitulo(
-              context: context,
-              title: widget.tourPaquete.nombreTours,
-              fecha: widget.tourPaquete.start.toString()),
+              context: context, title: widget.tourPaquete.nombreTours, fecha: widget.tourPaquete.start.toString()),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
@@ -98,10 +99,7 @@ class _DetalleToursState extends State<DetalleTours> {
               color: Colors.blue,
               lista: widget.tourPaquete.lugarSalida),
           listaHorizontal(
-              titulo: "REQUISITOS",
-              icono: Icons.report,
-              color: Colors.orange,
-              lista: widget.tourPaquete.requisitos),
+              titulo: "REQUISITOS", icono: Icons.report, color: Colors.orange, lista: widget.tourPaquete.requisitos),
           listaHorizontal(
               titulo: "EL NO VIAJE INCLUYE",
               icono: Icons.cancel,
@@ -120,10 +118,7 @@ class _DetalleToursState extends State<DetalleTours> {
     );
   }
 
-  _posterTitulo(
-      {@required BuildContext context,
-      @required String title,
-      @required String fecha}) {
+  _posterTitulo({@required BuildContext context, @required String title, @required String fecha}) {
     return new Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
@@ -140,10 +135,7 @@ class _DetalleToursState extends State<DetalleTours> {
                     textAlign: TextAlign.center,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
-                    style: TextStyle(
-                        color: Colors.lightBlue,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold)),
+                    style: TextStyle(color: Colors.lightBlue, fontSize: 18, fontWeight: FontWeight.bold)),
               ),
             ],
           ))
@@ -152,11 +144,7 @@ class _DetalleToursState extends State<DetalleTours> {
     );
   }
 
-  Widget listaHorizontal(
-      {@required String titulo,
-      IconData icono,
-      Color color,
-      List<dynamic> lista}) {
+  Widget listaHorizontal({@required String titulo, IconData icono, Color color, List<dynamic> lista}) {
     return Container(
       height: 220.0,
       child: Column(
@@ -170,10 +158,7 @@ class _DetalleToursState extends State<DetalleTours> {
             child: new Text(
               titulo,
               textAlign: TextAlign.center,
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(fontSize: 16, color: Colors.white),
+              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16, color: Colors.white),
             ),
           ),
           SizedBox(
@@ -187,9 +172,7 @@ class _DetalleToursState extends State<DetalleTours> {
                 itemCount: lista.length,
                 itemBuilder: (BuildContext context, int index) {
                   return _elementos(
-                      texto: lista[index],
-                      colorFondo: color,
-                      icono: new Icon(icono, color: Colors.white));
+                      texto: lista[index], colorFondo: color, icono: new Icon(icono, color: Colors.white));
                 }),
           ),
         ],
@@ -240,10 +223,7 @@ class _DetalleToursState extends State<DetalleTours> {
     return myLista;
   }
 
-  Widget _elementos(
-      {@required String texto,
-      @required Icon icono,
-      @required Color colorFondo}) {
+  Widget _elementos({@required String texto, @required Icon icono, @required Color colorFondo}) {
     return Opacity(
       opacity: 0.9,
       child: new Container(
@@ -251,9 +231,7 @@ class _DetalleToursState extends State<DetalleTours> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(20.0)),
             color: colorFondo,
-            boxShadow: [
-              BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0)
-            ]),
+            boxShadow: [BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0)]),
         height: 210.0,
         width: 140.0,
         child: Column(
@@ -262,9 +240,8 @@ class _DetalleToursState extends State<DetalleTours> {
               margin: EdgeInsets.all(8.0),
               padding: EdgeInsets.all(10.0),
               child: (icono),
-              decoration: new BoxDecoration(
-                  border: Border.all(color: Colors.white),
-                  borderRadius: BorderRadius.circular(40.0)),
+              decoration:
+                  new BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(40.0)),
             ),
             new SizedBox(height: 7.0),
             new Container(
@@ -272,10 +249,7 @@ class _DetalleToursState extends State<DetalleTours> {
                 padding: EdgeInsets.symmetric(horizontal: 8.0),
                 child: new Text(
                   texto,
-                  style: TextStyle(
-                      fontSize: 11,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.bold),
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
                   maxLines: 6,
@@ -317,8 +291,7 @@ class _DetalleToursState extends State<DetalleTours> {
               overflow: TextOverflow.ellipsis,
               maxLines: 50,
               textAlign: TextAlign.justify,
-              style: AppTheme.h6Style
-                  .copyWith(fontSize: 15, color: Colors.blueGrey)),
+              style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey)),
         ),
       ],
     );

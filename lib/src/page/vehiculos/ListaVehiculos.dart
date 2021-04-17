@@ -52,7 +52,9 @@ class ListaVehiculos extends StatelessWidget {
         itemCount: data.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, "DetalleVehiculos", arguments: data[index]);
+            },
             child: Column(
               children: <Widget>[
                 SizedBox(height: 15.0),
@@ -61,7 +63,7 @@ class ListaVehiculos extends StatelessWidget {
                 Lista(
                   model: new ListaModel(
                       id: int.parse(data[index].idvehiculo),
-                      nombre: '${data[index].modelo} ${data[index].anio}',
+                      nombre: '${data[index].marca} ${data[index].modelo} ${data[index].anio}',
                       descripcion: data[index].descripcion,
                       tag1: 'Precio Diario \$${data[index].precioDiario}',
                       tag2: data[index].transmision,
