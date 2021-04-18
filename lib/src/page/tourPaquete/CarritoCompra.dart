@@ -5,7 +5,6 @@ import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';
-
 import 'package:peliculas/src/page/tourPaquete/SeleccionarAsiento.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
@@ -52,21 +51,18 @@ class _CarritoCompraState extends State<CarritoCompra> {
           builder: (BuildContext context, AsyncSnapshot<InfoReservaModel> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
+                if (snapshot.data == null) return helper.noData();
                 if (snapshot.hasData) {
                   inicializarData(snapshot.data);
                 }
-
                 return scrollView(context, snapshot.data);
-
                 break;
               case ConnectionState.active:
-                return Text('activo');
+                return Center(child: CircularProgressIndicator());
               case ConnectionState.waiting:
-                print('esperando');
                 return Center(child: CircularProgressIndicator());
               default:
-                print('esperando');
-                return Text('ninguno');
+                return helper.noData();
             }
           }),
     );
@@ -226,25 +222,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
-  void agregarACarrito() {
-    final encontrado = asientosPrecio.indexWhere((pre) => pre.id == _precioSeleccionado.id);
-    if (encontrado == -1) {
-      _precioSeleccionado.cantidad = cantidadSeleccionada;
-      asientosPrecio.add(_precioSeleccionado);
-    } else {
-      asientosPrecio.forEach((element) {
-        if (element.id == _precioSeleccionado.id) {
-          element.cantidad = cantidadSeleccionada;
-          return;
-        }
-      });
-    }
-  }
-
-  void eliminarCarrito(id) {
-    asientosPrecio.removeWhere((element) => element.id == id);
-  }
-
   Widget _crearDropdown() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -371,26 +348,20 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return lista;
   }
 
-  void inicializarData(InfoReservaModel info) {
-    if (infoReservaModel == null) {
-      print("inicializando");
-      infoReservaModel = info;
+  Future<WompiModel> _crearEnlacePago(DetalleTurModel detalle) async {
+    creandoEnlace = true;
+    setState(() {});
+    final turServices = new TurServices();
 
-      //OCUPAREMES ESTA LISTA DE PRECIOS PARA LLENAR EL SELECT
-      listaPrecios = [];
-      listaPrecios.add(Precios(asiento: 1, pasaje: info.precio, titulo: "Normal"));
-      //AGREMAMOS LAS PROMOCIONES EXISTENTES SI LAS EXISTE
-      info.promociones.forEach((element) {
-        listaPrecios.add(new Precios(
-            titulo: element['titulo'],
-            asiento: int.parse(element['asiento']),
-            pasaje: double.parse(element['pasaje'])));
-      });
-      _precioSeleccionado = listaPrecios[0];
-    }
+    final WompiModel wompiModel = await turServices.guardarReserva(detalle);
+    // helper.redireccionar(context, wompiModel.urlEnlace);
+    creandoEnlace = false;
+    setState(() {});
+    print(wompiModel.urlEnlace);
+    return wompiModel;
   }
 
-  continuar() async {
+  void continuar() async {
     formKey.currentState.validate();
     String descripcionProducto = "";
     total = 0.0;
@@ -415,7 +386,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     _desicionTipo(descripcionProducto, cantidadAsientos);
   }
 
-  _desicionTipo(String descripcionProducto, int cantidadAsientos) async {
+  void _desicionTipo(String descripcionProducto, int cantidadAsientos) async {
     final detalle = new DetalleTurModel(
         idCliente: 7,
         idTours: widget.tourPaqueteModel.idTours,
@@ -439,21 +410,47 @@ class _CarritoCompraState extends State<CarritoCompra> {
                   )));
       return;
     } else {
-    //SINO CREAMOS ENLACE DE PAGO Y LO REDIRECCIONAMOS A LA PASARELA
-    await _crearEnlacePago(detalle);
+      //SINO CREAMOS ENLACE DE PAGO Y LO REDIRECCIONAMOS A LA PASARELA
+      await _crearEnlacePago(detalle);
     }
   }
 
-  Future<WompiModel> _crearEnlacePago(DetalleTurModel detalle) async {
-    creandoEnlace = true;
-    setState(() {});
-    final turServices = new TurServices();
+  void inicializarData(InfoReservaModel info) {
+    if (infoReservaModel == null) {
+      print("inicializando");
+      infoReservaModel = info;
 
-    final WompiModel wompiModel = await turServices.guardarReserva(detalle);
-    // helper.redireccionar(context, wompiModel.urlEnlace);
-    creandoEnlace = false;
-    setState(() {});
-    print(wompiModel.urlEnlace);
-    return wompiModel;
+      //OCUPAREMES ESTA LISTA DE PRECIOS PARA LLENAR EL SELECT
+      listaPrecios = [];
+      listaPrecios.add(Precios(asiento: 1, pasaje: info.precio, titulo: "Normal"));
+      //AGREMAMOS LAS PROMOCIONES EXISTENTES SI LAS EXISTE
+      info.promociones.forEach((element) {
+        listaPrecios.add(new Precios(
+            titulo: element['titulo'],
+            asiento: int.parse(element['asiento']),
+            pasaje: double.parse(element['pasaje'])));
+      });
+      _precioSeleccionado = listaPrecios[0];
+    }
   }
+
+  void agregarACarrito() {
+    final encontrado = asientosPrecio.indexWhere((pre) => pre.id == _precioSeleccionado.id);
+    if (encontrado == -1) {
+      _precioSeleccionado.cantidad = cantidadSeleccionada;
+      asientosPrecio.add(_precioSeleccionado);
+    } else {
+      asientosPrecio.forEach((element) {
+        if (element.id == _precioSeleccionado.id) {
+          element.cantidad = cantidadSeleccionada;
+          return;
+        }
+      });
+    }
+  }
+
+  void eliminarCarrito(id) {
+    asientosPrecio.removeWhere((element) => element.id == id);
+  }
+
 }

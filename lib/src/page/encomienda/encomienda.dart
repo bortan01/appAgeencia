@@ -1,42 +1,80 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/encomienda/encomienda_model.dart';
+import 'package:peliculas/src/models/precios_model.dart';
+import 'package:peliculas/src/services/encomienda_services.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class EncomiendaPage extends StatefulWidget {
+  const EncomiendaPage({Key key}) : super(key: key);
   @override
   _EncomiendaPageState createState() => _EncomiendaPageState();
 }
 
 class _EncomiendaPageState extends State<EncomiendaPage> {
+  Future<EncomiendaModel> futureEncomienda;
+  Color fondo = Colors.green;
   double screenHeight;
+  List<Precios> asientosPrecio = [];
+  List<Precios> listaPrecios = [];
+  int cantidadSeleccionada = 1;
+  double total = 0.0;
+  Precios _precioSeleccionado;
 
-  String _cantidad = "";
-  String _direccion = "";
-  String _destinoFinal = "";
-  String _total = "35.50";
-  String opcionSeleccionada = 'Producto';
-  List<String> _productos = ['Producto', 'Medicamentos', 'Jeringas', 'otros'];
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    futureEncomienda = _getEncomienda();
+  }
+
+  Future<EncomiendaModel> _getEncomienda() async {
+    final respuesta = await EncomiendaServices().obtenerEncomienda();
+    inicializarListaPrecios(respuesta.product);
+    return respuesta;
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      appBar: appBarEncomienda(),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            paginaFondo(),
-            imagenPortada(context),
-            cajaFormulario(context),
-          ],
-        ),
+      appBar: appBarCarrito(),
+      body: FutureBuilder(
+          future: futureEncomienda,
+          builder: (BuildContext context, AsyncSnapshot<EncomiendaModel> snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                if (snapshot.data == null) return helper.noData();
+                return scrollView(context);
+                break;
+              case ConnectionState.active:
+                return Center(child: CircularProgressIndicator());
+              case ConnectionState.waiting:
+                return Center(child: CircularProgressIndicator());
+              default:
+                return helper.noData();
+            }
+          }),
+    );
+  }
+
+  SingleChildScrollView scrollView(BuildContext context) {
+    return SingleChildScrollView(
+      child: Stack(
+        children: <Widget>[
+          paginaFondo(),
+          imagenPortada(context),
+          cajaFormulario(context),
+        ],
       ),
     );
   }
 
-  Widget appBarEncomienda() {
+  Widget appBarCarrito() {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Cotizador de Encomiendas"),
+      title: Text("Carrito de Compras"),
     );
   }
 
@@ -49,8 +87,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
         children: <Widget>[
           Text(
             "",
-            style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
           )
         ],
       ),
@@ -70,80 +107,26 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
             elevation: 8,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    child: Text(
-                      "Complete los Siguientes Campos",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  _crearDropDown(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearInputCantidad(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearInputDir(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearInputFinal(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearPersona(),
-                  SizedBox(
-                    height: 1,
-                  ),
-                  _createTotal(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
-                      FlatButton(
-                        child: Text("Cotizar"),
-                        color: Color(0xFF4B9DFE),
-                        textColor: Colors.white,
-                        padding: EdgeInsets.only(
-                            left: 38, right: 38, top: 15, bottom: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {},
-                      )
-                    ],
-                  )
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    _crearDropdown(),
+                    _inputCantidad(),
+                    _botonAgregar(),
+                    crearTitulo("Mi Carrito"),
+                    crearSubTitulo("(Mueva a los lados para eliminar)"),
+                    SizedBox(height: 4.0),
+                    _crearCarrito(),
+                    SizedBox(height: 5.0),
+                    _labelTotal(),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Puede completar datos adicionales en Pagina Web",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        )
       ],
     );
   }
@@ -158,105 +141,206 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
-  Widget _crearInputDir() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
+  Widget _inputCantidad() {
+    return TextFormField(
+      initialValue: "1",
+      keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+      textAlign: TextAlign.center,
+      //envia un paramettro inplicito
+      validator: helper.isNumeric,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          counter: new Text("Letras ${_direccion.length}"),
-          hintText: 'Dirección actual',
-          labelText: 'Dirección',
-          helperText: 'Debes digitar la dirección',
-          suffixIcon: Icon(Icons.airport_shuttle)),
-      onChanged: (String valor) {
-        _direccion = valor;
-        setState(() {});
+          labelText: 'ingrese numero de asientos'),
+      onSaved: (String valor) {
+        cantidadSeleccionada = int.parse(valor);
       },
     );
   }
 
-  Widget _crearInputFinal() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          counter: new Text("Letras ${_destinoFinal.length}"),
-          hintText: 'Dirección final',
-          labelText: 'Dirección final',
-          helperText: 'Debes digitar la dirección',
-          suffixIcon: Icon(Icons.add_location)),
+  Widget _labelTotal() {
+    total = 0.00;
+    asientosPrecio.forEach((element) {
+      total += (element.cantidad) * (element.pasaje);
+    });
 
-      onChanged: (String valor) {
-        _destinoFinal = valor;
-        setState(() {});
-      },
-    );
-  }
-
-  Widget _crearInputCantidad() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          hintText: 'lbs',
-          labelText: 'lbs',
-          helperText: 'Debes digitar la cantidad de libras',
-          suffixIcon: Icon(Icons.playlist_add_check)),
-
-      onChanged: (String valor) {
-        _cantidad = valor;
-        setState(() {});
-      },
-    );
-  }
-
-  Widget _crearPersona() {
-    return new ListTile(
-      trailing: new Text(opcionSeleccionada),
-      title: new Text("Direccion inicial: $_direccion"),
-      subtitle: new Text("Direccón Final: $_destinoFinal"),
-    );
-  }
-
-  Widget _createTotal() {
-    return new ListTile(
-      trailing: new Text("Cantidad de lbs: $_cantidad"),
-      title: new Text("Su Total es:  $_total"),
-    );
-  }
-
-  Widget _crearDropDown() {
-    return new Row(
+    return Row(
       children: <Widget>[
-        new Icon(Icons.select_all),
-        SizedBox(
-          width: 30.0,
-        ),
-        Expanded(
-          child: DropdownButton(
-              value: opcionSeleccionada,
-              items: getItemDropdown(),
-              onChanged: (opt) {
-                setState(() {
-                  opcionSeleccionada = opt;
-                });
-              }),
-        )
+        Text("Total:", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
+        Spacer(),
+        Text("\$${total.toStringAsFixed(2)}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
       ],
     );
   }
 
-  List<DropdownMenuItem<String>> getItemDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
-    _productos.forEach((producto) {
-      lista.add(DropdownMenuItem(
-        child: new Text(producto),
-        value: producto,
-      ));
+  Widget _botonAgregar() {
+    return RaisedButton.icon(
+      icon: Icon(Icons.shopping_cart),
+      label: Text("Agregar a mi carrito"),
+      color: Colors.blue,
+      textColor: Colors.white,
+      focusColor: Colors.red,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      onPressed: () {
+        if (formKey.currentState.validate()) {
+          //para ejecutar el on save
+          formKey.currentState.save();
+          setState(() {
+            agregarACarrito();
+          });
+        }
+      },
+    );
+  }
+
+  Widget _crearDropdown() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        children: <Widget>[
+          crearTitulo("Seleccione su producto"),
+          SizedBox(
+            height: 3.0,
+          ),
+          DropdownButtonFormField(
+              isExpanded: true,
+              decoration: InputDecoration(
+                  hintText: "name",
+                  border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
+              icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
+              value: _precioSeleccionado,
+              items: opcionesDropdown(),
+              onChanged: (opt) {
+                setState(() {
+                  _precioSeleccionado = opt;
+                  print(_precioSeleccionado.id.toString());
+                });
+              }),
+        ],
+      ),
+    );
+  }
+
+  Text crearTitulo(String tiulo) {
+    return Text(
+      tiulo,
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Text crearSubTitulo(String tiulo) {
+    return Text(
+      tiulo,
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal),
+    );
+  }
+
+  Widget _crearCarrito() {
+    List<Widget> listaIttem = [];
+    asientosPrecio.forEach((element) {
+      listaIttem.add(_crearItemCarrito(element));
     });
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(20.0)),
+      child: Column(
+        children: listaIttem,
+      ),
+    );
+  }
+
+  Widget _crearItemCarrito(Precios precioSeleccionado) {
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: (direction) {
+        setState(() {
+          eliminarCarrito(precioSeleccionado.id);
+        });
+      },
+      background: Container(
+        decoration: BoxDecoration(
+          color: Colors.black12,
+        ),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(
+            '${precioSeleccionado.cantidad.toString()}',
+            style: TextStyle(fontSize: 14.0),
+          ),
+        ),
+        title: Text(
+          '${precioSeleccionado.titulo}',
+          textAlign: TextAlign.right,
+          style: TextStyle(fontSize: 14.0, color: Colors.white),
+        ),
+        subtitle: Text(
+          'subTotal \$${(precioSeleccionado.cantidad * precioSeleccionado.pasaje).toStringAsFixed(2)}',
+          textAlign: TextAlign.right,
+          style: TextStyle(fontSize: 13.0, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  List<DropdownMenuItem<Precios>> opcionesDropdown() {
+    List<DropdownMenuItem<Precios>> lista = new List();
+    listaPrecios.forEach((precioItem) {
+      lista.add(DropdownMenuItem(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '${precioItem.titulo}',
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Text(
+                  '\$${precioItem.pasaje.toString()}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          value: precioItem));
+    });
+
     return lista;
+  }
+
+  void agregarACarrito() {
+    final encontrado = asientosPrecio.indexWhere((pre) => pre.id == _precioSeleccionado.id);
+    if (encontrado == -1) {
+      _precioSeleccionado.cantidad = cantidadSeleccionada;
+      asientosPrecio.add(_precioSeleccionado);
+    } else {
+      asientosPrecio.forEach((element) {
+        if (element.id == _precioSeleccionado.id) {
+          element.cantidad = cantidadSeleccionada;
+          return;
+        }
+      });
+    }
+  }
+
+  void eliminarCarrito(id) {
+    asientosPrecio.removeWhere((element) => element.id == id);
+  }
+
+  void inicializarListaPrecios(List<Product> products) {
+    listaPrecios = [];
+    products.forEach((prod) {
+      listaPrecios.add(new Precios(titulo: prod.nombreProducto, pasaje: prod.tarifa, asiento: 1, cantidad: 1));
+    });
   }
 }
