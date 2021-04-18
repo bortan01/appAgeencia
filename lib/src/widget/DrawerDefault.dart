@@ -20,7 +20,7 @@ Widget getDrawerDefault(BuildContext context) {
               style: estiloLetra,
             ),
             trailing: new Icon(
-              Icons.local_movies,
+              Icons.account_circle,
               color: colorBase,
             ),
             onTap: () => Navigator.of(context).pushNamed('subirImagenes'),
@@ -28,10 +28,10 @@ Widget getDrawerDefault(BuildContext context) {
           new Divider(height: 5.0, color: colorBase),
           new ListTile(
             title: new Text(
-              "Servicios",
+              "Documentos Personales",
               style: estiloLetra,
             ),
-            trailing: new Icon(Icons.live_tv, color: colorBase),
+            trailing: new Icon(Icons.panorama, color: colorBase),
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(
@@ -48,22 +48,10 @@ Widget getDrawerDefault(BuildContext context) {
           ),
           new ListTile(
             title: new Text(
-              "Contactanos",
+              "Acerca de nosotros",
               style: estiloLetra,
             ),
-            trailing: new Icon(Icons.close, color: colorBase),
-            onTap: () => Navigator.of(context).pop(),
-          ),
-          new Divider(
-            height: 5.0,
-            color: colorBase,
-          ),
-          new ListTile(
-            title: new Text(
-              "Registrate",
-              style: estiloLetra,
-            ),
-            trailing: new Icon(Icons.close, color: colorBase),
+            trailing: new Icon(Icons.flag, color: colorBase),
             onTap: () => Navigator.of(context).pop(),
           ),
           new Divider(
@@ -75,7 +63,7 @@ Widget getDrawerDefault(BuildContext context) {
               "Cerrar Sesion",
               style: estiloLetra,
             ),
-            trailing: new Icon(Icons.close, color: colorBase),
+            trailing: new Icon(Icons.exit_to_app, color: colorBase),
             onTap: () => cerrarSesion(context),
           ),
           new Divider(

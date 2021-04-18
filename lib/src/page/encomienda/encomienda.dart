@@ -19,6 +19,8 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   int cantidadSeleccionada = 1;
   double total = 0.0;
   Precios _precioSeleccionado;
+  String nombreUnidad = 'unidades';
+  double porcentajeComision = 0.0;
 
   final formKey = GlobalKey<FormState>();
 
@@ -31,6 +33,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   Future<EncomiendaModel> _getEncomienda() async {
     final respuesta = await EncomiendaServices().obtenerEncomienda();
     inicializarListaPrecios(respuesta.product);
+    porcentajeComision = respuesta.comision[0].porcentaje;
     return respuesta;
   }
 
@@ -74,7 +77,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Carrito de Compras"),
+      title: Text("Cotizador de Encomiendas"),
     );
   }
 
@@ -115,7 +118,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                     _crearDropdown(),
                     _inputCantidad(),
                     _botonAgregar(),
-                    crearTitulo("Mi Carrito"),
+                    crearTitulo("Productos seleccionados"),
                     crearSubTitulo("(Mueva a los lados para eliminar)"),
                     SizedBox(height: 4.0),
                     _crearCarrito(),
@@ -150,7 +153,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       validator: helper.isNumeric,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          labelText: 'ingrese numero de asientos'),
+          labelText: 'ingrese numero de $nombreUnidad'),
       onSaved: (String valor) {
         cantidadSeleccionada = int.parse(valor);
       },
@@ -162,10 +165,12 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     asientosPrecio.forEach((element) {
       total += (element.cantidad) * (element.pasaje);
     });
+    //sumando la comision
+    total += total * (porcentajeComision / 100);
 
     return Row(
       children: <Widget>[
-        Text("Total:", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
+        Text("Total + Gastos de envio:", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600)),
         Spacer(),
         Text("\$${total.toStringAsFixed(2)}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
       ],
@@ -174,8 +179,8 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
 
   Widget _botonAgregar() {
     return RaisedButton.icon(
-      icon: Icon(Icons.shopping_cart),
-      label: Text("Agregar a mi carrito"),
+      icon: Icon(Icons.add),
+      label: Text("Agregar"),
       color: Colors.blue,
       textColor: Colors.white,
       focusColor: Colors.red,
@@ -197,14 +202,14 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         children: <Widget>[
-          crearTitulo("Seleccione su producto"),
+          crearTitulo("Seleccione los producto"),
           SizedBox(
             height: 3.0,
           ),
           DropdownButtonFormField(
               isExpanded: true,
               decoration: InputDecoration(
-                  hintText: "name",
+                  hintText: "",
                   border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
               icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
               value: _precioSeleccionado,
@@ -320,8 +325,8 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
 
   void agregarACarrito() {
     final encontrado = asientosPrecio.indexWhere((pre) => pre.id == _precioSeleccionado.id);
-    if (encontrado == -1) {
-      _precioSeleccionado.cantidad = cantidadSeleccionada;
+    if (encontrado == -1 && _precioSeleccionado != null) {
+      _precioSeleccionado?.cantidad = cantidadSeleccionada;
       asientosPrecio.add(_precioSeleccionado);
     } else {
       asientosPrecio.forEach((element) {
