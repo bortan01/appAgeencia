@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/encomienda/encomienda_model.dart';
-import 'package:peliculas/src/models/precios_model.dart';
 import 'package:peliculas/src/services/encomienda_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
@@ -14,11 +13,11 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   Future<EncomiendaModel> futureEncomienda;
   Color fondo = Colors.green;
   double screenHeight;
-  List<Precios> asientosPrecio = [];
-  List<Precios> listaPrecios = [];
+  List<Product> productosSeleccionados = [];
+  List<Product> listaProductos = [];
   int cantidadSeleccionada = 1;
   double total = 0.0;
-  Precios _precioSeleccionado;
+  Product _productoSeleccionado;
   String nombreUnidad = 'unidades';
   double porcentajeComision = 0.0;
 
@@ -162,8 +161,8 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
 
   Widget _labelTotal() {
     total = 0.00;
-    asientosPrecio.forEach((element) {
-      total += (element.cantidad) * (element.pasaje);
+    productosSeleccionados.forEach((element) {
+      total += (element.cantidadSeleccionada) * (element.tarifa);
     });
     //sumando la comision
     total += total * (porcentajeComision / 100);
@@ -212,12 +211,12 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                   hintText: "",
                   border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
               icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
-              value: _precioSeleccionado,
+              value: listaProductos[0],
               items: opcionesDropdown(),
               onChanged: (opt) {
                 setState(() {
-                  _precioSeleccionado = opt;
-                  print(_precioSeleccionado.id.toString());
+                  _productoSeleccionado = opt;
+                  nombreUnidad = _productoSeleccionado.unidadMedida;
                 });
               }),
         ],
@@ -243,7 +242,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
 
   Widget _crearCarrito() {
     List<Widget> listaIttem = [];
-    asientosPrecio.forEach((element) {
+    productosSeleccionados.forEach((element) {
       listaIttem.add(_crearItemCarrito(element));
     });
     return Container(
@@ -255,12 +254,12 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
-  Widget _crearItemCarrito(Precios precioSeleccionado) {
+  Widget _crearItemCarrito(Product productoElegido) {
     return Dismissible(
       key: UniqueKey(),
       onDismissed: (direction) {
         setState(() {
-          eliminarCarrito(precioSeleccionado.id);
+          eliminarCarrito(productoElegido.idProducto);
         });
       },
       background: Container(
@@ -271,17 +270,17 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       child: ListTile(
         leading: CircleAvatar(
           child: Text(
-            '${precioSeleccionado.cantidad.toString()}',
+            '${productoElegido.cantidadSeleccionada.toString()}',
             style: TextStyle(fontSize: 14.0),
           ),
         ),
         title: Text(
-          '${precioSeleccionado.titulo}',
+          '${productoElegido.nombreProducto}',
           textAlign: TextAlign.right,
           style: TextStyle(fontSize: 14.0, color: Colors.white),
         ),
         subtitle: Text(
-          'subTotal \$${(precioSeleccionado.cantidad * precioSeleccionado.pasaje).toStringAsFixed(2)}',
+          'subTotal \$${(productoElegido.cantidadSeleccionada * productoElegido.tarifa).toStringAsFixed(2)}',
           textAlign: TextAlign.right,
           style: TextStyle(fontSize: 13.0, color: Colors.white),
         ),
@@ -289,9 +288,9 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
-  List<DropdownMenuItem<Precios>> opcionesDropdown() {
-    List<DropdownMenuItem<Precios>> lista = new List();
-    listaPrecios.forEach((precioItem) {
+  List<DropdownMenuItem<Product>> opcionesDropdown() {
+    List<DropdownMenuItem<Product>> lista = new List();
+    listaProductos.forEach((precioItem) {
       lista.add(DropdownMenuItem(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -300,7 +299,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                 child: Container(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(
-                    '${precioItem.titulo}',
+                    '${precioItem.nombreProducto}',
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -310,7 +309,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
               Container(
                 padding: const EdgeInsets.only(right: 8.0),
                 child: Text(
-                  '\$${precioItem.pasaje.toString()}',
+                  '\$${precioItem.tarifa.toString()}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -324,14 +323,14 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   }
 
   void agregarACarrito() {
-    final encontrado = asientosPrecio.indexWhere((pre) => pre.id == _precioSeleccionado.id);
-    if (encontrado == -1 && _precioSeleccionado != null) {
-      _precioSeleccionado?.cantidad = cantidadSeleccionada;
-      asientosPrecio.add(_precioSeleccionado);
+    final encontrado = productosSeleccionados.indexWhere((pre) => pre.idProducto == _productoSeleccionado.idProducto);
+    if (encontrado == -1 && _productoSeleccionado != null) {
+      _productoSeleccionado?.cantidadSeleccionada = cantidadSeleccionada;
+      productosSeleccionados.add(_productoSeleccionado);
     } else {
-      asientosPrecio.forEach((element) {
-        if (element.id == _precioSeleccionado.id) {
-          element.cantidad = cantidadSeleccionada;
+      productosSeleccionados.forEach((element) {
+        if (element.idProducto == _productoSeleccionado.idProducto) {
+          element.cantidadSeleccionada = cantidadSeleccionada;
           return;
         }
       });
@@ -339,13 +338,14 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   }
 
   void eliminarCarrito(id) {
-    asientosPrecio.removeWhere((element) => element.id == id);
+    productosSeleccionados.removeWhere((element) => element.idProducto == id);
   }
 
   void inicializarListaPrecios(List<Product> products) {
-    listaPrecios = [];
-    products.forEach((prod) {
-      listaPrecios.add(new Precios(titulo: prod.nombreProducto, pasaje: prod.tarifa, asiento: 1, cantidad: 1));
-    });
+    listaProductos = [];
+    listaProductos = products;
+    if (products.isNotEmpty) {
+      _productoSeleccionado = products[0];
+    }
   }
 }
