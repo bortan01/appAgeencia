@@ -49,20 +49,15 @@ class _DetalleToursState extends State<DetalleTours> {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               print('hecho');
-            if (snapshot.data == null) return helper.noData();
-              
+              if (snapshot.data == null) return helper.noData();
               final informacionAcicional = snapshot.data;
-
               return scrollView(context, informacionAcicional);
             case ConnectionState.active:
-              print('activo');
-              return Text('activo');
+              return Center(child: CircularProgressIndicator());
             case ConnectionState.waiting:
-              print('esperando');
               return Center(child: CircularProgressIndicator());
             default:
-              print('esperando');
-              return Text('ninguno');
+              return helper.noData();
           }
         });
   }

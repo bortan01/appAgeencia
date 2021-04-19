@@ -32,6 +32,7 @@ Widget getDrawerDefault(BuildContext context) {
               style: estiloLetra,
             ),
             trailing: new Icon(Icons.panorama, color: colorBase),
+              onTap: () => Navigator.of(context).pushNamed('subirDocumentos'),
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(

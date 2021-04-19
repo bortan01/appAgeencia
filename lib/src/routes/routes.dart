@@ -37,6 +37,7 @@ import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
 import 'package:peliculas/src/page/usuarios/recuperarContrasena.dart';
 import 'package:peliculas/src/page/usuarios/registro.dart';
+import 'package:peliculas/src/page/usuarios/subirDocumentos_page.dart';
 import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/page/vehiculos/ListaVehiculos.dart';
@@ -86,6 +87,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     //MODULO DE USUARIO.
     'login': (BuildContext context) => Login(),
     'subirImagenes' : (BuildContext context) => SubirImagenes(),
+    'subirDocumentos' : (BuildContext context) => SubirDocumentos(),
     'olvide': (BuildContext context) => Olvide(),
     'codigo': (BuildContext context) => Codigo(),
     'nuevaContra': (BuildContext context) => IngreseContra(),

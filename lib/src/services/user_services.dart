@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mime_type/mime_type.dart';
+import 'package:peliculas/src/models/image/documentos_model.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/conf.dart';
@@ -149,5 +150,22 @@ class UserServices {
     _usuarioPref.foto = respData['path'];
     print(respData);
     return true;
+  }
+
+  Future<List<DocumentosModel>> getGaleriaDocumentos() async {
+    final PreferenciasUsuario _preferenciasUsuario = new PreferenciasUsuario();
+    List<DocumentosModel> listaDocumentos = [];
+    print('haciendo peticion a getGaleriaDocumentos');
+    final url='${Conf.urlServidor}Imagen/show?tipo=usuario_documentos&identificador=${_preferenciasUsuario.idCliente}';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = convert.jsonDecode(response.body);
+      jsonResponse.forEach((element) {
+        listaDocumentos.add(DocumentosModel.fromJson(element));
+      });
+      return listaDocumentos;
+    } else {
+      return [];
+    }
   }
 }
