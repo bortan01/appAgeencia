@@ -20,9 +20,7 @@ class Lista extends StatelessWidget {
 
   Widget _poster() {
     return Container(
-        height: 320,
-        padding: EdgeInsets.symmetric(horizontal: 15.0),
-        child: Galeria(galeria: model.fotos));
+        height: 320, padding: EdgeInsets.symmetric(horizontal: 15.0), child: Galeria(galeria: model.fotos));
   }
 
   Widget _descripcion() {
@@ -36,8 +34,7 @@ class Lista extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               maxLines: 50,
               textAlign: TextAlign.justify,
-              style: AppTheme.h6Style
-                  .copyWith(fontSize: 15, color: Colors.blueGrey)),
+              style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey)),
         ),
         SizedBox(height: 15),
 
@@ -46,22 +43,19 @@ class Lista extends StatelessWidget {
         Column(
           children: <Widget>[
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: _chip(model.tag1, Colors.green, height: 5)),
+                padding: EdgeInsets.symmetric(horizontal: 15.0), child: _chip(model.tag1, Colors.green, height: 5)),
             SizedBox(
               height: 5.0,
             ),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 15.0),
-                child: _chip(model.tag2, Colors.blue, height: 5)),
+                padding: EdgeInsets.symmetric(horizontal: 15.0), child: _chip(model.tag2, Colors.blue, height: 5)),
           ],
         )
       ],
     );
   }
 
-  Widget _chip(String text, Color textColor,
-      {double height = 0, bool isPrimaryCard = false}) {
+  Widget _chip(String text, Color textColor, {double height = 0, bool isPrimaryCard = false}) {
     return Container(
       alignment: Alignment.center,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: height),
@@ -72,8 +66,7 @@ class Lista extends StatelessWidget {
       child: Text(
         text,
         maxLines: 3,
-        style: TextStyle(
-            color: isPrimaryCard ? Colors.white : textColor, fontSize: 15),
+        style: TextStyle(color: isPrimaryCard ? Colors.white : textColor, fontSize: 15),
       ),
     );
   }
@@ -88,10 +81,7 @@ class Lista extends StatelessWidget {
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
-                style: TextStyle(
-                    color: Colors.lightBlue,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold)),
+                style: TextStyle(color: Colors.lightBlue, fontSize: 16, fontWeight: FontWeight.bold)),
           ),
           SizedBox(
             width: 5,

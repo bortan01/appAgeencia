@@ -4,6 +4,7 @@ import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
+import 'package:peliculas/src/widget/chip_widget.dart';
 
 class DetalleVehiculos extends StatelessWidget {
   @override
@@ -21,9 +22,7 @@ class DetalleVehiculos extends StatelessWidget {
               id: carro.idvehiculo),
           new SliverList(
               delegate: new SliverChildListDelegate([
-            new SizedBox(
-              height: 10.0,
-            ),
+            new SizedBox(height: 10.0),
             _posterTitulo(
                 context: context,
                 titulo: myTitulo,
@@ -35,7 +34,9 @@ class DetalleVehiculos extends StatelessWidget {
             _descripcion(carro.descripcion),
             _cuadros(carro),
             _botones(context),
-            _adicional(),
+            SizedBox(height: 10.0),
+            _otrasOpciones(carro.opcAvanzadas),
+            _adicional(carro.opcAvanzadas),
             _swiperTarjetas(context, carro.galeria),
           ]))
         ],
@@ -216,13 +217,44 @@ Widget _cuadros(Auto carro) {
   );
 }
 
-Widget _adicional() {
+Widget _otrasOpciones(List<String> opcAvanzadas) {
+  List<Widget> opcionesList = [];
+  final titulo = Container(
+      padding: EdgeInsets.symmetric(horizontal: 11.0),
+      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: Text(
+        "Otras opciones:",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+      ));
+
+  opcionesList.add(titulo);
+  opcAvanzadas.forEach((opcion) {
+    opcionesList.add(ChipWidget(text: opcion, type: TypeChip.azul));
+    opcionesList.add(SizedBox(height: 5.0));
+  });
+
   return Container(
-    padding: EdgeInsets.all(11.0),
+    padding: EdgeInsets.symmetric(horizontal: 11.0),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: opcionesList,
+    ),
+  );
+}
+
+Widget _adicional(List<String> adicionales) {
+  return Container(
+    padding: EdgeInsets.symmetric(horizontal: 11.0),
+    margin: EdgeInsets.only(left: 11.0, right: 11.0, top: 10.0, bottom: 10.0),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(31),
-        topRight: Radius.circular(31),
+        topLeft: Radius.circular(18),
+        topRight: Radius.circular(18),
+        bottomLeft: Radius.circular(18),
+        bottomRight: Radius.circular(18),
       ),
       color: Colors.grey[200],
     ),
@@ -249,9 +281,9 @@ Widget _adicional() {
             ),
           ],
         ),
-        _item(icono: Icons.check_circle, titulo: "Wifi", descripcion: ""),
-        _item(icono: Icons.check_circle, titulo: "Sonido", descripcion: ""),
-        _item(icono: Icons.check_circle, titulo: "Otro", descripcion: ""),
+        new Column(
+            children:
+                adicionales.map((item) => _item(icono: Icons.check_circle, titulo: item, descripcion: "")).toList()),
       ],
     ),
   );
