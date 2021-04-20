@@ -137,5 +137,9 @@ redireccionar(BuildContext context, String url) async {
 }
 
 Widget noData() {
-  return Container( child: Center(child: Text("No hay datos que mostrar")));
+  return Container(child: Center(child: Text("No hay datos que mostrar")));
+}
+
+TextStyle titulo2() {
+  return TextStyle(fontWeight: FontWeight.bold, color: Colors.black87);
 }

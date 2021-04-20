@@ -54,8 +54,7 @@ class ListaVehiculos extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-          
-              Navigator.push(context,
+                  Navigator.push(context,
                   MaterialPageRoute(builder: (context) => DetalleVehiculos(autos[index], data.opcionesAdicionales)));
             },
             child: Column(

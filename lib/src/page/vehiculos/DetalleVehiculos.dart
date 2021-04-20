@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
+import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
@@ -29,11 +30,11 @@ class DetalleVehiculos extends StatelessWidget {
                 context: context,
                 titulo: myTitulo,
                 subtitulo: carro.descripcion,
-                precio: carro.precioDiario,
+                precio: carro.precioDiario.toStringAsFixed(2),
                 id: int.parse(carro.idvehiculo)),
             _descripcion("", carro.descripcion),
             _cuadros(carro),
-            _botones(context),
+            _botones(context, carro, opciones),
             SizedBox(height: 10.0),
             _otrasOpciones(carro.opcAvanzadas),
             _adicional(opciones),
@@ -76,7 +77,7 @@ _posterTitulo({BuildContext context, String titulo, String subtitulo, String pre
   );
 }
 
-Container _botones(BuildContext context) {
+Container _botones(BuildContext context, Auto carro, List<OpcioneAdicional> opciones) {
   return Container(
     margin: EdgeInsets.symmetric(horizontal: 10.0),
     decoration: BoxDecoration(
@@ -129,7 +130,13 @@ Container _botones(BuildContext context) {
             ],
           ),
           onPressed: () {
-            Navigator.pushNamed(context, 'Alquiler');
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Alquiler(
+                          carro: carro,
+                          opciones: opciones,
+                        )));
           },
         ),
       ],
@@ -145,11 +152,7 @@ Widget _descripcion(String titulo, String descripcion) {
       (titulo.isNotEmpty)
           ? Container(
               margin: EdgeInsets.only(left: 15.0, bottom: 5.0),
-              child: Text(titulo,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black87,
-                  )),
+              child: Text(titulo, style: helper.titulo2()),
             )
           : Container(),
       Container(

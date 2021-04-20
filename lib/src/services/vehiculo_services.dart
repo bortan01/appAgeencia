@@ -10,7 +10,6 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
     final url = '${Conf.urlServidor}vehiculo/vehiculos';
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      // final jsonResponse = convert.jsonDecode(response.body);
       final res = vehiculosModelFromJson(response.body);
       return res;
     } else {

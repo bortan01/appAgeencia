@@ -1,55 +1,55 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class Alquiler extends StatefulWidget {
+  final Auto carro;
+  final List<OpcioneAdicional> opciones;
+  const Alquiler({Key key, this.carro, this.opciones}) : super(key: key);
+
   @override
-  _AlquilerPageState createState() => _AlquilerPageState();
+  _AlquilerState createState() => _AlquilerState();
 }
 
-class _AlquilerPageState extends State<Alquiler> {
+class _AlquilerState extends State<Alquiler> {
+  Color fondo = Colors.green;
   double screenHeight;
+  List<OpcioneAdicional> opcionesSeleccionadas = [];
+  List<OpcioneAdicional> listaOpciones = [];
+  int cantidadSeleccionada = 1;
+  int numeroDias = 1;
+  double total = 0.0;
+  OpcioneAdicional opcionSelecionada;
 
-  String _nombre = "";
-  String _telefono = "";
-  String _direccionRecogida = "";
-  String _direccionDevolucion = "";
-  String _lugarRecogida = "";
-  String _lugarRecogidaFnal = "";
-  String _fechaR = "";
-  String _fechaD = "";
-  TextEditingController _controllerFecha = new TextEditingController();
-  TextEditingController _controllerFechaD = new TextEditingController();
-  String opcionSeleccionada = 'Servicio a Domicilio';
+  final formKey = GlobalKey<FormState>();
 
-  List<String> _lugar = [
-    'Servicio a Domicilio',
-    'Aeropuerto',
-    'Ciudad',
-    'otros'
-  ];
+  @override
+  void initState() {
+    super.initState();
+    inicializarListaOpciones(widget.opciones);
+  }
 
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      appBar: appBarAlquiler(),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: <Widget>[
-            paginaFondo(),
-            imagenPortada(context),
-            cajaFormulario(context),
-          ],
-        ),
-      ),
-    );
+        appBar: appBarCarrito(),
+        body: SingleChildScrollView(
+          child: Stack(
+            children: <Widget>[
+              paginaFondo(),
+              imagenPortada(context),
+              cajaFormulario(context, widget.carro),
+            ],
+          ),
+        ));
   }
 
-  Widget appBarAlquiler() {
+  Widget appBarCarrito() {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Alquiler de Vehículos"),
+      title: Text("Cotizar Vehículo"),
     );
   }
 
@@ -62,15 +62,14 @@ class _AlquilerPageState extends State<Alquiler> {
         children: <Widget>[
           Text(
             "",
-            style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
           )
         ],
       ),
     );
   }
 
-  Widget cajaFormulario(BuildContext context) {
+  Widget cajaFormulario(BuildContext context, Auto carro) {
     return Column(
       children: <Widget>[
         Container(
@@ -83,91 +82,29 @@ class _AlquilerPageState extends State<Alquiler> {
             elevation: 8,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    child: Text(
-                      "Rerservar Vehículo",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  _inputNombre(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputTelefono(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearDropdown(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputDireccionRecogida(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearFecha(context),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearDropdownDevolucion(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputDireccionDevolucion(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearFechaDevolucion(context),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
-                      FlatButton(
-                        child: Text("Reservar"),
-                        color: Color(0xFF4B9DFE),
-                        textColor: Colors.white,
-                        padding: EdgeInsets.only(
-                            left: 38, right: 38, top: 15, bottom: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {},
-                      )
-                    ],
-                  )
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    crearTitulo('${carro.marca} ${carro.modelo} ${carro.anio} (\$${carro.precioDiario}/Día) '),
+                    _inputCantidadDias(),
+                    crearTitulo("Seleccione servicos adicionales"),
+                    _crearDropdown(),
+                    _inputCantidad(),
+                    _botonAgregar(),
+                    crearTitulo("Productos seleccionados"),
+                    crearSubTitulo("(Mueva a los lados para eliminar)"),
+                    SizedBox(height: 4.0),
+                    _crearCarrito(),
+                    SizedBox(height: 5.0),
+                    _labelTotal(),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Puede completar datos adicionales en Pagina Web",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        )
       ],
     );
   }
@@ -182,196 +119,219 @@ class _AlquilerPageState extends State<Alquiler> {
     );
   }
 
-  Widget _inputNombre() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
+  Widget _inputCantidad() {
+    return TextFormField(
+      initialValue: "1",
+      keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+      textAlign: TextAlign.center,
+      //envia un paramettro inplicito
+      validator: helper.isNumeric,
       decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Nombre',
-        labelText: 'Digite su Nombre Completo',
-        helperText: 'Nombre Completo',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.supervised_user_circle),
-      ),
-      onChanged: (String persona) {
-        _nombre = persona;
-        setState(() {});
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'ingrese cantidad'),
+      onSaved: (String valor) {
+        cantidadSeleccionada = int.parse(valor);
       },
     );
   }
 
-  Widget _inputTelefono() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Numero de Telefono',
-        labelText: 'Digite su Numero de Telefono',
-        helperText: 'Numero de Telefono',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.phone),
+  Widget _inputCantidadDias() {
+    return Container(
+      margin: EdgeInsetsDirectional.only(top: 10.0),
+      child: TextFormField(
+        initialValue: "1",
+        keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+        textAlign: TextAlign.center,
+        //envia un paramettro inplicito
+        validator: helper.isNumeric,
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'ingrese numero de Dias'),
+        onSaved: (String valor) {
+          numeroDias = int.parse(valor);
+        },
       ),
-      onChanged: (String persona) {
-        _telefono = persona;
-        setState(() {});
-      },
     );
   }
 
-  Widget _inputDireccionRecogida() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite dirección',
-        labelText: 'Digite la Dirección de Recogida',
-        helperText: 'Dirección Completa',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.map),
-      ),
-      onChanged: (String persona) {
-        _direccionRecogida = persona;
-        setState(() {});
-      },
-    );
-  }
+  Widget _labelTotal() {
+    total = 0.00;
+    total += widget.carro.precioDiario * numeroDias;
 
-  Widget _inputDireccionDevolucion() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite de Devolución',
-        labelText: 'Dirección de Devolución',
-        helperText: 'Dirección Completa',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.map),
-      ),
-      onChanged: (String persona) {
-        _direccionDevolucion = persona;
-        setState(() {});
-      },
-    );
-  }
-
-  List<DropdownMenuItem<String>> getOpcionesDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
-    _lugar.forEach((lugar) {
-      lista.add(DropdownMenuItem(
-        child: new Text(lugar),
-        value: lugar,
-      ));
+    opcionesSeleccionadas.forEach((element) {
+      total += (element.cantidadSeleccionada) * (element.precio);
     });
-    return lista;
+    return Row(
+      children: <Widget>[
+        Text("Vehículo + Servicios Adicionales:",
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
+        Spacer(),
+        Text("\$${total.toStringAsFixed(2)}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
+      ],
+    );
+  }
+
+  Widget _botonAgregar() {
+    return RaisedButton.icon(
+      icon: Icon(Icons.add),
+      label: Text("Agregar"),
+      color: Colors.blue,
+      textColor: Colors.white,
+      focusColor: Colors.red,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      onPressed: () {
+        if (formKey.currentState.validate()) {
+          //para ejecutar el on save
+          formKey.currentState.save();
+          setState(() {
+            agregarACarrito();
+          });
+        }
+      },
+    );
   }
 
   Widget _crearDropdown() {
-    return DropdownButton(
-      value: opcionSeleccionada,
-      items: getOpcionesDropdown(),
-      onChanged: (opc) {
-        setState(() {
-          opcionSeleccionada = opc;
-        });
-      },
+    return Container(
+      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: DropdownButtonFormField(
+          isExpanded: true,
+          decoration: InputDecoration(
+              hintText: "", border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
+          icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
+          value: listaOpciones[0],
+          items: opcionesDropdown(),
+          onChanged: (opt) {
+            setState(() {
+              opcionSelecionada = opt;
+            });
+          }),
     );
   }
 
-  List<DropdownMenuItem<String>> getOpcionesDevolucionDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
-    _lugar.forEach((lugar) {
-      lista.add(DropdownMenuItem(
-        child: new Text(lugar),
-        value: lugar,
-      ));
+  Text crearTitulo(String tiulo) {
+    return Text(
+      tiulo,
+      textAlign: TextAlign.center,
+      style: helper.titulo2(),
+    );
+  }
+
+  Text crearSubTitulo(String tiulo) {
+    return Text(
+      tiulo,
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.normal),
+    );
+  }
+
+  Widget _crearCarrito() {
+    List<Widget> listaIttem = [];
+    opcionesSeleccionadas.forEach((element) {
+      listaIttem.add(_crearItemCarrito(element));
     });
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(20.0)),
+      child: Column(
+        children: listaIttem,
+      ),
+    );
+  }
+
+  Widget _crearItemCarrito(OpcioneAdicional opcionElegida) {
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: (direction) {
+        setState(() {
+          eliminarCarrito(opcionElegida.idserviciosOpc);
+        });
+      },
+      background: Container(
+        decoration: BoxDecoration(
+          color: Colors.black12,
+        ),
+      ),
+      child: ListTile(
+        leading: CircleAvatar(
+          child: Text(
+            '${opcionElegida.cantidadSeleccionada.toString()}',
+            style: TextStyle(fontSize: 14.0),
+          ),
+        ),
+        title: Text(
+          '${opcionElegida.nombreServicio}',
+          textAlign: TextAlign.right,
+          style: TextStyle(fontSize: 14.0, color: Colors.white),
+        ),
+        subtitle: Text(
+          'subTotal \$${(opcionElegida.cantidadSeleccionada * opcionElegida.precio).toStringAsFixed(2)}',
+          textAlign: TextAlign.right,
+          style: TextStyle(fontSize: 13.0, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  List<DropdownMenuItem<OpcioneAdicional>> opcionesDropdown() {
+    List<DropdownMenuItem<OpcioneAdicional>> lista = new List();
+    listaOpciones.forEach((precioItem) {
+      lista.add(DropdownMenuItem(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '${precioItem.nombreServicio}',
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Text(
+                  '\$${precioItem.precio.toString()}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          value: precioItem));
+    });
+
     return lista;
   }
 
-  Widget _crearDropdownDevolucion() {
-    return DropdownButton(
-      value: opcionSeleccionada,
-      items: getOpcionesDropdown(),
-      onChanged: (opc) {
-        setState(() {
-          opcionSeleccionada = opc;
-        });
-      },
-    );
-  }
-
-  Widget _crearFecha(BuildContext context) {
-    return new TextField(
-      controller: _controllerFecha,
-      enableInteractiveSelection: false,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Fecha de Recogida',
-        labelText: 'Fecha de Recogida',
-        helperText: 'Fecha en que Recogera el Vehiculo',
-        suffixIcon: Icon(Icons.calendar_today),
-      ),
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-        _selectDate(context);
-      },
-    );
-  }
-
-  _selectDate(BuildContext context) async {
-    DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: new DateTime.now(),
-      firstDate: new DateTime(2018),
-      lastDate: new DateTime(2025),
-      locale: Locale('es', 'ES'),
-    );
-
-    if (picked != null) {
-      setState(() {
-        _fechaR = picked.toString();
-        _controllerFecha.text = _fechaR;
+  void agregarACarrito() {
+    final encontrado =
+        opcionesSeleccionadas.indexWhere((pre) => pre.idserviciosOpc == opcionSelecionada.idserviciosOpc);
+    if (encontrado == -1 && opcionSelecionada != null) {
+      opcionSelecionada?.cantidadSeleccionada = cantidadSeleccionada;
+      opcionesSeleccionadas.add(opcionSelecionada);
+    } else {
+      opcionesSeleccionadas.forEach((element) {
+        if (element.idserviciosOpc == opcionSelecionada.idserviciosOpc) {
+          element.cantidadSeleccionada = cantidadSeleccionada;
+          return;
+        }
       });
     }
   }
-  //Fecha de Devolucion
 
-  Widget _crearFechaDevolucion(BuildContext context) {
-    return new TextField(
-      controller: _controllerFecha,
-      enableInteractiveSelection: false,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Fecha de Devolución',
-        labelText: 'Fecha de Devolución',
-        helperText: 'Fecha de Devolución el Vehiculo',
-        suffixIcon: Icon(Icons.calendar_today),
-      ),
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-        _selectDateDevolucion(context);
-      },
-    );
+  void eliminarCarrito(id) {
+    opcionesSeleccionadas.removeWhere((element) => element.idserviciosOpc == id);
   }
 
-  _selectDateDevolucion(BuildContext context) async {
-    DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: new DateTime.now(),
-      firstDate: new DateTime(2018),
-      lastDate: new DateTime(2025),
-      locale: Locale('es', 'ES'),
-    );
-
-    if (picked != null) {
-      setState(() {
-        _fechaD = picked.toString();
-        _controllerFechaD.text = _fechaR;
-      });
+  void inicializarListaOpciones(List<OpcioneAdicional> opciones) {
+    listaOpciones = [];
+    listaOpciones = opciones;
+    if (opciones.isNotEmpty) {
+      opcionSelecionada = opciones[0];
     }
   }
 }
