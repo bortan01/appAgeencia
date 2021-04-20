@@ -7,9 +7,11 @@ import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:peliculas/src/widget/chip_widget.dart';
 
 class DetalleVehiculos extends StatelessWidget {
+  final Auto carro;
+  final List<OpcioneAdicional> opciones;
+  DetalleVehiculos(this.carro, this.opciones);
   @override
   Widget build(BuildContext context) {
-    final Auto carro = ModalRoute.of(context).settings.arguments;
     final String myTitulo = '${carro.marca} ${carro.modelo} ${carro.anio}';
     return Scaffold(
       backgroundColor: Colors.white,
@@ -27,16 +29,15 @@ class DetalleVehiculos extends StatelessWidget {
                 context: context,
                 titulo: myTitulo,
                 subtitulo: carro.descripcion,
-                imagen:
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQG356LIbLadfZO3JsJcNpCSwBrotB57G35xQ&usqp=CAU",
-                precio: "28.50",
+                precio: carro.precioDiario,
                 id: int.parse(carro.idvehiculo)),
-            _descripcion(carro.descripcion),
+            _descripcion("", carro.descripcion),
             _cuadros(carro),
             _botones(context),
             SizedBox(height: 10.0),
             _otrasOpciones(carro.opcAvanzadas),
-            _adicional(carro.opcAvanzadas),
+            _adicional(opciones),
+            _descripcion('Informacion Adicional', carro.detalles),
             _swiperTarjetas(context, carro.galeria),
           ]))
         ],
@@ -45,18 +46,10 @@ class DetalleVehiculos extends StatelessWidget {
   }
 }
 
-_posterTitulo({BuildContext context, String titulo, String subtitulo, String precio, String imagen, int id}) {
+_posterTitulo({BuildContext context, String titulo, String subtitulo, String precio, int id}) {
   return new Container(
     child: Row(
       children: <Widget>[
-        // ClipRRect(
-        //   child: new Image(
-        //     image: NetworkImage(imagen),
-        //     height: 100,
-        //     width: 125,
-        //   ),
-        //   borderRadius: new BorderRadius.circular(20.0),
-        // ),
         new SizedBox(
           width: 10.0,
         ),
@@ -64,22 +57,6 @@ _posterTitulo({BuildContext context, String titulo, String subtitulo, String pre
             child: new Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            // new Text(
-            //   titulo,
-            //   style: TextStyle(
-            //     fontSize: 20,
-            //     color: Colors.black,
-            //   ),
-            //   overflow: TextOverflow.ellipsis, //por si el titulo es muy grande
-            // ),
-
-            // new Text(subtitulo,
-            //     //maxLines: 4,
-            //     style: TextStyle(
-            //       fontSize: 12,
-            //       color: Colors.blueAccent,
-            //     ),
-            //     overflow: TextOverflow.ellipsis),
             new Row(
               children: <Widget>[
                 new Text(
@@ -142,7 +119,7 @@ Container _botones(BuildContext context) {
           child: Row(
             children: <Widget>[
               Text(
-                "Reservar",
+                "Cotización",
                 style: TextStyle(color: Colors.white),
               ),
               Icon(
@@ -160,11 +137,21 @@ Container _botones(BuildContext context) {
   );
 }
 
-Widget _descripcion(String descripcion) {
+Widget _descripcion(String titulo, String descripcion) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: <Widget>[
       SizedBox(height: 15),
+      (titulo.isNotEmpty)
+          ? Container(
+              margin: EdgeInsets.only(left: 15.0, bottom: 5.0),
+              child: Text(titulo,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  )),
+            )
+          : Container(),
       Container(
         padding: EdgeInsets.symmetric(horizontal: 15.0),
         child: Text(descripcion,
@@ -245,9 +232,9 @@ Widget _otrasOpciones(List<String> opcAvanzadas) {
   );
 }
 
-Widget _adicional(List<String> adicionales) {
+Widget _adicional(List<OpcioneAdicional> adicionales) {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 11.0),
+    padding: EdgeInsets.symmetric(horizontal: 11.0, vertical: 11.0),
     margin: EdgeInsets.only(left: 11.0, right: 11.0, top: 10.0, bottom: 10.0),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
@@ -264,7 +251,7 @@ Widget _adicional(List<String> adicionales) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Text(
-              "Adicional: ",
+              "Servicios Adicionales:",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
@@ -282,8 +269,10 @@ Widget _adicional(List<String> adicionales) {
           ],
         ),
         new Column(
-            children:
-                adicionales.map((item) => _item(icono: Icons.check_circle, titulo: item, descripcion: "")).toList()),
+            children: adicionales
+                .map((item) =>
+                    _item(icono: Icons.check_circle, titulo: item.nombreServicio, descripcion: item.descripcion))
+                .toList()),
       ],
     ),
   );
@@ -401,10 +390,12 @@ Widget _item({IconData icono, String titulo, String descripcion}) {
           children: <Widget>[
             Text(
               titulo,
-              style: TextStyle(color: Colors.black87),
+              style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
             ),
+            SizedBox(height: 5.0),
             Text(
               descripcion,
+              textAlign: TextAlign.justify,
               style: TextStyle(color: Colors.black45),
             ),
           ],

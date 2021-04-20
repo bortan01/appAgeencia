@@ -13,22 +13,28 @@ class VehiculosModel {
         this.err,
         this.mensaje,
         this.autos,
+          this.opcionesAdicionales,
     });
 
     bool err;
     String mensaje;
     List<Auto> autos;
+    List<OpcioneAdicional> opcionesAdicionales;
 
     factory VehiculosModel.fromJson(Map<String, dynamic> json) => VehiculosModel(
         err: json["err"],
         mensaje: json["mensaje"],
         autos: List<Auto>.from(json["autos"].map((x) => Auto.fromJson(x))),
+        opcionesAdicionales: List<OpcioneAdicional>.from(json["opcionesAdicionales"].map((x) => OpcioneAdicional.fromJson(x))),
+
     );
 
     Map<String, dynamic> toJson() => {
         "err": err,
         "mensaje": mensaje,
         "autos": List<dynamic>.from(autos.map((x) => x.toJson())),
+        "opcionesAdicionales": List<dynamic>.from(opcionesAdicionales.map((x) => x.toJson())),
+
     };
 }
 
@@ -185,5 +191,39 @@ class Auto {
         "ultimaConexion": ultimaConexion,
         "foto": foto,
         "galeria": List<dynamic>.from(galeria.map((x) => x)),
+    };
+}
+
+
+
+class OpcioneAdicional {
+    OpcioneAdicional({
+        this.idserviciosOpc,
+        this.nombreServicio,
+        this.descripcion,
+        this.precio,
+        this.activo,
+    });
+
+    String idserviciosOpc;
+    String nombreServicio;
+    String descripcion;
+    double precio;
+    String activo;
+
+    factory OpcioneAdicional.fromJson(Map<String, dynamic> json) => OpcioneAdicional(
+        idserviciosOpc: json["idservicios_opc"],
+        nombreServicio: json["nombre_servicio"],
+        descripcion: json["descripcion"],
+        precio: double.parse(json["precio"]),
+        activo: json["activo"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "idservicios_opc": idserviciosOpc,
+        "nombre_servicio": nombreServicio,
+        "descripcion": descripcion,
+        "precio": precio,
+        "activo": activo,
     };
 }

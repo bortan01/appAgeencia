@@ -5,14 +5,14 @@ import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
 import 'package:peliculas/src/services/conf.dart';
 
 class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
-  Future<List<Auto>> obtenerVehiculos() async {
+  Future<VehiculosModel> obtenerVehiculos() async {
     print('haciendo peticion de vehiculos');
     final url = '${Conf.urlServidor}vehiculo/vehiculos';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       // final jsonResponse = convert.jsonDecode(response.body);
       final res = vehiculosModelFromJson(response.body);
-      return res.autos;
+      return res;
     } else {
       return null;
     }

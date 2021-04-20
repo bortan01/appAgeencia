@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
 import 'package:peliculas/src/services/vehiculo_services.dart';
 import 'package:peliculas/src/widget/Lista.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
@@ -26,7 +27,7 @@ class ListaVehiculos extends StatelessWidget {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
       future: _vehiculoServices.obtenerVehiculos(),
-      builder: (BuildContext context, AsyncSnapshot<List<Auto>> snapshot) {
+      builder: (BuildContext context, AsyncSnapshot<VehiculosModel> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             if (snapshot.data == null) return helper.noData();
@@ -45,15 +46,17 @@ class ListaVehiculos extends StatelessWidget {
     );
   }
 
-  Widget _creandoElementos(BuildContext context, List<Auto> data) {
+  Widget _creandoElementos(BuildContext context, VehiculosModel data) {
     //Posiblemente esto se convierta en futureBilder
-
+    List<Auto> autos = data.autos;
     return ListView.builder(
-        itemCount: data.length,
+        itemCount: autos.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, "DetalleVehiculos", arguments: data[index]);
+          
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => DetalleVehiculos(autos[index], data.opcionesAdicionales)));
             },
             child: Column(
               children: <Widget>[
@@ -62,13 +65,13 @@ class ListaVehiculos extends StatelessWidget {
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
                 Lista(
                   model: new ListaModel(
-                      id: int.parse(data[index].idvehiculo),
-                      nombre: '${data[index].marca} ${data[index].modelo} ${data[index].anio}',
-                      descripcion: data[index].descripcion,
-                      tag1: 'Precio Diario \$${data[index].precioDiario}',
-                      tag2: data[index].transmision,
-                      imagen: data[index].foto,
-                      fotos: data[index].galeria),
+                      id: int.parse(autos[index].idvehiculo),
+                      nombre: '${autos[index].marca} ${autos[index].modelo} ${autos[index].anio}',
+                      descripcion: autos[index].descripcion,
+                      tag1: 'Precio Diario \$${autos[index].precioDiario}',
+                      tag2: autos[index].transmision,
+                      imagen: autos[index].foto,
+                      fotos: autos[index].galeria),
                 ),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(
