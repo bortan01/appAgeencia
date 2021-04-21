@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:peliculas/src/providers/card_provider.dart';
+import 'package:peliculas/src/services/vehiculo_services.dart';
 import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
 import 'package:peliculas/src/widget/card_view_widget.dart';
 
@@ -16,6 +17,13 @@ class _HomeMenuState extends State<HomeMenu> {
   @override
   void initState() {
     super.initState();
+    getCategoria();
+  }
+
+  getCategoria() async {
+    VehiculoServices a = new VehiculoServices();
+    final respuea = await a.obtenerCategoria();
+    print(respuea.length);
   }
 
   List listaPaquete;

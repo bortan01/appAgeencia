@@ -26,21 +26,21 @@ class ListaVehiculos extends StatelessWidget {
   Widget _listado(BuildContext context) {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
-      future: _vehiculoServices.obtenerVehiculos(),
+      future: _vehiculoServices.obtenerVehiculos(""),
       builder: (BuildContext context, AsyncSnapshot<VehiculosModel> snapshot) {
+        print(snapshot.connectionState);
+        VehiculosModel data = snapshot.data;
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            if (snapshot.data == null) return helper.noData();
-            return _creandoElementos(context, snapshot.data);
+            print(data);
+            if (data == null || data.autos.isEmpty) return helper.noData();
+            return _creandoElementos(context, data);
           case ConnectionState.active:
-            print('activo');
-            return Text('activo');
+            return Center(child: CircularProgressIndicator());
           case ConnectionState.waiting:
-            print('esperando');
             return Center(child: CircularProgressIndicator());
           default:
-            print('esperando');
-            return Text('ninguno');
+            return helper.noData();
         }
       },
     );
@@ -54,7 +54,7 @@ class ListaVehiculos extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-                  Navigator.push(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => DetalleVehiculos(autos[index], data.opcionesAdicionales)));
             },
             child: Column(
@@ -83,7 +83,6 @@ class ListaVehiculos extends StatelessWidget {
           );
         });
   }
-
   ListView listView() {
     return ListView.builder(
         itemCount: CourseList.list.length,
