@@ -87,13 +87,13 @@ class _AlquilerState extends State<Alquiler> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    crearTitulo('${carro.marca} ${carro.modelo} ${carro.anio} (\$${carro.precioDiario}/Día) '),
+                    helper.crearTitulo('${carro.marca} ${carro.modelo} ${carro.anio} (\$${carro.precioDiario}/Día) '),
                     _inputCantidadDias(),
-                    crearTitulo("Seleccione servicos adicionales"),
+                    helper.crearTitulo("Seleccione servicos adicionales"),
                     _crearDropdown(),
                     _inputCantidad(),
                     _botonAgregar(),
-                    crearTitulo("Servicios adicionales seleccionados"),
+                    helper.crearTitulo("Servicios adicionales seleccionados"),
                     crearSubTitulo("(Mueva a los lados para eliminar)"),
                     SizedBox(height: 4.0),
                     _crearCarrito(),
@@ -211,14 +211,6 @@ class _AlquilerState extends State<Alquiler> {
               opcionSelecionada = opt;
             });
           }),
-    );
-  }
-
-  Text crearTitulo(String tiulo) {
-    return Text(
-      tiulo,
-      textAlign: TextAlign.center,
-      style: helper.titulo2(),
     );
   }
 

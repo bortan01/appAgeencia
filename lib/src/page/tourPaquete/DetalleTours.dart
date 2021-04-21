@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
 import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
+import 'package:peliculas/src/widget/chip_widget.dart';
 import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
@@ -51,7 +53,7 @@ class _DetalleToursState extends State<DetalleTours> {
               print('hecho');
               if (snapshot.data == null) return helper.noData();
               final informacionAcicional = snapshot.data;
-              return scrollView(context, informacionAcicional);
+              return scrollView(context, informacionAcicional, widget.tourPaquete);
             case ConnectionState.active:
               return Center(child: CircularProgressIndicator());
             case ConnectionState.waiting:
@@ -62,7 +64,7 @@ class _DetalleToursState extends State<DetalleTours> {
         });
   }
 
-  Widget scrollView(BuildContext context, dynamic informacionAdicional) {
+  Widget scrollView(BuildContext context, InformacionAdicional informacionAdicional, TourPaqueteModel tur) {
     return CustomScrollView(
       slivers: <Widget>[
         AppBarWidget(
@@ -82,31 +84,14 @@ class _DetalleToursState extends State<DetalleTours> {
             color: Colors.grey,
             height: 20.0,
           ),
-          _descripcion(widget.tourPaquete.descripcionForApp),
-          listaHorizontal(
-              titulo: "EL VIAJE INCLUYE",
-              icono: Icons.check_circle,
-              color: Colors.green,
-              lista: widget.tourPaquete.incluye),
-          listaHorizontal(
-              titulo: "LUGARES DE SALIDA",
-              icono: Icons.local_car_wash,
-              color: Colors.blue,
-              lista: widget.tourPaquete.lugarSalida),
-          listaHorizontal(
-              titulo: "REQUISITOS", icono: Icons.report, color: Colors.orange, lista: widget.tourPaquete.requisitos),
-          listaHorizontal(
-              titulo: "EL NO VIAJE INCLUYE",
-              icono: Icons.cancel,
-              color: Colors.redAccent,
-              lista: widget.tourPaquete.noIncluye),
-          // (tur['promociones'].length > 0)
-          //     ? listaHorizontal(
-          //         titulo: "Promociones",
-          //         icono: Icons.golf_course,
-          //         color: Colors.deepPurple,
-          //         lista: tur['promociones'])
-          //     : Container(),
+          _descripcion(tur.descripcionForApp),
+          listaHorizontal(tipo: TypeChip.azul, lista: tur.incluye),
+          helper.crearTitulo("Lugares de Salida"),
+          listaHorizontal(tipo: TypeChip.verde, lista: tur.lugarSalida),
+          helper.crearTitulo("Requisitos"),
+          listaHorizontal(tipo: TypeChip.anaranjado, lista: tur.requisitos),
+          helper.crearTitulo("No incluye"),
+          listaHorizontal(tipo: TypeChip.rojo, lista: tur.noIncluye),
           _crearBoton(context)
         ]))
       ],
@@ -139,38 +124,14 @@ class _DetalleToursState extends State<DetalleTours> {
     );
   }
 
-  Widget listaHorizontal({@required String titulo, IconData icono, Color color, List<dynamic> lista}) {
+  Widget listaHorizontal({@required TypeChip tipo, @required List<String> lista}) {
     return Container(
-      height: 220.0,
+      margin: EdgeInsets.symmetric(horizontal: 11.0),
+      padding: EdgeInsets.symmetric(vertical: 2.0),
       child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(7.0),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
-            child: new Text(
-              titulo,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16, color: Colors.white),
-            ),
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          Flexible(
-            /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
-            /* Iteramos la lista horizontal de los cuerpos del vehiculos */
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: lista.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _elementos(
-                      texto: lista[index], colorFondo: color, icono: new Icon(icono, color: Colors.white));
-                }),
-          ),
-        ],
+        children: lista.map((item) {
+          return Container(padding: EdgeInsets.symmetric(vertical: 3.0), child: ChipWidget(text: item, type: tipo));
+        }).toList(),
       ),
     );
   }

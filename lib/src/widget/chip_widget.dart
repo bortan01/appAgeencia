@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum TypeChip { rojo, verde, azul, amarillo }
+enum TypeChip { rojo, verde, azul, anaranjado }
 
 class ChipWidget extends StatelessWidget {
   final TypeChip type;
@@ -19,8 +19,8 @@ class ChipWidget extends StatelessWidget {
       case TypeChip.azul:
         return panel(text, Colors.blue);
         break;
-      case TypeChip.amarillo:
-        return panel(text, Colors.yellowAccent);
+      case TypeChip.anaranjado:
+        return panel(text, Colors.orange);
         break;
       default:
         return panel(text, Colors.yellowAccent);
@@ -39,6 +39,7 @@ class ChipWidget extends StatelessWidget {
       child: Text(
         text,
         maxLines: 3,
+        textAlign: TextAlign.center,
         style: TextStyle(color: textColor, fontSize: 15),
       ),
     );

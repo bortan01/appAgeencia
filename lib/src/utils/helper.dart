@@ -143,3 +143,11 @@ Widget noData() {
 TextStyle titulo2() {
   return TextStyle(fontWeight: FontWeight.bold, color: Colors.black87);
 }
+
+Text crearTitulo(String tiulo) {
+    return Text(
+      tiulo,
+      textAlign: TextAlign.center,
+      style: titulo2(),
+    );
+  }

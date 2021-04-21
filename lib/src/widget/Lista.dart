@@ -32,7 +32,7 @@ class Lista extends StatelessWidget {
           padding: EdgeInsets.symmetric(horizontal: 15.0),
           child: Text(model.descripcion,
               overflow: TextOverflow.ellipsis,
-              maxLines: 50,
+              maxLines: 7,
               textAlign: TextAlign.justify,
               style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey)),
         ),

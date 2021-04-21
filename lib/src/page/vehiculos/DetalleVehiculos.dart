@@ -255,17 +255,12 @@ Widget _adicional(List<OpcioneAdicional> adicionales) {
           children: <Widget>[
             Text(
               "Servicios Adicionales:",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
             ),
             FlatButton(
               child: Text(
                 "",
-                style: TextStyle(
-                  color: Color(0xFF009ff7),
-                ),
+                style: TextStyle(color: Color(0xFF009ff7)),
               ),
               onPressed: () {},
             ),

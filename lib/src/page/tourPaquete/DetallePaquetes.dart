@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
 import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
+import 'package:peliculas/src/widget/chip_widget.dart';
 import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class DetallePaquete extends StatefulWidget {
   final TourPaqueteModel tourPaquete;
@@ -40,75 +43,54 @@ class _DetallePaqueteState extends State<DetallePaquete> {
         body: detalle(context, widget.tourPaquete));
   }
 
-  Widget detalle(BuildContext context, dynamic tur) {
+  Widget detalle(BuildContext context, TourPaqueteModel tur) {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
         future: infoAdicional,
         builder: (BuildContext context, AsyncSnapshot<InformacionAdicional> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              print('hecho');
               final informacionAcicional = snapshot.data;
-              return scrollView(context, informacionAcicional);
+              return scrollView(context, informacionAcicional, tur);
             case ConnectionState.active:
-              print('activo');
-              return Text('activo');
+              return Center(child: CircularProgressIndicator());
             case ConnectionState.waiting:
               print('esperando');
               return Center(child: CircularProgressIndicator());
             default:
-              print('esperando');
-              return Text('ninguno');
+              return helper.noData();
           }
         });
   }
 
-  Widget scrollView(BuildContext context, InformacionAdicional informacionAdicional) {
+  Widget scrollView(BuildContext context, InformacionAdicional informacionAdicional, TourPaqueteModel tur) {
     return CustomScrollView(
       slivers: <Widget>[
         AppBarWidget(
-          titulo: 'Detalle paquete' + widget.tourPaquete.nombreTours,
-          imagen: transformarFoto(widget.tourPaquete.foto),
-          id: widget.tourPaquete.idTours.toString(),
+          titulo: 'Detalle paquete' + tur.nombreTours,
+          imagen: transformarFoto(tur.foto),
+          id: tur.idTours.toString(),
         ),
         new SliverList(
             delegate: new SliverChildListDelegate([
           new SizedBox(
             height: 10.0,
           ),
-          _posterTitulo(
-              context: context, title: widget.tourPaquete.nombreTours, fecha: widget.tourPaquete.start.toString()),
+          _posterTitulo(context: context, title: tur.nombreTours, fecha: tur.start.toString()),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
             height: 20.0,
           ),
-          listaHorizontal(
-              titulo: "EL VIAJE INCLUYE",
-              icono: Icons.check_circle,
-              color: Colors.green,
-              lista: widget.tourPaquete.incluye),
+          _descripcion(tur.descripcionForApp),
+          listaHorizontal(tipo: TypeChip.azul, lista: tur.incluye),
           _incluye(context, informacionAdicional),
-          listaHorizontal(
-              titulo: "LUGARES DE SALIDA",
-              icono: Icons.local_car_wash,
-              color: Colors.blue,
-              lista: widget.tourPaquete.lugarSalida),
-          listaHorizontal(
-              titulo: "REQUISITOS", icono: Icons.report, color: Colors.orange, lista: widget.tourPaquete.requisitos),
-          listaHorizontal(
-              titulo: "EL NO VIAJE INCLUYE",
-              icono: Icons.cancel,
-              color: Colors.redAccent,
-              lista: widget.tourPaquete.noIncluye),
-          // (tur['promociones'].length > 0)
-          //     ? listaHorizontal(
-          //         titulo: "Promociones",
-          //         icono: Icons.golf_course,
-          //         color: Colors.deepPurple,
-          //         lista: tur['promociones'])
-          //     : Container(),
-
+          helper.crearTitulo("Lugares de Salida"),
+          listaHorizontal(tipo: TypeChip.verde, lista: tur.lugarSalida),
+          helper.crearTitulo("Requisitos"),
+          listaHorizontal(tipo: TypeChip.anaranjado, lista: tur.requisitos),
+          helper.crearTitulo("No incluye"),
+          listaHorizontal(tipo: TypeChip.rojo, lista: tur.noIncluye),
           _crearBoton(context)
         ]))
       ],
@@ -188,38 +170,14 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     );
   }
 
-  Widget listaHorizontal({@required String titulo, IconData icono, Color color, List<dynamic> lista}) {
+  Widget listaHorizontal({@required TypeChip tipo, @required List<String> lista}) {
     return Container(
-      height: 220.0,
+      margin: EdgeInsets.symmetric(horizontal: 11.0),
+      padding: EdgeInsets.symmetric(vertical: 2.0),
       child: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.all(7.0),
-            decoration: BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.all(Radius.circular(10.0)),
-            ),
-            child: new Text(
-              titulo,
-              textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16, color: Colors.white),
-            ),
-          ),
-          SizedBox(
-            height: 15.0,
-          ),
-          Flexible(
-            /* Flexible : Un widget que controla cómo se flexiona un hijo de una Fila , Columna o Flex . */
-            /* Iteramos la lista horizontal de los cuerpos del vehiculos */
-            child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: lista.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return _elementos(
-                      texto: lista[index], colorFondo: color, icono: new Icon(icono, color: Colors.white));
-                }),
-          ),
-        ],
+        children: lista.map((item) {
+          return Container(padding: EdgeInsets.symmetric(vertical: 3.0), child: ChipWidget(text: item, type: tipo));
+        }).toList(),
       ),
     );
   }
@@ -317,6 +275,23 @@ class _DetallePaqueteState extends State<DetallePaquete> {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => CarritoCompra(tourPaqueteModel: widget.tourPaquete)));
           }),
+    );
+  }
+
+  Widget _descripcion(String descripcion) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        SizedBox(height: 15),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: Text(descripcion,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 50,
+              textAlign: TextAlign.justify,
+              style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey)),
+        ),
+      ],
     );
   }
 }
