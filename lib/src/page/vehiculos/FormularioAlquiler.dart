@@ -93,7 +93,7 @@ class _AlquilerState extends State<Alquiler> {
                     _crearDropdown(),
                     _inputCantidad(),
                     _botonAgregar(),
-                    crearTitulo("Productos seleccionados"),
+                    crearTitulo("Servicios adicionales seleccionados"),
                     crearSubTitulo("(Mueva a los lados para eliminar)"),
                     SizedBox(height: 4.0),
                     _crearCarrito(),
@@ -136,17 +136,19 @@ class _AlquilerState extends State<Alquiler> {
 
   Widget _inputCantidadDias() {
     return Container(
-      margin: EdgeInsetsDirectional.only(top: 10.0),
+      margin: EdgeInsetsDirectional.only(top: 10.0, bottom: 8.0),
       child: TextFormField(
         initialValue: "1",
         keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
         textAlign: TextAlign.center,
-        //envia un paramettro inplicito
         validator: helper.isNumeric,
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'ingrese numero de Dias'),
         onSaved: (String valor) {
           numeroDias = int.parse(valor);
+        },
+        onChanged: (String valor) {
+          setState(() {});
         },
       ),
     );
@@ -161,10 +163,13 @@ class _AlquilerState extends State<Alquiler> {
     });
     return Row(
       children: <Widget>[
-        Text("Vehículo + Servicios Adicionales:",
-            overflow: TextOverflow.ellipsis,
-            maxLines: 3,
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text("Vehículo +", overflow: TextOverflow.ellipsis, maxLines: 3, style: helper.titulo2()),
+            Text("Servicios Adicionales:", overflow: TextOverflow.ellipsis, maxLines: 3, style: helper.titulo2()),
+          ],
+        ),
         Spacer(),
         Text("\$${total.toStringAsFixed(2)}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
       ],
