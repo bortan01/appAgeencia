@@ -46,21 +46,17 @@ class CardViewAutoHorizontal extends StatelessWidget {
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
           boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10.0,
-                offset: Offset(0.0, 8.0))
+            BoxShadow(color: Colors.black12, blurRadius: 10.0, offset: Offset(0.0, 8.0))
           ], /* Aplica sombra */
         ),
         child: InkWell(
           onTap: () {
-            //print("el indice es " + index.toString());
+            print("el indice es " + index.toString());
             cd.cambiarCard(index);
           },
           borderRadius: new BorderRadius.circular(8.0),
           child: Container(
-            margin: const EdgeInsets.only(
-                left: 55.0, top: 12.0, right: 12.0, bottom: 12.0),
+            margin: const EdgeInsets.only(left: 55.0, top: 12.0, right: 12.0, bottom: 12.0),
             /*  Margen del contenido dentro de la tarjeta  */
             constraints: new BoxConstraints.expand(),
             child: Column(
@@ -68,15 +64,10 @@ class CardViewAutoHorizontal extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 new Text(titulo,
-                    style: TextStyle(
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                        color: colortexto),
+                    style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold, color: colortexto),
                     overflow: TextOverflow.ellipsis),
                 new Text(subtitulo,
-                    style: TextStyle(fontSize: 12.0, color: colortexto),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis),
+                    style: TextStyle(fontSize: 12.0, color: colortexto), maxLines: 2, overflow: TextOverflow.ellipsis),
               ],
             ),
           ),

@@ -28,8 +28,7 @@ class ListaVehiculos extends StatelessWidget {
     return FutureBuilder(
       future: _vehiculoServices.obtenerVehiculos(""),
       builder: (BuildContext context, AsyncSnapshot<VehiculosModel> snapshot) {
-        print(snapshot.connectionState);
-        VehiculosModel data = snapshot.data;
+       VehiculosModel data = snapshot.data;
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             print(data);

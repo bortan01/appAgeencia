@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:peliculas/src/models/vehiculo/categoria_model.dart';
 import 'package:peliculas/src/providers/card_provider.dart';
 import 'package:peliculas/src/services/vehiculo_services.dart';
 import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
 import 'package:peliculas/src/widget/card_view_widget.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class HomeMenu extends StatefulWidget {
   @override
@@ -13,20 +14,27 @@ class HomeMenu extends StatefulWidget {
 class _HomeMenuState extends State<HomeMenu> {
   //este es el stream para cambiar la imagen del centro
   final cd = new CardProvider();
+  Future<List<Categoria>> futureCategorias;
 
   @override
   void initState() {
     super.initState();
-    getCategoria();
+    futureCategorias = getCategoria();
   }
 
-  getCategoria() async {
+  Future<List<Categoria>> getCategoria() async {
     VehiculoServices a = new VehiculoServices();
-    final respuea = await a.obtenerCategoria();
-    print(respuea.length);
+    final respuesta = await a.obtenerCategoria();
+    listaCategoria = respuesta;
+
+    if (listaCategoria.isNotEmpty) {
+      cd.cambiarCard(listaCategoria[0].idcategoria);
+    }
+
+    return respuesta;
   }
 
-  List listaPaquete;
+  List<Categoria> listaCategoria;
   BoxDecoration boxDecorationFondo;
   Color colorCardView = Colors.white12;
   Color colorCardViewHorizontal = Colors.white10;
@@ -35,8 +43,6 @@ class _HomeMenuState extends State<HomeMenu> {
 
   @override
   Widget build(BuildContext context) {
-    cd.cambiarCard(0);
-
     boxDecorationFondo = BoxDecoration(
         gradient: LinearGradient(
       begin: Alignment.topRight,
@@ -44,62 +50,26 @@ class _HomeMenuState extends State<HomeMenu> {
       colors: [Theme.of(context).canvasColor, Theme.of(context).canvasColor],
     ));
 
-    listaPaquete = [
-      {
-        'posicion': 0,
-        'titulo': "Todos",
-        'subtitulo':
-            "Una característica clave en un sedán es la seguridad que aporta. Los frenos antibloqueo son la primera línea de defensa ante cualquier accidente. Al momento de la colisión, las bolsas de aire pueden salvar la vida de tus pasajeros.",
-        'assetImage': AssetImage("assets/img/sedan1.png"),
-        'superficie': 'Auto Familiar',
-        'distancia': '0 km',
+    return FutureBuilder(
+      future: futureCategorias,
+      builder: (BuildContext context, AsyncSnapshot<List<Categoria>> snapshot) {
+        List<Categoria> data = snapshot.data;
+        switch (snapshot.connectionState) {
+          case ConnectionState.done:
+            if (data == null || data.isEmpty) return helper.noData();
+            return cuerpo(context);
+          case ConnectionState.active:
+            return Center(child: CircularProgressIndicator());
+          case ConnectionState.waiting:
+            return Center(child: CircularProgressIndicator());
+          default:
+            return helper.noData();
+        }
       },
-      {
-        'posicion': 1,
-        'titulo': "Camionetas",
-        'subtitulo':
-            "Empleado generalmente para el transporte de mercancías, un término que hoy en día se aplica a veces informalmente a distintos tipos de automóviles, en concreto pickups, vehículos todoterreno, furgonetas, monovolúmenes, y familiares.",
-        'assetImage': AssetImage("assets/img/camioneta.png"),
-        'superficie': '74,8 millones km²',
-        'distancia': ' 57,91 millones km',
-      },
-      {
-        'posicion': 2,
-        'titulo': "Pickup",
-        'subtitulo':
-            "Empleado generalmente para el transporte de mercancías, y que tiene en su parte trasera una zona de carga descubierta (denominada caja, batea, balde, carrocería, platón, cama o palangana), en la cual se pueden colocar objetos grandes.",
-        'assetImage': AssetImage("assets/img/pickup.png"),
-        'superficie': '460,2 millones km²',
-        'distancia': '108,2 millones km',
-      },
-      {
-        'posicion': 3,
-        'titulo': "Microbus",
-        'subtitulo':
-            "Gran furgoneta que tiene asientos en la parte posterior para los pasajeros y ventanas a los lados.",
-        'assetImage': AssetImage("assets/img/microbus.png"),
-        'superficie': '510,1 millones km²',
-        'distancia': '149,6 millones km',
-      },
-      {
-        'posicion': 4,
-        'titulo': "Minivans",
-        'subtitulo':
-            "Ofrece características aptas para la familia, además de toda la tecnología que se podría desear en un paquete atractivo y a un precio muy conveniente.",
-        'assetImage': AssetImage("assets/img/minivan.png"),
-        'superficie': '144,8 millones km²',
-        'distancia': '227,9 millones km',
-      },
-      {
-        'posicion': 5,
-        'titulo': "Cotizar Vehículo",
-        'subtitulo': "Ven y Cotiza tu Vehículo",
-        'assetImage': AssetImage("assets/img/cotizar-tours.png"),
-        'superficie': 'Sub-America y Europa',
-        'distancia': ' 57,91 millones km',
-      },
-    ];
+    );
+  }
 
+  Container cuerpo(BuildContext context) {
     return Container(
       decoration: boxDecorationFondo,
       child: Scaffold(
@@ -129,17 +99,17 @@ class _HomeMenuState extends State<HomeMenu> {
             /* Iteramos la lista horizontal de los cuerpos del vehiculos */
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: listaPaquete.length,
+                itemCount: listaCategoria.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CardViewAutoHorizontal(
                     color: Colors.red,
                     colortexto: Theme.of(context).bottomAppBarColor,
-                    index: listaPaquete[index]["posicion"],
-                    assetImage: listaPaquete[index]["assetImage"],
-                    titulo: listaPaquete[index]["titulo"],
-                    subtitulo: listaPaquete[index]["subtitulo"],
-                    distancia: listaPaquete[index]["distancia"],
-                    superficie: listaPaquete[index]["superficie"],
+                    index: listaCategoria[index].idcategoria,
+                    assetImage: listaCategoria[index].getAsset(),
+                    titulo: listaCategoria[index].nombreCategoria,
+                    subtitulo: listaCategoria[index].descripcionCategoria,
+                    distancia: '',
+                    superficie: '',
                   );
                 }),
           ),
@@ -152,17 +122,19 @@ class _HomeMenuState extends State<HomeMenu> {
     return StreamBuilder(
       //este es el stream al que se esta escuchando
       stream: cd.cardStreamX,
-      initialData: 0,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        int posicion = snapshot.data;
+      initialData: listaCategoria[0].idcategoria,
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+        int indexSeleccionado = snapshot.data;
+        Categoria categoriaSeleccionada =
+            listaCategoria.firstWhere((categoria) => categoria.idcategoria == indexSeleccionado);
         return Container(
           child: CardViewAutoView(
             colortexto: Theme.of(context).bottomAppBarColor,
-            assetImage: listaPaquete[posicion]["assetImage"],
-            titulo: listaPaquete[posicion]["titulo"],
-            subtitulo: listaPaquete[posicion]["subtitulo"],
-            distancia: listaPaquete[posicion]["distancia"],
-            superficie: listaPaquete[posicion]["superficie"],
+            assetImage: categoriaSeleccionada.getAsset(),
+            titulo: categoriaSeleccionada.nombreCategoria,
+            subtitulo: categoriaSeleccionada.descripcionCategoria,
+            distancia: '',
+            superficie: '',
           ),
         );
       },
@@ -180,73 +152,19 @@ class _HomeMenuState extends State<HomeMenu> {
   Widget _boton() {
     return StreamBuilder(
       stream: cd.cardStreamX,
-      initialData: 0,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        int posicion = snapshot.data;
+      initialData: listaCategoria[0].idcategoria,
+      builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+        int indexSeleccionado = snapshot.data;
+        Categoria categoriaSeleccionada =
+            listaCategoria.firstWhere((categoria) => categoria.idcategoria == indexSeleccionado);
         return FloatingActionButton.extended(
           onPressed: () {
-            switch (posicion) {
-              case 0:
-
-                ///lo ideal es crear una sola pagina y mandarle los argumentos
-                ///para que dibuje deacuerdo a lo que se le envia
-
-                ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Sedan");
-
-                break;
-              case 1:
-
-                ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Camionetas");
-
-                break;
-              case 2:
-
-                ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Pickup");
-
-                break;
-              case 3:
-
-                ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Microbus");
-
-                break;
-              case 4:
-
-                ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaVehiculos', arguments: "Minivans");
-
-                break;
-
-              case 5:
-
-                ///redirigir a paquetes intercacionales
-                ///redirigir a paquetes intercacionales
-                print("en el cotizador");
-                Navigator.pushNamed(context, 'CotizarAuto', arguments: "Cotizar");
-
-                break;
-              default:
-            }
+            print(indexSeleccionado);
           },
-          label: nombreFlota(posicion),
+          label: Text('Ver Flota de ${categoriaSeleccionada.nombreCategoria}'),
           icon: Icon(Icons.check),
         );
       },
     );
-  }
-
-  Widget nombreFlota(int posicion) {
-    List<String> nombres = [
-      "Ver Flota de Sedan",
-      "Ver Flota de Camionetas",
-      " Ver Flota de Pickup",
-      "Ver Flota de Microbus",
-      "Ver Flota de Minivans",
-      "Cotizar Vehiculos"
-    ];
-    return Text(nombres[posicion]);
   }
 }
