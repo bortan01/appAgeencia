@@ -6,9 +6,8 @@ import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
 import 'package:peliculas/src/services/conf.dart';
 
 class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
-  Future<VehiculosModel> obtenerVehiculos(String idModelo) async {
-    print('haciendo peticion de vehiculos');
-    final url = '${Conf.urlServidor}vehiculo/show?idModelo=$idModelo';
+  Future<VehiculosModel> obtenerVehiculos(String idCategoria) async {
+    final url = '${Conf.urlServidor}vehiculo/show?idCategoria=$idCategoria';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final res = vehiculosModelFromJson(response.body);
@@ -18,7 +17,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
- Future<List<Categoria>> obtenerCategoria() async {
+  Future<List<Categoria>> obtenerCategoria() async {
     print('haciendo peticion de vehiculos');
     final url = '${Conf.urlServidor}categoriasAutos/categorias';
     final response = await http.get(url);
@@ -29,6 +28,4 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
       return [];
     }
   }
-
-  
 }

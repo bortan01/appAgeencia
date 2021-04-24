@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/vehiculo/categoria_model.dart';
 import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
 import 'package:peliculas/src/page/vehiculos/DetalleVehiculos.dart';
@@ -11,8 +12,11 @@ class ListaVehiculos extends StatelessWidget {
   final VehiculoServices _vehiculoServices = new VehiculoServices();
   @override
   Widget build(BuildContext context) {
-    final String argumento = ModalRoute.of(context).settings.arguments;
-    return Scaffold(appBar: appBarCategorias(argumento), body: _listado(context));
+    final Categoria categoria = ModalRoute.of(context).settings.arguments;
+    return Scaffold(
+      appBar: appBarCategorias(categoria.nombreCategoria),
+      body: _listado(context, categoria),
+    );
   }
 
   Widget appBarCategorias(String argumento) {
@@ -23,16 +27,15 @@ class ListaVehiculos extends StatelessWidget {
     );
   }
 
-  Widget _listado(BuildContext context) {
+  Widget _listado(BuildContext context, Categoria categoria) {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
-      future: _vehiculoServices.obtenerVehiculos(""),
+      future: _vehiculoServices.obtenerVehiculos(categoria.idcategoria.toString()),
       builder: (BuildContext context, AsyncSnapshot<VehiculosModel> snapshot) {
-       VehiculosModel data = snapshot.data;
+        VehiculosModel data = snapshot.data;
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            print(data);
-            if (data == null || data.autos.isEmpty) return helper.noData();
+             if (data == null || data.autos.isEmpty) return helper.noData();
             return _creandoElementos(context, data);
           case ConnectionState.active:
             return Center(child: CircularProgressIndicator());
@@ -82,6 +85,7 @@ class ListaVehiculos extends StatelessWidget {
           );
         });
   }
+
   ListView listView() {
     return ListView.builder(
         itemCount: CourseList.list.length,

@@ -137,7 +137,7 @@ class _HomeMenuState extends State<HomeMenu> {
             superficie: '',
           ),
         );
-      },
+      },      
     );
   }
 
@@ -159,7 +159,7 @@ class _HomeMenuState extends State<HomeMenu> {
             listaCategoria.firstWhere((categoria) => categoria.idcategoria == indexSeleccionado);
         return FloatingActionButton.extended(
           onPressed: () {
-            print(indexSeleccionado);
+            Navigator.pushNamed(context, 'ListaVehiculos', arguments: categoriaSeleccionada);
           },
           label: Text('Ver Flota de ${categoriaSeleccionada.nombreCategoria}'),
           icon: Icon(Icons.check),
