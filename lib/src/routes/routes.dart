@@ -62,7 +62,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'home': (BuildContext context) => Home(),
     //MODULO PAQUETES
     'HomePaquetes': (BuildContext context) => HomePaquetes(),
-        //MODULO TOURS
+    //MODULO TOURS
     'CotizarTours': (BuildContext context) => CotizarTours(),
     'HomeTours': (BuildContext context) => HomeTours(),
     'ListaTours': (BuildContext context) => ListaTours(),
@@ -70,9 +70,9 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'menuVehiculos': (BuildContext context) => HomeMenu(),
 
     'ListaVehiculos': (BuildContext context) => ListaVehiculos(),
-     //'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(),
+    //'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(),
     'Alquiler': (BuildContext context) => Alquiler(),
-    'CotizarAuto': (BuildContext context) => CotizarAuto(),
+    'CotizarAuto': (BuildContext context) => CotizaVehiculo(),
     //MODULO ENCOMIENDA
     'encomienda': (BuildContext context) => EncomiendaPage(),
     'menuEncomienda': (BuildContext context) => MenuEncomienda(),
@@ -85,8 +85,8 @@ Map<String, WidgetBuilder> getAplicationRoute() {
 
     //MODULO DE USUARIO.
     'login': (BuildContext context) => Login(),
-    'subirImagenes' : (BuildContext context) => SubirImagenes(),
-    'subirDocumentos' : (BuildContext context) => SubirDocumentos(),
+    'subirImagenes': (BuildContext context) => SubirImagenes(),
+    'subirDocumentos': (BuildContext context) => SubirDocumentos(),
     'olvide': (BuildContext context) => Olvide(),
     'codigo': (BuildContext context) => Codigo(),
     'nuevaContra': (BuildContext context) => IngreseContra(),

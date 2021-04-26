@@ -26,6 +26,12 @@ class _HomeMenuState extends State<HomeMenu> {
     VehiculoServices a = new VehiculoServices();
     final respuesta = await a.obtenerCategoria();
     listaCategoria = respuesta;
+    //agregamos una opcion mas para la cotizacion de vehiculos
+    listaCategoria.add(new Categoria(
+      idcategoria: listaCategoria.length + 1,
+      nombreCategoria: 'Cotizar Vehículo',
+      descripcionCategoria: 'Ven y Cotiza tu Vehículo',
+    ));
 
     if (listaCategoria.isNotEmpty) {
       cd.cambiarCard(listaCategoria[0].idcategoria);
@@ -59,9 +65,9 @@ class _HomeMenuState extends State<HomeMenu> {
             if (data == null || data.isEmpty) return helper.noData();
             return cuerpo(context);
           case ConnectionState.active:
-            return Center(child: CircularProgressIndicator());
+            return helper.waitingData();
           case ConnectionState.waiting:
-            return Center(child: CircularProgressIndicator());
+            return helper.waitingData();
           default:
             return helper.noData();
         }
@@ -137,7 +143,7 @@ class _HomeMenuState extends State<HomeMenu> {
             superficie: '',
           ),
         );
-      },      
+      },
     );
   }
 
@@ -157,11 +163,18 @@ class _HomeMenuState extends State<HomeMenu> {
         int indexSeleccionado = snapshot.data;
         Categoria categoriaSeleccionada =
             listaCategoria.firstWhere((categoria) => categoria.idcategoria == indexSeleccionado);
+        String nombreCategoria = categoriaSeleccionada.nombreCategoria;
         return FloatingActionButton.extended(
           onPressed: () {
-            Navigator.pushNamed(context, 'ListaVehiculos', arguments: categoriaSeleccionada);
+            if (nombreCategoria == 'Cotizar Vehículo') {
+              Navigator.pushNamed(context, 'CotizarAuto', arguments: "Cotizar");
+            } else {
+              Navigator.pushNamed(context, 'ListaVehiculos', arguments: categoriaSeleccionada);
+            }
           },
-          label: Text('Ver Flota de ${categoriaSeleccionada.nombreCategoria}'),
+          label: (nombreCategoria == 'Cotizar Vehículo')
+              ? Text('Cotizar Vehículo')
+              : Text('Ver Flota de $nombreCategoria'),
           icon: Icon(Icons.check),
         );
       },

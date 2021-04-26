@@ -140,14 +140,18 @@ Widget noData() {
   return Container(child: Center(child: Text("No hay datos que mostrar")));
 }
 
+Widget waitingData() {
+  return Container(color: Colors.white, child: Center(child: CircularProgressIndicator()));
+}
+
 TextStyle titulo2() {
   return TextStyle(fontWeight: FontWeight.bold, color: Colors.black87);
 }
 
 Text crearTitulo(String tiulo) {
-    return Text(
-      tiulo,
-      textAlign: TextAlign.center,
-      style: titulo2(),
-    );
-  }
+  return Text(
+    tiulo,
+    textAlign: TextAlign.center,
+    style: titulo2(),
+  );
+}
