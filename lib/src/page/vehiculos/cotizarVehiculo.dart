@@ -120,7 +120,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(top: screenHeight / 4),
+          margin: EdgeInsets.only(top: screenHeight / 4, bottom: 30.0),
           padding: EdgeInsets.only(left: 10, right: 10),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -180,6 +180,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
         keyboardType: TextInputType.multiline,
         minLines: 1,
         maxLines: 8,
+        controller: _controllerCaracteristicas,
         textAlign: TextAlign.center,
         validator: (s) => helper.maxLengthRequired(s, 10),
         decoration: InputDecoration(
@@ -279,6 +280,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
         keyboardType: TextInputType.multiline,
         minLines: 1,
         maxLines: 8,
+        controller: _controllerDireccionRecogida,
         textAlign: TextAlign.center,
         //envia un paramettro inplicito
         validator: (s) => helper.maxLengthRequired(s, 10),
@@ -299,6 +301,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
         keyboardType: TextInputType.multiline,
         minLines: 1,
         maxLines: 8,
+        controller: _controllerDireccionDevolucion,
         textAlign: TextAlign.center,
         //envia un paramettro inplicito
         validator: (s) => helper.maxLengthRequired(s, 10),
@@ -440,15 +443,17 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
     );
     bool res = await VehiculoServices().guardarReserva(miModel);
     if (res) {
-      helper.mostrarMensajeOk(context, 'Solicitud de cotización enviada correctamente');
-      _controllerCaracteristicas.text = '';
-      _controllerDireccionDevolucion.text = '';
-      _controllerDireccionRecogida.text = '';
-      _controllerFechaDevolucion.text = '';
-      _controllerFechaRecogida.text = '';
-      _controllerTimeDevolucion.text = '';
-      _controllerTimeRecogida.text = '';
-      setState(() {});
+      helper.mostrarMensajeOk(context,
+          'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
+      setState(() {
+        _controllerCaracteristicas.clear();
+        _controllerDireccionDevolucion.clear();
+        _controllerDireccionRecogida.clear();
+        _controllerFechaDevolucion.clear();
+        _controllerFechaRecogida.clear();
+        _controllerTimeDevolucion.clear();
+        _controllerTimeRecogida.clear();
+      });
     } else {
       helper.mostrarMensanjeError(context, 'Favor intente más tarde');
     }

@@ -148,6 +148,7 @@ class _AlquilerState extends State<Alquiler> {
           numeroDias = int.parse(valor);
         },
         onChanged: (String valor) {
+          numeroDias = int.parse(valor);
           setState(() {});
         },
       ),
@@ -155,7 +156,7 @@ class _AlquilerState extends State<Alquiler> {
   }
 
   Widget _labelTotal() {
-    total = 0.00;
+     total = 0.00;
     total += widget.carro.precioDiario * numeroDias;
 
     opcionesSeleccionadas.forEach((element) {

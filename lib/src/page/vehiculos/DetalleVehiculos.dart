@@ -152,11 +152,11 @@ Widget _descripcion(String titulo, String descripcion) {
       (titulo.isNotEmpty)
           ? Container(
               margin: EdgeInsets.only(left: 15.0, bottom: 5.0),
-              child: Text(titulo, style: helper.titulo2()),
+              child: Center(child: Text(titulo, style: helper.titulo2())),
             )
           : Container(),
       Container(
-        padding: EdgeInsets.symmetric(horizontal: 15.0),
+        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
         child: Text(descripcion,
             overflow: TextOverflow.ellipsis,
             maxLines: 50,
@@ -212,11 +212,13 @@ Widget _otrasOpciones(List<String> opcAvanzadas) {
   final titulo = Container(
       padding: EdgeInsets.symmetric(horizontal: 11.0),
       margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: Text(
-        "Otras opciones:",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          color: Colors.black87,
+      child: Center(
+        child: Text(
+          "Otras opciones",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
       ));
 
@@ -250,21 +252,9 @@ Widget _adicional(List<OpcioneAdicional> adicionales) {
     ),
     child: Column(
       children: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Text(
-              "Servicios Adicionales:",
-              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
-            ),
-            FlatButton(
-              child: Text(
-                "",
-                style: TextStyle(color: Color(0xFF009ff7)),
-              ),
-              onPressed: () {},
-            ),
-          ],
+        Text(
+          "Servicios Adicionales",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
         ),
         new Column(
             children: adicionales
