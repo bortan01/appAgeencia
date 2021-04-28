@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/vehiculo/cotizacionCliente_model.dart';
 import 'package:peliculas/src/models/vehiculo/tipoVehiculo_model.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/vehiculo_services.dart';
+import 'package:intl/intl.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class CotizaVehiculo extends StatefulWidget {
@@ -12,14 +15,21 @@ class CotizaVehiculo extends StatefulWidget {
 
 class _CotizaVehiculoState extends State<CotizaVehiculo> {
   Future<List<ModeloVehiculo>> futureModelos;
+  List<ModeloVehiculo> listaModelos = [];
+  List<int> listaYears = [];
+  TextEditingController _controllerCaracteristicas = new TextEditingController();
+  TextEditingController _controllerDireccionRecogida = new TextEditingController();
+  TextEditingController _controllerFechaRecogida = new TextEditingController();
+  TextEditingController _controllerTimeRecogida = new TextEditingController();
+  TextEditingController _controllerDireccionDevolucion = new TextEditingController();
+  TextEditingController _controllerFechaDevolucion = new TextEditingController();
+  TextEditingController _controllerTimeDevolucion = new TextEditingController();
+  PreferenciasUsuario _pref = new PreferenciasUsuario();
+  int anioSeleccionado = 0;
+  ModeloVehiculo modeloSeleccionado = ModeloVehiculo();
+
   Color fondo = Colors.green;
   double screenHeight;
-  // // List<ModeloVehiculo> opcionesSeleccionadas = [];
-  List<ModeloVehiculo> listaModelos = [];
-  // // int cantidadSeleccionada = 1;
-  // int numeroDias = 1;
-  // double total = 0.0;
-  // ModeloVehiculo opcionSelecionada;
 
   final formKey = GlobalKey<FormState>();
 
@@ -27,12 +37,24 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
   void initState() {
     super.initState();
     futureModelos = getModelo();
+    listaYears = getListYear();
   }
 
   Future<List<ModeloVehiculo>> getModelo() async {
     final respuesta = await VehiculoServices().obtenerModelo();
     listaModelos = respuesta;
+    modeloSeleccionado = listaModelos[0];
     return respuesta;
+  }
+
+  List<int> getListYear() {
+    List<int> lista = [];
+    int year = DateTime.now().year + 1;
+    for (var i = 10; i > 0; i--) {
+      lista.add(year - i);
+    }
+    anioSeleccionado = lista[0];
+    return lista;
   }
 
   @override
@@ -114,9 +136,23 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
                   children: <Widget>[
                     helper.crearTitulo("Seleccione el modelo"),
                     _crearDropdown(),
-                    helper.crearTitulo(''),
-                    _inputCantidadDias(),
-                    _inputCantidad(),
+                    helper.crearTitulo('Año'),
+                    _crearDropdownYears(),
+                    helper.crearTitulo('Características'),
+                    _inputCaracteristicas(),
+                    helper.crearTitulo('Dirección de Recogida'),
+                    _inputDireccionRecogida(),
+                    helper.crearTitulo('Fecha de Recogida'),
+                    _crearFecha(context, _controllerFechaRecogida, 'Seleccione la Fecha'),
+                    helper.crearTitulo('Hora de Recogida'),
+                    _crearHora(context, _controllerTimeRecogida, 'Seleccione la Hora'),
+                    helper.crearTitulo('Dirección de Devolución'),
+                    _inputDireccionDevolucion(),
+                    helper.crearTitulo('Fecha de Devolución'),
+                    _crearFecha(context, _controllerFechaDevolucion, 'Seleccione la Fecha'),
+                    helper.crearTitulo('Hora de Devolución'),
+                    _crearHora(context, _controllerTimeDevolucion, 'Seleccione la Hora'),
+                    _botonAgregar(context)
                   ],
                 ),
               ),
@@ -137,36 +173,140 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
     );
   }
 
-  Widget _inputCantidad() {
-    return TextFormField(
-      initialValue: "1",
-      keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
-      textAlign: TextAlign.center,
-      //envia un paramettro inplicito
-      validator: helper.isNumeric,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'ingrese cantidad'),
-      onSaved: (String valor) {
-        // cantidadSeleccionada = int.parse(valor);
-      },
+  Widget _inputCaracteristicas() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.multiline,
+        minLines: 1,
+        maxLines: 8,
+        textAlign: TextAlign.center,
+        validator: (s) => helper.maxLengthRequired(s, 10),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          alignLabelWithHint: true,
+          hintText: 'Digite las características que desee',
+        ),
+        onSaved: (String valor) {
+          _controllerCaracteristicas.text = valor;
+        },
+      ),
     );
   }
 
-  Widget _inputCantidadDias() {
+  Widget _crearFecha(BuildContext context, TextEditingController controller, String hint) {
     return Container(
-      margin: EdgeInsetsDirectional.only(top: 10.0, bottom: 8.0),
-      child: TextFormField(
-        initialValue: "1",
-        keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: new TextFormField(
+        controller: controller,
+        enableInteractiveSelection: false,
         textAlign: TextAlign.center,
-        validator: helper.isNumeric,
+        validator: (s) => helper.minLengthRequired(s, 2),
         decoration: InputDecoration(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'ingrese numero de Dias'),
-        onSaved: (String valor) {
-          // numeroDias = int.parse(valor);
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: hint,
+        ),
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+          _selectDate(context, controller);
         },
-        onChanged: (String valor) {
-          setState(() {});
+      ),
+    );
+  }
+
+  Widget _crearHora(BuildContext context, TextEditingController controller, String hint) {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: new TextFormField(
+        controller: controller,
+        textAlign: TextAlign.center,
+        enableInteractiveSelection: false,
+        validator: (s) => helper.minLengthRequired(s, 2),
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+            hintText: hint,
+            alignLabelWithHint: true),
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+          _selectTime(context, controller);
+        },
+      ),
+    );
+  }
+
+  _selectDate(BuildContext context, TextEditingController controller) async {
+    DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime(2018),
+      lastDate: new DateTime(2025),
+      locale: Locale('es', 'ES'),
+    );
+    if (picked != null) {
+      setState(() {
+        var fecha = picked;
+        controller.text = DateFormat('yyyy-MM-dd').format(fecha);
+      });
+    }
+  }
+
+  _selectTime(BuildContext context, TextEditingController controller) async {
+    TimeOfDay picked = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+        builder: (context, child) {
+          if (MediaQuery.of(context).alwaysUse24HourFormat) {
+            return child;
+          } else {
+            return Localizations.override(
+              context: context,
+              locale: Locale('es', 'US'),
+              child: child,
+            );
+          }
+        });
+    if (picked != null) {
+      setState(() {
+        controller.text = '${picked.hour}:${picked.minute}:00';
+      });
+    }
+  }
+
+  Widget _inputDireccionRecogida() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.multiline,
+        minLines: 1,
+        maxLines: 8,
+        textAlign: TextAlign.center,
+        //envia un paramettro inplicito
+        validator: (s) => helper.maxLengthRequired(s, 10),
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+            hintText: 'Digite la direccion de recogida'),
+        onSaved: (String valor) {
+          _controllerDireccionRecogida.text = valor;
+        },
+      ),
+    );
+  }
+
+  Widget _inputDireccionDevolucion() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.multiline,
+        minLines: 1,
+        maxLines: 8,
+        textAlign: TextAlign.center,
+        //envia un paramettro inplicito
+        validator: (s) => helper.maxLengthRequired(s, 10),
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+            hintText: 'Digite la direccion de devolución'),
+        onSaved: (String valor) {
+          _controllerDireccionDevolucion.text = valor;
         },
       ),
     );
@@ -182,9 +322,27 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
           icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
           value: listaModelos[0],
           items: opcionesDropdown(),
-          onChanged: (opt) {
+          onChanged: (ModeloVehiculo opt) {
             setState(() {
-              // opcionSelecionada = opt;
+              modeloSeleccionado = opt;
+            });
+          }),
+    );
+  }
+
+  Widget _crearDropdownYears() {
+    return Container(
+      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: DropdownButtonFormField(
+          isExpanded: true,
+          decoration: InputDecoration(
+              hintText: "", border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
+          icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
+          value: listaYears[0],
+          items: opcionesDropdownYears(),
+          onChanged: (int opt) {
+            setState(() {
+              anioSeleccionado = opt;
             });
           }),
     );
@@ -222,5 +380,77 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
     });
 
     return lista;
+  }
+
+  List<DropdownMenuItem<int>> opcionesDropdownYears() {
+    List<DropdownMenuItem<int>> lista = new List();
+    listaYears.forEach((year) {
+      lista.add(DropdownMenuItem(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '${year.toString()}',
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          value: year));
+    });
+
+    return lista;
+  }
+
+  Widget _botonAgregar(BuildContext context) {
+    return RaisedButton.icon(
+      icon: Icon(Icons.send),
+      label: Text("Enviar Solicitud de cotización"),
+      color: Colors.blue,
+      textColor: Colors.white,
+      focusColor: Colors.red,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      onPressed: () async {
+        if (formKey.currentState.validate()) {
+          formKey.currentState.save();
+          guardar(context);
+        }
+      },
+    );
+  }
+
+  Future<void> guardar(BuildContext context) async {
+    var miModel = CotizacionClienteModel(
+      anio: anioSeleccionado.toString(),
+      modelo: modeloSeleccionado.idmodelo,
+      caracteristicas: _controllerCaracteristicas.text,
+      direccionDevolucion: _controllerDireccionDevolucion.text,
+      direccionRecogida: _controllerDireccionRecogida.text,
+      fechaDevolucion: _controllerFechaDevolucion.text,
+      fechaRecogida: _controllerFechaRecogida.text,
+      horaDevolucion: _controllerTimeDevolucion.text,
+      horaRecogida: _controllerTimeRecogida.text,
+      idUsuario: _pref.idCliente,
+    );
+    bool res = await VehiculoServices().guardarReserva(miModel);
+    if (res) {
+      helper.mostrarMensajeOk(context, 'Solicitud de cotización enviada correctamente');
+      _controllerCaracteristicas.text = '';
+      _controllerDireccionDevolucion.text = '';
+      _controllerDireccionRecogida.text = '';
+      _controllerFechaDevolucion.text = '';
+      _controllerFechaRecogida.text = '';
+      _controllerTimeDevolucion.text = '';
+      _controllerTimeRecogida.text = '';
+      setState(() {});
+    } else {
+      helper.mostrarMensanjeError(context, 'Favor intente más tarde');
+    }
   }
 }

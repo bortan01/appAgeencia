@@ -95,6 +95,25 @@ void mostrarMensanjeError(BuildContext context, String mensaje) {
   ).show();
 }
 
+void mostrarMensajeOk(BuildContext context, String mensaje) {
+  Alert(
+    context: context,
+    type: AlertType.success,
+    title: "Exito",
+    desc: mensaje,
+    buttons: [
+      DialogButton(
+        child: Text(
+          "Cerrar",
+          style: TextStyle(color: Colors.white, fontSize: 20),
+        ),
+        onPressed: () => Navigator.pop(context),
+        color: Color.fromRGBO(0, 179, 134, 1.0),
+      )
+    ],
+  ).show();
+}
+
 //REDIRECCIONA SOLAMENTE AL HOME
 void mensanjeOkRedireccionar(BuildContext context, String mensaje, String ruta) {
   Alert(
