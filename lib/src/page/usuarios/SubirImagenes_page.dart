@@ -99,7 +99,7 @@ class _SubirImagenesState extends State<SubirImagenes> {
 
   submit(BuildContext context) async {
     if (_foto != null) {
-      bool respuesta = await _userServices.subirFotoPerfil(_foto);
+      bool respuesta = await _userServices.subirFoto(_foto, 'usuario_perfil');
       respuesta
           ? helper.mensanjeOkRedireccionar(context, "Foto de perfil acualizada", "home")
           : helper.mostrarMensanjeError(context, "Foto de perfil no actualizada");

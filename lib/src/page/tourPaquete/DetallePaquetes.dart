@@ -224,44 +224,6 @@ class _DetallePaqueteState extends State<DetallePaquete> {
 
     return myLista;
   }
-
-  Widget _elementos({@required String texto, @required Icon icono, @required Color colorFondo}) {
-    return Opacity(
-      opacity: 0.9,
-      child: new Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-            color: colorFondo,
-            boxShadow: [BoxShadow(color: Colors.black.withAlpha(100), blurRadius: 10.0)]),
-        height: 210.0,
-        width: 140.0,
-        child: Column(
-          children: <Widget>[
-            new Container(
-              margin: EdgeInsets.all(8.0),
-              padding: EdgeInsets.all(10.0),
-              child: (icono),
-              decoration:
-                  new BoxDecoration(border: Border.all(color: Colors.white), borderRadius: BorderRadius.circular(40.0)),
-            ),
-            new SizedBox(height: 7.0),
-            new Container(
-                margin: EdgeInsets.symmetric(horizontal: 8.0),
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
-                child: new Text(
-                  texto,
-                  style: TextStyle(fontSize: 11, color: Colors.white, fontWeight: FontWeight.bold),
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  maxLines: 6,
-                ))
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _crearBoton(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
