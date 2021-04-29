@@ -5,6 +5,7 @@ import 'package:peliculas/src/models/image/documentos_model.dart';
 import 'package:peliculas/src/models/image/responseImagen_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SubirDocumentos extends StatefulWidget {
   @override
@@ -104,7 +105,7 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
         child: Image(image: AssetImage('assets/img/document2.png'), height: 300.0, fit: BoxFit.cover));
   }
 
-  Widget _fotoDocumentoWidget(String url) {
+  Widget _fotoDocumentoWidget(DocumentosModel doc) {
     ///esto es para evitar problema si no existe el id del producto, como cuando no se a creado
     return Column(
       children: <Widget>[
@@ -115,12 +116,12 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
             child: Container(
                 child: FadeInImage(
               placeholder: AssetImage("assets/gif/loading.gif"),
-              image: NetworkImage(helper.transformarFoto(url)),
+              image: NetworkImage(helper.transformarFoto(doc.fotoPath)),
             )),
           ),
         ),
         new RawMaterialButton(
-          onPressed: () => null,
+          onPressed: () => alertaEliminar(doc),
           child: Icon(
             Icons.delete,
             color: Colors.white,
@@ -178,8 +179,47 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
   _mostrarGaleria() {
     List<Widget> galeria = [];
     listDocuments.forEach((element) {
-      galeria.add(_fotoDocumentoWidget(element.fotoPath));
+      galeria.add(_fotoDocumentoWidget(element));
     });
     return Column(children: galeria);
+  }
+
+  alertaEliminar(DocumentosModel doc) {
+    Alert(
+      context: context,
+      type: AlertType.warning,
+      title: "¿Deséa eliminar imagen?",
+      desc: "Eliminará la imagen de manera definitiva",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "CANCELAR",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () => Navigator.pop(context),
+          color: Color.fromRGBO(0, 179, 134, 1.0),
+        ),
+        DialogButton(
+          child: Text(
+            "ELIMINAR",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+          onPressed: () {
+            eliminarFoto(doc);
+            Navigator.pop(context);
+          },
+          color: Colors.redAccent,
+        )
+      ],
+    ).show();
+  }
+
+  eliminarFoto(DocumentosModel doc) async {
+    bool hecho = await _userServices.eliminarFoto(doc.idFoto);
+    if (hecho) {
+      print("foto eliminada");
+      listDocuments.removeWhere((element) => element.idFoto == doc.idFoto);
+      setState(() {});
+    }
   }
 }

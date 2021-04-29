@@ -178,4 +178,11 @@ class UserServices {
       return [];
     }
   }
+
+  Future<bool> eliminarFoto(String id) async {
+    final url = '${Conf.urlServidor}Imagen/delete';
+    final data = {'key': id};
+    final response = await http.post(url, body: data);
+    return response.statusCode == 200;
+  }
 }
