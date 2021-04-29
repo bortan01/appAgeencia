@@ -32,6 +32,7 @@ import 'package:peliculas/src/page/tourPaquete/HomeTours.dart';
 import 'package:peliculas/src/page/tourPaquete/ListaTourPaquete.dart';
 import 'package:peliculas/src/page/tourPaquete/cotizarTours.dart';
 import 'package:peliculas/src/page/usuarios/SubirImagenes_page.dart';
+import 'package:peliculas/src/page/usuarios/aboutAs_page.dart';
 import 'package:peliculas/src/page/usuarios/codigoVerificacion.dart';
 import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
@@ -92,6 +93,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'nuevaContra': (BuildContext context) => IngreseContra(),
     'registro': (BuildContext context) => Registro(),
     'pruebas': (BuildContext context) => PruebaList(),
+    'aboutAs': (BuildContext context) => AboutAsPage(),
 
     //MODULO DE PRODUCTOS ADQUIRIDOS
     'menuProductos': (BuildContext context) => MenuProductos(),

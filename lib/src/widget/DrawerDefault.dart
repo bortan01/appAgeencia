@@ -53,7 +53,7 @@ Widget getDrawerDefault(BuildContext context) {
               style: estiloLetra,
             ),
             trailing: new Icon(Icons.flag, color: colorBase),
-            onTap: () => Navigator.of(context).pop(),
+            onTap: () => Navigator.of(context).pushNamed('aboutAs'),
           ),
           new Divider(
             height: 5.0,
