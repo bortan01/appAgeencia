@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/image/responseImagen_model.dart';
 // import 'package:peliculas/src/models/image/imagen_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/user_services.dart';
@@ -64,22 +65,29 @@ class _SubirImagenesState extends State<SubirImagenes> {
     if (_foto != null) {
       return Center(
         //pregunta si existe la imagen
-        child: Image.file(_foto, height: 300.0, fit: BoxFit.cover),
-      );
-    }
-
-    if (_preferenciasUsuario.foto != '') {
-      return Container(
-        ///esto es para evitar problema si no existe el id del producto, como cuando no se a creado
-
-        child: new FadeInImage(
-          placeholder: new AssetImage('assets/gif/loading.gif'),
-          image: NetworkImage(helper.transformarFoto(_preferenciasUsuario.foto)),
-          height: 300.0,
-          width: double.infinity,
-          fit: BoxFit.contain,
+        child: Container(
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            child: Image.file(_foto, height: 300.0, fit: BoxFit.cover),
+          ),
         ),
       );
+    }
+    if (_preferenciasUsuario.foto != '') {
+      return Container(
+
+          ///esto es para evitar problema si no existe el id del producto, como cuando no se a creado
+          child: new Container(
+        margin: EdgeInsets.symmetric(vertical: 10.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          child: Container(
+              child: FadeInImage(
+            placeholder: AssetImage("assets/gif/loading.gif"),
+            image: NetworkImage(helper.transformarFoto(_preferenciasUsuario.foto)),
+          )),
+        ),
+      ));
     }
     return Center(
         //pregunta si existe la imagen
@@ -99,10 +107,10 @@ class _SubirImagenesState extends State<SubirImagenes> {
 
   submit(BuildContext context) async {
     if (_foto != null) {
-      bool respuesta = await _userServices.subirFoto(_foto, 'usuario_perfil');
-      respuesta
-          ? helper.mensanjeOkRedireccionar(context, "Foto de perfil acualizada", "home")
-          : helper.mostrarMensanjeError(context, "Foto de perfil no actualizada");
+      ImagenResponse respuesta = await _userServices.subirFotoPerfil(_foto);
+      respuesta.err
+          ? helper.mostrarMensanjeError(context, "Foto de perfil no actualizada")
+          : helper.mensanjeOkRedireccionar(context, "Foto de perfil acualizada", "home");
     }
   }
 }

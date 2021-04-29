@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:peliculas/src/models/image/documentos_model.dart';
+import 'package:peliculas/src/models/image/imagen_model.dart';
+import 'package:peliculas/src/models/image/responseImagen_model.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/conf.dart';
@@ -122,11 +124,21 @@ class UserServices {
     }
   }
 
-  Future<bool> subirFoto(File foto,String tipo) async {
+  Future<ImagenResponse> subirFotoPerfil(File foto) {
     final PreferenciasUsuario _preferenciasUsuario = new PreferenciasUsuario();
-
-    Map<String, String> qParams = {'identificador': _preferenciasUsuario.idCliente, 'tipo': tipo};
+    Map<String, String> qParams = {'identificador': _preferenciasUsuario.idCliente, 'tipo': 'usuario_perfil'};
     final url = Uri.parse('${Conf.urlServidor}/Imagen/savePhotoPerfil');
+    return subirFoto(qParams, url, foto);
+  }
+
+  Future<ImagenResponse> subirDocumentos(File foto) {
+    final PreferenciasUsuario _preferenciasUsuario = new PreferenciasUsuario();
+    Map<String, String> qParams = {'identificador': _preferenciasUsuario.idCliente, 'tipo': 'usuario_documentos'};
+    final url = Uri.parse('${Conf.urlServidor}/Imagen/save');
+    return subirFoto(qParams, url, foto);
+  }
+
+  Future<ImagenResponse> subirFoto(Map<String, String> qParams, Uri url, File foto) async {
     final mimeType = mime(foto.path).split('/');
     final imageUploadRequest = http.MultipartRequest(
       'POST',
@@ -142,21 +154,19 @@ class UserServices {
     final res = await http.Response.fromStream(streamResponse);
 
     if (res.statusCode != 200 && res.statusCode != 201) {
-      print("algo salio mal");
-      return false;
+      return new ImagenResponse(err: true, mensaje: 'Favor intente más tarde');
     }
     //extraemos el url de la respuesta
     final respData = convert.jsonDecode(res.body);
-    _usuarioPref.foto = respData['path'];
-    print(respData);
-    return true;
+    return new ImagenResponse.fromJson(respData);
   }
 
   Future<List<DocumentosModel>> getGaleriaDocumentos() async {
     final PreferenciasUsuario _preferenciasUsuario = new PreferenciasUsuario();
     List<DocumentosModel> listaDocumentos = [];
     print('haciendo peticion a getGaleriaDocumentos');
-    final url='${Conf.urlServidor}Imagen/show?tipo=usuario_documentos&identificador=${_preferenciasUsuario.idCliente}';
+    final url =
+        '${Conf.urlServidor}Imagen/show?tipo=usuario_documentos&identificador=${_preferenciasUsuario.idCliente}';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final List<dynamic> jsonResponse = convert.jsonDecode(response.body);
