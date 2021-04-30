@@ -49,8 +49,7 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
       {
         'posicion': 1,
         'titulo': "Historial de Encomiendas",
-        'subtitulo':
-            "Usa esta sencilla herramienta para obtener el historial de encomiendas realizadas.",
+        'subtitulo': "Usa esta sencilla herramienta para obtener el historial de encomiendas realizadas.",
         'assetImage': AssetImage("assets/img/cotizar.png"),
         'superficie': '74,8 millones km²',
         'distancia': ' 57,91 millones km',
@@ -149,24 +148,20 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'encomienda',
-                    arguments: "Cotización");
+                Navigator.pushNamed(context, 'encomienda', arguments: "Cotización");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'envios',
-                    arguments: "Historial de Encomiendas");
+                Navigator.pushNamed(context, 'HistoEncomienda', arguments: "Historial de Encomiendas");
 
                 break;
 
               default:
             }
           },
-          label: (posicion == 0)
-              ? Text('Cotizar Encomiendas')
-              : Text('Ver Historial'),
+          label: (posicion == 0) ? Text('Cotizar Encomiendas') : Text('Ver Historial'),
           icon: Icon(Icons.check),
         );
       },

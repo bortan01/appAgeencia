@@ -99,6 +99,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'menuProductos': (BuildContext context) => MenuProductos(),
     'toursAsistidos': (BuildContext context) => ToursAsistidos(),
     'carrosAlqui': (BuildContext context) => VehiculoAlquilado(),
-    'envios': (BuildContext context) => EncomiendasRealizadas(),
+    'enviosRealizados': (BuildContext context) => EncomiendasRealizadas(),
   };
 }

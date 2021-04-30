@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert' as convert;
 import 'package:peliculas/src/models/vehiculo/categoria_model.dart';
 import 'package:peliculas/src/models/vehiculo/cotizacionResponse.dart';
 import 'package:peliculas/src/models/vehiculo/cotizacionCliente_model.dart';
 import 'package:peliculas/src/models/vehiculo/tipoVehiculo_model.dart';
 import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
 import 'package:peliculas/src/services/conf.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert' as convert;
 
 class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   Future<VehiculosModel> obtenerVehiculos(String idCategoria) async {

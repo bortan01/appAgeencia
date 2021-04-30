@@ -1,39 +1,73 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/encomienda/historialEncomienda_model.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/services/encomienda_services.dart';
 import 'package:peliculas/src/widget/Lista.dart';
+import 'package:intl/intl.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class HistorialEncomienda extends StatelessWidget {
+  final _encomiendaServices = new EncomiendaServices();
   @override
   Widget build(BuildContext context) {
+    final String argumento = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: appBarPaquete(),
-      body: _listado(context),
+      appBar: appBarPaquete(context, argumento),
+      body: _listado(context, argumento),
     );
   }
 
-  Widget appBarPaquete() {
+  Widget appBarPaquete(BuildContext context, String titulo) {
     return AppBar(
-        backgroundColor: Colors.blue,
-        centerTitle: true,
-        title: Text(
-          "Historial Encomienda",
-        ));
+      backgroundColor: Theme.of(context).accentColor,
+      centerTitle: true,
+      title: Text(titulo),
+    );
   }
 
-  Widget _listado(BuildContext context) {
-    List<ListaModel> miListaPaquetes = listaInventada();
+  Widget _listado(BuildContext context, String tipo) {
     //Posiblemente esto se convierta en futureBilder
+    return FutureBuilder(
+        future: _encomiendaServices.obtenerHistorial(),
+        builder: (BuildContext context, AsyncSnapshot<HistorialEncomiendaModel> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              if (snapshot.data == null) return helper.noData();
+              return _creandoElementos(context, snapshot.data.encomiendasRealizadas);
+            case ConnectionState.active:
+              return Center(child: CircularProgressIndicator());
+            case ConnectionState.waiting:
+              return Center(child: CircularProgressIndicator());
+            default:
+              return helper.noData();
+          }
+        });
+  }
+
+  Widget _creandoElementos(BuildContext context, List<EncomiendaRealizada> data) {
+    //Posiblemente esto se convierta en futureBilder
+
     return ListView.builder(
-        itemCount: miListaPaquetes.length,
+        itemCount: data.length,
         itemBuilder: (BuildContext context, int index) {
+          final DateFormat formatter = DateFormat('dd/MM/yyyy');
           return GestureDetector(
-            onTap: () {
-              ///
-            },
+            onTap: () {},
             child: Column(
               children: <Widget>[
+                SizedBox(height: 15.0),
+
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
-                Lista(model: miListaPaquetes[index]),
+                Lista(
+                  model: new ListaModel(
+                      nombre: '',
+                      descripcion: '',
+                      tag1: '',
+                      tag2: '',
+                      imagen: '',
+                      fotos: [],
+                      id: int.parse(data[index].idEncomienda)),
+                ),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(
                   thickness: 1,
@@ -44,35 +78,5 @@ class HistorialEncomienda extends StatelessWidget {
             ),
           );
         });
-  }
-
-  List<ListaModel> listaInventada() {
-    final List<ListaModel> list = [
-      ListaModel(
-          id: 0,
-          nombre: "Se recibio la informacion",
-          descripcion: "esta bien el envio",
-          imagen:
-              "http://www.deasociety.com/pt/wp-content/uploads/sites/2/2016/10/logocontact-1.jpg",
-          tag1: "Fecha:",
-          tag2: "20-07-2020"),
-      ListaModel(
-          id: 1,
-          nombre: "En transito",
-          descripcion: "Siguie bien el envio",
-          tag1: "Fecha:",
-          tag2: "25-07-2020",
-          imagen:
-              "http://www.elsalvadorvida.com/uploads/1/0/3/6/10365923/published/3.png?1563650943"),
-      ListaModel(
-          id: 2,
-          nombre: "Entregado",
-          descripcion: "Creemos que sigue bien el envio",
-          tag1: "Fecha",
-          tag2: "26-07-2020",
-          imagen:
-              "https://image.freepik.com/foto-gratis/paquete-entregado-sonriente-joven-vendedor-dando-pulgar_13339-196060.jpg"),
-    ];
-    return list;
   }
 }

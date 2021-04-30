@@ -36,7 +36,7 @@ class AboutAsPage extends StatelessWidget {
             context: context,
             icono: Icons.language,
             titulo: 'Web',
-            descripcion: 'https://martineztraveltours.com',
+            descripcion: 'www.martineztraveltours.com',
           ),
           SizedBox(height: 30.0)
         ],

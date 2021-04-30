@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/encomienda/encomienda_model.dart';
+import 'package:peliculas/src/models/encomienda/historialEncomienda_model.dart';
 import 'package:peliculas/src/services/conf.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,6 +13,17 @@ class EncomiendaServices with ChangeNotifier, DiagnosticableTreeMixin {
     if (response.statusCode == 200) {
       // final jsonResponse = convert.jsonDecode(response.body);
       final res = encomiendaModelFromJson(response.body);
+      return res;
+    } else {
+      return null;
+    }
+  }
+   Future<HistorialEncomiendaModel> obtenerHistorial() async {
+    print('haciendo peticion encomiendas');
+    final url = '${Conf.urlServidor}Encomienda/show';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final res = historialEncomiendaFromJson(response.body);
       return res;
     } else {
       return null;
