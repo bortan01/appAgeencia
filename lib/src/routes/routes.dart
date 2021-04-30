@@ -16,6 +16,7 @@ import 'package:peliculas/src/page/ejemplo/slider_page.dart';
 import 'package:peliculas/src/page/ejemplo/listView.dart';
 import 'package:peliculas/src/page/ejemplo/home_componentes.dart';
 import 'package:peliculas/src/page/ejemplo/lista_peliculas.dart';
+import 'package:peliculas/src/page/encomienda/detalleEncomiendaPage.dart';
 import 'package:peliculas/src/page/encomienda/encomienda.dart';
 import 'package:peliculas/src/page/encomienda/historialEnco.dart';
 import 'package:peliculas/src/page/encomienda/listaEncomienda.dart';
@@ -79,6 +80,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'menuEncomienda': (BuildContext context) => MenuEncomienda(),
     'listaEncomienda': (BuildContext context) => ListaEncomienda(),
     'HistoEncomienda': (BuildContext context) => HistorialEncomienda(),
+    'DetalleEncomienda': (BuildContext context) => DetalleEncomiendaPage(),
     //MODULO CHAT
     'chat': (BuildContext context) => ChatScreen(),
     //MODULO DE CHAT ADMIN

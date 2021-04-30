@@ -52,9 +52,7 @@ class HistorialEncomienda extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           final DateFormat formatter = DateFormat('dd/MM/yyyy');
           return GestureDetector(
-            onTap: () {
-              print('redireciconar');
-            },
+            onTap: () => Navigator.pushNamed(context, 'DetalleEncomienda', arguments: data[index]),
             child: Column(
               children: <Widget>[
                 SizedBox(height: 15.0),
