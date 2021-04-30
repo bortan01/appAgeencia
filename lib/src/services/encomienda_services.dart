@@ -23,7 +23,7 @@ class EncomiendaServices with ChangeNotifier, DiagnosticableTreeMixin {
     final url = '${Conf.urlServidor}Encomienda/show';
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final res = historialEncomiendaFromJson(response.body);
+      final res = historialEncomiendaModelFromJson(response.body);
       return res;
     } else {
       return null;

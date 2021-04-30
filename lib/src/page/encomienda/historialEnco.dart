@@ -33,7 +33,7 @@ class HistorialEncomienda extends StatelessWidget {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               if (snapshot.data == null) return helper.noData();
-              return _creandoElementos(context, snapshot.data.encomiendasRealizadas);
+              return _creandoElementos(context, snapshot.data.encomiendas);
             case ConnectionState.active:
               return Center(child: CircularProgressIndicator());
             case ConnectionState.waiting:
@@ -52,7 +52,9 @@ class HistorialEncomienda extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           final DateFormat formatter = DateFormat('dd/MM/yyyy');
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              print('redireciconar');
+            },
             child: Column(
               children: <Widget>[
                 SizedBox(height: 15.0),
@@ -60,12 +62,13 @@ class HistorialEncomienda extends StatelessWidget {
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
                 Lista(
                   model: new ListaModel(
-                      nombre: '',
-                      descripcion: '',
-                      tag1: '',
-                      tag2: '',
+                      nombre: 'Ciudad de Destino ${data[index].destino.ciudadDestino}',
+                      descripcion:
+                          'Dirección de Destino: ${data[index].destino.direccionDestino} \n\nDirección Alternativa: ${data[index].destino.alternaDestino}',
+                      tag1: 'Total de envio \$${data[index].totalCliente}',
+                      tag2: 'Fecha de Envio ' + formatter.format(data[index].fecha),
                       imagen: '',
-                      fotos: [],
+                      fotos: ['http://localhost/API-REST-PHP/uploads/encomienda1.jpg'],
                       id: int.parse(data[index].idEncomienda)),
                 ),
                 //ESTA ES LA LINEA DE ABAJO
