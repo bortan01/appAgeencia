@@ -6,6 +6,7 @@ import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
+import 'package:peliculas/src/models/tourPaquete/historialReserva_model.dart';
 import 'package:peliculas/src/services/conf.dart';
 
 class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
@@ -31,8 +32,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     }
   }
 
-  Future<InformacionAdicional> obtenerInformacionAdicional(
-      String idTur) async {
+  Future<InformacionAdicional> obtenerInformacionAdicional(String idTur) async {
     print('haciendo peticion informacion adicional');
     final url = '${Conf.urlServidor}TurPaquete/showAdicional?id_tours=$idTur';
     final response = await http.get(url);
@@ -67,6 +67,22 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       final res = WompiModel.fromJson(jsonResponse);
+      return res;
+    } else {
+      return null;
+    }
+  }
+
+  Future<ResponseReserva> reservasByUser() async {
+    print("haciendo peticion de guardar reserva");
+
+    final url = '${Conf.urlServidor}TurPaquete/showInfoReserva';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      //TRANSFORMANDO DE STRIN A JSON
+      final jsonResponse = convert.jsonDecode(response.body);
+      //TRANSFORMANDO DE JSON A OBJETO
+      final res = ResponseReserva.fromJson(jsonResponse);
       return res;
     } else {
       return null;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/home.dart';
 import 'package:peliculas/src/page/chat/ChatScreen.dart';
-import 'package:peliculas/src/page/chatAdmin/WhatsAppHome.dart';
 import 'package:peliculas/src/page/ejemplo/avatar_page.dart';
 import 'package:peliculas/src/page/ejemplo/bienvenidos_page.dart';
 import 'package:peliculas/src/page/ejemplo/scroll_page.dart';
@@ -21,7 +20,7 @@ import 'package:peliculas/src/page/inicio/pruebaList.dart';
 import 'package:peliculas/src/page/tourPaquete/HomePaquetes.dart';
 import 'package:peliculas/src/page/productosAdquiridos/encomiendasRealizadas.dart';
 import 'package:peliculas/src/page/productosAdquiridos/menuProductos.dart';
-import 'package:peliculas/src/page/productosAdquiridos/toursAsistidos.dart';
+import 'package:peliculas/src/page/productosAdquiridos/tourPaqueteHistorial.dart';
 import 'package:peliculas/src/page/productosAdquiridos/vehiculosAlquilados.dart';
 import 'package:peliculas/src/page/tourPaquete/HomeTours.dart';
 import 'package:peliculas/src/page/tourPaquete/ListaTourPaquete.dart';
@@ -61,7 +60,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'ListaTours': (BuildContext context) => ListaTours(),
     //MODULO VEHICULO
     'menuVehiculos': (BuildContext context) => HomeMenu(),
-
     'ListaVehiculos': (BuildContext context) => ListaVehiculos(),
     //'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(),
     'Alquiler': (BuildContext context) => Alquiler(),
@@ -74,9 +72,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'DetalleEncomienda': (BuildContext context) => DetalleEncomiendaPage(),
     //MODULO CHAT
     'chat': (BuildContext context) => ChatScreen(),
-    //MODULO DE CHAT ADMIN
-    'chatAdmin': (BuildContext context) => WhatsAppHome(),
-
     //MODULO DE USUARIO.
     'login': (BuildContext context) => Login(),
     'subirImagenes': (BuildContext context) => SubirImagenes(),
@@ -87,10 +82,9 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'registro': (BuildContext context) => Registro(),
     'pruebas': (BuildContext context) => PruebaList(),
     'aboutAs': (BuildContext context) => AboutAsPage(),
-
     //MODULO DE PRODUCTOS ADQUIRIDOS
     'menuProductos': (BuildContext context) => MenuProductos(),
-    'toursAsistidos': (BuildContext context) => ToursAsistidos(),
+    'TourPaqueteHistorial': (BuildContext context) => TourPaqueteHistorial(),
     'carrosAlqui': (BuildContext context) => VehiculoAlquilado(),
     'enviosRealizados': (BuildContext context) => EncomiendasRealizadas(),
   };

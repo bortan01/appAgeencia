@@ -158,7 +158,7 @@ class _MenuProductosState extends State<MenuProductos> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'toursAsistidos');
+                Navigator.pushNamed(context, 'TourPaqueteHistorial');
 
                 break;
               case 1:
