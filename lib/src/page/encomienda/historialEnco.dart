@@ -32,7 +32,7 @@ class HistorialEncomienda extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<HistorialEncomiendaModel> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              if (snapshot.data == null) return helper.noData();
+              if (snapshot.data == null || snapshot.data.encomiendas.isEmpty) return helper.noData();
               return _creandoElementos(context, snapshot.data.encomiendas);
             case ConnectionState.active:
               return Center(child: CircularProgressIndicator());
