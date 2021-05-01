@@ -4,25 +4,19 @@ import 'package:peliculas/src/page/chat/ChatScreen.dart';
 import 'package:peliculas/src/page/chatAdmin/WhatsAppHome.dart';
 import 'package:peliculas/src/page/ejemplo/avatar_page.dart';
 import 'package:peliculas/src/page/ejemplo/bienvenidos_page.dart';
-import 'package:peliculas/src/page/ejemplo/home_page.dart';
-import 'package:peliculas/src/page/ejemplo/pelicula_detalle.dart';
 import 'package:peliculas/src/page/ejemplo/scroll_page.dart';
 import 'package:peliculas/src/page/ejemplo/alert_page.dart';
-
 import 'package:peliculas/src/page/ejemplo/card_page.dart';
 import 'package:peliculas/src/page/ejemplo/animated_container.dart';
 import 'package:peliculas/src/page/ejemplo/input_page.dart';
 import 'package:peliculas/src/page/ejemplo/slider_page.dart';
 import 'package:peliculas/src/page/ejemplo/listView.dart';
 import 'package:peliculas/src/page/ejemplo/home_componentes.dart';
-import 'package:peliculas/src/page/ejemplo/lista_peliculas.dart';
 import 'package:peliculas/src/page/encomienda/detalleEncomiendaPage.dart';
 import 'package:peliculas/src/page/encomienda/encomienda.dart';
 import 'package:peliculas/src/page/encomienda/historialEnco.dart';
 import 'package:peliculas/src/page/encomienda/listaEncomienda.dart';
-
 import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
-
 import 'package:peliculas/src/page/inicio/pruebaList.dart';
 import 'package:peliculas/src/page/tourPaquete/HomePaquetes.dart';
 import 'package:peliculas/src/page/productosAdquiridos/encomiendasRealizadas.dart';
@@ -48,10 +42,8 @@ import 'package:peliculas/src/page/vehiculos/cotizarVehiculo.dart';
 Map<String, WidgetBuilder> getAplicationRoute() {
   return <String, WidgetBuilder>{
     'bienvenidoos': (BuildContext context) => BienvenidosPage(),
-    'homeX': (BuildContext context) => HomePageX(),
     'homeComponentes': (BuildContext context) => HomeComponents(),
-    'detalle': (BuildContext context) => PeliculaDetalle(),
-    'scrollPage': (BuildContext context) => ScrollPage(),
+     'scrollPage': (BuildContext context) => ScrollPage(),
     'alert': (BuildContext context) => AlertPage(),
     'avatar': (BuildContext context) => AvatarPage(),
     'card': (BuildContext context) => CardPage(),
@@ -59,7 +51,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'inputs': (BuildContext context) => InputPage(),
     'slider': (BuildContext context) => SliderPage(),
     'list': (BuildContext context) => ListaPage(),
-    'listaPeliculas': (BuildContext context) => ListaPeliculas(),
     //AQUI EMPIEZAN LOS NUESTROS
     'home': (BuildContext context) => Home(),
     //MODULO PAQUETES
