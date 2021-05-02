@@ -26,12 +26,7 @@ class DetalleVehiculos extends StatelessWidget {
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(height: 10.0),
-            _posterTitulo(
-                context: context,
-                titulo: myTitulo,
-                subtitulo: carro.descripcion,
-                precio: carro.precioDiario.toStringAsFixed(2),
-                id: int.parse(carro.idvehiculo)),
+             helper.posterTitulo(context: context, title: myTitulo, fecha: ''),
             _descripcion("", carro.descripcion),
             _cuadros(carro),
             _botones(context, carro, opciones),
@@ -47,35 +42,6 @@ class DetalleVehiculos extends StatelessWidget {
   }
 }
 
-_posterTitulo({BuildContext context, String titulo, String subtitulo, String precio, int id}) {
-  return new Container(
-    child: Row(
-      children: <Widget>[
-        new SizedBox(
-          width: 10.0,
-        ),
-        new Flexible(
-            child: new Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            new Row(
-              children: <Widget>[
-                new Text(
-                  '\$$precio',
-                  style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.w800),
-                ),
-                new Text(
-                  '/Día',
-                  style: TextStyle(fontSize: 15, color: Colors.black, fontWeight: FontWeight.w500),
-                ),
-              ],
-            )
-          ],
-        ))
-      ],
-    ),
-  );
-}
 
 Container _botones(BuildContext context, Auto carro, List<OpcioneAdicional> opciones) {
   return Container(

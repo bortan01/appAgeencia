@@ -76,7 +76,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
           new SizedBox(
             height: 10.0,
           ),
-          _posterTitulo(context: context, title: tur.nombreTours, fecha: tur.start.toString()),
+          helper.posterTitulo(context: context, title: tur.nombreTours, fecha: tur.start.toString()),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
@@ -97,32 +97,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     );
   }
 
-  _posterTitulo({@required BuildContext context, @required String title, @required String fecha}) {
-    return new Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
-      child: Row(
-        children: <Widget>[
-          new SizedBox(
-            width: 20.0,
-          ),
-          new Flexible(
-              child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: new Text(title,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(color: Colors.lightBlue, fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-            ],
-          ))
-        ],
-      ),
-    );
-  }
-
+ 
   Widget _incluye(BuildContext context, InformacionAdicional informacionAdicional) {
     return Stepper(
       currentStep: pasoActual,

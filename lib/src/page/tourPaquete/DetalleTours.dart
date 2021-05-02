@@ -77,7 +77,7 @@ class _DetalleToursState extends State<DetalleTours> {
           new SizedBox(
             height: 10.0,
           ),
-          _posterTitulo(
+          helper.posterTitulo(
               context: context, title: widget.tourPaquete.nombreTours, fecha: widget.tourPaquete.start.toString()),
           new SizedBox(height: 10.0),
           new Divider(
@@ -96,32 +96,6 @@ class _DetalleToursState extends State<DetalleTours> {
           _crearBoton(context)
         ]))
       ],
-    );
-  }
-
-  _posterTitulo({@required BuildContext context, @required String title, @required String fecha}) {
-    return new Container(
-      padding: EdgeInsets.symmetric(horizontal: 10.0),
-      child: Row(
-        children: <Widget>[
-          new SizedBox(
-            width: 20.0,
-          ),
-          new Flexible(
-              child: new Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                child: new Text(title,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(color: Colors.lightBlue, fontSize: 18, fontWeight: FontWeight.bold)),
-              ),
-            ],
-          ))
-        ],
-      ),
     );
   }
 

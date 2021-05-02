@@ -174,3 +174,15 @@ Text crearTitulo(String tiulo) {
     style: titulo2(),
   );
 }
+
+ posterTitulo({@required BuildContext context, @required String title, @required String fecha}) {
+    return Container(
+      child: new Text(
+        title,
+        textAlign: TextAlign.center,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2,
+        style: TextStyle(color: Colors.lightBlue, fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+    );
+  }
