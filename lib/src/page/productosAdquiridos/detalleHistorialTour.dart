@@ -1,37 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
-import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
+import 'package:peliculas/src/models/tourPaquete/historialReserva_model.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
-import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
 import 'package:peliculas/src/widget/chip_widget.dart';
 import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
-class DetalleTours extends StatefulWidget {
-  final TourPaqueteModel tourPaquete;
-  const DetalleTours({@required this.tourPaquete});
+class DetalleHistorialTours extends StatefulWidget {
+  final Reserva reserva;
+  const DetalleHistorialTours({@required this.reserva});
 
   @override
-  _DetalleToursState createState() => _DetalleToursState();
+  _DetalleHistorialToursState createState() => _DetalleHistorialToursState();
 }
 
-class _DetalleToursState extends State<DetalleTours> {
+class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
   int pasoActual = 0;
-  Future infoAdicional;
-
-  @override
-  void initState() {
-    super.initState();
-    infoAdicional = _getInfoAdicional();
-  }
-
-  Future<dynamic> _getInfoAdicional() async {
-    return await TurServices().obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,59 +27,37 @@ class _DetalleToursState extends State<DetalleTours> {
 
     return Scaffold(
         //backgroundColor: Colors.blueAccent,
-        body: detalle(context));
+        body: scrollView(context, widget.reserva));
   }
 
-  Widget detalle(BuildContext context) {
-    //Posiblemente esto se convierta en futureBilder
-    return FutureBuilder(
-        future: infoAdicional,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              print('hecho');
-              if (snapshot.data == null) return helper.noData();
-              final informacionAcicional = snapshot.data;
-              return scrollView(context, informacionAcicional, widget.tourPaquete);
-            case ConnectionState.active:
-              return Center(child: CircularProgressIndicator());
-            case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
-            default:
-              return helper.noData();
-          }
-        });
-  }
-
-  Widget scrollView(BuildContext context, InformacionAdicional informacionAdicional, TourPaqueteModel tur) {
+  Widget scrollView(BuildContext context, Reserva reserva) {
     return CustomScrollView(
       slivers: <Widget>[
         AppBarWidget(
-          titulo: widget.tourPaquete.nombreTours,
-          imagen: transformarFoto(widget.tourPaquete.foto),
-          id: widget.tourPaquete.idTours.toString(),
+          titulo: widget.reserva.nombreTours,
+          imagen: transformarFoto(widget.reserva.galeria[0]),
+          id: widget.reserva.idTours.toString(),
         ),
         new SliverList(
             delegate: new SliverChildListDelegate([
           new SizedBox(
             height: 10.0,
           ),
-          _posterTitulo(
-              context: context, title: widget.tourPaquete.nombreTours, fecha: widget.tourPaquete.start.toString()),
+          _posterTitulo(context: context, title: widget.reserva.nombreTours, fecha: widget.reserva.start.toString()),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
             height: 20.0,
           ),
-          _descripcion(tur.descripcionForApp),
+          _descripcion(reserva.descripcionTur),
           helper.crearTitulo("Incluye"),
-          listaHorizontal(tipo: TypeChip.azul, lista: tur.incluye),
+          listaHorizontal(tipo: TypeChip.azul, lista: reserva.incluye),
           helper.crearTitulo("Lugares de Salida"),
-          listaHorizontal(tipo: TypeChip.verde, lista: tur.lugarSalida),
+          listaHorizontal(tipo: TypeChip.verde, lista: reserva.lugarSalida),
           helper.crearTitulo("Requisitos"),
-          listaHorizontal(tipo: TypeChip.anaranjado, lista: tur.requisitos),
+          listaHorizontal(tipo: TypeChip.anaranjado, lista: reserva.requisitos),
           helper.crearTitulo("No incluye"),
-          listaHorizontal(tipo: TypeChip.rojo, lista: tur.noIncluye),
+          listaHorizontal(tipo: TypeChip.rojo, lista: reserva.noIncluye),
           _crearBoton(context)
         ]))
       ],
@@ -189,16 +154,7 @@ class _DetalleToursState extends State<DetalleTours> {
           color: Theme.of(context).accentColor,
           textColor: Theme.of(context).bottomAppBarColor,
           shape: StadiumBorder(),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CarritoCompra(
-                  tourPaqueteModel: widget.tourPaquete,
-                ),
-              ),
-            );
-          }),
+          onPressed: () {}),
     );
   }
 

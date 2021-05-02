@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/tourPaquete/historialReserva_model.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/page/productosAdquiridos/detalleHistorialTour.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/widget/Lista.dart';
 import 'package:intl/intl.dart';
@@ -54,7 +55,16 @@ class TourPaqueteHistorial extends StatelessWidget {
         itemCount: infoReservas.length,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetalleHistorialTours(
+                    reserva: infoReservas[index],
+                  ),
+                ),
+              );
+            },
             child: Column(
               children: <Widget>[
                 SizedBox(height: 15.0),
@@ -63,8 +73,8 @@ class TourPaqueteHistorial extends StatelessWidget {
                 Lista(
                   model: new ListaModel(
                       id: int.parse(infoReservas[index].idTours),
-                      nombre: infoReservas[index].nombreTours,
-                      descripcion: infoReservas[index].descripcionTur,
+                      nombre: '${infoReservas[index].nombreTours}',
+                      descripcion: infoReservas[index].tipo + '\n' + infoReservas[index].descripcionTur,
                       tag1: 'Pago de Reserva \$${infoReservas[index].monto}',
                       tag2: 'Fecha de Reserva  ${formatter.format(infoReservas[index].fechaReserva)}',
                       imagen: '',

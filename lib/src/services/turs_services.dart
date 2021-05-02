@@ -7,10 +7,12 @@ import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/historialReserva_model.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/conf.dart';
 
 class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
   int _count = 0;
+  PreferenciasUsuario _pref = new PreferenciasUsuario();
 
   int get count => _count;
 
@@ -74,9 +76,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<ResponseReserva> reservasByUser() async {
-    print("haciendo peticion de guardar reserva");
-
-    final url = '${Conf.urlServidor}TurPaquete/showInfoReserva';
+    final url = '${Conf.urlServidor}TurPaquete/showInfoReserva?id_cliente=${_pref.idCliente}';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       //TRANSFORMANDO DE STRIN A JSON

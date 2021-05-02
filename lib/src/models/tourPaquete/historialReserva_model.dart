@@ -66,10 +66,10 @@ class Reserva {
   String cantidadAsientos;
   DateTime start;
   DateTime end;
-  String lugarSalida;
-  String incluye;
-  String noIncluye;
-  String requisitos;
+  List<String> lugarSalida;
+  List<String> incluye;
+  List<String> noIncluye;
+  List<String> requisitos;
   String descripcionTur;
   DateTime fechaReserva;
   String formaPagoUtilizada;
@@ -90,10 +90,10 @@ class Reserva {
         cantidadAsientos: json["cantidad_asientos"],
         start: DateTime.parse(json["start"]),
         end: DateTime.parse(json["end"]),
-        lugarSalida: json["lugar_salida"],
-        incluye: json["incluye"],
-        noIncluye: json["no_incluye"],
-        requisitos: json["requisitos"],
+        lugarSalida: List<String>.from(json["lugar_salida"].map((x) => x)),
+        incluye: List<String>.from(json["incluye"].map((x) => x)),
+        noIncluye: List<String>.from(json["no_incluye"].map((x) => x)),
+        requisitos: List<String>.from(json["requisitos"].map((x) => x)),
         descripcionTur: json["descripcion_tur"],
         fechaReserva: DateTime.parse(json["fecha_reserva"]),
         formaPagoUtilizada: json["formaPagoUtilizada"],

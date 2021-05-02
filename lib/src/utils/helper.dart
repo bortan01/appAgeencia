@@ -164,7 +164,7 @@ Widget waitingData() {
 }
 
 TextStyle titulo2() {
-  return TextStyle(fontWeight: FontWeight.bold, color: Colors.black87);
+  return TextStyle(fontWeight: FontWeight.bold, color: Colors.lightBlue, fontSize: 16.0);
 }
 
 Text crearTitulo(String tiulo) {

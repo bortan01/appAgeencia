@@ -53,10 +53,10 @@ class _DetallePaqueteState extends State<DetallePaquete> {
               final informacionAcicional = snapshot.data;
               return scrollView(context, informacionAcicional, tur);
             case ConnectionState.active:
-              return Center(child: CircularProgressIndicator());
+             return helper.waitingData();
             case ConnectionState.waiting:
               print('esperando');
-              return Center(child: CircularProgressIndicator());
+              return helper.waitingData();
             default:
               return helper.noData();
           }
@@ -224,6 +224,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
 
     return myLista;
   }
+
   Widget _crearBoton(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
