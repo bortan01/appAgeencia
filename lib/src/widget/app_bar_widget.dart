@@ -5,12 +5,7 @@ class AppBarWidget extends StatelessWidget {
   final String imagen;
   final String id;
 
-  const AppBarWidget(
-      {Key key,
-      @required this.titulo,
-      @required this.imagen,
-      @required this.id})
-      : super(key: key);
+  const AppBarWidget({Key key, @required this.titulo, @required this.imagen, @required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

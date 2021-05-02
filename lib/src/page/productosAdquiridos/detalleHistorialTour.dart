@@ -34,7 +34,7 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
       slivers: <Widget>[
         AppBarWidget(
           titulo: widget.reserva.nombreTours,
-          imagen: transformarFoto(widget.reserva.galeria[0]),
+          imagen: transformarFoto(widget.reserva.foto),
           id: widget.reserva.idTours.toString(),
         ),
         new SliverList(

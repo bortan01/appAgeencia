@@ -56,6 +56,7 @@ class Reserva {
     this.descripcionWeb,
     this.transporte,
     this.galeria,
+    this.foto,
   });
 
   String idCliente;
@@ -80,6 +81,7 @@ class Reserva {
   String descripcionWeb;
   Transporte transporte;
   List<String> galeria;
+  String foto;
 
   factory Reserva.fromJson(Map<String, dynamic> json) => Reserva(
         idCliente: json["id_cliente"],
@@ -104,6 +106,7 @@ class Reserva {
         descripcionWeb: json["descripcionWeb"],
         transporte: json["transporte"] == null ? null : Transporte.fromJson(json["transporte"]),
         galeria: List<String>.from(json["galeria"].map((x) => x)),
+        foto: json["foto"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -131,6 +134,7 @@ class Reserva {
         "descripcionWeb": descripcionWeb,
         "transporte": transporte == null ? null : transporte.toJson(),
         "galeria": List<dynamic>.from(galeria.map((x) => x)),
+        "foto": foto,
       };
 }
 
