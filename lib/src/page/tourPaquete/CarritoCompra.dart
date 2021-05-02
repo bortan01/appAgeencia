@@ -402,12 +402,14 @@ class _CarritoCompraState extends State<CarritoCompra> {
       //SI ES UN TUR REDIRECCIONAMOS PARA QUE SELECCIONE EL PAQUETE
       TransporteModel transporteModel = infoReservaModel.transporte;
       Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => SeleccionarAsiento(
-                    detalle: detalle,
-                    transporte: transporteModel,
-                  )));
+        context,
+        MaterialPageRoute(
+          builder: (context) => SeleccionarAsiento(
+            detalle: detalle,
+            transporte: transporteModel,
+          ),
+        ),
+      );
       return;
     } else {
       //SINO CREAMOS ENLACE DE PAGO Y LO REDIRECCIONAMOS A LA PASARELA
@@ -452,5 +454,4 @@ class _CarritoCompraState extends State<CarritoCompra> {
   void eliminarCarrito(id) {
     asientosPrecio.removeWhere((element) => element.id == id);
   }
-
 }

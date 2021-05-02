@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -175,14 +175,24 @@ Text crearTitulo(String tiulo) {
   );
 }
 
- posterTitulo({@required BuildContext context, @required String title, @required String fecha}) {
-    return Container(
-      child: new Text(
-        title,
-        textAlign: TextAlign.center,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2,
-        style: TextStyle(color: Colors.lightBlue, fontSize: 18, fontWeight: FontWeight.bold),
-      ),
-    );
-  }
+posterTitulo({@required BuildContext context, @required String title, @required String fecha}) {
+  return Container(
+    child: new Text(
+      title,
+      textAlign: TextAlign.center,
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2,
+      style: TextStyle(color: Colors.lightBlue, fontSize: 18, fontWeight: FontWeight.bold),
+    ),
+  );
+}
+
+String transformarFecha(DateTime fecha) {
+  final DateFormat formatter = DateFormat('dd/MM/yyyy');
+  return formatter.format(fecha);
+}
+
+String transformarFechaAndHora(DateTime fecha) {
+  final DateFormat formatter = DateFormat('dd/MM/yyyy hh:mm a');
+  return formatter.format(fecha);
+}

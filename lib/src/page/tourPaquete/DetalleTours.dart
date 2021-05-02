@@ -84,6 +84,7 @@ class _DetalleToursState extends State<DetalleTours> {
             color: Colors.grey,
             height: 20.0,
           ),
+          helper.crearTitulo("Descripción"),
           _descripcion(tur.descripcionForApp),
           helper.crearTitulo("Incluye"),
           listaHorizontal(tipo: TypeChip.azul, lista: tur.incluye),

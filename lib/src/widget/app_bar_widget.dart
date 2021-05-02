@@ -18,16 +18,13 @@ class AppBarWidget extends StatelessWidget {
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         centerTitle: true,
-        title: Container(
-          padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
-          child: Text(
-            ///AQUI DEBERIA DE IR UN TITULO
-            "",
-            style: TextStyle(color: Colors.white, fontSize: 12.0),
-            overflow: TextOverflow.ellipsis,
-            maxLines: 2,
-            textAlign: TextAlign.center,
-          ),
+        title: Text(
+          ///AQUI DEBERIA DE IR UN TITULO
+          '',
+          style: TextStyle(color: Colors.white, fontSize: 20.0),
+          overflow: TextOverflow.ellipsis,
+          maxLines: 2,
+          textAlign: TextAlign.center,
         ),
         background: Hero(
           tag: id,

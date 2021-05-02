@@ -53,7 +53,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
               final informacionAcicional = snapshot.data;
               return scrollView(context, informacionAcicional, tur);
             case ConnectionState.active:
-             return helper.waitingData();
+              return helper.waitingData();
             case ConnectionState.waiting:
               print('esperando');
               return helper.waitingData();
@@ -82,6 +82,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
             color: Colors.grey,
             height: 20.0,
           ),
+          helper.crearTitulo("Descripción"),
           _descripcion(tur.descripcionForApp),
           listaHorizontal(tipo: TypeChip.azul, lista: tur.incluye),
           _incluye(context, informacionAdicional),
@@ -91,13 +92,12 @@ class _DetallePaqueteState extends State<DetallePaquete> {
           listaHorizontal(tipo: TypeChip.anaranjado, lista: tur.requisitos),
           helper.crearTitulo("No incluye"),
           listaHorizontal(tipo: TypeChip.rojo, lista: tur.noIncluye),
-          _crearBoton(context)
+           _crearBoton(context)
         ]))
       ],
     );
   }
 
- 
   Widget _incluye(BuildContext context, InformacionAdicional informacionAdicional) {
     return Stepper(
       currentStep: pasoActual,

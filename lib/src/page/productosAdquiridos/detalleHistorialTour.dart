@@ -53,6 +53,8 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
           _descripcionCompra(reserva.descripcionProducto),
           helper.crearTitulo("Descripción"),
           _descripcion(reserva.descripcionTur),
+          helper.crearTitulo("Fecha de Salida"),
+          _descripcionCompra(helper.transformarFecha(reserva.start)),
           helper.crearTitulo("Incluye"),
           listaHorizontal(tipo: TypeChip.azul, lista: reserva.incluye),
           helper.crearTitulo("Lugares de Salida"),
@@ -61,16 +63,28 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
           listaHorizontal(tipo: TypeChip.anaranjado, lista: reserva.requisitos),
           helper.crearTitulo("No incluye"),
           listaHorizontal(tipo: TypeChip.rojo, lista: reserva.noIncluye),
+          asientosByClient(reserva),
           SizedBox(height: 20.0)
         ]))
       ],
     );
   }
 
+  asientosByClient(Reserva reserva) {
+    return (reserva.transporte == null)
+        ? Container(
+            color: Colors.red,
+            child: Text("NO DATA"),
+          )
+        : Container(
+            child: new Text("fdas"),
+          );
+  }
+
   Widget listaHorizontal({@required TypeChip tipo, @required List<String> lista}) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 11.0),
-      padding: EdgeInsets.symmetric(vertical: 2.0),
+      padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Column(
         children: lista.map((item) {
           return Container(padding: EdgeInsets.symmetric(vertical: 3.0), child: ChipWidget(text: item, type: tipo));
