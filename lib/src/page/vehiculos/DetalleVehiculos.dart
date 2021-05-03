@@ -26,7 +26,7 @@ class DetalleVehiculos extends StatelessWidget {
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(height: 10.0),
-             helper.posterTitulo(context: context, title: myTitulo, fecha: ''),
+             helper.posterTitulo(context: context, title: myTitulo),
             _descripcion("", carro.descripcion),
             _cuadros(carro),
             _botones(context, carro, opciones),

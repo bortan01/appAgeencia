@@ -39,7 +39,7 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
           delegate: new SliverChildListDelegate([
         new SizedBox(height: 10.0),
         helper.posterTitulo(
-            context: context, title: widget.reserva.nombreTours, fecha: widget.reserva.start.toString()),
+            context: context, title: widget.reserva.nombreTours),
         new SizedBox(height: 10.0),
         new Divider(color: Colors.grey, height: 20.0),
         helper.crearTitulo("Detalle de Compra"),

@@ -78,7 +78,7 @@ class _DetalleToursState extends State<DetalleTours> {
             height: 10.0,
           ),
           helper.posterTitulo(
-              context: context, title: widget.tourPaquete.nombreTours, fecha: widget.tourPaquete.start.toString()),
+              context: context, title: widget.tourPaquete.nombreTours),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,

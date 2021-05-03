@@ -175,7 +175,7 @@ Text crearTitulo(String tiulo) {
   );
 }
 
-posterTitulo({@required BuildContext context, @required String title, @required String fecha}) {
+posterTitulo({@required BuildContext context, @required String title}) {
   return Container(
     child: new Text(
       title,

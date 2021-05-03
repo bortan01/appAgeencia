@@ -76,7 +76,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
           new SizedBox(
             height: 10.0,
           ),
-          helper.posterTitulo(context: context, title: tur.nombreTours, fecha: tur.start.toString()),
+          helper.posterTitulo(context: context, title: tur.nombreTours),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
