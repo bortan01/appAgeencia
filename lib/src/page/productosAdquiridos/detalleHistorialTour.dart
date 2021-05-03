@@ -5,6 +5,7 @@ import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:peliculas/src/widget/chip_widget.dart';
+import 'package:peliculas/src/widget/crear_bus.dart';
 import 'package:provider/provider.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
@@ -63,21 +64,29 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
           listaHorizontal(tipo: TypeChip.anaranjado, lista: reserva.requisitos),
           helper.crearTitulo("No incluye"),
           listaHorizontal(tipo: TypeChip.rojo, lista: reserva.noIncluye),
-          asientosByClient(reserva),
+          asientosByClient(context, reserva.transporte),
           SizedBox(height: 20.0)
         ]))
       ],
     );
   }
 
-  asientosByClient(Reserva reserva) {
-    return (reserva.transporte == null)
+  asientosByClient(BuildContext context, Transporte transporte) {
+    return (transporte == null)
         ? Container(
             color: Colors.red,
             child: Text("NO DATA"),
           )
-        : Container(
-            child: new Text("fdas"),
+        : crearBus(
+            context: context,
+            asientosDerecho: transporte.asientoIzquierdo,
+            asientosIzquierdos: transporte.asientoDerecho,
+            filas: transporte.filas,
+            deshabilitados: '',
+            agregarAsiento: (String identificadorAsiento, String label) => {},
+            eliminarAsiento: (String identificadorAsiento, String label) => {},
+            ocupados: [],
+            filaTrasera: transporte.filaTrasera,
           );
   }
 

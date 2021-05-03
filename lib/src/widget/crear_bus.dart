@@ -3,8 +3,8 @@ import 'package:peliculas/src/widget/asiento_widget.dart';
 
 Widget crearBus({
   @required BuildContext context,
-  @required int asientosIzquierdos,
   @required int asientosDerecho,
+  @required int asientosIzquierdos,
   @required int filas,
   @required String deshabilitados,
   @required Function agregarAsiento,
@@ -12,7 +12,7 @@ Widget crearBus({
   @required List<String> ocupados,
   @required String filaTrasera,
 }) {
-  final int totalAsientos = asientosIzquierdos + asientosDerecho + 1;
+  final int totalAsientos = asientosDerecho + asientosIzquierdos + 1;
   final Size scrimSize = MediaQuery.of(context).size;
   final double dimensiones = ((scrimSize.width * 0.85) - 88) / totalAsientos;
   final List<String> asientosDeshabilitados = deshabilitados.split(",");
@@ -25,7 +25,7 @@ Widget crearBus({
   for (var i = 1; i <= filas; i++) {
     List<Widget> elementos = [];
     //este es para dibujar los asientos izquierdos
-    for (var j = 1; j <= asientosIzquierdos; j++) {
+    for (var j = 1; j <= asientosDerecho; j++) {
       elementos.add(AsientoWidget(
         context: context,
         label: labelAsiento.toString(),
@@ -42,7 +42,7 @@ Widget crearBus({
     //Agregamos una separacion entre los asientos derechos y izquierdos
     elementos.add(Container(width: dimensiones, height: dimensiones));
     //este es para dibujar los asidento derechos
-    for (var j = 2 + asientosIzquierdos; j <= asientosDerecho + asientosIzquierdos + 1; j++) {
+    for (var j = 2 + asientosDerecho; j <= asientosIzquierdos + asientosDerecho + 1; j++) {
       elementos.add(AsientoWidget(
         context: context,
         label: labelAsiento.toString(),
@@ -66,7 +66,7 @@ Widget crearBus({
 
   if (filaTrasera == "1") {
     final List<Widget> otraFila = [];
-    for (var i = 1; i <= asientosDerecho + asientosIzquierdos + 1; i++) {
+    for (var i = 1; i <= asientosIzquierdos + asientosDerecho + 1; i++) {
       otraFila.add(AsientoWidget(
         context: context,
         label: labelAsiento.toString(),

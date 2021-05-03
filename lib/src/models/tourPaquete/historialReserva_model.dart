@@ -153,7 +153,7 @@ class Transporte {
   int filas;
   int asientoDerecho;
   int asientoIzquierdo;
-  int filaTrasera;
+  String filaTrasera;
 
   factory Transporte.fromJson(Map<String, dynamic> json) => Transporte(
         idTipoServicio: json["id_tipo_servicio"],
@@ -161,7 +161,7 @@ class Transporte {
         filas: int.parse(json["filas"]),
         asientoDerecho: int.parse(json["asiento_derecho"]),
         asientoIzquierdo: int.parse(json["asiento_izquierdo"]),
-        filaTrasera: int.parse(json["fila_trasera"]),
+        filaTrasera: json["fila_trasera"],
       );
 
   Map<String, dynamic> toJson() => {

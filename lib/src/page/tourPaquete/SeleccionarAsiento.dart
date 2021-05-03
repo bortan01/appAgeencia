@@ -90,8 +90,8 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
                   SizedBox(height: 4.0),
                   crearBus(
                     context: context,
-                    asientosDerecho: int.parse(widget.transporte.asientoDerecho),
                     asientosIzquierdos: int.parse(widget.transporte.asientoIzquierdo),
+                    asientosDerecho: int.parse(widget.transporte.asientoDerecho),
                     filas: int.parse(widget.transporte.filas),
                     deshabilitados: widget.transporte.asientosDeshabilitados,
                     ocupados: widget.transporte.ocupados,
@@ -209,4 +209,3 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
     labelAsientos.remove(label);
   }
 }
-
