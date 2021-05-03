@@ -64,7 +64,7 @@ Widget crearBus({
     children: <Widget>[SizedBox(width: 20.0, height: 20.0)],
   );
 
-  if (filaTrasera == "1") {
+  if (filaTrasera == "0") {
     final List<Widget> otraFila = [];
     for (var i = 1; i <= asientosIzquierdos + asientosDerecho + 1; i++) {
       otraFila.add(AsientoWidget(
@@ -84,7 +84,10 @@ Widget crearBus({
     listaFilas.add(new Row(mainAxisAlignment: MainAxisAlignment.center, children: otraFila));
   }
 
-  return Column(
-    children: listaFilas,
+  return Container(
+    margin: EdgeInsets.only(top: 15.0),
+    child: Column(
+      children: listaFilas,
+    ),
   );
 }

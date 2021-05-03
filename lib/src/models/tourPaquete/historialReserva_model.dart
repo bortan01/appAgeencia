@@ -62,7 +62,7 @@ class Reserva {
   String idCliente;
   String idTours;
   String nombreTours;
-  String asientosSeleccionados;
+  List<String> asientosSeleccionados;
   String labelAsiento;
   String cantidadAsientos;
   DateTime start;
@@ -87,7 +87,7 @@ class Reserva {
         idCliente: json["id_cliente"],
         idTours: json["id_tours"],
         nombreTours: json["nombreTours"],
-        asientosSeleccionados: json["asientos_seleccionados"],
+        asientosSeleccionados: List<String>.from(json["asientos_seleccionados"].map((x) => x)),
         labelAsiento: json["label_asiento"],
         cantidadAsientos: json["cantidad_asientos"],
         start: DateTime.parse(json["start"]),

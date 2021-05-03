@@ -23,71 +23,68 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
   @override
   Widget build(BuildContext context) {
     Provider.of<TurServices>(context, listen: false);
-    // final dynamic tur = ModalRoute.of(context).settings.arguments;
-
     return Scaffold(
         //backgroundColor: Colors.blueAccent,
         body: scrollView(context, widget.reserva));
   }
 
   Widget scrollView(BuildContext context, Reserva reserva) {
-    return CustomScrollView(
-      slivers: <Widget>[
-        AppBarWidget(
-          titulo: widget.reserva.nombreTours,
-          imagen: transformarFoto(widget.reserva.foto),
-          id: widget.reserva.idTours.toString(),
-        ),
-        new SliverList(
-            delegate: new SliverChildListDelegate([
-          new SizedBox(
-            height: 10.0,
-          ),
-          helper.posterTitulo(
-              context: context, title: widget.reserva.nombreTours, fecha: widget.reserva.start.toString()),
-          new SizedBox(height: 10.0),
-          new Divider(
-            color: Colors.grey,
-            height: 20.0,
-          ),
-          helper.crearTitulo("Detalle de Compra"),
-          _descripcionCompra(reserva.descripcionProducto),
-          helper.crearTitulo("Descripción"),
-          _descripcion(reserva.descripcionTur),
-          helper.crearTitulo("Fecha de Salida"),
-          _descripcionCompra(helper.transformarFecha(reserva.start)),
-          helper.crearTitulo("Incluye"),
-          listaHorizontal(tipo: TypeChip.azul, lista: reserva.incluye),
-          helper.crearTitulo("Lugares de Salida"),
-          listaHorizontal(tipo: TypeChip.verde, lista: reserva.lugarSalida),
-          helper.crearTitulo("Requisitos"),
-          listaHorizontal(tipo: TypeChip.anaranjado, lista: reserva.requisitos),
-          helper.crearTitulo("No incluye"),
-          listaHorizontal(tipo: TypeChip.rojo, lista: reserva.noIncluye),
-          asientosByClient(context, reserva.transporte),
-          SizedBox(height: 20.0)
-        ]))
-      ],
-    );
+    return CustomScrollView(slivers: <Widget>[
+      AppBarWidget(
+        titulo: widget.reserva.nombreTours,
+        imagen: transformarFoto(widget.reserva.foto),
+        id: widget.reserva.idTours.toString(),
+      ),
+      new SliverList(
+          delegate: new SliverChildListDelegate([
+        new SizedBox(height: 10.0),
+        helper.posterTitulo(
+            context: context, title: widget.reserva.nombreTours, fecha: widget.reserva.start.toString()),
+        new SizedBox(height: 10.0),
+        new Divider(color: Colors.grey, height: 20.0),
+        helper.crearTitulo("Detalle de Compra"),
+        _descripcionCompra(reserva.descripcionProducto),
+        helper.crearTitulo("Descripción"),
+        _descripcion(reserva.descripcionTur),
+        helper.crearTitulo("Fecha de Salida"),
+        _descripcionCompra(helper.transformarFecha(reserva.start)),
+        helper.crearTitulo("Incluye"),
+        listaHorizontal(tipo: TypeChip.azul, lista: reserva.incluye),
+        helper.crearTitulo("Lugares de Salida"),
+        listaHorizontal(tipo: TypeChip.verde, lista: reserva.lugarSalida),
+        helper.crearTitulo("Requisitos"),
+        listaHorizontal(tipo: TypeChip.anaranjado, lista: reserva.requisitos),
+        helper.crearTitulo("No incluye"),
+        listaHorizontal(tipo: TypeChip.rojo, lista: reserva.noIncluye),
+        helper.crearTitulo("Asientos Seleccinados"),
+        asientosByClient(context, reserva.transporte, reserva.asientosSeleccionados),
+        SizedBox(height: 20.0)
+      ]))
+    ]);
   }
 
-  asientosByClient(BuildContext context, Transporte transporte) {
-    return (transporte == null)
-        ? Container(
-            color: Colors.red,
-            child: Text("NO DATA"),
-          )
-        : crearBus(
-            context: context,
-            asientosDerecho: transporte.asientoIzquierdo,
-            asientosIzquierdos: transporte.asientoDerecho,
-            filas: transporte.filas,
-            deshabilitados: '',
-            agregarAsiento: (String identificadorAsiento, String label) => {},
-            eliminarAsiento: (String identificadorAsiento, String label) => {},
-            ocupados: [],
-            filaTrasera: transporte.filaTrasera,
-          );
+  Widget asientosByClient(BuildContext context, Transporte transporte, List<String> ocupados) {
+    if ((transporte == null)) {
+      return Container(
+        color: Colors.red,
+        child: Text("NO DATA"),
+      );
+    } else {
+      return AbsorbPointer(
+        absorbing: true,
+        child: crearBus(
+          context: context,
+          asientosDerecho: transporte.asientoDerecho,
+          asientosIzquierdos: transporte.asientoIzquierdo,
+          filas: transporte.filas,
+          deshabilitados: '',
+          agregarAsiento: (String _, String __) => {},
+          eliminarAsiento: (String _, String __) => {},
+          ocupados: ocupados,
+          filaTrasera: transporte.filaTrasera,
+        ),
+      );
+    }
   }
 
   Widget listaHorizontal({@required TypeChip tipo, @required List<String> lista}) {

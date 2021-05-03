@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AsientoWidget extends StatefulWidget {
-  const AsientoWidget(
-      {Key key,
-      @required this.context,
-      @required this.label,
-      @required this.fondoActivo,
-      @required this.identificador,
-      @required this.fondoInactivo,
-      @required this.dimensiones,
-      @required this.agregar,
-      @required this.eliminar,
-      @required this.asientosNoDisponibles})
-      : super(key: key);
+  const AsientoWidget({
+    Key key,
+    @required this.context,
+    @required this.label,
+    @required this.fondoActivo,
+    @required this.identificador,
+    @required this.fondoInactivo,
+    @required this.dimensiones,
+    @required this.agregar,
+    @required this.eliminar,
+    @required this.asientosNoDisponibles,
+  }) : super(key: key);
 
   final BuildContext context;
   final String label;
@@ -49,14 +49,13 @@ class _AsientoWidgetState extends State<AsientoWidget> {
         GestureDetector(
           onTap: () {
             if (!deshabilitado) {
-              setState(() {
-                if (select) {
-                  widget.agregar(widget.identificador, widget.label);
-                } else {
-                  widget.eliminar(widget.identificador, widget.label);
-                }
-                select = !select;
-              });
+              if (select) {
+                widget.agregar(widget.identificador, widget.label);
+              } else {
+                widget.eliminar(widget.identificador, widget.label);
+              }
+              select = !select;
+              setState(() {});
             }
             // return null;
           },

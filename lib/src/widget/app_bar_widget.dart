@@ -10,11 +10,13 @@ class AppBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      elevation: 2.0,
-      backgroundColor: Theme.of(context).accentColor,
       expandedHeight: 250,
       floating: false,
       pinned: true,
+      title: new Text(titulo),
+      centerTitle: true,
+      backgroundColor: Theme.of(context).accentColor,
+      elevation: 8.0,
       flexibleSpace: FlexibleSpaceBar(
         titlePadding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 20.0),
         centerTitle: true,
