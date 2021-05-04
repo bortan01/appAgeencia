@@ -59,6 +59,7 @@ class HistorialDetalle {
     this.opcAvanzadas,
     this.foto,
     this.galeria,
+    this.tipoCombustible,
   });
 
   String idvehiculo;
@@ -84,6 +85,7 @@ class HistorialDetalle {
   List<String> opcAvanzadas;
   String foto;
   List<String> galeria;
+  String tipoCombustible;
 
   factory HistorialDetalle.fromJson(Map<String, dynamic> json) => HistorialDetalle(
         idvehiculo: json["idvehiculo"],
@@ -109,6 +111,7 @@ class HistorialDetalle {
         opcAvanzadas: List<String>.from(json["opc_avanzadas"].map((x) => x)),
         foto: json["foto"],
         galeria: List<String>.from(json["galeria"].map((x) => x)),
+        tipoCombustible: json["tipoCombustible"],
       );
 
   Map<String, dynamic> toJson() => {

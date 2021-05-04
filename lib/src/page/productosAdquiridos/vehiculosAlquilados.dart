@@ -51,8 +51,8 @@ class VehiculoAlquilado extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              // Navigator.push(context,
-              //     MaterialPageRoute(builder: (context) => DetalleVehiculos(autos[index], data.opcionesAdicionales)));
+              Navigator.pushNamed(context, "DetalleHistorialVehiculo", arguments: autos[index]);
+              
             },
             child: Column(
               children: <Widget>[
@@ -87,7 +87,7 @@ class VehiculoAlquilado extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, "DetalleVehiculos", arguments: CourseList.list[index]);
+              Navigator.pushNamed(context, "DetalleHistorialVehiculo", arguments: CourseList.list[index]);
             },
             child: Column(
               children: <Widget>[

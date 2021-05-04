@@ -17,6 +17,7 @@ import 'package:peliculas/src/page/encomienda/historialEnco.dart';
 import 'package:peliculas/src/page/encomienda/listaEncomienda.dart';
 import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
 import 'package:peliculas/src/page/inicio/pruebaList.dart';
+import 'package:peliculas/src/page/productosAdquiridos/detalleHistorialVehiculo.dart';
 import 'package:peliculas/src/page/tourPaquete/HomePaquetes.dart';
 import 'package:peliculas/src/page/productosAdquiridos/encomiendasRealizadas.dart';
 import 'package:peliculas/src/page/productosAdquiridos/menuProductos.dart';
@@ -85,6 +86,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     //MODULO DE PRODUCTOS ADQUIRIDOS
     'menuProductos': (BuildContext context) => MenuProductos(),
     'TourPaqueteHistorial': (BuildContext context) => TourPaqueteHistorial(),
+    'DetalleHistorialVehiculo': (BuildContext context) => DetalleHistorialVehiculos(),
     'carrosAlqui': (BuildContext context) => VehiculoAlquilado(),
     'enviosRealizados': (BuildContext context) => EncomiendasRealizadas(),
   };
