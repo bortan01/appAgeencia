@@ -50,7 +50,6 @@ class _DetalleToursState extends State<DetalleTours> {
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              print('hecho');
               if (snapshot.data == null) return helper.noData();
               final informacionAcicional = snapshot.data;
               return scrollView(context, informacionAcicional, widget.tourPaquete);
@@ -77,8 +76,7 @@ class _DetalleToursState extends State<DetalleTours> {
           new SizedBox(
             height: 10.0,
           ),
-          helper.posterTitulo(
-              context: context, title: widget.tourPaquete.nombreTours),
+          helper.posterTitulo(context: context, title: widget.tourPaquete.nombreTours),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,

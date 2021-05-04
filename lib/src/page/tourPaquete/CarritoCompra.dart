@@ -125,7 +125,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
                     _crearDropdown(),
                     _inputCantidad(),
                     _botonAgregar(),
-                    crearTitulo("Mi Carrito"),
+                    helper.crearTitulo("Mi Carrito"),
                     crearSubTitulo("(Mueva a los lados para eliminar)"),
                     SizedBox(height: 4.0),
                     _crearCarrito(),
@@ -195,9 +195,23 @@ class _CarritoCompraState extends State<CarritoCompra> {
 
     return Row(
       children: <Widget>[
-        Text("Total:", style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.w600)),
+        Text(
+          "Total:",
+          style: TextStyle(
+            fontSize: 20.0,
+            color: Colors.lightBlue,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
         Spacer(),
-        Text("\$${total.toStringAsFixed(2)}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
+        Text(
+          "\$${total.toStringAsFixed(2)}",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+            color: Colors.lightBlue,
+          ),
+        )
       ],
     );
   }
@@ -227,7 +241,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         children: <Widget>[
-          crearTitulo("Seleccione el tipo de asiento"),
+          helper.crearTitulo("Seleccione el tipo de asiento"),
           SizedBox(
             height: 3.0,
           ),
@@ -247,14 +261,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
               }),
         ],
       ),
-    );
-  }
-
-  Text crearTitulo(String tiulo) {
-    return Text(
-      tiulo,
-      textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
     );
   }
 

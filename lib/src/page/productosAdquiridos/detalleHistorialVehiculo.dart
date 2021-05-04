@@ -255,44 +255,6 @@ _swiperTarjetas(BuildContext context, List<String> galery) {
   );
 }
 
-Widget _item({IconData icono, String titulo, String descripcion}) {
-  return Row(
-    children: <Widget>[
-      Container(
-        padding: EdgeInsets.all(11),
-        margin: EdgeInsets.all(11),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Color(0xFF009ff7),
-        ),
-        child: Icon(
-          icono,
-          color: Colors.white,
-        ),
-      ),
-      SizedBox(
-        width: 5.0,
-      ),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              titulo,
-              style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 5.0),
-            Text(
-              descripcion,
-              textAlign: TextAlign.justify,
-              style: TextStyle(color: Colors.black45),
-            ),
-          ],
-        ),
-      ),
-    ],
-  );
-}
 
 class MyIconButton extends StatelessWidget {
   final String buttonText;
