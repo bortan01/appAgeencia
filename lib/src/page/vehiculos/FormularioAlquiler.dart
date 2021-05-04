@@ -156,7 +156,7 @@ class _AlquilerState extends State<Alquiler> {
   }
 
   Widget _labelTotal() {
-     total = 0.00;
+    total = 0.00;
     total += widget.carro.precioDiario * numeroDias;
 
     opcionesSeleccionadas.forEach((element) {
@@ -167,12 +167,29 @@ class _AlquilerState extends State<Alquiler> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("Vehículo +", overflow: TextOverflow.ellipsis, maxLines: 3, style: helper.titulo2()),
-            Text("Servicios Adicionales:", overflow: TextOverflow.ellipsis, maxLines: 3, style: helper.titulo2()),
+            Text(
+              "Vehículo +",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: helper.titulo2(),
+            ),
+            Text(
+              "Servicios Adicionales:",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: helper.titulo2(),
+            ),
           ],
         ),
         Spacer(),
-        Text("\$${total.toStringAsFixed(2)}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
+        Text(
+          "\$${total.toStringAsFixed(2)}",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+            color: Colors.lightBlue,
+          ),
+        )
       ],
     );
   }

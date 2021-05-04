@@ -117,7 +117,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                     _crearDropdown(),
                     _inputCantidad(),
                     _botonAgregar(),
-                    crearTitulo("Productos seleccionados"),
+                    helper.crearTitulo("Productos seleccionados"),
                     crearSubTitulo("(Mueva a los lados para eliminar)"),
                     SizedBox(height: 4.0),
                     _crearCarrito(),
@@ -169,9 +169,32 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
 
     return Row(
       children: <Widget>[
-        Text("Total + Gastos de envio:", style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.w600)),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Text(
+              "Total +",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: helper.titulo2(),
+            ),
+            Text(
+              " Gastos de envio:",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: helper.titulo2(),
+            ),
+          ],
+        ),
         Spacer(),
-        Text("\$${total.toStringAsFixed(2)}", style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600))
+        Text(
+          "\$${total.toStringAsFixed(2)}",
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+            color: Colors.lightBlue,
+          ),
+        )
       ],
     );
   }
@@ -201,7 +224,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         children: <Widget>[
-          crearTitulo("Seleccione los producto"),
+          helper.crearTitulo("Seleccione los producto"),
           SizedBox(
             height: 3.0,
           ),
@@ -224,14 +247,6 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
-  Text crearTitulo(String tiulo) {
-    return Text(
-      tiulo,
-      textAlign: TextAlign.center,
-      style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),
-    );
-  }
-
   Text crearSubTitulo(String tiulo) {
     return Text(
       tiulo,
@@ -247,7 +262,10 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     });
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(color: Colors.blue, borderRadius: BorderRadius.circular(20.0)),
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       child: Column(
         children: listaIttem,
       ),

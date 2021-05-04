@@ -6,6 +6,7 @@ import 'package:peliculas/src/widget/app_bar_widget.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/widget/chip_widget.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
+import 'package:peliculas/src/widget/descripcion_widget.dart';
 
 class DetalleVehiculos extends StatelessWidget {
   final Auto carro;
@@ -26,14 +27,16 @@ class DetalleVehiculos extends StatelessWidget {
           new SliverList(
               delegate: new SliverChildListDelegate([
             new SizedBox(height: 10.0),
-             helper.posterTitulo(context: context, title: myTitulo),
-            _descripcion("", carro.descripcion),
+            helper.posterTitulo(context: context, title: myTitulo),
+            descripcion(carro.descripcion),
             _cuadros(carro),
             _botones(context, carro, opciones),
             SizedBox(height: 10.0),
+            helper.crearTitulo('Otras Opcionees'),
             _otrasOpciones(carro.opcAvanzadas),
             _adicional(opciones),
-            _descripcion('Informacion Adicional', carro.detalles),
+            helper.crearTitulo('Informacion Adicional'),
+            descripcion(carro.detalles),
             _swiperTarjetas(context, carro.galeria),
           ]))
         ],
@@ -41,7 +44,6 @@ class DetalleVehiculos extends StatelessWidget {
     );
   }
 }
-
 
 Container _botones(BuildContext context, Auto carro, List<OpcioneAdicional> opciones) {
   return Container(
@@ -85,51 +87,21 @@ Container _botones(BuildContext context, Auto carro, List<OpcioneAdicional> opci
         FlatButton(
           child: Row(
             children: <Widget>[
-              Text(
-                "Cotización",
-                style: TextStyle(color: Colors.white),
-              ),
-              Icon(
-                Icons.call_made,
-                color: Colors.white,
-              ),
+              Text("Cotización", style: TextStyle(color: Colors.white)),
+              Icon(Icons.call_made, color: Colors.white),
             ],
           ),
           onPressed: () {
             Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Alquiler(
-                          carro: carro,
-                          opciones: opciones,
-                        )));
+              context,
+              MaterialPageRoute(
+                builder: (context) => Alquiler(carro: carro, opciones: opciones),
+              ),
+            );
           },
         ),
       ],
     ),
-  );
-}
-
-Widget _descripcion(String titulo, String descripcion) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: <Widget>[
-      SizedBox(height: 15),
-      (titulo.isNotEmpty)
-          ? Container(
-              margin: EdgeInsets.only(left: 15.0, bottom: 5.0),
-              child: Center(child: Text(titulo, style: helper.titulo2())),
-            )
-          : Container(),
-      Container(
-        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
-        child: Text(descripcion,
-            overflow: TextOverflow.ellipsis,
-            maxLines: 50,
-            textAlign: TextAlign.justify,
-            style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey)),
-      ),
-    ],
   );
 }
 
@@ -175,27 +147,14 @@ Widget _cuadros(Auto carro) {
 
 Widget _otrasOpciones(List<String> opcAvanzadas) {
   List<Widget> opcionesList = [];
-  final titulo = Container(
-      padding: EdgeInsets.symmetric(horizontal: 11.0),
-      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: Center(
-        child: Text(
-          "Otras opciones",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-        ),
-      ));
 
-  opcionesList.add(titulo);
   opcAvanzadas.forEach((opcion) {
     opcionesList.add(ChipWidget(text: opcion, type: TypeChip.azul));
     opcionesList.add(SizedBox(height: 5.0));
   });
 
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 11.0),
+    padding: EdgeInsets.symmetric(horizontal: 11.0, vertical: 8.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: opcionesList,
@@ -220,19 +179,25 @@ Widget _adicional(List<OpcioneAdicional> adicionales) {
       children: <Widget>[
         Text(
           "Servicios Adicionales",
-          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
         ),
         new Column(
             children: adicionales
-                .map((item) =>
-                    _item(icono: Icons.check_circle, titulo: item.nombreServicio, descripcion: item.descripcion))
+                .map((item) => _item(
+                      icono: Icons.check_circle,
+                      titulo: item.nombreServicio,
+                      descripcion: item.descripcion,
+                    ))
                 .toList()),
       ],
     ),
   );
 }
 
-_swiperTarjetas(BuildContext context, List<String> galery) {
+Widget _swiperTarjetas(BuildContext context, List<String> galery) {
   ///estos son datos quemados
   final tamanioPantalla = MediaQuery.of(context).size;
 
@@ -288,7 +253,10 @@ Widget _item({IconData icono, String titulo, String descripcion}) {
           children: <Widget>[
             Text(
               titulo,
-              style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 5.0),
             Text(
