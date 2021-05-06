@@ -28,8 +28,7 @@ class DetalleHistorialVehiculos extends StatelessWidget {
             helper.posterTitulo(context: context, title: myTitulo),
             _descripcion("", carro.descripcion),
             _cuadros(carro),
-            _botones(context, carro),
-            SizedBox(height: 10.0),
+            helper.crearTitulo("Otras Opciones"),
             _otrasOpciones(carro.opcAvanzadas),
             _adicional(carro),
             _descripcion('Informacion Adicional', carro.detalles),
@@ -39,65 +38,6 @@ class DetalleHistorialVehiculos extends StatelessWidget {
       ),
     );
   }
-}
-
-Container _botones(BuildContext context, HistorialDetalle carro) {
-  return Container(
-    margin: EdgeInsets.symmetric(horizontal: 10.0),
-    decoration: BoxDecoration(
-      color: Colors.blueAccent,
-      borderRadius: BorderRadius.circular(35),
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        FlatButton(
-          child: Row(
-            children: <Widget>[
-              Icon(
-                Icons.call_received,
-                color: Colors.white,
-              ),
-              Text(
-                "Ver Flota de Vehiculos",
-                style: TextStyle(color: Colors.white),
-              )
-            ],
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        Container(
-          height: 30,
-          width: 1,
-          decoration: BoxDecoration(
-            border: Border(
-              left: BorderSide(
-                color: Colors.white54,
-                width: 3.0,
-              ),
-            ),
-          ),
-        ),
-        FlatButton(
-          child: Row(
-            children: <Widget>[
-              Text(
-                "Cotización",
-                style: TextStyle(color: Colors.white),
-              ),
-              Icon(
-                Icons.call_made,
-                color: Colors.white,
-              ),
-            ],
-          ),
-          onPressed: () {},
-        ),
-      ],
-    ),
-  );
 }
 
 Widget _descripcion(String titulo, String descripcion) {
@@ -165,27 +105,14 @@ Widget _cuadros(HistorialDetalle carro) {
 
 Widget _otrasOpciones(List<String> opcAvanzadas) {
   List<Widget> opcionesList = [];
-  final titulo = Container(
-      padding: EdgeInsets.symmetric(horizontal: 11.0),
-      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-      child: Center(
-        child: Text(
-          "Otras opciones",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-        ),
-      ));
 
-  opcionesList.add(titulo);
   opcAvanzadas.forEach((opcion) {
     opcionesList.add(ChipWidget(text: opcion, type: TypeChip.azul));
     opcionesList.add(SizedBox(height: 5.0));
   });
 
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 11.0),
+    padding: EdgeInsets.symmetric(horizontal: 11.0, vertical: 10.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: opcionesList,
@@ -195,7 +122,7 @@ Widget _otrasOpciones(List<String> opcAvanzadas) {
 
 Widget _adicional(HistorialDetalle carro) {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 11.0, vertical: 11.0),
+    padding: EdgeInsets.symmetric(horizontal: 41.0, vertical: 15.0),
     margin: EdgeInsets.only(left: 11.0, right: 11.0, top: 10.0, bottom: 10.0),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.only(
@@ -209,15 +136,12 @@ Widget _adicional(HistorialDetalle carro) {
     child: Column(
       children: <Widget>[
         Text(
-          "Servicios Adicionales",
+          "Servicios Adicionales Seleccionados",
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87),
         ),
-        // new Column(
-        //   children: adicionales
-        //       .map((item) =>
-        //           _item(icono: Icons.check_circle, titulo: item.nombreServicio, descripcion: item.descripcion))
-        //       .toList(),
-        // ),
+        new Column(
+          children: carro.servicios.map((item) => _item(servicio: item)).toList(),
+        ),
       ],
     ),
   );
@@ -255,6 +179,56 @@ _swiperTarjetas(BuildContext context, List<String> galery) {
   );
 }
 
+Widget _item({Servicio servicio}) {
+  double total = int.parse(servicio.cantidadServicio) * double.parse(servicio.costoServicio);
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: <Widget>[
+      Container(
+        padding: EdgeInsets.all(11),
+        margin: EdgeInsets.all(11),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Color(0xFF009ff7),
+        ),
+        child: Icon(
+          Icons.check,
+          color: Colors.white,
+        ),
+      ),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '${servicio.cantidadServicio} X  ${servicio.servicioAdicional}',
+              style: TextStyle(
+                color: Colors.black87,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 5.0),
+            Text(
+              'Precio: ${servicio.costoServicio} c/u',
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                color: Colors.black45,
+              ),
+            ),
+            Text(
+              'Total: ${total.toStringAsFixed(2)}',
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                color: Colors.black45,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ],
+  );
+}
 
 class MyIconButton extends StatelessWidget {
   final String buttonText;

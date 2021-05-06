@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
+import 'package:peliculas/src/models/tourPaquete/cotizar_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/historialReserva_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
@@ -86,6 +87,19 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
       return res;
     } else {
       return null;
+    }
+  }
+
+  Future<bool> guardaCotizacion(CotizarModel cotizacion) async {
+    print("haciendo peticion de guardar cotizacion");
+    final url = '${Conf.urlServidor}TurPaquete/cotizacion';
+    final response = await http.post(url, body: cotizacion.toJson());
+    if (response.statusCode == 200) {
+      final jsonResponse = convert.jsonDecode(response.body);
+      print(jsonResponse);
+      return true;
+    } else {
+      return false;
     }
   }
 }

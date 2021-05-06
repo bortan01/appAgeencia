@@ -38,6 +38,7 @@ class HistorialDetalle {
   HistorialDetalle({
     this.idvehiculo,
     this.idCliente,
+    this.idDetalle,
     this.fechaReserva,
     this.resultadoTransaccion,
     this.monto,
@@ -57,6 +58,7 @@ class HistorialDetalle {
     this.transmision,
     this.nombreCategoria,
     this.opcAvanzadas,
+    this.servicios,
     this.foto,
     this.galeria,
     this.tipoCombustible,
@@ -64,6 +66,7 @@ class HistorialDetalle {
 
   String idvehiculo;
   String idCliente;
+  String idDetalle;
   DateTime fechaReserva;
   String resultadoTransaccion;
   String monto;
@@ -83,6 +86,7 @@ class HistorialDetalle {
   String transmision;
   String nombreCategoria;
   List<String> opcAvanzadas;
+  List<Servicio> servicios;
   String foto;
   List<String> galeria;
   String tipoCombustible;
@@ -90,6 +94,7 @@ class HistorialDetalle {
   factory HistorialDetalle.fromJson(Map<String, dynamic> json) => HistorialDetalle(
         idvehiculo: json["idvehiculo"],
         idCliente: json["id_cliente"],
+        idDetalle: json["id_detalle"],
         fechaReserva: DateTime.parse(json["fecha_reserva"]),
         resultadoTransaccion: json["resultadoTransaccion"],
         monto: json["monto"],
@@ -110,6 +115,7 @@ class HistorialDetalle {
         nombreCategoria: json["nombre_categoria"],
         opcAvanzadas: List<String>.from(json["opc_avanzadas"].map((x) => x)),
         foto: json["foto"],
+        servicios: List<Servicio>.from(json["servicios"].map((x) => Servicio.fromJson(x))),
         galeria: List<String>.from(json["galeria"].map((x) => x)),
         tipoCombustible: json["tipoCombustible"],
       );
@@ -140,5 +146,37 @@ class HistorialDetalle {
         "opc_avanzadas": List<dynamic>.from(opcAvanzadas.map((x) => x)),
         "foto": foto,
         "galeria": List<dynamic>.from(galeria.map((x) => x)),
+      };
+}
+
+class Servicio {
+  Servicio({
+    this.iddetalleServicios,
+    this.idDetalle,
+    this.servicioAdicional,
+    this.costoServicio,
+    this.cantidadServicio,
+  });
+
+  String iddetalleServicios;
+  String idDetalle;
+  String servicioAdicional;
+  String costoServicio;
+  String cantidadServicio;
+
+  factory Servicio.fromJson(Map<String, dynamic> json) => Servicio(
+        iddetalleServicios: json["iddetalle_servicios"],
+        idDetalle: json["id_detalle"],
+        servicioAdicional: json["servicio_adicional"],
+        costoServicio: json["costo_servicio"],
+        cantidadServicio: json["cantidad_servicio"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "iddetalle_servicios": iddetalleServicios,
+        "id_detalle": idDetalle,
+        "servicio_adicional": servicioAdicional,
+        "costo_servicio": costoServicio,
+        "cantidad_servicio": cantidadServicio,
       };
 }

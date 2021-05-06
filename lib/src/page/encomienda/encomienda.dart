@@ -206,7 +206,9 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       color: Colors.blue,
       textColor: Colors.white,
       focusColor: Colors.red,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
       onPressed: () {
         if (formKey.currentState.validate()) {
           //para ejecutar el on save
@@ -231,8 +233,11 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
           DropdownButtonFormField(
               isExpanded: true,
               decoration: InputDecoration(
-                  hintText: "",
-                  border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
+                hintText: "",
+                border: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                ),
+              ),
               icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
               value: listaProductos[0],
               items: opcionesDropdown(),

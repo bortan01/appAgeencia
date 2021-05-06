@@ -138,19 +138,7 @@ class _RegistroPageState extends State<Registro> {
             ),
           ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Puede completar datos adicionales en Pagina Web",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        )
+    
       ],
     );
   }

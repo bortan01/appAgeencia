@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/tourPaquete/cotizar_model.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
+import 'package:peliculas/src/services/turs_services.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class CotizarTours extends StatefulWidget {
   @override
@@ -6,36 +10,13 @@ class CotizarTours extends StatefulWidget {
 }
 
 class _CotizarToursState extends State<CotizarTours> {
-  int asiento_izquierdo;
-  int asiento_derecho;
   int filas;
 
   double screenHeight;
 
-  String _nombre = "";
-  String _telefono = "";
-  String _direccionPais = "";
-
-  String _fechaViaje = "";
-  String _fechaRetorno = "";
-
-  String _sitios = "";
-  String _adultos = "";
-  String _bebe = "";
-  String _ninos = "";
-  String _ancianos = "";
-
   TextEditingController _controllerFecha = new TextEditingController();
-  TextEditingController _controllerFechaD = new TextEditingController();
-  String opcionSeleccionada = 'Tipo de Viaje';
-
-  List<String> _lugar = [
-    'Tipo de Viaje',
-    'Familiar',
-    'Vacaciones',
-    'Luna de Miel',
-    'otros'
-  ];
+  TextEditingController _controllerDescripcion = new TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +40,7 @@ class _CotizarToursState extends State<CotizarTours> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Cotizar Tours"),
+      title: Text("Cotizar Viaje"),
     );
   }
 
@@ -72,8 +53,7 @@ class _CotizarToursState extends State<CotizarTours> {
         children: <Widget>[
           Text(
             "",
-            style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
           )
         ],
       ),
@@ -93,103 +73,22 @@ class _CotizarToursState extends State<CotizarTours> {
             elevation: 8,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Align(
-                    child: Text(
-                      "Cotizar Tours",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  _inputNombre(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputTelefono(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearDropdown(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputPais(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearFecha(context),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _crearFechaRetorno(context),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputSitiosTuristicos(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputBebes(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputNinos(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputAdultos(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  _inputAncianos(),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Expanded(
-                        child: Container(),
-                      ),
-                      FlatButton(
-                        child: Text("Enviar Cotización"),
-                        color: Color(0xFF4B9DFE),
-                        textColor: Colors.white,
-                        padding: EdgeInsets.only(
-                            left: 38, right: 38, top: 15, bottom: 15),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onPressed: () {},
-                      )
-                    ],
-                  )
-                ],
+              child: Form(
+                key: formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    helper.crearTitulo("¿Cuándo desea realizar su viaje?"),
+                    _crearFecha(context, _controllerFecha, 'Seleccione la Fecha'),
+                    helper.crearTitulo("Describa su viaje ideal"),
+                    _inputDescripcion(),
+                    _botonAgregar(context),
+                  ],
+                ),
               ),
             ),
           ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 40,
-            ),
-            Text(
-              "Puede completar datos adicionales en Pagina Web",
-              style: TextStyle(color: Colors.grey),
-            ),
-          ],
-        )
       ],
     );
   }
@@ -204,115 +103,27 @@ class _CotizarToursState extends State<CotizarTours> {
     );
   }
 
-  Widget _inputNombre() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Nombre',
-        labelText: 'Digite su Nombre Completo',
-        helperText: 'Nombre Completo',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.supervised_user_circle),
-      ),
-      onChanged: (String persona) {
-        _nombre = persona;
-        setState(() {});
-      },
-    );
-  }
-
-  Widget _inputTelefono() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Numero de Telefono',
-        labelText: 'Digite su Numero de Telefono',
-        helperText: 'Numero de Telefono',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.phone),
-      ),
-      keyboardType: TextInputType.number,
-      onChanged: (String persona) {
-        _telefono = persona;
-        setState(() {});
-      },
-    );
-  }
-
-  Widget _inputPais() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Destino a Visitar',
-        labelText: 'Digite el País que desea visitar',
-        helperText: 'Destino a Visitar',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.map),
-      ),
-      onChanged: (String persona) {
-        _direccionPais = persona;
-        setState(() {});
-      },
-    );
-  }
-
-  List<DropdownMenuItem<String>> getOpcionesDropdown() {
-    List<DropdownMenuItem<String>> lista = new List();
-    _lugar.forEach((lugar) {
-      lista.add(DropdownMenuItem(
-        child: new Text(lugar),
-        value: lugar,
-      ));
-    });
-    return lista;
-  }
-
-  Widget _crearDropdown() {
-    return new Row(
-      children: <Widget>[
-        new Icon(Icons.person_pin_circle),
-        SizedBox(
-          width: 30.0,
+  Widget _crearFecha(BuildContext context, TextEditingController controller, String hint) {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: new TextFormField(
+        controller: controller,
+        enableInteractiveSelection: false,
+        textAlign: TextAlign.center,
+        validator: (s) => helper.minLengthRequired(s, 2),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          hintText: hint,
         ),
-        Expanded(
-          child: DropdownButton(
-              value: opcionSeleccionada,
-              items: getOpcionesDropdown(),
-              onChanged: (opt) {
-                setState(() {
-                  opcionSeleccionada = opt;
-                });
-              }),
-        )
-      ],
-    );
-  }
-
-  Widget _crearFecha(BuildContext context) {
-    return new TextField(
-      controller: _controllerFecha,
-      enableInteractiveSelection: false,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Fecha del Viaje',
-        labelText: 'Fecha del Viaje',
-        helperText: 'Fecha del Viaje',
-        suffixIcon: Icon(Icons.calendar_today),
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+          _selectDate(context, controller);
+        },
       ),
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-        _selectDate(context);
-      },
     );
   }
 
-  _selectDate(BuildContext context) async {
+  _selectDate(BuildContext context, TextEditingController controller) async {
     DateTime picked = await showDatePicker(
       context: context,
       initialDate: new DateTime.now(),
@@ -320,147 +131,71 @@ class _CotizarToursState extends State<CotizarTours> {
       lastDate: new DateTime(2025),
       locale: Locale('es', 'ES'),
     );
-
     if (picked != null) {
       setState(() {
-        _fechaViaje = picked.toString();
-        _controllerFecha.text = _fechaViaje;
-      });
-    }
-  }
-  //Fecha de Devolucion
-
-  Widget _crearFechaRetorno(BuildContext context) {
-    return new TextField(
-      controller: _controllerFecha,
-      enableInteractiveSelection: false,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Fecha de Retorno',
-        labelText: 'Fecha de Retorno',
-        helperText: 'Fecha de Retorno del Viaje',
-        suffixIcon: Icon(Icons.calendar_today),
-      ),
-      onTap: () {
-        FocusScope.of(context).requestFocus(new FocusNode());
-        _selectDateRetorno(context);
-      },
-    );
-  }
-
-  _selectDateRetorno(BuildContext context) async {
-    DateTime picked = await showDatePicker(
-      context: context,
-      initialDate: new DateTime.now(),
-      firstDate: new DateTime(2018),
-      lastDate: new DateTime(2025),
-      locale: Locale('es', 'ES'),
-    );
-
-    if (picked != null) {
-      setState(() {
-        _fechaRetorno = picked.toString();
-        _controllerFechaD.text = _fechaViaje;
+        var fecha = picked;
+        controller.text = helper.transformarFecha(fecha);
       });
     }
   }
 
-  Widget _inputSitiosTuristicos() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite Sitios Turísticos',
-        labelText: 'Digite Sitios Turísticos',
-        helperText: 'Sitios Turísticos que desee visitar',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.map),
-      ),
-      onChanged: (String sitio) {
-        _sitios = sitio;
-        setState(() {});
+  Widget _botonAgregar(BuildContext context) {
+    return RaisedButton.icon(
+      icon: Icon(Icons.send),
+      label: Text("Enviar Solicitud de cotización"),
+      color: Colors.blue,
+      textColor: Colors.white,
+      focusColor: Colors.red,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+      onPressed: () async {
+        if (formKey.currentState.validate()) {
+          formKey.currentState.save();
+          guardar(context);
+        }
       },
     );
   }
 
-  Widget _inputBebes() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite cantidad de Bebés que viajarán',
-        labelText: 'Digite cantidad de Bebés',
-        helperText: 'Cantidad de Bebés que viajarán',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.child_care),
+  Widget _inputDescripcion() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.multiline,
+        minLines: 6,
+        maxLines: 18,
+        controller: _controllerDescripcion,
+        textAlign: TextAlign.center,
+        validator: (s) => helper.maxLengthRequired(s, 10),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          alignLabelWithHint: true,
+          hintText: 'Digite las características que desee',
+        ),
+        onSaved: (String valor) {
+          _controllerDescripcion.text = valor;
+        },
       ),
-      keyboardType: TextInputType.number,
-      onChanged: (String bebe) {
-        _bebe = bebe;
-        setState(() {});
-      },
     );
   }
 
-  Widget _inputNinos() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite cantidad de Niños que viajarán',
-        labelText: 'Digite cantidad de Niños',
-        helperText: 'Cantidad de Niños que viajarán',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.child_care),
-      ),
-      keyboardType: TextInputType.number,
-      onChanged: (String nino) {
-        _ninos = nino;
-        setState(() {});
-      },
+  Future<void> guardar(BuildContext context) async {
+    PreferenciasUsuario pref = PreferenciasUsuario();
+    CotizarModel cotizacion = CotizarModel(
+      idCliente: pref.idCliente,
+      fechaPeticion: _controllerFecha.text,
+      peticion: _controllerDescripcion.text,
+      visto: "0",
     );
-  }
 
-  Widget _inputAdultos() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite cantidad de Adultos que viajarán',
-        labelText: 'Digite cantidad de Adultos',
-        helperText: 'Cantidad de Adultos que viajarán',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.person),
-      ),
-      keyboardType: TextInputType.number,
-      onChanged: (String adultos) {
-        _adultos = adultos;
-        setState(() {});
-      },
-    );
-  }
-
-  Widget _inputAncianos() {
-    return new TextField(
-      // autofocus: true,
-      textCapitalization: TextCapitalization.words,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite cantidad de Adultos Mayores que viajarán',
-        labelText: 'Digite cantidad de Adultos',
-        helperText: 'Cantidad de Adultos Mayores que viajarán',
-        floatingLabelBehavior: FloatingLabelBehavior.auto,
-        suffixIcon: Icon(Icons.person),
-      ),
-      keyboardType: TextInputType.number,
-      onChanged: (String ancianos) {
-        _ancianos = ancianos;
-        setState(() {});
-      },
-    );
+    bool res = await TurServices().guardaCotizacion(cotizacion);
+    if (res) {
+      helper.mostrarMensajeOk(context,
+          'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
+      // _controllerDescripcion.clear();
+      // _controllerFecha.clear();
+      setState(() {});
+    } else {
+      helper.mostrarMensanjeError(context, 'Favor intente más tarde');
+    }
   }
 }

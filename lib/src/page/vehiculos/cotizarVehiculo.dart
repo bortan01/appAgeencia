@@ -178,8 +178,8 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
       padding: EdgeInsets.only(top: 10.0, bottom: 10),
       child: TextFormField(
         keyboardType: TextInputType.multiline,
-        minLines: 1,
-        maxLines: 8,
+        minLines: 5,
+        maxLines: 18,
         controller: _controllerCaracteristicas,
         textAlign: TextAlign.center,
         validator: (s) => helper.maxLengthRequired(s, 10),
