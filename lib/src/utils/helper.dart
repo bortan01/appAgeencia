@@ -196,3 +196,7 @@ String transformarFechaAndHora(DateTime fecha) {
   final DateFormat formatter = DateFormat('dd/MM/yyyy hh:mm a');
   return formatter.format(fecha);
 }
+String transformarHora(DateTime fecha) {
+  final DateFormat formatter = DateFormat('hh:mm a');
+  return formatter.format(fecha);
+}

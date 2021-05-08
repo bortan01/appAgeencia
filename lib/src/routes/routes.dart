@@ -18,6 +18,7 @@ import 'package:peliculas/src/page/encomienda/listaEncomienda.dart';
 import 'package:peliculas/src/page/encomienda/menuEncomienda.dart';
 import 'package:peliculas/src/page/inicio/pruebaList.dart';
 import 'package:peliculas/src/page/productosAdquiridos/detalleHistorialVehiculo.dart';
+import 'package:peliculas/src/page/productosAdquiridos/itinerario_page.dart';
 import 'package:peliculas/src/page/tourPaquete/CotizacionesByClient.dart';
 import 'package:peliculas/src/page/tourPaquete/HomePaquetes.dart';
 import 'package:peliculas/src/page/productosAdquiridos/encomiendasRealizadas.dart';
@@ -91,5 +92,6 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'carrosAlqui': (BuildContext context) => VehiculoAlquilado(),
     'enviosRealizados': (BuildContext context) => EncomiendasRealizadas(),
     'CotizacionesPaquetesPage': (BuildContext context) => CotizacionesPaquetesPage(),
+    'itinerario': (BuildContext context) => ItinerarioPage(),
   };
 }

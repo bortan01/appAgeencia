@@ -38,8 +38,7 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
       new SliverList(
           delegate: new SliverChildListDelegate([
         new SizedBox(height: 10.0),
-        helper.posterTitulo(
-            context: context, title: widget.reserva.nombreTours),
+        helper.posterTitulo(context: context, title: widget.reserva.nombreTours),
         new SizedBox(height: 10.0),
         new Divider(color: Colors.grey, height: 20.0),
         helper.crearTitulo("Detalle de Compra"),
@@ -56,8 +55,9 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
         listaHorizontal(tipo: TypeChip.anaranjado, lista: reserva.requisitos),
         helper.crearTitulo("No incluye"),
         listaHorizontal(tipo: TypeChip.rojo, lista: reserva.noIncluye),
-        helper.crearTitulo("Asientos Seleccinados"),
+        (reserva.transporte != null) ? helper.crearTitulo("Asientos Seleccinados") : Container(),
         asientosByClient(context, reserva.transporte, reserva.asientosSeleccionados),
+        _botonItinerario(context),
         SizedBox(height: 20.0)
       ]))
     ]);
@@ -65,10 +65,7 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
 
   Widget asientosByClient(BuildContext context, Transporte transporte, List<String> ocupados) {
     if ((transporte == null)) {
-      return Container(
-        color: Colors.red,
-        child: Text("NO DATA"),
-      );
+      return Container();
     } else {
       return AbsorbPointer(
         absorbing: true,
@@ -133,6 +130,23 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _botonItinerario(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
+      child: RaisedButton.icon(
+        icon: Icon(Icons.timeline),
+        label: Text("Ver Itinerario"),
+        color: Colors.blue,
+        textColor: Colors.white,
+        focusColor: Colors.red,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+        onPressed: () {
+          Navigator.pushNamed(context, 'itinerario');
+        },
+      ),
     );
   }
 }

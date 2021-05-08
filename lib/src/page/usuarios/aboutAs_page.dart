@@ -16,7 +16,7 @@ class AboutAsPage extends StatelessWidget {
           _tarjetaDetalle(
             context: context,
             icono: Icons.info,
-            titulo: 'Informacion',
+            titulo: '¿Quíenes somos?',
             descripcion:
                 'Somos una empresa que tiene como objetivo primordial complacer a los distintos gustos de los turistas, vía terrestre y/o vía aérea a Centro América y el Mundo .Donde ofrecemos paquetes turísticos vacacionales con el fin que deseen ',
           ),

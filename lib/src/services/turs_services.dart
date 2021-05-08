@@ -9,6 +9,7 @@ import 'package:peliculas/src/models/tourPaquete/cotizacionesByClient_model.dart
 import 'package:peliculas/src/models/tourPaquete/cotizar_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/historialReserva_model.dart';
+import 'package:peliculas/src/models/tourPaquete/itinerario_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/conf.dart';
 
@@ -106,9 +107,20 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<CotizacionesPaquetesCliente> obtenerCotizacionesByCliente() async {
     final url = '${Conf.urlServidor}TurPaquete/cotizacionByClient?id_cliente=${_pref.idCliente}';
-      final response = await http.get(url);
+    final response = await http.get(url);
     if (response.statusCode == 200) {
       final cotizacion = cotizacionesPaquetesClienteFromJson(response.body);
+      return cotizacion;
+    } else {
+      return null;
+    }
+  }
+
+  Future<ItinerarioModel> obtenerItinerario(String id) async {
+    final url = '${Conf.urlServidor}Itinerario/itinerarioForApp?id_tours=$id';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final cotizacion = itinerarioModelFromJson(response.body);
       return cotizacion;
     } else {
       return null;
