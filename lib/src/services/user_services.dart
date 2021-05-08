@@ -4,7 +4,6 @@ import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:peliculas/src/models/image/documentos_model.dart';
-import 'package:peliculas/src/models/image/imagen_model.dart';
 import 'package:peliculas/src/models/image/responseImagen_model.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';

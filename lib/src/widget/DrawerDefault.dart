@@ -15,55 +15,31 @@ Widget getDrawerDefault(BuildContext context) {
             child: Text(""),
           ),
           new ListTile(
-            title: new Text(
-              "Foto de Perfil",
-              style: estiloLetra,
-            ),
-            trailing: new Icon(
-              Icons.account_circle,
-              color: colorBase,
-            ),
+            title: new Text("Foto de Perfil", style: estiloLetra),
+            trailing: new Icon(Icons.account_circle, color: colorBase),
             onTap: () => Navigator.of(context).pushNamed('subirImagenes'),
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(
-            title: new Text(
-              "Documentos Personales",
-              style: estiloLetra,
-            ),
+            title: new Text("Documentos Personales", style: estiloLetra),
             trailing: new Icon(Icons.panorama, color: colorBase),
-              onTap: () => Navigator.of(context).pushNamed('subirDocumentos'),
+            onTap: () => Navigator.of(context).pushNamed('subirDocumentos'),
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(
-            title: new Text(
-              "Promociones",
-              style: estiloLetra,
-            ),
-            trailing: new Icon(Icons.close, color: colorBase),
-            onTap: () => Navigator.of(context).pop(),
+            title: new Text("Cotizaciones de Paquetes", style: estiloLetra),
+            trailing: new Icon(Icons.assignment, color: colorBase),
+            onTap: () => Navigator.of(context).pushNamed('CotizacionesPaquetesPage'),
           ),
-          new Divider(
-            height: 5.0,
-            color: colorBase,
-          ),
+          new Divider(height: 5.0, color: colorBase),
           new ListTile(
-            title: new Text(
-              "Acerca de nosotros",
-              style: estiloLetra,
-            ),
+            title: new Text("Acerca de nosotros", style: estiloLetra),
             trailing: new Icon(Icons.flag, color: colorBase),
             onTap: () => Navigator.of(context).pushNamed('aboutAs'),
           ),
-          new Divider(
-            height: 5.0,
-            color: colorBase,
-          ),
+          new Divider(height: 5.0, color: colorBase),
           new ListTile(
-            title: new Text(
-              "Cerrar Sesion",
-              style: estiloLetra,
-            ),
+            title: new Text("Cerrar Sesion", style: estiloLetra),
             trailing: new Icon(Icons.exit_to_app, color: colorBase),
             onTap: () => cerrarSesion(context),
           ),

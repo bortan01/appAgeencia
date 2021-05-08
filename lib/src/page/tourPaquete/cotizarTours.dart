@@ -191,8 +191,8 @@ class _CotizarToursState extends State<CotizarTours> {
     if (res) {
       helper.mostrarMensajeOk(context,
           'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
-      // _controllerDescripcion.clear();
-      // _controllerFecha.clear();
+      _controllerDescripcion.clear();
+      _controllerFecha.clear();
       setState(() {});
     } else {
       helper.mostrarMensanjeError(context, 'Favor intente más tarde');

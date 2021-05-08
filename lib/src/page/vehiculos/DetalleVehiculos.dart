@@ -3,7 +3,6 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
 import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
-import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/widget/chip_widget.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:peliculas/src/widget/descripcion_widget.dart';

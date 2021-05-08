@@ -63,8 +63,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<VehiculosAlquiladosModel> obtenerHistorial() async {
-    // final url = '${Conf.urlServidor}vehiculo/historial?id_cliente=${_pref.idCliente}';
-    final url = '${Conf.urlServidor}vehiculo/historial?id_cliente=2';
+    final url = '${Conf.urlServidor}vehiculo/historial?id_cliente=${_pref.idCliente}';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
