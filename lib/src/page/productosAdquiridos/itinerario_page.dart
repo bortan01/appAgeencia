@@ -6,22 +6,24 @@ import 'package:peliculas/src/utils/helper.dart' as helper;
 class ItinerarioPage extends StatelessWidget {
   const ItinerarioPage({Key key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
+    final String idTour = ModalRoute.of(context).settings.arguments;
     final TurServices _turServices = new TurServices();
     return Scaffold(
       appBar: new AppBar(centerTitle: true, title: new Text('Itinerario')),
       body: FutureBuilder(
-        future: _turServices.obtenerItinerario('6'),
+        future: _turServices.obtenerItinerario(idTour),
         builder: (BuildContext context, AsyncSnapshot<ItinerarioModel> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               if (snapshot.data == null || snapshot.data.evento.isEmpty) return helper.noData();
               return _listaEventos(context, snapshot.data.evento);
             case ConnectionState.active:
-              return Center(child: CircularProgressIndicator());
+              return helper.waitingData();
             case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
+              return helper.waitingData();
             default:
               return helper.noData();
           }
@@ -105,13 +107,5 @@ class ItinerarioPage extends StatelessWidget {
           ),
         ));
   }
-
-  Widget _imagen() {
-    return new Container(
-      child: Image(
-        image: AssetImage('assets/img/icon.png'),
-        height: 300.0,
-      ),
-    );
-  }
+  
 }

@@ -103,6 +103,9 @@ class Evento {
         return Colors.red;
         break;
 
+      case "#28a745":
+        return Colors.green;
+        break;
       default:
         return Colors.blue;
         break;
@@ -110,6 +113,10 @@ class Evento {
   }
 
   String obtenerFecha() {
+    if (start == null) {
+      return '';
+    }
+
     if (start == end) {
       return helper.transformarFecha(start);
     }

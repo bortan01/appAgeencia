@@ -36,30 +36,32 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
         id: widget.reserva.idTours.toString(),
       ),
       new SliverList(
-          delegate: new SliverChildListDelegate([
-        new SizedBox(height: 10.0),
-        helper.posterTitulo(context: context, title: widget.reserva.nombreTours),
-        new SizedBox(height: 10.0),
-        new Divider(color: Colors.grey, height: 20.0),
-        helper.crearTitulo("Detalle de Compra"),
-        _descripcionCompra(reserva.descripcionProducto),
-        helper.crearTitulo("Descripción"),
-        _descripcion(reserva.descripcionTur),
-        helper.crearTitulo("Fecha de Salida"),
-        _descripcionCompra(helper.transformarFecha(reserva.start)),
-        helper.crearTitulo("Incluye"),
-        listaHorizontal(tipo: TypeChip.azul, lista: reserva.incluye),
-        helper.crearTitulo("Lugares de Salida"),
-        listaHorizontal(tipo: TypeChip.verde, lista: reserva.lugarSalida),
-        helper.crearTitulo("Requisitos"),
-        listaHorizontal(tipo: TypeChip.anaranjado, lista: reserva.requisitos),
-        helper.crearTitulo("No incluye"),
-        listaHorizontal(tipo: TypeChip.rojo, lista: reserva.noIncluye),
-        (reserva.transporte != null) ? helper.crearTitulo("Asientos Seleccinados") : Container(),
-        asientosByClient(context, reserva.transporte, reserva.asientosSeleccionados),
-        _botonItinerario(context),
-        SizedBox(height: 20.0)
-      ]))
+          delegate: new SliverChildListDelegate(
+        [
+          new SizedBox(height: 10.0),
+          helper.posterTitulo(context: context, title: widget.reserva.nombreTours),
+          new SizedBox(height: 10.0),
+          new Divider(color: Colors.grey, height: 20.0),
+          helper.crearTitulo("Detalle de Compra"),
+          _descripcionCompra(reserva.descripcionProducto),
+          helper.crearTitulo("Descripción"),
+          _descripcion(reserva.descripcionTur),
+          helper.crearTitulo("Fecha de Salida"),
+          _descripcionCompra(helper.transformarFecha(reserva.start)),
+          helper.crearTitulo("Incluye"),
+          listaHorizontal(tipo: TypeChip.azul, lista: reserva.incluye),
+          helper.crearTitulo("Lugares de Salida"),
+          listaHorizontal(tipo: TypeChip.verde, lista: reserva.lugarSalida),
+          helper.crearTitulo("Requisitos"),
+          listaHorizontal(tipo: TypeChip.anaranjado, lista: reserva.requisitos),
+          helper.crearTitulo("No incluye"),
+          listaHorizontal(tipo: TypeChip.rojo, lista: reserva.noIncluye),
+          (reserva.transporte != null) ? helper.crearTitulo("Asientos Seleccinados") : Container(),
+          asientosByClient(context, reserva.transporte, reserva.asientosSeleccionados),
+          _botonItinerario(context, reserva.idTours),
+          SizedBox(height: 20.0)
+        ],
+      ))
     ]);
   }
 
@@ -133,7 +135,7 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
     );
   }
 
-  Widget _botonItinerario(BuildContext context) {
+  Widget _botonItinerario(BuildContext context, String idTours) {
     return Container(
       margin: EdgeInsets.only(top: 10.0, right: 10.0, left: 10.0),
       child: RaisedButton.icon(
@@ -144,7 +146,7 @@ class _DetalleHistorialToursState extends State<DetalleHistorialTours> {
         focusColor: Colors.red,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
         onPressed: () {
-          Navigator.pushNamed(context, 'itinerario');
+          Navigator.pushNamed(context, 'itinerario', arguments: idTours);
         },
       ),
     );

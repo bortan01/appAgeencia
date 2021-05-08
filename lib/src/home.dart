@@ -82,12 +82,14 @@ class Home extends StatelessWidget {
       ),
       appBar: new AppBar(
         backgroundColor: Theme.of(context).primaryColor.withOpacity(1.0),
-        title: Text('Martínez Travels & Tours',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                color: Colors.white,
-                //fontSize: 24.0,
-                fontWeight: FontWeight.bold)),
+        centerTitle: true,
+        title: Text(
+          'Martínez Travels & Tours',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       drawer: getDrawerDefault(context),
       //bottomNavigationBar: _bottomNavigationBar(context)
@@ -104,7 +106,10 @@ class Home extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             SizedBox(height: 10.0),
-            Text('Agencia de Viajes', style: TextStyle(color: Colors.white, fontSize: 18.0)),
+            // Text(
+            //   'Agencia de Viajes',
+            //   style: TextStyle(color: Colors.white, fontSize: 18.0),
+            // ),
           ],
         ),
       ),
