@@ -30,11 +30,13 @@ class Lista extends StatelessWidget {
         SizedBox(height: 15),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 15.0),
-          child: Text(model.descripcion,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 7,
-              textAlign: TextAlign.justify,
-              style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey)),
+          child: Text(
+            model.descripcion,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 7,
+            textAlign: TextAlign.justify,
+            style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey),
+          ),
         ),
         SizedBox(height: 15),
 
@@ -43,12 +45,16 @@ class Lista extends StatelessWidget {
         Column(
           children: <Widget>[
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 15.0), child: _chip(model.tag1, Colors.green, height: 5)),
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: _chip(model.tag1, Colors.green, height: 5),
+            ),
             SizedBox(
               height: 5.0,
             ),
             Container(
-                padding: EdgeInsets.symmetric(horizontal: 15.0), child: _chip(model.tag2, Colors.blue, height: 5)),
+              padding: EdgeInsets.symmetric(horizontal: 15.0),
+              child: _chip(model.tag2, Colors.blue, height: 5),
+            ),
           ],
         )
       ],

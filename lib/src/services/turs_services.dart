@@ -105,8 +105,8 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<CotizacionesPaquetesCliente> obtenerCotizacionesByCliente() async {
-    final url = '${Conf.urlServidor}cotizacionByClient?id_cliente=${_pref.idCliente}';
-    final response = await http.get(url);
+    final url = '${Conf.urlServidor}TurPaquete/cotizacionByClient?id_cliente=${_pref.idCliente}';
+      final response = await http.get(url);
     if (response.statusCode == 200) {
       final cotizacion = cotizacionesPaquetesClienteFromJson(response.body);
       return cotizacion;

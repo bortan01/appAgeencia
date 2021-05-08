@@ -27,7 +27,7 @@ Widget getDrawerDefault(BuildContext context) {
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(
-            title: new Text("Cotizaciones de Paquetes", style: estiloLetra),
+            title: new Text("Cotizaciones de Tours", style: estiloLetra),
             trailing: new Icon(Icons.assignment, color: colorBase),
             onTap: () => Navigator.of(context).pushNamed('CotizacionesPaquetesPage'),
           ),
