@@ -1,15 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:peliculas/src/models/chat/chatFirebase_model.dart';
+import 'package:peliculas/src/models/chat/informacionChat_model.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
+import 'package:peliculas/src/services/conf.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
+import 'package:http/http.dart' as http;
 
 class ChatServices {
+  String chatUID = '';
+  PreferenciasUsuario _pref = new PreferenciasUsuario();
   //LA PRIMERA VEZ QUE SE CONSTRULLE LOS MENSAJES
   Future<List<ChatFirebase>> getMessagesFirtTime() async {
+    chatUID = await obtenerUID();
+    if (chatUID == null) return null;
     List<ChatFirebase> listaChats = [];
-
     final instance = FirebaseFirestore.instance
         .collection('chat')
-        .where('chat_uuid', isEqualTo: '00173220210413')
+        .where('chat_uuid', isEqualTo: chatUID)
         .orderBy('time', descending: true)
         .limit(20);
 
@@ -30,7 +37,7 @@ class ChatServices {
   Stream<List<ChatFirebase>> getMessagesListener() {
     return FirebaseFirestore.instance
         .collection('chat')
-        .where('chat_uuid', isEqualTo: '00173220210413')
+        .where('chat_uuid', isEqualTo: chatUID)
         .orderBy('time', descending: true)
         .limit(1)
         .snapshots()
@@ -52,5 +59,18 @@ class ChatServices {
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<String> obtenerUID() async {
+    String user_2 = _pref.uid;
+
+    final url = '${Conf.urlServidor}Usuario/obtenerChat';
+    final response = await http.post(url, body: {"user_2": user_2});
+    if (response.statusCode == 200) {
+      final infoChat = informacionChatModelFromJson(response.body);
+      return infoChat.chatUuid;
+    } else {
+      return null;
+    }
   }
 }

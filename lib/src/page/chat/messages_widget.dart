@@ -3,6 +3,7 @@ import 'package:peliculas/src/models/chat/chatFirebase_model.dart';
 import 'package:peliculas/src/page/chat/message_widget.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/chat_services.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class MessagesWidget extends StatefulWidget {
   const MessagesWidget({Key key}) : super(key: key);
@@ -15,7 +16,8 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
   PreferenciasUsuario preferencias = new PreferenciasUsuario();
   List<ChatFirebase> listaMensajes;
   Future<List<ChatFirebase>> mensajesInicialesFurute;
-  bool primeraVez = true;
+  bool isPrimeraVez = true;
+  ChatServices _chatServices = new ChatServices();
 
   @override
   void initState() {
@@ -24,7 +26,7 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
   }
 
   Future<List<ChatFirebase>> _getMensajesIniciales() async {
-    return await ChatServices().getMessagesFirtTime();
+    return await _chatServices.getMessagesFirtTime();
   }
 
   @override
@@ -34,26 +36,23 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
       builder: (BuildContext context, AsyncSnapshot<List<ChatFirebase>> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.active:
-            print('activo');
-            return Center(child: CircularProgressIndicator());
+            return helper.waitingData();
           case ConnectionState.waiting:
-            print('esperando');
-            return Center(child: CircularProgressIndicator());
+            return helper.waitingData();
           case ConnectionState.done:
-            listaMensajes = snapshot.data;
+            if (snapshot.data == null) return helper.noData();
+          listaMensajes = snapshot.data;
             return mensajeListener(listaMensajes);
           default:
-            print('esperando');
-            return Center(child: CircularProgressIndicator());
+            return helper.waitingData();
         }
       },
     );
   }
 
   StreamBuilder<List<ChatFirebase>> mensajeListener(List<ChatFirebase> listMensajesIniciales) {
-    ChatServices chatServices = new ChatServices();
     return StreamBuilder<List<ChatFirebase>>(
-      stream: chatServices.getMessagesListener(),
+      stream: _chatServices.getMessagesListener(),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.waiting:
@@ -63,10 +62,10 @@ class _MessagesWidgetState extends State<MessagesWidget> with TickerProviderStat
               return buildText('Intente Mas tarde');
             } else {
               List<ChatFirebase> messagesNuevos = snapshot.data;
-              if (!primeraVez) {
+              if (!isPrimeraVez) {
                 listMensajesIniciales.insertAll(0, messagesNuevos);
               }
-              primeraVez = false;
+              isPrimeraVez = false;
               return listaMensajes.isEmpty
                   ? buildText('No hay mensajes todavía...')
                   : ListView.builder(
