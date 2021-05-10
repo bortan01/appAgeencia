@@ -7,16 +7,15 @@ import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:http/http.dart' as http;
 
 class ChatServices {
-  String chatUID = '';
   PreferenciasUsuario _pref = new PreferenciasUsuario();
   //LA PRIMERA VEZ QUE SE CONSTRULLE LOS MENSAJES
   Future<List<ChatFirebase>> getMessagesFirtTime() async {
-    chatUID = await obtenerUID();
-    if (chatUID == null) return null;
+    await obtenerUID();
+    if (_pref.uidChat == null) return null;
     List<ChatFirebase> listaChats = [];
     final instance = FirebaseFirestore.instance
         .collection('chat')
-        .where('chat_uuid', isEqualTo: chatUID)
+        .where('chat_uuid', isEqualTo: _pref.uidChat)
         .orderBy('time', descending: true)
         .limit(20);
 
@@ -37,22 +36,22 @@ class ChatServices {
   Stream<List<ChatFirebase>> getMessagesListener() {
     return FirebaseFirestore.instance
         .collection('chat')
-        .where('chat_uuid', isEqualTo: chatUID)
+        .where('chat_uuid', isEqualTo: _pref.uidChat)
         .orderBy('time', descending: true)
         .limit(1)
         .snapshots()
         .transform(helper.transformer(ChatFirebase.desdeJson));
   }
 
-  Future<void> addMessage(String message, String user1, String user2, String uuid) {
+  Future<void> addMessage(String message) {
     // Call the user's CollectionReference to add a new user
     CollectionReference chatreference = FirebaseFirestore.instance.collection('chat');
     return chatreference
         .add({
           "message": message,
-          "user_1_uuid": user1,
-          "user_2_uuid": user2,
-          "chat_uuid": uuid,
+          "user_1_uuid": _pref.uid,
+          "user_2_uuid": _pref.uidAdministrador,
+          "chat_uuid": _pref.uidChat,
           "user_1_isView": 0,
           "user_2_isView": 0,
           "time": new DateTime.now(),
@@ -61,16 +60,13 @@ class ChatServices {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
-  Future<String> obtenerUID() async {
-    String user_2 = _pref.uid;
-
+  Future<void> obtenerUID() async {
     final url = '${Conf.urlServidor}Usuario/obtenerChat';
-    final response = await http.post(url, body: {"user_2": user_2});
+    final response = await http.post(url, body: {"user_2": _pref.uid});
     if (response.statusCode == 200) {
       final infoChat = informacionChatModelFromJson(response.body);
-      return infoChat.chatUuid;
-    } else {
-      return null;
+      _pref.uidAdministrador = infoChat.user1Uuid;
+      _pref.uidChat = infoChat.chatUuid;
     }
   }
 }

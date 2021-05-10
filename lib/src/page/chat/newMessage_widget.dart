@@ -51,7 +51,8 @@ class _NewMessageWidgetState extends State<NewMessageWidget> with TickerProvider
     setState(() {
       _isTyped = false;
     });
-    _chatServices.addMessage(text, "RQjLWk34VddV8v2IVjNZfkwIEm33", "28TK1JZ3yWRf2DT5TzdRd5hT0L43", "00173220210413");
+    _chatServices.addMessage(text);
     print(text);
   }
 }
+

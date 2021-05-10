@@ -29,13 +29,30 @@ class PreferenciasUsuario {
 
   // GET y SET del uid
   get uid {
-    return _prefs.getString('uid') ?? '';
+    return _prefs.getString('uid') ?? '22222222';
   }
 
   set uid(String value) {
     _prefs.setString('uid', value);
   }
 
+    // GET y SET del uid
+  get uidAdministrador {
+    return _prefs.getString('uidAdministrador') ?? '00000000';
+  }
+
+  set uidAdministrador(String value) {
+    _prefs.setString('uidAdministrador', value);
+  }
+
+    // GET y SET del uid
+  get uidChat {
+    return _prefs.getString('uidChat') ?? '11111111';
+  }
+
+  set uidChat(String value) {
+    _prefs.setString('uidChat', value);
+  }
   // GET y SET del id_cliente
   get idCliente {
     return _prefs.getString('idCliente') ?? '';
