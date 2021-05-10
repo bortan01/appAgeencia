@@ -1,6 +1,4 @@
-// import 'dart:async';
 import 'dart:io';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:mime_type/mime_type.dart';
 import 'package:peliculas/src/models/image/documentos_model.dart';
@@ -47,6 +45,10 @@ class UserServices {
   Future<String> getUser() async {
     return (_firebaseAuth.currentUser.email);
   }
+  // obtener datos del usuario
+  Future<void> restablecerPassword(String email) async {
+     _firebaseAuth.sendPasswordResetEmail(email: email);
+  }
 
   Future<Map<String, dynamic>> loginCliente(LoginModel login) async {
     print("haciendo peticion de login cliente");
@@ -88,12 +90,15 @@ class UserServices {
 
   void eliminarPreferencias() {
     _usuarioPref.nombre = "";
-    _usuarioPref.uid = "";
-    _usuarioPref.idCliente = "";
-    _usuarioPref.correo = "";
-    _usuarioPref.celular = "";
+
     _usuarioPref.dui = "";
+    _usuarioPref.uid = "";
     _usuarioPref.foto = "";
+    _usuarioPref.correo = "";
+    _usuarioPref.uidChat = "";
+    _usuarioPref.celular = "";
+    _usuarioPref.idCliente = "";
+    _usuarioPref.uidAdministrador = "";
     _usuarioPref.paginaInicio = "login";
   }
 

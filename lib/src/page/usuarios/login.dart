@@ -191,12 +191,9 @@ class _LoginPageState extends State<Login> {
 
   Widget _inputOlvide() {
     return new FlatButton(
-      child: Text(
-        '¿Olvidastes tu contraseña?',
-        style: TextStyle(color: Colors.black54),
-      ),
+      child: Text('¿Olvidastes tu contraseña?', style: TextStyle(color: Colors.black54)),
       onPressed: () {
-        Navigator.pushNamed(context, 'olvide');
+        Navigator.pushReplacementNamed(context, 'olvide');
       },
     );
   }

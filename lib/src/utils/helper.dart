@@ -128,7 +128,7 @@ void mensanjeOkRedireccionar(BuildContext context, String mensaje, String ruta) 
           style: TextStyle(color: Colors.white, fontSize: 20),
         ),
         onPressed: () => Navigator.pushAndRemoveUntil(
-            context, MaterialPageRoute(builder: (context) => Home()), ModalRoute.withName("home")),
+            context, MaterialPageRoute(builder: (context) => Home()), ModalRoute.withName(ruta)),
         color: Color.fromRGBO(0, 179, 134, 1.0),
       )
     ],

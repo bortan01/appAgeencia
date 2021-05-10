@@ -30,8 +30,6 @@ import 'package:peliculas/src/page/tourPaquete/ListaTourPaquete.dart';
 import 'package:peliculas/src/page/tourPaquete/cotizarTours.dart';
 import 'package:peliculas/src/page/usuarios/SubirImagenes_page.dart';
 import 'package:peliculas/src/page/usuarios/aboutAs_page.dart';
-import 'package:peliculas/src/page/usuarios/codigoVerificacion.dart';
-import 'package:peliculas/src/page/usuarios/ingreseContra.dart';
 import 'package:peliculas/src/page/usuarios/login.dart';
 import 'package:peliculas/src/page/usuarios/recuperarContrasena.dart';
 import 'package:peliculas/src/page/usuarios/registro.dart';
@@ -80,8 +78,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'subirImagenes': (BuildContext context) => SubirImagenes(),
     'subirDocumentos': (BuildContext context) => SubirDocumentos(),
     'olvide': (BuildContext context) => Olvide(),
-    'codigo': (BuildContext context) => Codigo(),
-    'nuevaContra': (BuildContext context) => IngreseContra(),
+ 
     'registro': (BuildContext context) => Registro(),
     'pruebas': (BuildContext context) => PruebaList(),
     'aboutAs': (BuildContext context) => AboutAsPage(),
