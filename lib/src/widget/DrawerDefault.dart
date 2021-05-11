@@ -35,7 +35,7 @@ Widget getDrawerDefault(BuildContext context) {
           new ListTile(
             title: new Text("Cotizaciones de Vehículos", style: estiloLetra),
             trailing: new Icon(Icons.directions_car, color: colorBase),
-            onTap: () => Navigator.of(context).pushNamed('CotizacionesPaquetesPage'),
+            onTap: () => Navigator.of(context).pushNamed('CotizacionesRealizadasPage'),
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(

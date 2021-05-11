@@ -155,7 +155,7 @@ class _OlvidePageState extends State<Olvide> {
       onPressed: () async {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          // await _userServices.restablecerPassword(_controllerCorreo.text);
+          await _userServices.restablecerPassword(_controllerCorreo.text);
           _controllerCorreo.clear();
 
           Alert(

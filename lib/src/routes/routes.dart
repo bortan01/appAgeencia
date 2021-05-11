@@ -37,6 +37,7 @@ import 'package:peliculas/src/page/usuarios/subirDocumentos_page.dart';
 import 'package:peliculas/src/page/vehiculos/FormularioAlquiler.dart';
 import 'package:peliculas/src/page/vehiculos/ListaVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/Menu.dart';
+import 'package:peliculas/src/page/vehiculos/cotizacionesRealizadas_page.dart';
 import 'package:peliculas/src/page/vehiculos/cotizarVehiculo.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
@@ -62,6 +63,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     //MODULO VEHICULO
     'menuVehiculos': (BuildContext context) => HomeMenu(),
     'ListaVehiculos': (BuildContext context) => ListaVehiculos(),
+    'CotizacionesRealizadasPage': (BuildContext context) => CotizacionesRealizadasPage(),
     //'DetalleVehiculos': (BuildContext context) => DetalleVehiculos(),
     'Alquiler': (BuildContext context) => Alquiler(),
     'CotizarAuto': (BuildContext context) => CotizaVehiculo(),

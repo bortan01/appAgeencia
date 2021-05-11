@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/vehiculo/categoria_model.dart';
 import 'package:peliculas/src/models/vehiculo/cotizacionResponse.dart';
 import 'package:peliculas/src/models/vehiculo/cotizacionCliente_model.dart';
+import 'package:peliculas/src/models/vehiculo/cotizacionesRealizadas.dart';
 import 'package:peliculas/src/models/vehiculo/vehiculosAlquilados_model.dart';
 import 'package:peliculas/src/models/vehiculo/tipoVehiculo_model.dart';
 import 'package:peliculas/src/models/vehiculo/vehiculo_model.dart';
@@ -68,6 +69,17 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       final res = VehiculosAlquiladosModel.fromJson(jsonResponse);
+      return res;
+    } else {
+      return null;
+    }
+  }
+
+  Future<CotizacionesRealizadas> cotizacionesByCliente() async {
+    final url = '${Conf.urlServidor}cotizarVehiculo/cotizar?id_usuario=2';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final res = cotizacionesRealizadasFromJson(response.body);
       return res;
     } else {
       return null;
