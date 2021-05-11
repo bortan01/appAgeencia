@@ -130,7 +130,7 @@ class Home extends StatelessWidget {
         TableRow(children: [
           _crearBotonRedondeado(
               Colors.deepPurpleAccent, Icons.add_shopping_cart, 'Servicos Adquiridos', context, "menuProductos"),
-          _crearBotonRedondeado(Colors.purple, Icons.chat, 'Chat', context, "chat"),
+          _crearBotonRedondeado(Colors.green, Icons.chat, 'Chat', context, "chat"),
         ]),
       ],
     );

@@ -15,6 +15,12 @@ Widget getDrawerDefault(BuildContext context) {
             child: Text(""),
           ),
           new ListTile(
+            title: new Text("Actuazar Datos Personales", style: estiloLetra),
+            trailing: new Icon(Icons.refresh, color: colorBase),
+            onTap: () => Navigator.of(context).pushNamed('ActualizarDatosPage'),
+          ),
+          new Divider(height: 5.0, color: colorBase),
+          new ListTile(
             title: new Text("Foto de Perfil", style: estiloLetra),
             trailing: new Icon(Icons.account_circle, color: colorBase),
             onTap: () => Navigator.of(context).pushNamed('subirImagenes'),

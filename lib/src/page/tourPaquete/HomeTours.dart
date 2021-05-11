@@ -35,7 +35,7 @@ class _HomeToursState extends State<HomeTours> {
       end: Alignment.bottomLeft,
       colors: [Theme.of(context).canvasColor, Theme.of(context).canvasColor],
     ));
-listaPaquete = [
+    listaPaquete = [
       {
         'posicion': 0,
         'titulo': "Nacionales",
@@ -48,8 +48,7 @@ listaPaquete = [
       {
         'posicion': 1,
         'titulo': "Internacionales",
-        'subtitulo':
-            "Ven y Haz realidad tus sueños con nuestros Tours para Centro América, Sudamérica y Europa",
+        'subtitulo': "Ven y Haz realidad tus sueños con nuestros Tours para Centro América, Sudamérica y Europa",
         'assetImage': AssetImage("assets/img/tours-internacionas.png"),
         'superficie': 'Sub-America y Europa',
         'distancia': ' 57,91 millones km',
@@ -57,8 +56,7 @@ listaPaquete = [
       {
         'posicion': 2,
         'titulo': "Cotizar Tours",
-        'subtitulo':
-            "Realiza tu cotización de Tours para Centro América, Sudamérica y Europa",
+        'subtitulo': "Realiza tu cotización de Tours para Centro América, Sudamérica y Europa",
         'assetImage': AssetImage("assets/img/cotizar-tours.png"),
         'superficie': 'Centro América, Sub-America y Europa',
         'distancia': ' 57,91 millones km',
@@ -158,22 +156,19 @@ listaPaquete = [
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'ListaTours',
-                    arguments: "Tour Nacional");
+                Navigator.pushNamed(context, 'ListaTours', arguments: "Tour Nacional");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaTours',
-                    arguments: "Tour Internacional");
+                Navigator.pushNamed(context, 'ListaTours', arguments: "Tour Internacional");
 
                 break;
               case 2:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'CotizarTours',
-                    arguments: "Cotización");
+                Navigator.pushNamed(context, 'CotizarTours', arguments: "Cotización");
 
                 break;
               default:
@@ -189,11 +184,7 @@ listaPaquete = [
   }
 
   Widget nombreAccion(int posicion) {
-    List<String> nombres = [
-      "Ver Tours Nacionales",
-      "Ver Tours Internacionales'",
-      "Cotizar Tours"
-    ];
+    List<String> nombres = ["Ver Tours Nacionales", "Ver Tours Internacionales", "Cotizar Tours"];
     return Text(nombres[posicion]);
   }
 }

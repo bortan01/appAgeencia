@@ -57,7 +57,7 @@ class CotizacionesPaquetesPage extends StatelessWidget {
       padding: EdgeInsets.only(top: 10.0),
       child: Column(
         children: <Widget>[
-          helper.crearTitulo('Fecha Solicitada'),
+          helper.crearTitulo('Fecha  Solicitada'),
           _descripcion(helper.transformarFecha(cotizacion.fechaPeticion)),
           helper.crearTitulo('Solicitud'),
           _descripcion(cotizacion.peticion),

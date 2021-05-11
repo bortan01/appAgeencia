@@ -150,22 +150,19 @@ class _HomePaquetesState extends State<HomePaquetes> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'ListaTours',
-                    arguments: "Paquete Nacional");
+                Navigator.pushNamed(context, 'ListaTours', arguments: "Paquete Nacional");
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaTours',
-                    arguments: "Paquete Internacional");
+                Navigator.pushNamed(context, 'ListaTours', arguments: "Paquete Internacional");
 
                 break;
               case 2:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'CotizarTours',
-                    arguments: "Cotización");
+                Navigator.pushNamed(context, 'CotizarTours', arguments: "Cotización");
 
                 break;
               default:
@@ -181,11 +178,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
   }
 
   Widget nombreAccion(int posicion) {
-    List<String> nombres = [
-      "Ver Tours Nacionales",
-      "Ver Tours Internacionales'",
-      "Cotizar Tours"
-    ];
+    List<String> nombres = ["Ver Tours Nacionales", "Ver Tours Internacionales", "Cotizar Tours"];
     return Text(nombres[posicion]);
   }
 }
