@@ -72,7 +72,7 @@ String isMailRequired(String s) {
 }
 
 String repeatPassword(String password, String repetida) {
-  if ((repetida).trim().isEmpty) return necesario;
+  // if ((repetida).trim().isEmpty) return necesario;
   return !(password == repetida) ? "Password no coinciden" : null;
 }
 
@@ -196,6 +196,7 @@ String transformarFechaAndHora(DateTime fecha) {
   final DateFormat formatter = DateFormat('dd/MM/yyyy hh:mm a');
   return formatter.format(fecha);
 }
+
 String transformarHora(DateTime fecha) {
   final DateFormat formatter = DateFormat('hh:mm a');
   return formatter.format(fecha);

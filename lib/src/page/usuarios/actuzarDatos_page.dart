@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/usuarios/resposeUpdate_model.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/user_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
-import 'package:rflutter_alert/rflutter_alert.dart';
 
 class ActualizarDatosPage extends StatefulWidget {
   @override
@@ -11,7 +12,7 @@ class ActualizarDatosPage extends StatefulWidget {
 
 class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
   double screenHeight;
-
+  PreferenciasUsuario _pref = new PreferenciasUsuario();
   String _nombre = "";
   String _correo = "";
   String _password = "";
@@ -23,6 +24,16 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
   bool _ocultarPassword2 = true;
   final formKey = GlobalKey<FormState>();
   UserServices _userServices = new UserServices();
+
+  @override
+  void initState() {
+    super.initState();
+    _nombre = _pref.nombre;
+    _correo = _pref.correo;
+    _dui = _pref.dui;
+    _celular = _pref.celular;
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -45,7 +56,7 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Crear Cuenta"),
+      title: Text("Actualizar Información"),
     );
   }
 
@@ -107,15 +118,7 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
                     SizedBox(height: 20),
                     SizedBox(height: 15),
                     _inputDui(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(),
-                        ),
-                        _inputBoton(),
-                      ],
-                    ),
+                    _inputBoton(),
                     _inputLogin(),
                   ],
                 ),
@@ -144,6 +147,7 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
       autofocus: false,
       //envia un paramettro inplicito
       validator: (value) => helper.betweenLengthRequired(value, 40, 3),
+      initialValue: _nombre,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Nombre Completo',
@@ -166,6 +170,8 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
+      initialValue: _correo,
+      enabled: false,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Email',
@@ -186,7 +192,7 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
       keyboardType: TextInputType.emailAddress,
       autofocus: false,
       obscureText: _ocultarPassword1,
-      validator: (value) => helper.betweenLengthRequired(value, 20, 8),
+      // validator: (value) => helper.betweenLengthRequired(value, 20, 8),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Password',
@@ -196,9 +202,8 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
         suffixIcon: GestureDetector(
           child: Icon(Icons.remove_red_eye),
           onTap: () {
-            setState(() {
-              _ocultarPassword1 = !_ocultarPassword1;
-            });
+            _ocultarPassword1 = !_ocultarPassword1;
+            setState(() {});
           },
         ),
       ),
@@ -237,20 +242,16 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
   }
 
   Widget _inputDui() {
-    // var maskFormatter = new MaskTextInputFormatter(
-    //     mask: '########-#',
-    //     filter: {"#": RegExp(r'[0-9]')},
-    //     initialText: '12345678-9');
-
     return new TextFormField(
       // inputFormatters: [maskFormatter],
       keyboardType: TextInputType.number,
       validator: (value) => helper.minLength(value, 10),
+      initialValue: _dui,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: '12345678-9',
         labelText: 'Digite su Dui (opcional)',
-        helperText: 'Contraseña',
+        helperText: 'Dui',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.credit_card),
       ),
@@ -265,11 +266,12 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
     return new TextFormField(
       keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
       validator: (value) => helper.minLength(value, 8),
+      initialValue: _celular,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Célular (opcional)',
         labelText: 'Digite su Célular (opcional)',
-        helperText: 'Contraseña',
+        helperText: 'Celular',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: Icon(Icons.phone),
       ),
@@ -294,72 +296,51 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
 
   Widget _inputBoton() {
     return new FlatButton(
-      child: (_guardando) ? Text("Por favor espere...") : Text("Crear Cuenta"),
+      child: (_guardando) ? Text("Por favor espere...") : Text("Actualizar Información"),
       color: Color(0xFF4B9DFE),
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      onPressed: (_guardando) ? null : _guardar,
+      onPressed: (_guardando) ? null : _actualizar,
     );
   }
 
-  void _guardar() async {
+  void _actualizar() async {
     if (formKey.currentState.validate()) {
       //para ejecutar el on save
-      setState(() {
-        _guardando = true;
-      });
+
+      _guardando = true;
+      setState(() {});
       formKey.currentState.save();
       final signUp = new SignUpModel(
-          nombre: _nombre.trim(),
-          correo: _correo.trim(),
-          password: _password.trim(),
-          celular: _celular.trim(),
-          dui: _dui.toString(),
-          nivel: 'CLIENTE');
-      var respuesta = await _userServices.registrarUsuario(signUp);
-      setState(() {
-        _guardando = false;
-      });
-      if (respuesta['err']) {
-        ///si hay errores los imprimiremos con el Alert
-        helper.mostrarMensanjeError(context, respuesta['mensaje']);
+        nombre: _nombre.trim(),
+        correo: _correo.trim(),
+        password: _password.trim(),
+        celular: _celular.trim(),
+        dui: _dui.toString(),
+      );
+      ResponseUpdateModel respuesta = await _userServices.actulizarDatos(signUp);
+      _guardando = false;
+      setState(() {});
+      if (respuesta != null) {
+        helper.mostrarMensajeOk(context, "Datos Actualizados exitósamente");
+        _actalizarPreferencias(respuesta);
       } else {
-        //si se guardo redireccionaremos al login
-        _limpiar();
-        Alert(
-          context: context,
-          type: AlertType.success,
-          title: "Listo",
-          desc: respuesta['mensaje'],
-          closeFunction: () => Navigator.pushReplacementNamed(context, 'login'),
-          buttons: [
-            DialogButton(
-              child: Text(
-                "ok",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: () {
-                Navigator.pushReplacementNamed(context, 'login');
-              },
-              color: Color.fromRGBO(0, 179, 134, 1.0),
-            )
-          ],
-        ).show();
+        helper.mostrarMensanjeError(context, "Intente más tarde");
       }
+      Navigator.pop(context);
     }
-
-    // Navigator.pushNamed(context, 'login');
   }
 
-  void _limpiar() {
-    setState(() {
-      _nombre = "";
-      _correo = "";
-      _password = "";
-      _password2 = "";
-      _celular = "";
-      _dui = "";
-    });
+  void _actalizarPreferencias(ResponseUpdateModel respuesta) {
+    if (respuesta.usuario.nombre != "") {
+      _pref.nombre = respuesta.usuario.nombre;
+    }
+    if (respuesta.usuario.dui != "") {
+      _pref.dui = respuesta.usuario.dui;
+    }
+    if (respuesta.usuario.celular != "") {
+      _pref.celular = respuesta.usuario.celular;
+    }
   }
 }

@@ -4,6 +4,7 @@ import 'package:mime_type/mime_type.dart';
 import 'package:peliculas/src/models/image/documentos_model.dart';
 import 'package:peliculas/src/models/image/responseImagen_model.dart';
 import 'package:peliculas/src/models/usuarios/login_model.dart';
+import 'package:peliculas/src/models/usuarios/resposeUpdate_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/conf.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
@@ -45,9 +46,10 @@ class UserServices {
   Future<String> getUser() async {
     return (_firebaseAuth.currentUser.email);
   }
+
   // obtener datos del usuario
   Future<void> restablecerPassword(String email) async {
-     _firebaseAuth.sendPasswordResetEmail(email: email);
+    _firebaseAuth.sendPasswordResetEmail(email: email);
   }
 
   Future<Map<String, dynamic>> loginCliente(LoginModel login) async {
@@ -188,5 +190,21 @@ class UserServices {
     final data = {'key': id};
     final response = await http.post(url, body: data);
     return response.statusCode == 200;
+  }
+
+  Future<ResponseUpdateModel> actulizarDatos(SignUpModel signUp) async {
+    final url = '${Conf.urlServidor}Usuario/update';
+    final data = signUp.toJsonForUpdate();
+    data['id_cliente'] = _usuarioPref.idCliente;
+    final response = await http.put(url, body: data);
+    switch (response.statusCode) {
+      case 200:
+        final jsonResponse = responseUpdateModelFromJson(response.body);
+        return jsonResponse;
+        break;
+      default:
+        return null;
+        break;
+    }
   }
 }

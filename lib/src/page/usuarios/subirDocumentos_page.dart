@@ -101,8 +101,9 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
       );
     }
     return Center(
-        //pregunta si existe la imagen
-        child: Image(image: AssetImage('assets/img/document2.png'), height: 300.0, fit: BoxFit.cover));
+      //pregunta si existe la imagen
+      child: Image(image: AssetImage('assets/img/document2.png'), height: 300.0, fit: BoxFit.cover),
+    );
   }
 
   Widget _fotoDocumentoWidget(DocumentosModel doc) {
@@ -117,6 +118,12 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
                 child: FadeInImage(
               placeholder: AssetImage("assets/gif/loading.gif"),
               image: NetworkImage(helper.transformarFoto(doc.fotoPath)),
+              imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                return Center(
+                  //pregunta si existe la imagen
+                  child: Image(image: AssetImage('assets/img/no-image.png'), height: 300.0, fit: BoxFit.cover),
+                );
+              },
             )),
           ),
         ),
