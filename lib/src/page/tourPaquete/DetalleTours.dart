@@ -92,7 +92,7 @@ class _DetalleToursState extends State<DetalleTours> {
           listaHorizontal(tipo: TypeChip.anaranjado, lista: tur.requisitos),
           helper.crearTitulo("No incluye"),
           listaHorizontal(tipo: TypeChip.rojo, lista: tur.noIncluye),
-          _crearBoton(context)
+          _crearBoton(context),
         ]))
       ],
     );
@@ -156,6 +156,7 @@ class _DetalleToursState extends State<DetalleTours> {
   Widget _crearBoton(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+      margin: EdgeInsets.only(bottom: 20.0),
       child: new RaisedButton.icon(
           label: new Text("Reservar Tour"),
           icon: new Icon(Icons.shopping_cart),

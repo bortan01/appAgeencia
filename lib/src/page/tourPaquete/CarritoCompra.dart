@@ -142,22 +142,17 @@ class _CarritoCompraState extends State<CarritoCompra> {
     );
   }
 
-  Row _botonContinuar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: <Widget>[
-        Expanded(
-          child: Container(),
-        ),
-        FlatButton(
-          child: (creandoEnlace) ? Text("Espere por Favor...") : Text("Continuar"),
-          color: Colors.blueAccent,
-          textColor: Colors.white,
-          padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-          onPressed: (creandoEnlace) ? null : continuar,
-        )
-      ],
+  Widget _botonContinuar() {
+    return Container(
+      margin: EdgeInsetsDirectional.only(top: 20.0),
+      child: FlatButton(
+        child: (creandoEnlace) ? Text("Espere por Favor...") : Text("Continuar"),
+        color: Colors.blue,
+        textColor: Colors.white,
+        padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        onPressed: (creandoEnlace) ? null : continuar,
+      ),
     );
   }
 

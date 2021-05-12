@@ -300,7 +300,7 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
       color: Color(0xFF4B9DFE),
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       onPressed: (_guardando) ? null : _actualizar,
     );
   }

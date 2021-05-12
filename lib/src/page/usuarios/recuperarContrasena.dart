@@ -81,7 +81,7 @@ class _OlvidePageState extends State<Olvide> {
                         "Recuperar Contraseña",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.lightBlueAccent,
                           fontSize: 28,
                           fontWeight: FontWeight.w600,
                         ),
@@ -90,15 +90,7 @@ class _OlvidePageState extends State<Olvide> {
                     SizedBox(height: 15),
                     _inputUsuario(),
                     SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(),
-                        ),
-                        _inputBoton(),
-                      ],
-                    ),
+                    _inputBoton(),
                   ],
                 ),
               ),
@@ -148,10 +140,10 @@ class _OlvidePageState extends State<Olvide> {
   Widget _inputBoton() {
     return new FlatButton(
       child: Text("Enviar"),
-      color: Color(0xFF4B9DFE),
+      color: Colors.blue,
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       onPressed: () async {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();

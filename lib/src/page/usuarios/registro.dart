@@ -58,8 +58,7 @@ class _RegistroPageState extends State<Registro> {
         children: <Widget>[
           Text(
             "",
-            style: TextStyle(
-                fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
+            style: TextStyle(fontSize: 34, color: Colors.white, fontWeight: FontWeight.w400),
           )
         ],
       ),
@@ -89,7 +88,7 @@ class _RegistroPageState extends State<Registro> {
                         "Crear Cuenta",
                         textAlign: TextAlign.center,
                         style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.lightBlueAccent,
                           fontSize: 28,
                           fontWeight: FontWeight.w600,
                         ),
@@ -122,15 +121,7 @@ class _RegistroPageState extends State<Registro> {
                       height: 15,
                     ),
                     _inputDui(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(),
-                        ),
-                        _inputBoton(),
-                      ],
-                    ),
+                    _inputBoton(),
                     _inputLogin(),
                   ],
                 ),
@@ -138,7 +129,6 @@ class _RegistroPageState extends State<Registro> {
             ),
           ),
         ),
-    
       ],
     );
   }
@@ -279,8 +269,7 @@ class _RegistroPageState extends State<Registro> {
 
   Widget _inputCelular() {
     return new TextFormField(
-      keyboardType:
-          TextInputType.numberWithOptions(decimal: false, signed: false),
+      keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
       validator: (value) => helper.minLength(value, 8),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -310,13 +299,16 @@ class _RegistroPageState extends State<Registro> {
   }
 
   Widget _inputBoton() {
-    return new FlatButton(
-      child: (_guardando) ? Text("Por favor espere...") : Text("Crear Cuenta"),
-      color: Color(0xFF4B9DFE),
-      textColor: Colors.white,
-      padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      onPressed: (_guardando) ? null : _guardar,
+    return Container(
+      padding: EdgeInsets.only(top: 10.0),
+      child: new FlatButton(
+        child: (_guardando) ? Text("Por favor espere...") : Text("Crear Cuenta"),
+        color: Colors.blue,
+        textColor: Colors.white,
+        padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+        onPressed: (_guardando) ? null : _guardar,
+      ),
     );
   }
 

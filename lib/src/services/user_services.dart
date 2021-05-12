@@ -49,7 +49,11 @@ class UserServices {
 
   // obtener datos del usuario
   Future<void> restablecerPassword(String email) async {
-    _firebaseAuth.sendPasswordResetEmail(email: email);
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+    } catch (e) {
+      print("usuario no encontrado");
+    }
   }
 
   Future<Map<String, dynamic>> loginCliente(LoginModel login) async {
