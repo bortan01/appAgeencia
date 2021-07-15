@@ -40,7 +40,7 @@ class _CotizarToursState extends State<CotizarTours> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Cotizar Viaje"),
+      title: Text("Cotizar Paquete"),
     );
   }
 

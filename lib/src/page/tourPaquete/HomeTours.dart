@@ -53,14 +53,6 @@ class _HomeToursState extends State<HomeTours> {
         'superficie': 'Sub-America y Europa',
         'distancia': ' 57,91 millones km',
       },
-      {
-        'posicion': 2,
-        'titulo': "Cotizar Tours",
-        'subtitulo': "Realiza tu cotización de Tours para Centro América, Sudamérica y Europa",
-        'assetImage': AssetImage("assets/img/cotizar-tours.png"),
-        'superficie': 'Centro América, Sub-America y Europa',
-        'distancia': ' 57,91 millones km',
-      },
     ];
 
     return Container(
@@ -165,12 +157,7 @@ class _HomeToursState extends State<HomeTours> {
                 Navigator.pushNamed(context, 'ListaTours', arguments: "Tour Internacional");
 
                 break;
-              case 2:
-
-                ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'CotizarTours', arguments: "Cotización");
-
-                break;
+             
               default:
             }
           },
@@ -184,7 +171,7 @@ class _HomeToursState extends State<HomeTours> {
   }
 
   Widget nombreAccion(int posicion) {
-    List<String> nombres = ["Ver Tours Nacionales", "Ver Tours Internacionales", "Cotizar Tours"];
+    List<String> nombres = ["Ver Tours Nacionales", "Ver Tours Internacionales"];
     return Text(nombres[posicion]);
   }
 }

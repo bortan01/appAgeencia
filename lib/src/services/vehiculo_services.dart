@@ -64,6 +64,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<VehiculosAlquiladosModel> obtenerHistorial() async {
+    print("historia por cliente");
     final url = '${Conf.urlServidor}vehiculo/historial?id_cliente=${_pref.idCliente}';
     final response = await http.get(url);
     if (response.statusCode == 200) {
@@ -76,7 +77,8 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<CotizacionesRealizadas> cotizacionesByCliente() async {
-    final url = '${Conf.urlServidor}cotizarVehiculo/cotizar?id_usuario=2';
+    print("obtener by cliente");
+    final url = '${Conf.urlServidor}cotizarVehiculo/cotizar?id_usuario=${_pref.idCliente}';
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final res = cotizacionesRealizadasFromJson(response.body);

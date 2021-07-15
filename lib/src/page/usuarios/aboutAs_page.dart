@@ -18,7 +18,7 @@ class AboutAsPage extends StatelessWidget {
             icono: Icons.info,
             titulo: '¿Quíenes somos?',
             descripcion:
-                'Somos una empresa que tiene como objetivo primordial complacer a los distintos gustos de los turistas, vía terrestre y/o vía aérea a Centro América y el Mundo .Donde ofrecemos paquetes turísticos vacacionales con el fin que deseen ',
+                'La agencia de viajes surge en el año 2009 como un negocio familiar, realizando excursiones nacionales y en Centroamérica, vía terrestre, orientados desde un principio en la calidad, seguridad, además del profesionalismo en cada uno de sus tours, promoviendo paquetes turísticos a lo largo de todo el mundo, realizando circuitos en más de 20 países incluyendo tanto Europeos como Asiáticos, gracias al éxito obtenido en cada uno de esos viajes surge lo que hoy en día es una agencia de viajes llamada MARTINEZ TRAVEL & TOURS siendo de alta calidad y completos los servicios que ofrecen a sus clientes.',
           ),
           _tarjetaDetalle(
             context: context,

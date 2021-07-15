@@ -55,6 +55,14 @@ class _HomePaquetesState extends State<HomePaquetes> {
         'superficie': 'Sub-America y Europa',
         'distancia': ' 57,91 millones km',
       },
+      {
+        'posicion': 2,
+        'titulo': "Cotizar Paquetes",
+        'subtitulo': "Realiza tu cotización de Paquetes a Nivel nacional, Centro América, Sudamérica y Europa",
+        'assetImage': AssetImage("assets/img/cotizar-tours.png"),
+        'superficie': 'Centro América, Sub-America y Europa',
+        'distancia': ' 57,91 millones km',
+      },
     ];
 
     return Container(
@@ -178,7 +186,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
   }
 
   Widget nombreAccion(int posicion) {
-    List<String> nombres = ["Ver Tours Nacionales", "Ver Tours Internacionales", "Cotizar Tours"];
+    List<String> nombres = ["Ver Tours Nacionales", "Ver Tours Internacionales", "Cotizar Paquete"];
     return Text(nombres[posicion]);
   }
 }
