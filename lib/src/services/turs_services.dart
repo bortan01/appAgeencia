@@ -66,7 +66,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<WompiModel> guardarReserva(DetalleTurModel reserva) async {
     print("haciendo peticion de guardar reserva");
-
+    reserva.idCliente = int.parse(_pref.idCliente);
     final url = '${Conf.urlServidor}DetalleTour/saveByClient';
     final response = await http.post(url, body: reserva.toJson());
     if (response.statusCode == 200) {

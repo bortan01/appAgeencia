@@ -156,7 +156,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
             onPressed: () {
-              //helper.redireccionar(context, url);
+              helper.redireccionar(context, url);
             },
             color: Color.fromRGBO(0, 179, 134, 1.0),
           )

@@ -11,7 +11,7 @@ class EncomiendaServices with ChangeNotifier, DiagnosticableTreeMixin {
   PreferenciasUsuario _pref = new PreferenciasUsuario();
 
   Future<EncomiendaModel> obtenerEncomienda() async {
-    print('haciendo peticion de vehiculos');
+    print('haciendo peticion de productos productos');
     final url = '${Conf.urlServidor}Producto/productos';
     final response = await http.get(url);
     if (response.statusCode == 200) {

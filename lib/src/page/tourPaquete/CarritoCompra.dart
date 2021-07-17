@@ -9,6 +9,7 @@ import 'package:peliculas/src/page/tourPaquete/SeleccionarAsiento.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
+
 class CarritoCompra extends StatefulWidget {
   final TourPaqueteModel tourPaqueteModel;
 
@@ -389,7 +390,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
 
   void _desicionTipo(String descripcionProducto, int cantidadAsientos) async {
     final detalle = new DetalleTurModel(
-        idCliente: 7,
         idTours: widget.tourPaqueteModel.idTours,
         nombreProducto: widget.tourPaqueteModel.nombreTours,
         descripcionProducto: '$descripcionProducto',

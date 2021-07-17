@@ -47,6 +47,8 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.data == null) return helper.noData();
+                if (snapshot.data.product.length == 0) return helper.noData();
+                if (snapshot.data.comision.length == 0) return helper.noData();
                 return scrollView(context);
                 break;
               case ConnectionState.active:

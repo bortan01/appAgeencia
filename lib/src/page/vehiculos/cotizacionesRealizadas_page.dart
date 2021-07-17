@@ -67,14 +67,14 @@ class CotizacionesRealizadasPage extends StatelessWidget {
           helper.crearTitulo('Información de Recogida'),
           _descripcion(cotizacion.direccionRecogida +
               ", " +
-              helper.transformarFecha(cotizacion.fechaRecogida) +
+              (cotizacion.fechaRecogida) +
               " " +
               cotizacion.horaRecogida),
 
           helper.crearTitulo('Información de Devolución'),
           _descripcion(cotizacion.direccionDevolucion +
               ", " +
-              helper.transformarFecha(cotizacion.fechaDevolucion) +
+              (cotizacion.fechaDevolucion) +
               " " +
               cotizacion.horaDevolucion),
           helper.crearTitulo('Modelo y Año'),
