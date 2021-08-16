@@ -1,19 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
+import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
-import 'package:peliculas/src/page/tourPaquete/DetallePaquetes.dart';
-import 'package:peliculas/src/page/tourPaquete/DetalleTours.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/Lista.dart';
 import 'package:intl/intl.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
-class ListaTours extends StatelessWidget {
-  final turServices = new TurServices();
+class ListaTours extends StatefulWidget {
+  final String tipo;
+  //Constructor
+  const ListaTours({@required this.tipo});
+  @override
+  _ListaToursState createState() => _ListaToursState();
+}
+
+class _ListaToursState extends State<ListaTours> {
+  Future<List<DataTourPaqueteModel>> listTourPaquete;
+  @override
+  void initState() {
+    super.initState();
+    listTourPaquete = _getData();
+  }
+
+  Future<List<DataTourPaqueteModel>> _getData() async {
+    return await TurServices().obtenerDataTourPaquete(widget.tipo);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final String argumento = ModalRoute.of(context).settings.arguments;
+    final String argumento = widget.tipo;
     return Scaffold(
       appBar: appBarPaquete(context, argumento),
       body: _listado(context, argumento),
@@ -31,8 +47,8 @@ class ListaTours extends StatelessWidget {
   Widget _listado(BuildContext context, String tipo) {
     //Posiblemente esto se convierta en futureBilder
     return FutureBuilder(
-        future: turServices.obtenerViaje(tipo),
-        builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+        future: listTourPaquete,
+        builder: (BuildContext context, AsyncSnapshot<List<DataTourPaqueteModel>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               if (snapshot.data.isEmpty) return helper.noData();
@@ -47,26 +63,26 @@ class ListaTours extends StatelessWidget {
         });
   }
 
-  Widget _creandoElementos(BuildContext context, List<dynamic> data) {
+  Widget _creandoElementos(BuildContext context, List<DataTourPaqueteModel> listTourPaquete) {
     //Posiblemente esto se convierta en futureBilder
 
     return ListView.builder(
-        itemCount: data.length,
+        itemCount: listTourPaquete.length,
         itemBuilder: (BuildContext context, int index) {
-          final myTourPaquete = new TourPaqueteModel.fromJson(data[index]);
           final DateFormat formatter = DateFormat('dd/MM/yyyy');
           return GestureDetector(
             onTap: () {
-              if (myTourPaquete.tipo == 'Paquete Nacional' || myTourPaquete.tipo == 'Paquete Internacional')
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DetallePaquete(tourPaquete: myTourPaquete)),
-                );
-              else
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => DetalleTours(tourPaquete: myTourPaquete)),
-                );
+              // if (listTourPaquete[index].tipo == 'Paquete Nacional' ||
+              //     listTourPaquete[index].tipo == 'Paquete Internacional')
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => DetallePaquete(tourPaquete: myTourPaquete)),
+              //   );
+              // else
+              //   Navigator.push(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => DetalleTours(tourPaquete: myTourPaquete)),
+              //   );
             },
             child: Column(
               children: <Widget>[
@@ -75,13 +91,13 @@ class ListaTours extends StatelessWidget {
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
                 Lista(
                   model: new ListaModel(
-                      nombre: myTourPaquete.nombreTours,
-                      descripcion: myTourPaquete.descripcionForApp,
-                      tag1: 'Precio \$${myTourPaquete.precio.toString()}',
-                      tag2: 'Fecha de Salida ' + formatter.format(myTourPaquete.start),
-                      imagen: transformarFoto(myTourPaquete.foto),
-                      fotos: myTourPaquete.galeria,
-                      id: myTourPaquete.idTours),
+                      nombre: listTourPaquete[index].nombreTours,
+                      descripcion: listTourPaquete[index].descripcionForApp,
+                      tag1: 'Precio \$${listTourPaquete[index].precio.toString()}',
+                      tag2: 'Fecha de Salida ' + formatter.format(listTourPaquete[index].start),
+                      imagen: transformarFoto(listTourPaquete[index].foto),
+                      fotos: listTourPaquete[index].galeria,
+                      id: int.parse(listTourPaquete[index].idTours)),
                 ),
                 //ESTA ES LA LINEA DE ABAJO
                 Divider(

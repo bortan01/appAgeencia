@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/page/tourPaquete/ListaTourPaquete.dart';
 
 import 'package:peliculas/src/providers/card_provider.dart';
 import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
@@ -146,18 +147,14 @@ class _HomeToursState extends State<HomeTours> {
 
                 ///lo ideal es crear una sola pagina y mandarle los argumentos
                 ///para que dibuje deacuerdo a lo que se le envia
-
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'ListaTours', arguments: "Tour Nacional");
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Tour Nacional')));
                 break;
               case 1:
-
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'ListaTours', arguments: "Tour Internacional");
-
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Tour Internacional')));
                 break;
-             
               default:
             }
           },

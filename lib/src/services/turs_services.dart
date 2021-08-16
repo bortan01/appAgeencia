@@ -2,6 +2,7 @@ import 'dart:convert' as convert;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
@@ -124,6 +125,18 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
       return cotizacion;
     } else {
       return null;
+    }
+  }
+
+  Future<List<DataTourPaqueteModel>> obtenerDataTourPaquete(String tipo) async {
+    print('haciendo peticion obtener data tour paquete');
+    final url = '${Conf.urlServidor}TurPaquete/showApp?estado=1&tipo=$tipo';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final res = dataTourPaqueteModelFromJson(response.body);
+      return res;
+    } else {
+      return [];
     }
   }
 }

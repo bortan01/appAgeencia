@@ -26,7 +26,6 @@ import 'package:peliculas/src/page/productosAdquiridos/menuProductos.dart';
 import 'package:peliculas/src/page/productosAdquiridos/tourPaqueteHistorial.dart';
 import 'package:peliculas/src/page/productosAdquiridos/vehiculosAlquilados.dart';
 import 'package:peliculas/src/page/tourPaquete/HomeTours.dart';
-import 'package:peliculas/src/page/tourPaquete/ListaTourPaquete.dart';
 import 'package:peliculas/src/page/tourPaquete/cotizarTours.dart';
 import 'package:peliculas/src/page/usuarios/SubirImagenes_page.dart';
 import 'package:peliculas/src/page/usuarios/aboutAs_page.dart';
@@ -60,8 +59,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     //MODULO TOURS
     'CotizarTours': (BuildContext context) => CotizarTours(),
     'HomeTours': (BuildContext context) => HomeTours(),
-    'ListaTours': (BuildContext context) => ListaTours(),
-    //MODULO VEHICULO
+     //MODULO VEHICULO
     'menuVehiculos': (BuildContext context) => HomeMenu(),
     'ListaVehiculos': (BuildContext context) => ListaVehiculos(),
     'CotizacionesRealizadasPage': (BuildContext context) => CotizacionesRealizadasPage(),
