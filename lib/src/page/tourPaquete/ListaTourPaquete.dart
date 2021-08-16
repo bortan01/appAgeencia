@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/page/tourPaquete/DetallePaquetes.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/Lista.dart';
@@ -69,15 +70,14 @@ class _ListaToursState extends State<ListaTours> {
     return ListView.builder(
         itemCount: listTourPaquete.length,
         itemBuilder: (BuildContext context, int index) {
-          final DateFormat formatter = DateFormat('dd/MM/yyyy');
           return GestureDetector(
             onTap: () {
               // if (listTourPaquete[index].tipo == 'Paquete Nacional' ||
               //     listTourPaquete[index].tipo == 'Paquete Internacional')
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => DetallePaquete(tourPaquete: myTourPaquete)),
-              //   );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DetallePaquete(dataTourPaquete: listTourPaquete[index])),
+              );
               // else
               //   Navigator.push(
               //     context,
@@ -94,7 +94,7 @@ class _ListaToursState extends State<ListaTours> {
                       nombre: listTourPaquete[index].nombreTours,
                       descripcion: listTourPaquete[index].descripcionForApp,
                       tag1: 'Precio \$${listTourPaquete[index].precio.toString()}',
-                      tag2: 'Fecha de Salida ' + formatter.format(listTourPaquete[index].start),
+                      tag2: mensajeFecha(listTourPaquete[index].start),
                       imagen: transformarFoto(listTourPaquete[index].foto),
                       fotos: listTourPaquete[index].galeria,
                       id: int.parse(listTourPaquete[index].idTours)),
@@ -109,5 +109,14 @@ class _ListaToursState extends State<ListaTours> {
             ),
           );
         });
+  }
+
+  String mensajeFecha(DateTime fecha) {
+    final DateFormat formatter = DateFormat('dd/MM/yyyy');
+    if (fecha == null) {
+      return 'Siempre Disponible';
+    } else {
+      return 'Fecha de Salida ' + formatter.format(fecha);
+    }
   }
 }

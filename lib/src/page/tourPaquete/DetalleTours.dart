@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
-import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
+import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/page/Temas/Temas.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
-import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
 import 'package:peliculas/src/widget/chip_widget.dart';
 import 'package:peliculas/src/widget/galeria.dart';
 import 'package:provider/provider.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class DetalleTours extends StatefulWidget {
-  final TourPaqueteModel tourPaquete;
-  const DetalleTours({@required this.tourPaquete});
+  final DataTourPaqueteModel dataTourPaquete;
+  const DetalleTours({@required this.dataTourPaquete});
 
   @override
   _DetalleToursState createState() => _DetalleToursState();
@@ -26,11 +24,6 @@ class _DetalleToursState extends State<DetalleTours> {
   @override
   void initState() {
     super.initState();
-    infoAdicional = _getInfoAdicional();
-  }
-
-  Future<dynamic> _getInfoAdicional() async {
-    return await TurServices().obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
   }
 
   @override
@@ -40,58 +33,40 @@ class _DetalleToursState extends State<DetalleTours> {
 
     return Scaffold(
         //backgroundColor: Colors.blueAccent,
-        body: detalle(context));
+        body: scrollView(context, widget.dataTourPaquete));
   }
 
-  Widget detalle(BuildContext context) {
-    //Posiblemente esto se convierta en futureBilder
-    return FutureBuilder(
-        future: infoAdicional,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              if (snapshot.data == null) return helper.noData();
-              final informacionAcicional = snapshot.data;
-              return scrollView(context, informacionAcicional, widget.tourPaquete);
-            case ConnectionState.active:
-              return Center(child: CircularProgressIndicator());
-            case ConnectionState.waiting:
-              return Center(child: CircularProgressIndicator());
-            default:
-              return helper.noData();
-          }
-        });
-  }
 
-  Widget scrollView(BuildContext context, InformacionAdicional informacionAdicional, TourPaqueteModel tur) {
+
+  Widget scrollView(BuildContext context, DataTourPaqueteModel dataTourPaquete) {
     return CustomScrollView(
       slivers: <Widget>[
         AppBarWidget(
-          titulo: widget.tourPaquete.nombreTours,
-          imagen: transformarFoto(widget.tourPaquete.foto),
-          id: widget.tourPaquete.idTours.toString(),
+          titulo: widget.dataTourPaquete.nombreTours,
+          imagen: transformarFoto(widget.dataTourPaquete.foto),
+          id: widget.dataTourPaquete.idTours.toString(),
         ),
         new SliverList(
             delegate: new SliverChildListDelegate([
           new SizedBox(
             height: 10.0,
           ),
-          helper.posterTitulo(context: context, title: widget.tourPaquete.nombreTours),
+          helper.posterTitulo(context: context, title: widget.dataTourPaquete.nombreTours),
           new SizedBox(height: 10.0),
           new Divider(
             color: Colors.grey,
             height: 20.0,
           ),
           helper.crearTitulo("Descripción"),
-          _descripcion(tur.descripcionForApp),
+          _descripcion(dataTourPaquete.descripcionForApp),
           helper.crearTitulo("Incluye"),
-          listaHorizontal(tipo: TypeChip.azul, lista: tur.incluye),
+          listaHorizontal(tipo: TypeChip.azul, lista: dataTourPaquete.incluye),
           helper.crearTitulo("Lugares de Salida"),
-          listaHorizontal(tipo: TypeChip.verde, lista: tur.lugarSalida),
+          listaHorizontal(tipo: TypeChip.verde, lista: dataTourPaquete.lugarSalida),
           helper.crearTitulo("Requisitos"),
-          listaHorizontal(tipo: TypeChip.anaranjado, lista: tur.requisitos),
+          listaHorizontal(tipo: TypeChip.anaranjado, lista: dataTourPaquete.requisitos),
           helper.crearTitulo("No incluye"),
-          listaHorizontal(tipo: TypeChip.rojo, lista: tur.noIncluye),
+          listaHorizontal(tipo: TypeChip.rojo, lista: dataTourPaquete.noIncluye),
           _crearBoton(context),
         ]))
       ],
@@ -164,14 +139,14 @@ class _DetalleToursState extends State<DetalleTours> {
           textColor: Theme.of(context).bottomAppBarColor,
           shape: StadiumBorder(),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => CarritoCompra(
-                  tourPaqueteModel: widget.tourPaquete,
-                ),
-              ),
-            );
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(
+            //     builder: (context) => CarritoCompra(
+            //       tourPaqueteModel: widget.dataTourPaquete,
+            //     ),
+            //   ),
+            // );
           }),
     );
   }

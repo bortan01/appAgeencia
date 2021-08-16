@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
 import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/services/turs_services.dart';
@@ -13,9 +14,9 @@ import 'package:provider/provider.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class DetallePaquete extends StatefulWidget {
-  final TourPaqueteModel tourPaquete;
+  final DataTourPaqueteModel dataTourPaquete;
 
-  const DetallePaquete({@required this.tourPaquete});
+  const DetallePaquete({@required this.dataTourPaquete});
 
   @override
   _DetallePaqueteState createState() => _DetallePaqueteState();
@@ -28,12 +29,8 @@ class _DetallePaqueteState extends State<DetallePaquete> {
   @override
   void initState() {
     super.initState();
-    infoAdicional = _getInfoAdicional();
   }
 
-  Future<InformacionAdicional> _getInfoAdicional() async {
-    return await TurServices().obtenerInformacionAdicional(widget.tourPaquete.idTours.toString());
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,67 +38,48 @@ class _DetallePaqueteState extends State<DetallePaquete> {
 
     return Scaffold(
         //backgroundColor: Colors.blueAccent,
-        body: detalle(context, widget.tourPaquete));
+        body: scrollView(context, widget.dataTourPaquete));
   }
 
-  Widget detalle(BuildContext context, TourPaqueteModel tur) {
-    //Posiblemente esto se convierta en futureBilder
-    return FutureBuilder(
-        future: infoAdicional,
-        builder: (BuildContext context, AsyncSnapshot<InformacionAdicional> snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              final informacionAcicional = snapshot.data;
-              return scrollView(context, informacionAcicional, tur);
-            case ConnectionState.active:
-              return helper.waitingData();
-            case ConnectionState.waiting:
-              print('esperando');
-              return helper.waitingData();
-            default:
-              return helper.noData();
-          }
-        });
-  }
 
-  Widget scrollView(BuildContext context, InformacionAdicional informacionAdicional, TourPaqueteModel tur) {
+  Widget scrollView(BuildContext context, DataTourPaqueteModel dataTourPaquete) {
     return CustomScrollView(
       slivers: <Widget>[
         AppBarWidget(
-          titulo: tur.nombreTours,
-          imagen: transformarFoto(tur.foto),
-          id: tur.idTours.toString(),
+          titulo: dataTourPaquete.nombreTours,
+          imagen: transformarFoto(dataTourPaquete.foto),
+          id: dataTourPaquete.idTours.toString(),
         ),
         new SliverList(
             delegate: new SliverChildListDelegate([
           new SizedBox(height: 10.0),
-          helper.posterTitulo(context: context, title: tur.nombreTours),
+          helper.posterTitulo(context: context, title: dataTourPaquete.nombreTours),
           new SizedBox(height: 10.0),
           new Divider(color: Colors.grey, height: 20.0),
           helper.crearTitulo("Descripción"),
-          descripcion(tur.descripcionForApp),
-          listaHorizontal(tipo: TypeChip.azul, lista: tur.incluye),
-          _incluye(context, informacionAdicional),
+          descripcion(dataTourPaquete.descripcionForApp),
+          listaHorizontal(tipo: TypeChip.azul, lista: dataTourPaquete.incluye),
+          _incluye(context, dataTourPaquete),
           helper.crearTitulo("Lugares de Salida"),
-          listaHorizontal(tipo: TypeChip.verde, lista: tur.lugarSalida),
+          listaHorizontal(tipo: TypeChip.verde, lista: dataTourPaquete.lugarSalida),
           helper.crearTitulo("Requisitos"),
-          listaHorizontal(tipo: TypeChip.anaranjado, lista: tur.requisitos),
+          listaHorizontal(tipo: TypeChip.anaranjado, lista: dataTourPaquete.requisitos),
           helper.crearTitulo("No incluye"),
-          listaHorizontal(tipo: TypeChip.rojo, lista: tur.noIncluye),
+          listaHorizontal(tipo: TypeChip.rojo, lista: dataTourPaquete.noIncluye),
           _crearBoton(context)
         ]))
       ],
     );
   }
 
-  Widget _incluye(BuildContext context, InformacionAdicional informacionAdicional) {
+  Widget _incluye(BuildContext context, DataTourPaqueteModel dataTourPaquete) {
     return Stepper(
       currentStep: pasoActual,
       physics: new ClampingScrollPhysics(), //SE DEBE DE AGREGAR ESTA PROPIEDAD PARA EVITAR QUE CREE UN NUEVO SCROLL
-      steps: listaDeElementos(informacionAdicional),
+      steps: listaDeElementos(dataTourPaquete),
       onStepContinue: () {
         setState(() {
-          if (pasoActual < listaDeElementos(informacionAdicional).length - 1) {
+          if (pasoActual < listaDeElementos(dataTourPaquete).length - 1) {
             pasoActual++;
           }
         });
@@ -141,9 +119,9 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     );
   }
 
-  List<Step> listaDeElementos(InformacionAdicional informacionAdicional) {
+  List<Step> listaDeElementos(DataTourPaqueteModel dataTourPaquete) {
     List<Step> myLista = [];
-    informacionAdicional.sitiosTuristicos.forEach((item) {
+    dataTourPaquete.sitiosTuristicos.forEach((item) {
       myLista.add(
         new Step(
             title: new Text(item.nombreSitio),
@@ -161,7 +139,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
       );
     });
 
-    informacionAdicional.serviciosAdicionales.forEach((item) {
+    dataTourPaquete.serviciosAdicionales.forEach((item) {
       myLista.add(new Step(
           title: new Text(item.nombreServicio),
           content: Column(
@@ -192,7 +170,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
         shape: StadiumBorder(),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CarritoCompra(tourPaqueteModel: widget.tourPaquete)));
+              context, MaterialPageRoute(builder: (context) => CarritoCompra(tourPaqueteModel: new TourPaqueteModel (), )));
         },
       ),
     );
