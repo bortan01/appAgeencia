@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
-import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
@@ -31,7 +30,6 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
     Provider.of<TurServices>(context, listen: false);
@@ -40,7 +38,6 @@ class _DetallePaqueteState extends State<DetallePaquete> {
         //backgroundColor: Colors.blueAccent,
         body: scrollView(context, widget.dataTourPaquete));
   }
-
 
   Widget scrollView(BuildContext context, DataTourPaqueteModel dataTourPaquete) {
     return CustomScrollView(
@@ -170,7 +167,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
         shape: StadiumBorder(),
         onPressed: () {
           Navigator.push(
-              context, MaterialPageRoute(builder: (context) => CarritoCompra(tourPaqueteModel: new TourPaqueteModel (), )));
+              context, MaterialPageRoute(builder: (context) => CarritoCompra(dataTourPaquete: widget.dataTourPaquete)));
         },
       ),
     );

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/precios_model.dart';
+import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
-import 'package:peliculas/src/models/tourPaquete/TourPaquete_model.dart';
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';
@@ -9,11 +9,10 @@ import 'package:peliculas/src/page/tourPaquete/SeleccionarAsiento.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
-
 class CarritoCompra extends StatefulWidget {
-  final TourPaqueteModel tourPaqueteModel;
+  final DataTourPaqueteModel dataTourPaquete;
 
-  const CarritoCompra({Key key, @required this.tourPaqueteModel}) : super(key: key);
+  const CarritoCompra({Key key, @required this.dataTourPaquete}) : super(key: key);
   @override
   _CarritoCompraState createState() => _CarritoCompraState();
 }
@@ -35,11 +34,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
   @override
   void initState() {
     super.initState();
-    futureInfoReserva = _getInfoReserva();
-  }
-
-  Future<InfoReservaModel> _getInfoReserva() async {
-    return await TurServices().obtenerInfomacionToReserva(widget.tourPaqueteModel.idTours.toString());
+    inicializarData();
   }
 
   @override
@@ -47,29 +42,11 @@ class _CarritoCompraState extends State<CarritoCompra> {
     screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: appBarCarrito(),
-      body: FutureBuilder(
-          future: futureInfoReserva,
-          builder: (BuildContext context, AsyncSnapshot<InfoReservaModel> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.done:
-                if (snapshot.data == null) return helper.noData();
-                if (snapshot.hasData) {
-                  inicializarData(snapshot.data);
-                }
-                return scrollView(context, snapshot.data);
-                break;
-              case ConnectionState.active:
-                return Center(child: CircularProgressIndicator());
-              case ConnectionState.waiting:
-                return Center(child: CircularProgressIndicator());
-              default:
-                return helper.noData();
-            }
-          }),
+      body: scrollView(context),
     );
   }
 
-  SingleChildScrollView scrollView(BuildContext context, InfoReservaModel info) {
+  SingleChildScrollView scrollView(BuildContext context) {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
@@ -390,15 +367,15 @@ class _CarritoCompraState extends State<CarritoCompra> {
 
   void _desicionTipo(String descripcionProducto, int cantidadAsientos) async {
     final detalle = new DetalleTurModel(
-        idTours: widget.tourPaqueteModel.idTours,
-        nombreProducto: widget.tourPaqueteModel.nombreTours,
+        idTours: int.parse(widget.dataTourPaquete.idTours),
+        nombreProducto: widget.dataTourPaquete.nombreTours,
         descripcionProducto: '$descripcionProducto',
-        descripcionTurPaquete: widget.tourPaqueteModel.descripcionTur,
+        descripcionTurPaquete: widget.dataTourPaquete.descripcionTur,
         cantidadAsientos: cantidadAsientos,
         total: total,
         asientosSeleccionados: 'NO_SELECCIONADO',
         labelAsiento: 'NO_LABEL');
-    String tipo = widget.tourPaqueteModel.tipo;
+    String tipo = widget.dataTourPaquete.tipo;
     if (tipo == 'Paquete Internacional' || tipo == 'Paquete Nacional') {
       //SI ES UN TUR REDIRECCIONAMOS PARA QUE SELECCIONE EL PAQUETE
       TransporteModel transporteModel = infoReservaModel.transporte;
@@ -418,20 +395,22 @@ class _CarritoCompraState extends State<CarritoCompra> {
     }
   }
 
-  void inicializarData(InfoReservaModel info) {
+  void inicializarData() {
     if (infoReservaModel == null) {
       print("inicializando");
-      infoReservaModel = info;
+      // infoReservaModel = info;
+      final precio = double.parse(widget.dataTourPaquete.precio);
 
       //OCUPAREMES ESTA LISTA DE PRECIOS PARA LLENAR EL SELECT
       listaPrecios = [];
-      listaPrecios.add(Precios(asiento: 1, pasaje: info.precio, titulo: "Normal"));
+      listaPrecios.add(Precios(asiento: 1, pasaje: precio, titulo: "Normal"));
       //AGREMAMOS LAS PROMOCIONES EXISTENTES SI LAS EXISTE
-      info.promociones.forEach((element) {
+      widget.dataTourPaquete.promociones.forEach((element) {
         listaPrecios.add(new Precios(
-            titulo: element['titulo'],
-            asiento: int.parse(element['asiento']),
-            pasaje: double.parse(element['pasaje'])));
+          titulo: element.titulo,
+          asiento: int.parse(element.asiento),
+          pasaje: double.parse(element.pasaje),
+        ));
       });
       _precioSeleccionado = listaPrecios[0];
     }
