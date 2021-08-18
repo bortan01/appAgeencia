@@ -18,7 +18,6 @@ class CarritoCompra extends StatefulWidget {
 }
 
 class _CarritoCompraState extends State<CarritoCompra> {
-  Future<InfoReservaModel> futureInfoReserva;
   Color fondo = Colors.green;
   double screenHeight;
   Precios _precioSeleccionado;
@@ -27,7 +26,6 @@ class _CarritoCompraState extends State<CarritoCompra> {
   int cantidadSeleccionada = 1;
   double total = 0.0;
   TransporteModel transporte;
-  InfoReservaModel infoReservaModel;
   bool creandoEnlace = false;
   final formKey = GlobalKey<FormState>();
 
@@ -343,8 +341,9 @@ class _CarritoCompraState extends State<CarritoCompra> {
   void continuar() async {
     formKey.currentState.validate();
     String descripcionProducto = "";
-    total = 0.0;
     int cantidadAsientos = 0;
+    int cupos = int.parse(widget.dataTourPaquete.cuposDisponibles);
+    total = 0.0;
     if (asientosPrecio.length == 0) {
       helper.mostrarMensanjeError(context, "El carrito esta vacio.");
       return;
@@ -358,8 +357,8 @@ class _CarritoCompraState extends State<CarritoCompra> {
           '${element.cantidad.toString()} X Asiento(s) ${element.titulo} \$${element.pasaje} c/u, Sub Total \$$subTotal\n';
     });
     descripcionProducto += '\n  Total: \$$total \n';
-    if (cantidadAsientos > infoReservaModel.cupos) {
-      helper.mostrarMensanjeError(context, "Solo hay ${infoReservaModel.cupos} asientos disponibles");
+    if (cantidadAsientos > cupos) {
+      helper.mostrarMensanjeError(context, "Solo hay ${cupos.toString()} asientos disponibles");
       return;
     }
     _desicionTipo(descripcionProducto, cantidadAsientos);
@@ -376,15 +375,14 @@ class _CarritoCompraState extends State<CarritoCompra> {
         asientosSeleccionados: 'NO_SELECCIONADO',
         labelAsiento: 'NO_LABEL');
     String tipo = widget.dataTourPaquete.tipo;
-    if (tipo == 'Paquete Internacional' || tipo == 'Paquete Nacional') {
+    if (tipo == 'Tour Internacional' || tipo == 'Tour Nacional') {
       //SI ES UN TUR REDIRECCIONAMOS PARA QUE SELECCIONE EL PAQUETE
-      TransporteModel transporteModel = infoReservaModel.transporte;
       Navigator.push(
         context,
         MaterialPageRoute(
           builder: (context) => SeleccionarAsiento(
             detalle: detalle,
-            transporte: transporteModel,
+            transporte: widget.dataTourPaquete.transporte,
           ),
         ),
       );
@@ -396,24 +394,22 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   void inicializarData() {
-    if (infoReservaModel == null) {
-      print("inicializando");
-      // infoReservaModel = info;
-      final precio = double.parse(widget.dataTourPaquete.precio);
+    print("inicializando");
+    // infoReservaModel = info;
+    final precio = double.parse(widget.dataTourPaquete.precio);
 
-      //OCUPAREMES ESTA LISTA DE PRECIOS PARA LLENAR EL SELECT
-      listaPrecios = [];
-      listaPrecios.add(Precios(asiento: 1, pasaje: precio, titulo: "Normal"));
-      //AGREMAMOS LAS PROMOCIONES EXISTENTES SI LAS EXISTE
-      widget.dataTourPaquete.promociones.forEach((element) {
-        listaPrecios.add(new Precios(
-          titulo: element.titulo,
-          asiento: int.parse(element.asiento),
-          pasaje: double.parse(element.pasaje),
-        ));
-      });
-      _precioSeleccionado = listaPrecios[0];
-    }
+    //OCUPAREMES ESTA LISTA DE PRECIOS PARA LLENAR EL SELECT
+    listaPrecios = [];
+    listaPrecios.add(Precios(asiento: 1, pasaje: precio, titulo: "Normal"));
+    //AGREMAMOS LAS PROMOCIONES EXISTENTES SI LAS EXISTE
+    widget.dataTourPaquete.promociones.forEach((element) {
+      listaPrecios.add(new Precios(
+        titulo: element.titulo,
+        asiento: int.parse(element.asiento),
+        pasaje: double.parse(element.pasaje),
+      ));
+    });
+    _precioSeleccionado = listaPrecios[0];
   }
 
   void agregarACarrito() {

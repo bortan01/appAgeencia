@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
-import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';
-import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/widget/crear_bus.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class SeleccionarAsiento extends StatefulWidget {
   final DetalleTurModel detalle;
-  final TransporteModel transporte;
+  final Transporte transporte;
   SeleccionarAsiento({
     Key key,
     @required this.detalle,
