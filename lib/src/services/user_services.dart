@@ -189,6 +189,23 @@ class UserServices {
     }
   }
 
+  Future<DocumentosModel> getPhotoProfile() async {
+    final PreferenciasUsuario _preferenciasUsuario = new PreferenciasUsuario();
+    DocumentosModel photoProfile;
+    print('haciendo peticion a foto de perfil');
+    final url = '${Conf.urlServidor}Imagen/show?tipo=usuario_perfil&identificador=${_preferenciasUsuario.idCliente}';
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonResponse = convert.jsonDecode(response.body);
+      jsonResponse.forEach((element) {
+        photoProfile = DocumentosModel.fromJson(element);
+      });
+      return photoProfile;
+    } else {
+      return null;
+    }
+  }
+
   Future<bool> eliminarFoto(String id) async {
     final url = '${Conf.urlServidor}Imagen/delete';
     final data = {'key': id};

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/precios_model.dart';
 import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
-import 'package:peliculas/src/models/tourPaquete/InfoReserva_model.dart';
 import 'package:peliculas/src/models/tourPaquete/Wompi_model.dart';
 import 'package:peliculas/src/models/tourPaquete/detalleTur_model.dart';
 import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';

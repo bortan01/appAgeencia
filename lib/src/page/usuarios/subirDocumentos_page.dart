@@ -90,7 +90,7 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
 
   Widget _mostrarFoto() {
     if (_foto != null) {
-      return Center(
+        return Center(
         //pregunta si existe la imagen
         child: Container(
           child: ClipRRect(
