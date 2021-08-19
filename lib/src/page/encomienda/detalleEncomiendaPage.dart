@@ -31,7 +31,7 @@ class DetalleEncomiendaPage extends StatelessWidget {
       builder: (BuildContext context, AsyncSnapshot<DetalleEncomienda> snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
-            if (snapshot.data == null) return helper.noData();
+            if (snapshot.data == null || snapshot.data.actualizaciones.isEmpty) return helper.noData();
             return _crearHistorial(context, snapshot.data.actualizaciones);
           // return _creandoElementos(context, snapshot.data);
           case ConnectionState.active:
