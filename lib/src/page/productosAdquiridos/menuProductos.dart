@@ -58,8 +58,7 @@ class _MenuProductosState extends State<MenuProductos> {
       {
         'posicion': 2,
         'titulo': "Historial de Encomiendas",
-        'subtitulo':
-            "Usa esta sencilla herramienta para obtener el historial de encomiendas realizadas.",
+        'subtitulo': "Usa esta sencilla herramienta para obtener el historial de encomiendas realizadas.",
         'assetImage': AssetImage("assets/img/cotizar.png"),
         'superficie': '74,8 millones km²',
         'distancia': ' 57,91 millones km',
@@ -169,8 +168,7 @@ class _MenuProductosState extends State<MenuProductos> {
                 break;
 
               case 2:
-                Navigator.pushNamed(context, 'envios',
-                    arguments: "Historial de Encomiendas");
+                Navigator.pushNamed(context, 'HistoEncomienda', arguments: "Historial de Encomiendas");
 
                 break;
 

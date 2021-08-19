@@ -36,29 +36,31 @@ class _SubirImagenesState extends State<SubirImagenes> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldKey,
-        appBar: AppBar(
-          title: Text('Seleccione su foto'),
-          centerTitle: true,
-          actions: <Widget>[
-            new IconButton(icon: new Icon(Icons.photo_size_select_actual), onPressed: _seleccionarFoto),
-            new IconButton(icon: new Icon(Icons.camera), onPressed: _tomarFoto),
-          ],
-        ),
-        body: FutureBuilder(
-            future: photoProfile,
-            builder: (BuildContext context, AsyncSnapshot<DocumentosModel> snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.done:
-                  return cuerpo(context, snapshot.data);
-                case ConnectionState.active:
-                  return helper.waitingData();
-                case ConnectionState.waiting:
-                  return helper.waitingData();
-                default:
-                  return helper.noData();
-              }
-            }));
+      key: scaffoldKey,
+      appBar: AppBar(
+        title: Text('Seleccione su foto'),
+        centerTitle: true,
+        actions: <Widget>[
+          new IconButton(icon: new Icon(Icons.photo_size_select_actual), onPressed: _seleccionarFoto),
+          new IconButton(icon: new Icon(Icons.camera), onPressed: _tomarFoto),
+        ],
+      ),
+      body: FutureBuilder(
+        future: photoProfile,
+        builder: (BuildContext context, AsyncSnapshot<DocumentosModel> snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.done:
+              return cuerpo(context, snapshot.data);
+            case ConnectionState.active:
+              return helper.waitingData();
+            case ConnectionState.waiting:
+              return helper.waitingData();
+            default:
+              return helper.noData();
+          }
+        },
+      ),
+    );
   }
 
   SingleChildScrollView cuerpo(BuildContext context, DocumentosModel photo) {
@@ -122,7 +124,7 @@ class _SubirImagenesState extends State<SubirImagenes> {
 
   crearBotton(BuildContext context) {
     return RaisedButton.icon(
-      onPressed: () => submit(context),
+      onPressed: () => submit(context), 
       icon: new Icon(Icons.save),
       label: Text("guardar"),
       shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
