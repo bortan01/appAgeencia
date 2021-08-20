@@ -1,4 +1,5 @@
 import 'dart:convert' as convert;
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -129,9 +130,10 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
   }
 
   Future<List<DataTourPaqueteModel>> obtenerDataTourPaquete(String tipo) async {
+    //
     print('haciendo peticion obtener data tour paquete');
     final url = '${Conf.urlServidor}TurPaquete/showApp?estado=1&tipo=$tipo';
-    final response = await http.get(url);
+    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = dataTourPaqueteModelFromJson(response.body);
       return res;

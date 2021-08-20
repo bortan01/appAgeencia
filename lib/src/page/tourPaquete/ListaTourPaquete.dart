@@ -68,47 +68,48 @@ class _ListaToursState extends State<ListaTours> {
     //Posiblemente esto se convierta en futureBilder
 
     return ListView.builder(
-        itemCount: listTourPaquete.length,
-        itemBuilder: (BuildContext context, int index) {
-          return GestureDetector(
-            onTap: () {
-              // if (listTourPaquete[index].tipo == 'Paquete Nacional' ||
-              //     listTourPaquete[index].tipo == 'Paquete Internacional')
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => DetallePaquete(dataTourPaquete: listTourPaquete[index])),
-              );
-              // else
-              //   Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => DetalleTours(tourPaquete: myTourPaquete)),
-              //   );
-            },
-            child: Column(
-              children: <Widget>[
-                SizedBox(height: 15.0),
+      itemCount: listTourPaquete.length,
+      itemBuilder: (BuildContext context, int index) {
+        return GestureDetector(
+          onTap: () {
+            // if (listTourPaquete[index].tipo == 'Paquete Nacional' ||
+            //     listTourPaquete[index].tipo == 'Paquete Internacional')
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetallePaquete(dataTourPaquete: listTourPaquete[index])),
+            );
+            // else
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => DetalleTours(tourPaquete: myTourPaquete)),
+            //   );
+          },
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: 15.0),
 
-                ///AQUI ES DONDE SE CREAN LAS IMAGENES
-                Lista(
-                  model: new ListaModel(
-                      nombre: listTourPaquete[index].nombreTours,
-                      descripcion: listTourPaquete[index].descripcionForApp,
-                      tag1: 'Precio \$${listTourPaquete[index].precio.toString()}',
-                      tag2: mensajeFecha(listTourPaquete[index].start),
-                      imagen: transformarFoto(listTourPaquete[index].foto),
-                      fotos: listTourPaquete[index].galeria,
-                      id: int.parse(listTourPaquete[index].idTours)),
-                ),
-                //ESTA ES LA LINEA DE ABAJO
-                Divider(
-                  thickness: 1,
-                  endIndent: 20,
-                  indent: 20,
-                )
-              ],
-            ),
-          );
-        });
+              ///AQUI ES DONDE SE CREAN LAS IMAGENES
+              Lista(
+                model: new ListaModel(
+                    nombre: listTourPaquete[index].nombreTours,
+                    descripcion: listTourPaquete[index].descripcionForApp,
+                    tag1: 'Precio \$${listTourPaquete[index].precio.toString()}',
+                    tag2: mensajeFecha(listTourPaquete[index].start),
+                    imagen: transformarFoto(listTourPaquete[index].foto),
+                    fotos: listTourPaquete[index].galeria,
+                    id: int.parse(listTourPaquete[index].idTours)),
+              ),
+              //ESTA ES LA LINEA DE ABAJO
+              Divider(
+                thickness: 1,
+                endIndent: 20,
+                indent: 20,
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 
   String mensajeFecha(DateTime fecha) {
