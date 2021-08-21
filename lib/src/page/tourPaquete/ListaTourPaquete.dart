@@ -52,7 +52,7 @@ class _ListaToursState extends State<ListaTours> {
         builder: (BuildContext context, AsyncSnapshot<List<DataTourPaqueteModel>> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              if (snapshot.data.isEmpty) return helper.noData();
+              if (snapshot.data == null || snapshot.data.isEmpty) return helper.noData();
               return _creandoElementos(context, snapshot.data);
             case ConnectionState.active:
               return Center(child: CircularProgressIndicator());

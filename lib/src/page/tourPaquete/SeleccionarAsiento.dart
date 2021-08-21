@@ -24,7 +24,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
   final fcaffolKey = GlobalKey<ScaffoldState>();
   final turServices = new TurServices();
   double screenHeight;
-  List<String> asientosSeleccionados = [];
+  List<String> listAsientosSeleccionados = [];
   List<String> labelAsientos = [];
   bool _guardando = false;
   @override
@@ -130,7 +130,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
   }
 
   void _reservar() async {
-    if (asientosSeleccionados.length != widget.detalle.cantidadAsientos) {
+    if (listAsientosSeleccionados.length != widget.detalle.cantidadAsientos) {
       helper.mostrarMensanjeError(
           context, 'Debe de seleccionar ${widget.detalle.cantidadAsientos.toString()} asiento(s)');
     } else {
@@ -138,10 +138,16 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
         print("redibujando");
         _guardando = true;
       });
-      String strIdAsientos = asientosSeleccionados.toString();
+      String strIdAsientos = '';
+      listAsientosSeleccionados.forEach((idAsiento) {
+        strIdAsientos += idAsiento + ',';
+      });
+
       String strLabelAsientos = labelAsientos.toString();
-      widget.detalle.asientosSeleccionados = strIdAsientos.substring(1, strIdAsientos.length - 1);
+      widget.detalle.asientosSeleccionados = strIdAsientos;
       widget.detalle.labelAsiento = strLabelAsientos.substring(1, strLabelAsientos.length - 1);
+      print(strIdAsientos);
+
       final WompiModel resultado = await turServices.guardarReserva(widget.detalle);
       String url = resultado.urlEnlace;
       Alert(
@@ -200,12 +206,12 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
   }
 
   void agregarAsiento(String identificadorAsiento, String label) {
-    asientosSeleccionados.add(identificadorAsiento);
+    listAsientosSeleccionados.add(identificadorAsiento);
     labelAsientos.add(label);
   }
 
   void eliminarAsiento(String identificadorAsiento, String label) {
-    asientosSeleccionados.remove(identificadorAsiento);
+    listAsientosSeleccionados.remove(identificadorAsiento);
     labelAsientos.remove(label);
   }
 }
