@@ -53,54 +53,24 @@ class CardViewAutoView extends StatelessWidget {
           shape: BoxShape.rectangle,
           borderRadius: new BorderRadius.circular(8.0),
           boxShadow: <BoxShadow>[
-            BoxShadow(
-                color: Colors.black12,
-                blurRadius: 10.0,
-                offset: Offset(0.0, 8.0))
+            BoxShadow(color: Colors.black12, blurRadius: 10.0, offset: Offset(0.0, 8.0))
           ], /* Aplica sombra */
         ),
         child: Container(
           /* Margen del contenido */
-          margin: const EdgeInsets.only(
-              left: 12.0, top: 75.0, right: 12.0, bottom: 12.0),
+          margin: const EdgeInsets.only(left: 12.0, top: 75.0, right: 12.0, bottom: 12.0),
           constraints: new BoxConstraints.expand(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Text(titulo,
-                  style: TextStyle(
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                      color: colortexto),
+                  style: TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold, color: colortexto),
                   overflow: TextOverflow.ellipsis),
               new SizedBox(height: 5.0),
-              new Text(subtitulo,
-                  style: TextStyle(fontSize: 14.0, color: colortexto),
-                  textAlign: TextAlign.center),
+              new Text(subtitulo, style: TextStyle(fontSize: 14.0, color: colortexto), textAlign: TextAlign.center),
               new Divider(),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Icon(Icons.brightness_7, size: 14.0, color: Colors.amber),
-                  new SizedBox(width: 5.0),
-                  new Text(distancia,
-                      style: TextStyle(fontSize: 12.0, color: colortexto),
-                      overflow: TextOverflow.ellipsis),
-                ],
-              ),
               new SizedBox(height: 5.0),
-              new Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  new Icon(Icons.transfer_within_a_station,
-                      size: 14.0, color: Colors.blueAccent),
-                  new SizedBox(width: 5.0),
-                  new Text(superficie,
-                      style: TextStyle(fontSize: 12.0, color: colortexto),
-                      overflow: TextOverflow.ellipsis),
-                ],
-              ),
             ],
           ),
         ));
