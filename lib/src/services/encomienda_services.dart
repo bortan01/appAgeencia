@@ -38,7 +38,8 @@ class EncomiendaServices with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<DetalleEncomienda> obtenerDetalle(String idEncomienda) async {
     print('haciendo peticion detalle encomiendas');
-    final url = '${Conf.urlServidor}Detalle_envio/detalleEnvio?id_encomienda=$idEncomienda';
+    final url = '${Conf.urlServidor}Detalle_envio/show?id_encomienda=$idEncomienda';
+    print(url);
     final response = await http.get(url);
     if (response.statusCode == 200) {
       final res = detalleEncomiendaFromJson(response.body);
