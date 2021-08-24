@@ -119,13 +119,13 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
                     SizedBox(height: 15),
                     _inputDui(),
                     _inputBoton(),
-                    _inputLogin(),
                   ],
                 ),
               ),
             ),
           ),
         ),
+        SizedBox(height: 25),
       ],
     );
   }
@@ -282,22 +282,10 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
     );
   }
 
-  Widget _inputLogin() {
-    return new FlatButton(
-      child: Text(
-        '¿Ya tienes cuenta?',
-        style: TextStyle(color: Colors.black54),
-      ),
-      onPressed: () {
-        Navigator.pushReplacementNamed(context, 'login');
-      },
-    );
-  }
-
   Widget _inputBoton() {
     return new FlatButton(
       child: (_guardando) ? Text("Por favor espere...") : Text("Actualizar Información"),
-      color: Color(0xFF4B9DFE),
+      color: Colors.blue,
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),

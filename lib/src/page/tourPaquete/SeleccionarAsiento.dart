@@ -112,17 +112,14 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
 
   Row _botonPagar(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Expanded(
-          child: Container(),
-        ),
         FlatButton(
           child: (_guardando) ? Text("Por favor espere...") : Text("Continuar"),
-          color: Colors.blueAccent,
+          color: Colors.blue,
           textColor: Colors.white,
           padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
           onPressed: (_guardando) ? null : _reservar,
         )
       ],
