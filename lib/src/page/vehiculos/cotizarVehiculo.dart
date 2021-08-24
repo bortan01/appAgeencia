@@ -423,6 +423,8 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
           guardar(context);
+        } else {
+          helper.mostrarMensanjeError(context, 'Complete los campos');
         }
       },
     );
@@ -442,6 +444,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
       idUsuario: _pref.idCliente,
     );
     bool res = await VehiculoServices().guardarReserva(miModel);
+    print("done");
     if (res) {
       helper.mostrarMensajeOk(context,
           'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
