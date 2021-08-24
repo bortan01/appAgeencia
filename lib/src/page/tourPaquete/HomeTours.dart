@@ -70,6 +70,7 @@ class _HomeToursState extends State<HomeTours> {
           ),
         ),
         floatingActionButton: _boton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
@@ -151,6 +152,7 @@ class _HomeToursState extends State<HomeTours> {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Tour Nacional')));
                 break;
               case 1:
+
                 ///redirigir a paquetes intercacionales
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Tour Internacional')));

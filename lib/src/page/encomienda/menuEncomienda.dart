@@ -70,6 +70,7 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
           ),
         ),
         floatingActionButton: _boton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }

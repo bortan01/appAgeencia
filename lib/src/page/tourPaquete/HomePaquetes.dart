@@ -80,6 +80,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
           ),
         ),
         floatingActionButton: _boton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }

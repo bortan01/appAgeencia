@@ -90,6 +90,7 @@ class _HomeMenuState extends State<HomeMenu> {
           ),
         ),
         floatingActionButton: _boton(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
     );
   }
