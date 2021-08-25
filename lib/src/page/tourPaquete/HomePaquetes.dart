@@ -69,11 +69,11 @@ class _HomePaquetesState extends State<HomePaquetes> {
     return Container(
       decoration: boxDecorationFondo,
       child: Scaffold(
+        appBar: appBarCategorias(context),
         body: SafeArea(
           child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              appBarCategorias(context),
               elementosHorizontal(),
               elementoSeleccionado(),
             ],

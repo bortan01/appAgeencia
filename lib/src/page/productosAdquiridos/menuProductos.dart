@@ -68,11 +68,11 @@ class _MenuProductosState extends State<MenuProductos> {
     return Container(
       decoration: boxDecorationFondo,
       child: Scaffold(
+        appBar: appBarCategorias(),
         body: SafeArea(
           child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              appBarCategorias(),
               elementosHorizontal(),
               elementoSeleccionado(),
             ],

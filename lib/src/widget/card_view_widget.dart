@@ -69,8 +69,6 @@ class CardViewAutoView extends StatelessWidget {
                   overflow: TextOverflow.ellipsis),
               new SizedBox(height: 5.0),
               new Text(subtitulo, style: TextStyle(fontSize: 14.0, color: colortexto), textAlign: TextAlign.center),
-              new Divider(),
-              new SizedBox(height: 5.0),
             ],
           ),
         ));

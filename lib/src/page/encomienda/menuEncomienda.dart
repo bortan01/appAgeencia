@@ -59,11 +59,11 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
     return Container(
       decoration: boxDecorationFondo,
       child: Scaffold(
+        appBar: appBarCategorias(),
         body: SafeArea(
           child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              appBarCategorias(),
               elementosHorizontal(),
               elementoSeleccionado(),
             ],

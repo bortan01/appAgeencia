@@ -160,7 +160,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: new RaisedButton.icon(
-        label: new Text("Reservar Paquete"),
+        label: new Text("Reservar"),
         icon: new Icon(Icons.shopping_cart),
         color: Theme.of(context).accentColor,
         textColor: Theme.of(context).bottomAppBarColor,

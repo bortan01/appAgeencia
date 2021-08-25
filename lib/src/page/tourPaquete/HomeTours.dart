@@ -63,12 +63,12 @@ class _HomeToursState extends State<HomeTours> {
           child: ListView(
             scrollDirection: Axis.vertical,
             children: <Widget>[
-              appBarCategorias(context),
               elementosHorizontal(),
               elementoSeleccionado(),
             ],
           ),
         ),
+        appBar: appBarCategorias(context),
         floatingActionButton: _boton(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       ),
@@ -128,9 +128,9 @@ class _HomeToursState extends State<HomeTours> {
 
   Widget appBarCategorias(BuildContext context) {
     return AppBar(
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Theme.of(context).primaryColor.withOpacity(1.0),
       centerTitle: true,
-      title: Text("Categoría de Tours"),
+      title: Text("Tours"),
     );
   }
 
