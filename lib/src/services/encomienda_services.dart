@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/encomienda/detalleEncomienda_model.dart';
@@ -13,7 +15,7 @@ class EncomiendaServices with ChangeNotifier, DiagnosticableTreeMixin {
   Future<EncomiendaModel> obtenerEncomienda() async {
     print('haciendo peticion de productos productos');
     final url = '${Conf.urlServidor}Producto/productos';
-    final response = await http.get(url);
+    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       // final jsonResponse = convert.jsonDecode(response.body);
       final res = encomiendaModelFromJson(response.body);
@@ -27,7 +29,7 @@ class EncomiendaServices with ChangeNotifier, DiagnosticableTreeMixin {
     print('haciendo peticion encomiendas');
     String id = _pref.idCliente;
     final url = '${Conf.urlServidor}Encomienda/show?id_usuario=$id';
-    final response = await http.get(url);
+    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = historialEncomiendaModelFromJson(response.body);
       return res;
@@ -40,7 +42,7 @@ class EncomiendaServices with ChangeNotifier, DiagnosticableTreeMixin {
     print('haciendo peticion detalle encomiendas');
     final url = '${Conf.urlServidor}Detalle_envio/show?id_encomienda=$idEncomienda';
     print(url);
-    final response = await http.get(url);
+    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = detalleEncomiendaFromJson(response.body);
       return res;
