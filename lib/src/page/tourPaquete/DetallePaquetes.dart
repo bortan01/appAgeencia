@@ -92,23 +92,15 @@ class _DetallePaqueteState extends State<DetallePaquete> {
         return Row(
           children: <Widget>[
             FlatButton(
-              onPressed: onStepContinue,
-              color: (Theme.of(context).accentColor),
-              child: const Text(
-                'SIGUIENTE',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            SizedBox(
-              width: 5.0,
-            ),
-            FlatButton(
               onPressed: onStepCancel,
               color: (Theme.of(context).accentColor),
-              child: const Text(
-                'ATRAS',
-                style: TextStyle(color: Colors.white),
-              ),
+              child: const Text('ATRAS', style: TextStyle(color: Colors.white)),
+            ),
+            SizedBox(width: 5.0),
+            FlatButton(
+              onPressed: onStepContinue,
+              color: (Theme.of(context).accentColor),
+              child: const Text('SIGUIENTE', style: TextStyle(color: Colors.white)),
             ),
           ],
         );

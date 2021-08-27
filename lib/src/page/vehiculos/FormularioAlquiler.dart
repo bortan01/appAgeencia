@@ -174,13 +174,13 @@ class _AlquilerState extends State<Alquiler> {
               "Vehículo +",
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
-              style: helper.titulo2(),
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.lightBlue, fontSize: 15.0),
             ),
             Text(
               "Servicios Adicionales:",
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
-              style: helper.titulo2(),
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.lightBlue, fontSize: 15.0),
             ),
           ],
         ),
@@ -188,11 +188,7 @@ class _AlquilerState extends State<Alquiler> {
         Text(
           "\$${total.toStringAsFixed(2)}",
           overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.lightBlue,
-          ),
+          style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.lightBlue),
         )
       ],
     );

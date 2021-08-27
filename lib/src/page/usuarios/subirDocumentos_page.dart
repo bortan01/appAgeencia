@@ -42,7 +42,7 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
         centerTitle: true,
         actions: <Widget>[
           new IconButton(icon: new Icon(Icons.photo_size_select_actual), onPressed: _seleccionarFoto),
-          new IconButton(icon: new Icon(Icons.camera), onPressed: _tomarFoto),
+          // new IconButton(icon: new Icon(Icons.camera), onPressed: _tomarFoto),
         ],
       ),
       body: FutureBuilder(
@@ -90,7 +90,7 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
 
   Widget _mostrarFoto() {
     if (_foto != null) {
-        return Center(
+      return Center(
         //pregunta si existe la imagen
         child: Container(
           child: ClipRRect(

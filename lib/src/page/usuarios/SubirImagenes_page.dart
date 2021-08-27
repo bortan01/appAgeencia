@@ -42,7 +42,7 @@ class _SubirImagenesState extends State<SubirImagenes> {
         centerTitle: true,
         actions: <Widget>[
           new IconButton(icon: new Icon(Icons.photo_size_select_actual), onPressed: _seleccionarFoto),
-          new IconButton(icon: new Icon(Icons.camera), onPressed: _tomarFoto),
+          // new IconButton(icon: new Icon(Icons.camera), onPressed: _tomarFoto),
         ],
       ),
       body: FutureBuilder(
@@ -124,7 +124,7 @@ class _SubirImagenesState extends State<SubirImagenes> {
 
   crearBotton(BuildContext context) {
     return RaisedButton.icon(
-      onPressed: () => submit(context), 
+      onPressed: () => submit(context),
       icon: new Icon(Icons.save),
       label: Text("guardar"),
       shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
