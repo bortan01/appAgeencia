@@ -115,7 +115,7 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         FlatButton(
-          child: (_guardando) ? Text("Por favor espere...") : Text("Continuar"),
+          child: (_guardando) ? CircularProgressIndicator() : Text("Continuar"),
           color: Colors.blue,
           textColor: Colors.white,
           padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),

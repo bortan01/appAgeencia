@@ -57,7 +57,7 @@ class _MenuProductosState extends State<MenuProductos> {
       },
       {
         'posicion': 2,
-        'titulo': "Historial de Encomiendas",
+        'titulo': "Historial Encomiendas",
         'subtitulo': "Usa esta sencilla herramienta para obtener el historial de encomiendas realizadas.",
         'assetImage': AssetImage("assets/img/cotizar.png"),
         'superficie': '74,8 millones km²',

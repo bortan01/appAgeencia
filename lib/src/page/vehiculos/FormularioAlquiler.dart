@@ -105,6 +105,9 @@ class _AlquilerState extends State<Alquiler> {
             ),
           ),
         ),
+        SizedBox(
+          height: 30.0,
+        )
       ],
     );
   }
@@ -184,8 +187,9 @@ class _AlquilerState extends State<Alquiler> {
         Spacer(),
         Text(
           "\$${total.toStringAsFixed(2)}",
+          overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.lightBlue,
           ),

@@ -78,7 +78,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Cotizador de Encomiendas"),
+      title: Text("Cotizador Encomiendas"),
     );
   }
 
@@ -192,7 +192,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
         Text(
           "\$${total.toStringAsFixed(2)}",
           style: TextStyle(
-            fontSize: 25,
+            fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.lightBlue,
           ),

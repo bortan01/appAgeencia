@@ -142,7 +142,7 @@ class _CotizarToursState extends State<CotizarTours> {
   Widget _botonAgregar(BuildContext context) {
     return RaisedButton.icon(
       icon: Icon(Icons.send),
-      label: Text("Enviar Solicitud de cotización"),
+      label: Text("Enviar Solicitud"),
       color: Colors.blue,
       textColor: Colors.white,
       focusColor: Colors.red,

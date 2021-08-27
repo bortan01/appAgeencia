@@ -284,7 +284,7 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
 
   Widget _inputBoton() {
     return new FlatButton(
-      child: (_guardando) ? Text("Por favor espere...") : Text("Actualizar Información"),
+      child: (_guardando) ? CircularProgressIndicator() : Text("Actualizar Información"),
       color: Colors.blue,
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),

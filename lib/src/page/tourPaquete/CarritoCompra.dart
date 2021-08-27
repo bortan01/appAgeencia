@@ -83,7 +83,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.only(top: screenHeight / 4),
+          margin: EdgeInsets.only(top: screenHeight / 4, bottom: 30.0),
           padding: EdgeInsets.only(left: 10, right: 10),
           child: Card(
             shape: RoundedRectangleBorder(
@@ -121,7 +121,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return Container(
       margin: EdgeInsetsDirectional.only(top: 20.0),
       child: FlatButton(
-        child: (creandoEnlace) ? Text("Espere por Favor...") : Text("Continuar"),
+        child: (creandoEnlace) ? CircularProgressIndicator() : Text("Continuar"),
         color: Colors.blue,
         textColor: Colors.white,
         padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
@@ -342,12 +342,13 @@ class _CarritoCompraState extends State<CarritoCompra> {
     String descripcionProducto = "";
     int cantidadAsientos = 0;
     int cupos = int.parse(widget.dataTourPaquete.cuposDisponibles);
+    String tipo = widget.dataTourPaquete.tipo;
     total = 0.0;
     if (asientosPrecio.length == 0) {
       helper.mostrarMensanjeError(context, "El carrito esta vacio.");
       return;
     }
-
+    print("por aca");
     asientosPrecio.forEach((element) {
       double subTotal = (element.cantidad * element.pasaje);
       total += subTotal;
@@ -356,9 +357,13 @@ class _CarritoCompraState extends State<CarritoCompra> {
           '${element.cantidad.toString()} X Asiento(s) ${element.titulo} \$${element.pasaje} c/u, Sub Total \$$subTotal\n';
     });
     descripcionProducto += '\n  Total: \$$total \n';
-    if (cantidadAsientos > cupos) {
-      helper.mostrarMensanjeError(context, "Solo hay ${cupos.toString()} asientos disponibles");
-      return;
+
+    // se hace esta validacion porque los paquetetes no tienen cupos fijo
+    if (tipo == 'Tour Internacional' || tipo == 'Tour Nacional') {
+      if (cantidadAsientos > cupos) {
+        helper.mostrarMensanjeError(context, "Solo hay ${cupos.toString()} asientos disponibles");
+        return;
+      }
     }
     _desicionTipo(descripcionProducto, cantidadAsientos);
   }

@@ -182,7 +182,7 @@ posterTitulo({@required BuildContext context, @required String title}) {
       textAlign: TextAlign.center,
       overflow: TextOverflow.ellipsis,
       maxLines: 2,
-      style: TextStyle(color: Colors.lightBlue, fontSize: 18, fontWeight: FontWeight.bold),
+      style: TextStyle(color: Colors.lightBlue, fontSize: 16, fontWeight: FontWeight.bold),
     ),
   );
 }

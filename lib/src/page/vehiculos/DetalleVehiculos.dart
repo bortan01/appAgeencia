@@ -37,6 +37,7 @@ class DetalleVehiculos extends StatelessWidget {
             helper.crearTitulo('Informacion Adicional'),
             descripcion(carro.detalles),
             _swiperTarjetas(context, carro.galeria),
+            new SizedBox(height: 25.0),
           ]))
         ],
       ),
@@ -63,7 +64,7 @@ Container _botones(BuildContext context, Auto carro, List<OpcioneAdicional> opci
               ),
               Text(
                 "Ver Flota de Vehiculos",
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white, fontSize: 12.0),
               )
             ],
           ),
@@ -86,7 +87,10 @@ Container _botones(BuildContext context, Auto carro, List<OpcioneAdicional> opci
         FlatButton(
           child: Row(
             children: <Widget>[
-              Text("Cotización", style: TextStyle(color: Colors.white)),
+              Text(
+                "Cotización",
+                style: TextStyle(color: Colors.white, fontSize: 12.0),
+              ),
               Icon(Icons.call_made, color: Colors.white),
             ],
           ),

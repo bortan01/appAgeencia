@@ -66,7 +66,7 @@ class HistorialEncomienda extends StatelessWidget {
                       tag1: 'Total de envio \$${data[index].totalCliente}',
                       tag2: 'Fecha de Envio ' + formatter.format(data[index].fecha),
                       imagen: '',
-                      fotos: ['http://localhost/API-REST-PHP/uploads/encomienda1.jpg'],
+                      fotos: ['https://admin.tesistours.com/uploads/encomienda1.jpg'],
                       id: int.parse(data[index].idEncomienda)),
                 ),
                 //ESTA ES LA LINEA DE ABAJO

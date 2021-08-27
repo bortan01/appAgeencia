@@ -212,7 +212,7 @@ class _LoginPageState extends State<Login> {
 
   Widget _inputBoton() {
     return new FlatButton(
-      child: (_guardando) ? Text("Espere por favor...") : Text("Iniciar Sesión"),
+      child: (_guardando) ? CircularProgressIndicator() : Text("Iniciar Sesión"),
       color: Colors.blue,
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),

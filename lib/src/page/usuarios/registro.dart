@@ -302,7 +302,7 @@ class _RegistroPageState extends State<Registro> {
     return Container(
       padding: EdgeInsets.only(top: 10.0),
       child: new FlatButton(
-        child: (_guardando) ? Text("Por favor espere...") : Text("Crear Cuenta"),
+        child: (_guardando) ? CircularProgressIndicator() : Text("Crear Cuenta"),
         color: Colors.blue,
         textColor: Colors.white,
         padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
