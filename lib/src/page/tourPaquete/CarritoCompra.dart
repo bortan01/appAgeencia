@@ -98,6 +98,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     _crearDropdown(),
+                    _crearLabelAsientosDisponibles(),
                     _inputCantidad(),
                     _botonAgregar(),
                     helper.crearTitulo("Mi Carrito"),
@@ -142,18 +143,21 @@ class _CarritoCompraState extends State<CarritoCompra> {
   }
 
   Widget _inputCantidad() {
-    return TextFormField(
-      initialValue: "1",
-      keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
-      textAlign: TextAlign.center,
-      //envia un paramettro inplicito
-      validator: helper.isNumeric,
-      decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          labelText: 'ingrese numero de asientos'),
-      onSaved: (String valor) {
-        cantidadSeleccionada = int.parse(valor);
-      },
+    return Container(
+      margin: EdgeInsets.only(top: 8.0),
+      child: TextFormField(
+        initialValue: "1",
+        keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
+        textAlign: TextAlign.center,
+        //envia un paramettro inplicito
+        validator: helper.isNumeric,
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+            labelText: 'ingrese numero de asientos'),
+        onSaved: (String valor) {
+          cantidadSeleccionada = int.parse(valor);
+        },
+      ),
     );
   }
 
@@ -433,5 +437,14 @@ class _CarritoCompraState extends State<CarritoCompra> {
 
   void eliminarCarrito(id) {
     asientosPrecio.removeWhere((element) => element.id == id);
+  }
+
+  Widget _crearLabelAsientosDisponibles() {
+    // SI ES TOUR NACIONA LO INTERNACIONAL MOSTRAREMOS EL NUEMOR DE DASIENTOS DISPONIBLES
+    String tipo = widget.dataTourPaquete.tipo;
+    if (tipo == 'Tour Internacional' || tipo == 'Tour Nacional') {
+      return helper.crearTitulo("Asientos disponibles ${widget.dataTourPaquete.cuposDisponibles}");
+    }
+    return Container();
   }
 }
