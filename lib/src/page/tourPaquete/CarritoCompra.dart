@@ -352,7 +352,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
       helper.mostrarMensanjeError(context, "El carrito esta vacio.");
       return;
     }
-    print("por aca");
+
     asientosPrecio.forEach((element) {
       double subTotal = (element.cantidad * element.pasaje);
       total += subTotal;
@@ -376,7 +376,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     final detalle = new DetalleTurModel(
         idTours: int.parse(widget.dataTourPaquete.idTours),
         nombreProducto: widget.dataTourPaquete.nombreTours,
-        descripcionProducto: '$descripcionProducto',
+        descripcionProducto: descripcionProducto,
         descripcionTurPaquete: widget.dataTourPaquete.descripcionTur,
         cantidadAsientos: cantidadAsientos,
         total: total,

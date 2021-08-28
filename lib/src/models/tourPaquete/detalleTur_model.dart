@@ -48,8 +48,8 @@ class DetalleTurModel {
         "label_asiento": labelAsiento.toString(),
         "nombre_producto": nombreProducto.toString(),
         "total": total.toString(),
-        "descripcionProducto": descripcionProducto.toString(),
+        "descripcionProducto": descripcionProducto,
         "cantidad_asientos": cantidadAsientos.toString(),
-        "descripcionTurPaquete": descripcionTurPaquete
+        "descripcionTurPaquete": "descripcionTurPaquete"
       };
 }
