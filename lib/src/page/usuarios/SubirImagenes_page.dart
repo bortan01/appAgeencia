@@ -5,8 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/image/documentos_model.dart';
 import 'package:peliculas/src/models/image/responseImagen_model.dart';
+// import 'package:peliculas/src/models/image/imagen_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class SubirImagenes extends StatefulWidget {
   @override
@@ -17,12 +19,12 @@ class _SubirImagenesState extends State<SubirImagenes> {
   final picker = ImagePicker();
   File _foto;
   Future<DocumentosModel> photoProfile;
+  bool guardando = false;
   // final _imagenModel = new ImagenModel();
 
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final UserServices _userServices = new UserServices();
-
   @override
   void initState() {
     super.initState();
@@ -90,55 +92,84 @@ class _SubirImagenesState extends State<SubirImagenes> {
     setState(() {});
   }
 
-  void _tomarFoto() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    _foto = (pickedFile != null) ? File(pickedFile.path) : null;
-    setState(() {});
-  }
-
   Widget _mostrarFoto(DocumentosModel photo) {
-    return Column(
-      children: <Widget>[
-        Center(
-          child: new Container(
-            margin: EdgeInsets.symmetric(vertical: 10.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(30)),
-              child: Container(
-                  child: FadeInImage(
-                placeholder: AssetImage("assets/gif/loading.gif"),
-                image: NetworkImage(helper.transformarFoto(photo.fotoPath)),
-                imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                  return Center(
-                    //pregunta si existe la imagen
-                    child: Image(image: AssetImage('assets/img/no-image.png'), height: 300.0, fit: BoxFit.cover),
-                  );
-                },
-              )),
-            ),
+    if (_foto != null) {
+      return Center(
+        //pregunta si existe la imagen
+        child: Container(
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            child: Image.file(_foto, height: 300.0, fit: BoxFit.cover),
           ),
         ),
-      ],
-    );
+      );
+    }
+    if (photo.fotoPath != '') {
+      return Container(
+
+          ///esto es para evitar problema si no existe el id del producto, como cuando no se a creado
+          child: new Container(
+        margin: EdgeInsets.symmetric(vertical: 10.0),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(30)),
+          child: Container(
+              child: FadeInImage(
+            placeholder: AssetImage("assets/gif/loading.gif"),
+            image: NetworkImage(helper.transformarFoto(photo.fotoPath)),
+          )),
+        ),
+      ));
+    }
   }
 
   crearBotton(BuildContext context) {
-    return RaisedButton.icon(
-      onPressed: () => submit(context),
-      icon: new Icon(Icons.save),
-      label: Text("guardar"),
-      shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      color: Colors.blue,
-      textColor: Colors.white,
-    );
+    if (guardando == true) {
+      return Container(margin: EdgeInsets.only(top: 15.0), child: CircularProgressIndicator());
+    } else {
+      return Container(
+        margin: EdgeInsets.only(top: 15.0),
+        child: RaisedButton.icon(
+          onPressed: () => submit(context),
+          icon: new Icon(Icons.save),
+          label: Text("guardar"),
+          shape: new RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+          color: Colors.blue,
+          textColor: Colors.white,
+        ),
+      );
+    }
   }
 
   submit(BuildContext context) async {
+    setState(() {
+      guardando = true;
+    });
+
     if (_foto != null) {
       ImagenResponse respuesta = await _userServices.subirFotoPerfil(_foto);
-      respuesta.err
-          ? helper.mostrarMensanjeError(context, "Foto de perfil no actualizada")
-          : helper.mensanjeOkRedireccionar(context, "Foto de perfil acualizada", "home");
+      if (respuesta.err) {
+        helper.mostrarMensanjeError(context, "Foto de perfil no actualizada");
+      } else {
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Listo",
+          desc: "Foto actualizada",
+          buttons: [
+            DialogButton(
+              child: Text(
+                "ok",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              },
+              color: Color.fromRGBO(0, 179, 134, 1.0),
+            )
+          ],
+        ).show();
+      }
     }
   }
 }
