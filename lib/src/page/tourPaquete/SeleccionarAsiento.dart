@@ -146,25 +146,29 @@ class _SeleccionarAsientoState extends State<SeleccionarAsiento> {
       print(strIdAsientos);
 
       final WompiModel resultado = await turServices.guardarReserva(widget.detalle);
-      String url = resultado.urlEnlace;
-      Alert(
-        context: context,
-        type: AlertType.success,
-        title: "Listo",
-        desc: 'Será redirigido a nuestra pasarela de pago',
-        buttons: [
-          DialogButton(
-            child: Text(
-              "ok",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            onPressed: () {
-              helper.redireccionar(context, url);
-            },
-            color: Color.fromRGBO(0, 179, 134, 1.0),
-          )
-        ],
-      ).show();
+      if (resultado != null) {
+        String url = resultado.urlEnlace;
+        Alert(
+          context: context,
+          type: AlertType.success,
+          title: "Listo",
+          desc: 'Será redirigido a nuestra pasarela de pago',
+          buttons: [
+            DialogButton(
+              child: Text(
+                "ok",
+                style: TextStyle(color: Colors.white, fontSize: 20),
+              ),
+              onPressed: () {
+                helper.redireccionar(context, url);
+              },
+              color: Color.fromRGBO(0, 179, 134, 1.0),
+            )
+          ],
+        ).show();
+      } else {
+      helper.mostrarMensanjeError(context, "Intete más tarde");
+      }
     }
   }
 

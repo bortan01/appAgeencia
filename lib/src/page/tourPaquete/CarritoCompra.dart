@@ -7,6 +7,7 @@ import 'package:peliculas/src/models/tourPaquete/transporte_model.dart';
 import 'package:peliculas/src/page/tourPaquete/SeleccionarAsiento.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class CarritoCompra extends StatefulWidget {
   final DataTourPaqueteModel dataTourPaquete;
@@ -335,7 +336,25 @@ class _CarritoCompraState extends State<CarritoCompra> {
 
     final WompiModel wompiModel = await turServices.guardarReserva(detalle);
     if (wompiModel != null) {
-      helper.redireccionar(context, wompiModel.urlEnlace);
+      String url = wompiModel.urlEnlace;
+      Alert(
+        context: context,
+        type: AlertType.success,
+        title: "Listo",
+        desc: 'Será redirigido a nuestra pasarela de pago',
+        buttons: [
+          DialogButton(
+            child: Text(
+              "ok",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+            onPressed: () {
+              helper.redireccionar(context, url);
+            },
+            color: Color.fromRGBO(0, 179, 134, 1.0),
+          )
+        ],
+      ).show();
     } else {
       helper.mostrarMensanjeError(context, "Intete más tarde");
     }
