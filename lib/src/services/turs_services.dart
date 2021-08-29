@@ -72,13 +72,14 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     final url = '${Conf.urlServidor}DetalleTour/saveByClient';
     final response = await http
         .post(url, body: reserva.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       final res = WompiModel.fromJson(jsonResponse);
       return res;
     } else {
       final jsonResponse = convert.jsonDecode(response.body);
-      return new WompiModel(urlEnlace: "adfadf");
+      return null;
     }
   }
 

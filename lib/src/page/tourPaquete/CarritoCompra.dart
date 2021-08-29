@@ -328,17 +328,19 @@ class _CarritoCompraState extends State<CarritoCompra> {
     return lista;
   }
 
-  Future<WompiModel> _crearEnlacePago(DetalleTurModel detalle) async {
+  Future<void> _crearEnlacePago(BuildContext context, DetalleTurModel detalle) async {
     creandoEnlace = true;
     setState(() {});
     final turServices = new TurServices();
 
     final WompiModel wompiModel = await turServices.guardarReserva(detalle);
-    // helper.redireccionar(context, wompiModel.urlEnlace);
+    if (wompiModel != null) {
+      helper.redireccionar(context, wompiModel.urlEnlace);
+    } else {
+      helper.mostrarMensanjeError(context, "Intete más tarde");
+    }
     creandoEnlace = false;
     setState(() {});
-    print(wompiModel.urlEnlace);
-    return wompiModel;
   }
 
   void continuar() async {
@@ -397,7 +399,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
       return;
     } else {
       //SINO CREAMOS ENLACE DE PAGO Y LO REDIRECCIONAMOS A LA PASARELA
-      await _crearEnlacePago(detalle);
+      await _crearEnlacePago(context, detalle);
     }
   }
 
