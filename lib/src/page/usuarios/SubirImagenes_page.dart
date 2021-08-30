@@ -99,13 +99,13 @@ class _SubirImagenesState extends State<SubirImagenes> {
         child: Container(
           child: ClipRRect(
             borderRadius: BorderRadius.all(Radius.circular(30)),
-            child: Image.file(_foto, height: 300.0, fit: BoxFit.cover),
+            child: Image.file(_foto, fit: BoxFit.cover),
           ),
         ),
       );
     }
     if (photo.fotoPath != '') {
-      return Container(
+      return Center(
 
           ///esto es para evitar problema si no existe el id del producto, como cuando no se a creado
           child: new Container(
@@ -120,6 +120,7 @@ class _SubirImagenesState extends State<SubirImagenes> {
         ),
       ));
     }
+    // return mostrarAvatar();
   }
 
   crearBotton(BuildContext context) {
@@ -141,11 +142,10 @@ class _SubirImagenesState extends State<SubirImagenes> {
   }
 
   submit(BuildContext context) async {
-    setState(() {
-      guardando = true;
-    });
-
     if (_foto != null) {
+      setState(() {
+        guardando = true;
+      });
       ImagenResponse respuesta = await _userServices.subirFotoPerfil(_foto);
       if (respuesta.err) {
         helper.mostrarMensanjeError(context, "Foto de perfil no actualizada");
