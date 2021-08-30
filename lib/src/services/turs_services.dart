@@ -78,7 +78,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
       final res = WompiModel.fromJson(jsonResponse);
       return res;
     } else {
-      final jsonResponse = convert.jsonDecode(response.body);
+      // final jsonResponse = convert.jsonDecode(response.body);
       return null;
     }
   }

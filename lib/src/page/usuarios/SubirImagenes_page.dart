@@ -106,21 +106,24 @@ class _SubirImagenesState extends State<SubirImagenes> {
     }
     if (photo.fotoPath != '') {
       return Center(
-
-          ///esto es para evitar problema si no existe el id del producto, como cuando no se a creado
-          child: new Container(
-        margin: EdgeInsets.symmetric(vertical: 10.0),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-          child: Container(
+        //pregunta si existe la imagen
+        child: Container(
+          child: ClipRRect(
+              borderRadius: BorderRadius.all(Radius.circular(30)),
               child: FadeInImage(
-            placeholder: AssetImage("assets/gif/loading.gif"),
-            image: NetworkImage(helper.transformarFoto(photo.fotoPath)),
-          )),
+                placeholder: AssetImage("assets/gif/loading.gif"),
+                image: NetworkImage(helper.transformarFoto(photo.fotoPath)),
+                imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                  return Center(
+                    //pregunta si existe la imagen
+                    child: Image(image: AssetImage('assets/img/no-image.png'), height: 300.0, fit: BoxFit.cover),
+                  );
+                },
+              )),
         ),
-      ));
+      );
     }
-    // return mostrarAvatar();
+    return mostrarAvatar();
   }
 
   crearBotton(BuildContext context) {

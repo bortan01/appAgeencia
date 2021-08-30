@@ -82,11 +82,11 @@ class _SubirDocumentosState extends State<SubirDocumentos> {
     setState(() {});
   }
 
-  void _tomarFoto() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    _foto = (pickedFile != null) ? File(pickedFile.path) : null;
-    setState(() {});
-  }
+  // void _tomarFoto() async {
+  //   final pickedFile = await picker.getImage(source: ImageSource.camera);
+  //   _foto = (pickedFile != null) ? File(pickedFile.path) : null;
+  //   setState(() {});
+  // }
 
   Widget _mostrarFoto() {
     if (_foto != null) {
