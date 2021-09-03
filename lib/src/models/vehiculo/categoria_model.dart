@@ -66,11 +66,14 @@ class Categoria {
       case 'Sedan':
         return AssetImage("assets/img/sedan1.png");
         break;
-      case 'Camionetas':
+      case 'Camioneta':
         return AssetImage("assets/img/camioneta.png");
         break;
-      case 'Pickup':
+      case 'Pick up':
         return AssetImage("assets/img/pickup.png");
+        break;
+      case 'Deportivo':
+        return AssetImage("assets/img/deportivo.png");
         break;
       case 'Microbus':
         return AssetImage("assets/img/microbus.png");

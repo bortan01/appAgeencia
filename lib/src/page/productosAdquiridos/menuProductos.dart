@@ -48,7 +48,7 @@ class _MenuProductosState extends State<MenuProductos> {
       },
       {
         'posicion': 1,
-        'titulo': "Historial de Vehiculos",
+        'titulo': "Historial de Vehículos",
         'subtitulo':
             "En esta seccion encontraras todos los vehiculos que has rentado con la ayuda de nuestra agencia It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
         'assetImage': AssetImage("assets/img/sedan1.png"),
@@ -186,7 +186,7 @@ class _MenuProductosState extends State<MenuProductos> {
   Widget nombreHistorial(int posicion) {
     List<String> nombres = [
       "Ver historial de Viajes",
-      "Ver historial de Vehiculos",
+      "Ver historial de Vehículos",
       "Ver historial de Encomiendas",
     ];
     return Text(nombres[posicion]);

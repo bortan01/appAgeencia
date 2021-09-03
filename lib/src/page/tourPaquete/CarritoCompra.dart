@@ -154,7 +154,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
         validator: helper.isNumeric,
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-            labelText: 'ingrese numero de asientos'),
+            labelText: 'ingrese número de asientos'),
         onSaved: (String valor) {
           cantidadSeleccionada = int.parse(valor);
         },

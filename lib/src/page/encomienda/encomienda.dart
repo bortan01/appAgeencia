@@ -119,7 +119,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                     _crearDropdown(),
                     _inputCantidad(),
                     _botonAgregar(),
-                    helper.crearTitulo("Productos seleccionados"),
+                    helper.crearTitulo("Productos Seleccionados"),
                     crearSubTitulo("(Mueva a los lados para eliminar)"),
                     SizedBox(height: 4.0),
                     _crearCarrito(),
@@ -154,7 +154,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       validator: helper.isNumeric,
       decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-          labelText: 'ingrese numero de $nombreUnidad'),
+          labelText: 'Ingrese Número de $nombreUnidad'),
       onSaved: (String valor) {
         cantidadSeleccionada = int.parse(valor);
       },
@@ -228,7 +228,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         children: <Widget>[
-          helper.crearTitulo("Seleccione los producto"),
+          helper.crearTitulo("Seleccione los Productos"),
           SizedBox(
             height: 3.0,
           ),

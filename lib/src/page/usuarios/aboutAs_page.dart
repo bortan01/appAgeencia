@@ -16,7 +16,7 @@ class AboutAsPage extends StatelessWidget {
           _tarjetaDetalle(
             context: context,
             icono: Icons.info,
-            titulo: '¿Quíenes somos?',
+            titulo: '¿Quiénes somos?',
             descripcion:
                 'La agencia de viajes surge en el año 2009 como un negocio familiar, realizando excursiones nacionales y en Centroamérica, vía terrestre, orientados desde un principio en la calidad, seguridad, además del profesionalismo en cada uno de sus tours, promoviendo paquetes turísticos a lo largo de todo el mundo, realizando circuitos en más de 20 países incluyendo tanto Europeos como Asiáticos, gracias al éxito obtenido en cada uno de esos viajes surge lo que hoy en día es una agencia de viajes llamada MARTINEZ TRAVEL & TOURS siendo de alta calidad y completos los servicios que ofrecen a sus clientes.',
           ),

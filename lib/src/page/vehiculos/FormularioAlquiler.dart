@@ -89,11 +89,11 @@ class _AlquilerState extends State<Alquiler> {
                   children: <Widget>[
                     helper.crearTitulo('${carro.marca} ${carro.modelo} ${carro.anio} (\$${carro.precioDiario}/Día) '),
                     _inputCantidadDias(),
-                    helper.crearTitulo("Seleccione servicos adicionales"),
+                    helper.crearTitulo("Seleccione Servicos Adicionales"),
                     _crearDropdown(),
                     _inputCantidad(),
                     _botonAgregar(),
-                    helper.crearTitulo("Servicios adicionales seleccionados"),
+                    helper.crearTitulo("Servicios Adicionales Seleccionados"),
                     crearSubTitulo("(Mueva a los lados para eliminar)"),
                     SizedBox(height: 4.0),
                     _crearCarrito(),
@@ -130,7 +130,7 @@ class _AlquilerState extends State<Alquiler> {
       //envia un paramettro inplicito
       validator: helper.isNumeric,
       decoration: InputDecoration(
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'ingrese cantidad'),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'Ingrese Cantidad'),
       onSaved: (String valor) {
         cantidadSeleccionada = int.parse(valor);
       },
@@ -146,7 +146,7 @@ class _AlquilerState extends State<Alquiler> {
         textAlign: TextAlign.center,
         validator: helper.isNumeric,
         decoration: InputDecoration(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'ingrese numero de Dias'),
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), labelText: 'Ingrese Número de Días'),
         onSaved: (String valor) {
           numeroDias = int.parse(valor);
         },

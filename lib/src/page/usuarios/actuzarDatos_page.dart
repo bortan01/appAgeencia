@@ -195,8 +195,8 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
       // validator: (value) => helper.betweenLengthRequired(value, 20, 8),
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-        hintText: 'Digite su Password',
-        labelText: 'Digite su Password',
+        hintText: 'Digite su Contraseña',
+        labelText: 'Digite su Contraseña',
         helperText: 'Password',
         floatingLabelBehavior: FloatingLabelBehavior.auto,
         suffixIcon: GestureDetector(
