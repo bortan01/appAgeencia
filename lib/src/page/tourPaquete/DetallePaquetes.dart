@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/tourPaquete/DataTourPaquete_model.dart';
 import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart';
-import 'package:peliculas/src/models/tourPaquete/historialReserva_model.dart';
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';

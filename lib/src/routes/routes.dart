@@ -39,6 +39,7 @@ import 'package:peliculas/src/page/vehiculos/ListaVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/Menu.dart';
 import 'package:peliculas/src/page/vehiculos/cotizacionesRealizadas_page.dart';
 import 'package:peliculas/src/page/vehiculos/cotizarVehiculo.dart';
+import 'package:peliculas/src/page/vuelos/HomeVuelos.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
   return <String, WidgetBuilder>{
@@ -91,5 +92,8 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'enviosRealizados': (BuildContext context) => EncomiendasRealizadas(),
     'CotizacionesPaquetesPage': (BuildContext context) => CotizacionesPaquetesPage(),
     'itinerario': (BuildContext context) => ItinerarioPage(),
+    // MODULO DE VUELOS
+    'HomeVuelos': (BuildContext context) => HomeVuelos(),
+
   };
 }
