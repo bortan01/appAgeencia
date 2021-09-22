@@ -63,6 +63,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
           listaHorizontal(tipo: TypeChip.anaranjado, lista: dataTourPaquete.requisitos),
           helper.crearTitulo("No incluye"),
           listaHorizontal(tipo: TypeChip.rojo, lista: dataTourPaquete.noIncluye),
+          promociones(dataTourPaquete.promociones),
           _crearBoton(context)
         ]))
       ],
@@ -163,5 +164,22 @@ class _DetallePaqueteState extends State<DetallePaquete> {
         },
       ),
     );
+  }
+
+  Widget promociones(List<Promocione> promociones) {
+    if (promociones.isEmpty) {
+      return Container();
+    } else {
+      List<String> elementos = [];
+      for (Promocione promo in promociones) {
+        elementos.add('${promo.titulo} -->  \$${promo.pasaje}');
+      }
+      return Column(
+        children: <Widget>[
+          helper.crearTitulo("Promociones"),
+          listaHorizontal(tipo: TypeChip.purpura, lista: elementos),
+        ],
+      );
+    }
   }
 }
