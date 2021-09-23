@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/vuelos/vuelos_model.dart';
 import 'package:peliculas/src/page/inicio/modelo/ModeloInformacion.dart';
+import 'package:peliculas/src/page/vuelos/DetalleVuelo.dart';
 import 'package:peliculas/src/services/vuelos_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/Lista.dart';
@@ -70,10 +71,10 @@ class _ListaPromocionesState extends State<ListaPromociones> {
       itemBuilder: (BuildContext context, int index) {
         return GestureDetector(
           onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(builder: (context) => DetallePaquete(dataTourPaquete: promociones[index])),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => DetalleVuelo(dataPromocion: promociones[index])),
+            );
           },
           child: Column(
             children: <Widget>[
@@ -83,7 +84,7 @@ class _ListaPromocionesState extends State<ListaPromociones> {
               Lista(
                 model: new ListaModel(
                     nombre: promociones[index].nombrePromocion,
-                    descripcion: promociones[index].descripcionPromocion,
+                    descripcion: promociones[index].descripcion,
                     tag1: 'Precio \$${promociones[index].precioPromocion}',
                     tag2: promociones[index].fechaDisponiblePromocion,
                     imagen: transformarFoto(promociones[index].foto),
