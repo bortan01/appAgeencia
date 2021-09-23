@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/page/tourPaquete/ListaTourPaquete.dart';
-import 'package:peliculas/src/page/vuelos/VePromociones.dart';
+import 'package:peliculas/src/page/vuelos/ListaPromociones.dart';
 
 import 'package:peliculas/src/providers/card_provider.dart';
 import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
@@ -149,7 +149,7 @@ class _HomeVuelosState extends State<HomeVuelos> {
                 ///lo ideal es crear una sola pagina y mandarle los argumentos
                 ///para que dibuje deacuerdo a lo que se le envia
                 ///redirigir a paquetes nacionales
-                Navigator.push(context, MaterialPageRoute(builder: (context) => VerPromociones()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ListaPromociones()));
                 break;
               case 1:
 

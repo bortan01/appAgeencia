@@ -7,14 +7,14 @@ import 'package:peliculas/src/widget/Lista.dart';
 import 'package:intl/intl.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
-class VerPromociones extends StatefulWidget {
+class ListaPromociones extends StatefulWidget {
   //Constructor
-  const VerPromociones();
+  const ListaPromociones();
   @override
-  _VerPromocionesState createState() => _VerPromocionesState();
+  _ListaPromocionesState createState() => _ListaPromocionesState();
 }
 
-class _VerPromocionesState extends State<VerPromociones> {
+class _ListaPromocionesState extends State<ListaPromociones> {
   Future<List<Promocione>> listPromociones;
   @override
   void initState() {
