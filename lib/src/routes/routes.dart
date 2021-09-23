@@ -40,6 +40,7 @@ import 'package:peliculas/src/page/vehiculos/Menu.dart';
 import 'package:peliculas/src/page/vehiculos/cotizacionesRealizadas_page.dart';
 import 'package:peliculas/src/page/vehiculos/cotizarVehiculo.dart';
 import 'package:peliculas/src/page/vuelos/HomeVuelos.dart';
+import 'package:peliculas/src/page/vuelos/VePromociones.dart';
 
 Map<String, WidgetBuilder> getAplicationRoute() {
   return <String, WidgetBuilder>{
@@ -94,6 +95,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'itinerario': (BuildContext context) => ItinerarioPage(),
     // MODULO DE VUELOS
     'HomeVuelos': (BuildContext context) => HomeVuelos(),
+    'VerPromociones': (BuildContext context) => VerPromociones(),
 
   };
 }
