@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/page/tourPaquete/ListaTourPaquete.dart';
 import 'package:peliculas/src/page/vuelos/ListaPromociones.dart';
+import 'package:peliculas/src/page/vuelos/cotizarVuelo.dart';
 
 import 'package:peliculas/src/providers/card_provider.dart';
 import 'package:peliculas/src/widget/cardViewAutoHorizontal.dart';
@@ -154,8 +154,7 @@ class _HomeVuelosState extends State<HomeVuelos> {
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Tour Internacional')));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => CotizaVuelo()));
                 break;
               default:
             }

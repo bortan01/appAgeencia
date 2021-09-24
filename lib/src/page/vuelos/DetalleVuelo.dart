@@ -48,7 +48,7 @@ class _DetalleVueloState extends State<DetalleVuelo> {
               helper.crearTitulo("Descripción"),
               descripcion(dataPromocion.descripcion),
               helper.crearTitulo("Precio por Persona"),
-              info(tipo: TypeChip.azul, txt: dataPromocion.precioPromocion),
+              info(tipo: TypeChip.azul, txt: '\$${dataPromocion.precioPromocion}'),
               helper.crearTitulo("Saliendo de"),
               info(tipo: TypeChip.anaranjado, txt: dataPromocion.lugarSalidaPromocion),
               helper.crearTitulo("País"),
