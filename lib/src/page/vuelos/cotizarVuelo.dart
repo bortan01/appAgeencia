@@ -18,7 +18,10 @@ class CotizaVuelo extends StatefulWidget {
 class _CotizaVueloState extends State<CotizaVuelo> {
   Future<CotizarVueloModel> futureCotizarVuelo;
   List<int> listaYears = [];
-  TextEditingController _controllerCaracteristicas = new TextEditingController();
+  TextEditingController _controllerAdulto = new TextEditingController();
+  TextEditingController _controllerNino = new TextEditingController();
+  TextEditingController _controllerBebe = new TextEditingController();
+  TextEditingController _controllerMaleta = new TextEditingController();
   TextEditingController _controllerDireccionRecogida = new TextEditingController();
   TextEditingController _controllerFechaRecogida = new TextEditingController();
   TextEditingController _controllerTimeRecogida = new TextEditingController();
@@ -95,7 +98,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     return AppBar(
       backgroundColor: Colors.blue,
       centerTitle: true,
-      title: Text("Cotizar Vehículo"),
+      title: Text("Cotizar Vuelo"),
     );
   }
 
@@ -134,23 +137,27 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     helper.crearTitulo("Seleccione el modelo"),
-                    // _crearDropdown(),
-                    helper.crearTitulo('Año'),
                     _crearDropdownYears(),
-                    helper.crearTitulo('Características'),
-                    _inputCaracteristicas(),
-                    helper.crearTitulo('Dirección de Recogida'),
+                    helper.crearTitulo('Punto de Partida'),
                     _inputDireccionRecogida(),
-                    helper.crearTitulo('Fecha de Recogida'),
+                    helper.crearTitulo('Fecha de Partida'),
                     _crearFecha(context, _controllerFechaRecogida, 'Seleccione la Fecha'),
-                    helper.crearTitulo('Hora de Recogida'),
+                    helper.crearTitulo('Hora de Partida'),
                     _crearHora(context, _controllerTimeRecogida, 'Seleccione la Hora'),
-                    helper.crearTitulo('Dirección de Devolución'),
+                    helper.crearTitulo('Punto de Llegada'),
                     _inputDireccionDevolucion(),
-                    helper.crearTitulo('Fecha de Devolución'),
+                    helper.crearTitulo('Fecha de Llegada'),
                     _crearFecha(context, _controllerFechaDevolucion, 'Seleccione la Fecha'),
-                    helper.crearTitulo('Hora de Devolución'),
+                    helper.crearTitulo('Hora de Llegada'),
                     _crearHora(context, _controllerTimeDevolucion, 'Seleccione la Hora'),
+                    helper.crearTitulo('Bebés (0 a 4 años)'),
+                    _inputBebes(),
+                    helper.crearTitulo('Niños (5 a 11 años)'),
+                    _inputNinos(),
+                    helper.crearTitulo('Adultos (+12 años)'),
+                    _inputAdultos(),
+                    helper.crearTitulo('Maletas'),
+                    _inputMaletas(),
                     _botonAgregar(context)
                   ],
                 ),
@@ -172,23 +179,89 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     );
   }
 
-  Widget _inputCaracteristicas() {
+  Widget _inputAdultos() {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10),
       child: TextFormField(
-        keyboardType: TextInputType.multiline,
-        minLines: 5,
+        keyboardType: TextInputType.number,
+        minLines: 1,
         maxLines: 18,
-        controller: _controllerCaracteristicas,
+        controller: _controllerAdulto,
         textAlign: TextAlign.center,
-        validator: (s) => helper.maxLengthRequired(s, 10),
+        validator: (s) => helper.isNumericRequired(s),
         decoration: InputDecoration(
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
           alignLabelWithHint: true,
-          hintText: 'Digite las características que desee',
+          hintText: 'Número de Adultos',
         ),
         onSaved: (String valor) {
-          _controllerCaracteristicas.text = valor;
+          _controllerAdulto.text = valor;
+        },
+      ),
+    );
+  }
+
+  Widget _inputNinos() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        minLines: 1,
+        maxLines: 18,
+        controller: _controllerNino,
+        textAlign: TextAlign.center,
+        validator: (s) => helper.isNumericRequired(s),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          alignLabelWithHint: true,
+          hintText: 'Número de Niños',
+        ),
+        onSaved: (String valor) {
+          _controllerNino.text = valor;
+        },
+      ),
+    );
+  }
+
+  Widget _inputBebes() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        minLines: 1,
+        maxLines: 18,
+        controller: _controllerBebe,
+        textAlign: TextAlign.center,
+        validator: (s) => helper.isNumericRequired(s),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          alignLabelWithHint: true,
+          hintText: 'Número de Niños',
+        ),
+        onSaved: (String valor) {
+          _controllerBebe.text = valor;
+        },
+      ),
+    );
+  }
+
+  Widget _inputMaletas() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.number,
+        minLines: 1,
+        maxLines: 18,
+        controller: _controllerMaleta,
+        textAlign: TextAlign.center,
+        validator: (s) => helper.isNumericRequired(s),
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          alignLabelWithHint: true,
+          hintText: 'Número de Maletas',
+        ),
+        onSaved: (String valor) {
+          _controllerMaleta.text = valor;
         },
       ),
     );
@@ -421,7 +494,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
       onPressed: () async {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          guardar(context);
+          // guardar(context);
         } else {
           helper.mostrarMensanjeError(context, 'Complete los campos');
         }
@@ -433,7 +506,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     var miModel = CotizacionClienteModel(
       anio: anioSeleccionado.toString(),
       modelo: modeloSeleccionado.idmodelo,
-      caracteristicas: _controllerCaracteristicas.text,
+      caracteristicas: _controllerAdulto.text,
       direccionDevolucion: _controllerDireccionDevolucion.text,
       direccionRecogida: _controllerDireccionRecogida.text,
       fechaDevolucion: _controllerFechaDevolucion.text,
@@ -448,7 +521,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
       helper.mostrarMensajeOk(context,
           'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
       setState(() {
-        _controllerCaracteristicas.clear();
+        _controllerAdulto.clear();
         _controllerDireccionDevolucion.clear();
         _controllerDireccionRecogida.clear();
         _controllerFechaDevolucion.clear();
