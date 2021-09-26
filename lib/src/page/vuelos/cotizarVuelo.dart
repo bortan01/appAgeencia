@@ -17,7 +17,7 @@ class CotizaVuelo extends StatefulWidget {
 
 class _CotizaVueloState extends State<CotizaVuelo> {
   Future<CotizarVueloModel> futureCotizarVuelo;
-  
+
   TextEditingController _controllerAdulto = new TextEditingController();
   TextEditingController _controllerNino = new TextEditingController();
   TextEditingController _controllerBebe = new TextEditingController();
@@ -29,7 +29,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   TextEditingController _controllerFechaDevolucion = new TextEditingController();
   TextEditingController _controllerTimeDevolucion = new TextEditingController();
   PreferenciasUsuario _pref = new PreferenciasUsuario();
-  int anioSeleccionado = 0;
+  Aerolinea aerolineaSeleccionada;
   ModeloVehiculo modeloSeleccionado = ModeloVehiculo();
 
   Color fondo = Colors.green;
@@ -41,7 +41,8 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   void initState() {
     super.initState();
     futureCotizarVuelo = getModelo();
-   }
+    aerolineaSeleccionada = null;
+  }
 
   Future<CotizarVueloModel> getModelo() async {
     final respuesta = await VuelosServices().obtenerDataCotizacion();
@@ -54,7 +55,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     for (var i = 10; i > 0; i--) {
       lista.add(year - i);
     }
-    anioSeleccionado = lista[0];
+
     return lista;
   }
 
@@ -117,7 +118,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     );
   }
 
-  Widget cajaFormulario(BuildContext context,CotizarVueloModel data ) {
+  Widget cajaFormulario(BuildContext context, CotizarVueloModel data) {
     return Column(
       children: <Widget>[
         Container(
@@ -136,7 +137,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     helper.crearTitulo("Seleccione el modelo"),
-                    _crearDropdownYears(data.aerolineas),
+                    _crearDropdownAerolineas(data.aerolineas),
                     helper.crearTitulo('Punto de Partida'),
                     _inputDireccionRecogida(),
                     helper.crearTitulo('Fecha de Partida'),
@@ -386,25 +387,10 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     );
   }
 
-  // Widget _crearDropdown() {
-  //   return Container(
-  //     margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
-  //     child: DropdownButtonFormField(
-  //         isExpanded: true,
-  //         decoration: InputDecoration(
-  //             hintText: "", border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
-  //         icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
-  //         value: listaModelos[0],
-  //         items: opcionesDropdown(),
-  //         onChanged: (ModeloVehiculo opt) {
-  //           setState(() {
-  //             modeloSeleccionado = opt;
-  //           });
-  //         }),
-  //   );
-  // }
-
-  Widget _crearDropdownYears(List<Aerolinea> aerolineas) {
+  Widget _crearDropdownAerolineas(List<Aerolinea> aerolineas) {
+    if (aerolineaSeleccionada == null) {
+      aerolineaSeleccionada = aerolineas[0];
+    }
     return Container(
       margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: DropdownButtonFormField(
@@ -413,10 +399,29 @@ class _CotizaVueloState extends State<CotizaVuelo> {
               hintText: "", border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
           icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
           value: aerolineas[0],
-          items: opcionesDropdownYears(aerolineas),
+          items: aerolineas.map<DropdownMenuItem<Aerolinea>>((Aerolinea aero) {
+            return DropdownMenuItem(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Text(
+                          '${aero.nombreAerolinea}',
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                value: aero);
+          }).toList(),
           onChanged: (Aerolinea opt) {
             setState(() {
-              // anioSeleccionado = opt;
+              aerolineaSeleccionada = opt;
             });
           }),
     );
@@ -430,58 +435,6 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     );
   }
 
-  // List<DropdownMenuItem<ModeloVehiculo>> opcionesDropdown() {
-  //   List<DropdownMenuItem<ModeloVehiculo>> lista = new List();
-  //   listaModelos.forEach((mod) {
-  //     lista.add(DropdownMenuItem(
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: <Widget>[
-  //             Expanded(
-  //               child: Container(
-  //                 padding: const EdgeInsets.only(right: 8.0),
-  //                 child: Text(
-  //                   '${mod.modelo}',
-  //                   maxLines: 4,
-  //                   overflow: TextOverflow.ellipsis,
-  //                   textAlign: TextAlign.center,
-  //                 ),
-  //               ),
-  //             ),
-  //           ],
-  //         ),
-  //         value: mod));
-  //   });
-
-  //   return lista;
-  // }
-
-  List<DropdownMenuItem<Aerolinea>> opcionesDropdownYears(List<Aerolinea> aerolineeas) {
-    List<DropdownMenuItem<Aerolinea>> lista = new List();
-    aerolineeas.forEach((aero) {
-      lista.add(DropdownMenuItem(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Text(
-                    '${aero.nombreAerolinea}',
-                    maxLines: 4,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          value: aero));
-    });
-
-    return lista;
-  }
-
   Widget _botonAgregar(BuildContext context) {
     return RaisedButton.icon(
       icon: Icon(Icons.send),
@@ -491,6 +444,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
       focusColor: Colors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       onPressed: () async {
+        print(aerolineaSeleccionada.idaerolinea);
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
           // guardar(context);
@@ -503,7 +457,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
 
   Future<void> guardar(BuildContext context) async {
     var miModel = CotizacionClienteModel(
-      anio: anioSeleccionado.toString(),
+      anio: aerolineaSeleccionada.toString(),
       modelo: modeloSeleccionado.idmodelo,
       caracteristicas: _controllerAdulto.text,
       direccionDevolucion: _controllerDireccionDevolucion.text,
