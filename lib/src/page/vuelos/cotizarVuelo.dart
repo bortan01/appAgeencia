@@ -17,7 +17,7 @@ class CotizaVuelo extends StatefulWidget {
 
 class _CotizaVueloState extends State<CotizaVuelo> {
   Future<CotizarVueloModel> futureCotizarVuelo;
-  List<int> listaYears = [];
+  
   TextEditingController _controllerAdulto = new TextEditingController();
   TextEditingController _controllerNino = new TextEditingController();
   TextEditingController _controllerBebe = new TextEditingController();
@@ -41,8 +41,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   void initState() {
     super.initState();
     futureCotizarVuelo = getModelo();
-    listaYears = getListYear();
-  }
+   }
 
   Future<CotizarVueloModel> getModelo() async {
     final respuesta = await VuelosServices().obtenerDataCotizacion();
@@ -66,11 +65,11 @@ class _CotizaVueloState extends State<CotizaVuelo> {
       appBar: appBarCarrito(),
       body: FutureBuilder(
           future: futureCotizarVuelo,
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          builder: (BuildContext context, AsyncSnapshot<CotizarVueloModel> snapshot) {
             switch (snapshot.connectionState) {
               case ConnectionState.done:
                 if (snapshot.data == null) return helper.noData();
-                return cuerpo(context);
+                return cuerpo(context, snapshot.data);
               case ConnectionState.active:
                 return helper.waitingData();
               case ConnectionState.waiting:
@@ -82,13 +81,13 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     );
   }
 
-  SingleChildScrollView cuerpo(BuildContext context) {
+  SingleChildScrollView cuerpo(BuildContext context, CotizarVueloModel data) {
     return SingleChildScrollView(
       child: Stack(
         children: <Widget>[
           paginaFondo(),
           imagenPortada(context),
-          cajaFormulario(context),
+          cajaFormulario(context, data),
         ],
       ),
     );
@@ -118,7 +117,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     );
   }
 
-  Widget cajaFormulario(BuildContext context) {
+  Widget cajaFormulario(BuildContext context,CotizarVueloModel data ) {
     return Column(
       children: <Widget>[
         Container(
@@ -137,7 +136,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     helper.crearTitulo("Seleccione el modelo"),
-                    _crearDropdownYears(),
+                    _crearDropdownYears(data.aerolineas),
                     helper.crearTitulo('Punto de Partida'),
                     _inputDireccionRecogida(),
                     helper.crearTitulo('Fecha de Partida'),
@@ -405,7 +404,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   //   );
   // }
 
-  Widget _crearDropdownYears() {
+  Widget _crearDropdownYears(List<Aerolinea> aerolineas) {
     return Container(
       margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
       child: DropdownButtonFormField(
@@ -413,11 +412,11 @@ class _CotizaVueloState extends State<CotizaVuelo> {
           decoration: InputDecoration(
               hintText: "", border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
           icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
-          value: listaYears[0],
-          items: opcionesDropdownYears(),
-          onChanged: (int opt) {
+          value: aerolineas[0],
+          items: opcionesDropdownYears(aerolineas),
+          onChanged: (Aerolinea opt) {
             setState(() {
-              anioSeleccionado = opt;
+              // anioSeleccionado = opt;
             });
           }),
     );
@@ -457,9 +456,9 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   //   return lista;
   // }
 
-  List<DropdownMenuItem<int>> opcionesDropdownYears() {
-    List<DropdownMenuItem<int>> lista = new List();
-    listaYears.forEach((year) {
+  List<DropdownMenuItem<Aerolinea>> opcionesDropdownYears(List<Aerolinea> aerolineeas) {
+    List<DropdownMenuItem<Aerolinea>> lista = new List();
+    aerolineeas.forEach((aero) {
       lista.add(DropdownMenuItem(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -468,7 +467,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                 child: Container(
                   padding: const EdgeInsets.only(right: 8.0),
                   child: Text(
-                    '${year.toString()}',
+                    '${aero.nombreAerolinea}',
                     maxLines: 4,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
@@ -477,7 +476,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
               ),
             ],
           ),
-          value: year));
+          value: aero));
     });
 
     return lista;
