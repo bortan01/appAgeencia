@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:peliculas/src/models/vehiculo/cotizacionCliente_model.dart';
 import 'package:peliculas/src/models/vehiculo/tipoVehiculo_model.dart';
 import 'package:peliculas/src/models/vuelos/CotizarVuelo_model.dart';
+import 'package:peliculas/src/models/vuelos/VueloSave_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
-import 'package:peliculas/src/services/vehiculo_services.dart';
 import 'package:intl/intl.dart';
 import 'package:peliculas/src/services/vuelos_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
@@ -22,14 +21,16 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   TextEditingController _controllerNino = new TextEditingController();
   TextEditingController _controllerBebe = new TextEditingController();
   TextEditingController _controllerMaleta = new TextEditingController();
-  TextEditingController _controllerDireccionRecogida = new TextEditingController();
-  TextEditingController _controllerFechaRecogida = new TextEditingController();
-  TextEditingController _controllerTimeRecogida = new TextEditingController();
-  TextEditingController _controllerDireccionDevolucion = new TextEditingController();
-  TextEditingController _controllerFechaDevolucion = new TextEditingController();
-  TextEditingController _controllerTimeDevolucion = new TextEditingController();
+  TextEditingController _controllerDireccionPartida = new TextEditingController();
+  TextEditingController _controllerFechaPartida = new TextEditingController();
+  TextEditingController _controllerHoraPartida = new TextEditingController();
+  TextEditingController _controllerPunetoLlegada = new TextEditingController();
+  TextEditingController _controllerFechaLlegada = new TextEditingController();
+  TextEditingController _controllerHoraLlegada = new TextEditingController();
   PreferenciasUsuario _pref = new PreferenciasUsuario();
   Aerolinea aerolineaSeleccionada;
+  Clase claseSeleccionada;
+  TiposViaje tipoSeleccionado;
   ModeloVehiculo modeloSeleccionado = ModeloVehiculo();
 
   Color fondo = Colors.green;
@@ -42,6 +43,8 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     super.initState();
     futureCotizarVuelo = getModelo();
     aerolineaSeleccionada = null;
+    claseSeleccionada = null;
+    tipoSeleccionado = null;
   }
 
   Future<CotizarVueloModel> getModelo() async {
@@ -136,20 +139,18 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    helper.crearTitulo("Seleccione el modelo"),
-                    _crearDropdownAerolineas(data.aerolineas),
                     helper.crearTitulo('Punto de Partida'),
-                    _inputDireccionRecogida(),
+                    _inputDireccionPartida(),
                     helper.crearTitulo('Fecha de Partida'),
-                    _crearFecha(context, _controllerFechaRecogida, 'Seleccione la Fecha'),
+                    _crearFecha(context, _controllerFechaPartida, 'Seleccione la Fecha'),
                     helper.crearTitulo('Hora de Partida'),
-                    _crearHora(context, _controllerTimeRecogida, 'Seleccione la Hora'),
+                    _crearHora(context, _controllerHoraPartida, 'Seleccione la Hora'),
                     helper.crearTitulo('Punto de Llegada'),
-                    _inputDireccionDevolucion(),
+                    _inputPuntoLlegada(),
                     helper.crearTitulo('Fecha de Llegada'),
-                    _crearFecha(context, _controllerFechaDevolucion, 'Seleccione la Fecha'),
+                    _crearFecha(context, _controllerFechaLlegada, 'Seleccione la Fecha'),
                     helper.crearTitulo('Hora de Llegada'),
-                    _crearHora(context, _controllerTimeDevolucion, 'Seleccione la Hora'),
+                    _crearHora(context, _controllerHoraLlegada, 'Seleccione la Hora'),
                     helper.crearTitulo('Bebés (0 a 4 años)'),
                     _inputBebes(),
                     helper.crearTitulo('Niños (5 a 11 años)'),
@@ -158,6 +159,12 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                     _inputAdultos(),
                     helper.crearTitulo('Maletas'),
                     _inputMaletas(),
+                    helper.crearTitulo("Seleccione la Aerolinea"),
+                    _crearDropdownAerolineas(data.aerolineas),
+                    helper.crearTitulo("Seleccione la Clase"),
+                    _crearDropdownClases(data.clases),
+                    helper.crearTitulo("Seleccione el Tipo de Viaje"),
+                    _crearDropdownTipo(data.tiposViajes),
                     _botonAgregar(context)
                   ],
                 ),
@@ -345,43 +352,43 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     }
   }
 
-  Widget _inputDireccionRecogida() {
+  Widget _inputDireccionPartida() {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10),
       child: TextFormField(
         keyboardType: TextInputType.multiline,
         minLines: 1,
         maxLines: 8,
-        controller: _controllerDireccionRecogida,
+        controller: _controllerDireccionPartida,
         textAlign: TextAlign.center,
         //envia un paramettro inplicito
         validator: (s) => helper.maxLengthRequired(s, 10),
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-            hintText: 'Digite la direccion de recogida'),
+            hintText: 'Digite el punto de partida'),
         onSaved: (String valor) {
-          _controllerDireccionRecogida.text = valor;
+          _controllerDireccionPartida.text = valor;
         },
       ),
     );
   }
 
-  Widget _inputDireccionDevolucion() {
+  Widget _inputPuntoLlegada() {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10),
       child: TextFormField(
         keyboardType: TextInputType.multiline,
         minLines: 1,
         maxLines: 8,
-        controller: _controllerDireccionDevolucion,
+        controller: _controllerPunetoLlegada,
         textAlign: TextAlign.center,
         //envia un paramettro inplicito
         validator: (s) => helper.maxLengthRequired(s, 10),
         decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
-            hintText: 'Digite la direccion de devolución'),
+            hintText: 'Digite el punto de llegada'),
         onSaved: (String valor) {
-          _controllerDireccionDevolucion.text = valor;
+          _controllerPunetoLlegada.text = valor;
         },
       ),
     );
@@ -427,6 +434,86 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     );
   }
 
+  Widget _crearDropdownClases(List<Clase> clases) {
+    if (claseSeleccionada == null) {
+      claseSeleccionada = clases[0];
+    }
+    return Container(
+      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: DropdownButtonFormField(
+          isExpanded: true,
+          decoration: InputDecoration(
+              hintText: "", border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
+          icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
+          value: clases[0],
+          items: clases.map<DropdownMenuItem<Clase>>((Clase clase) {
+            return DropdownMenuItem(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Text(
+                          '${clase.nombreClase}',
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                value: clase);
+          }).toList(),
+          onChanged: (Clase opt) {
+            setState(() {
+              claseSeleccionada = opt;
+            });
+          }),
+    );
+  }
+
+  Widget _crearDropdownTipo(List<TiposViaje> tipos) {
+    if (claseSeleccionada == null) {
+      tipoSeleccionado = tipos[0];
+    }
+    return Container(
+      margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
+      child: DropdownButtonFormField(
+          isExpanded: true,
+          decoration: InputDecoration(
+              hintText: "", border: OutlineInputBorder(borderRadius: const BorderRadius.all(Radius.circular(20.0)))),
+          icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
+          value: tipos[0],
+          items: tipos.map<DropdownMenuItem<TiposViaje>>((TiposViaje tip) {
+            return DropdownMenuItem(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child: Text(
+                          '${tip.nombreTipoviaje}',
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                value: tip);
+          }).toList(),
+          onChanged: (TiposViaje opt) {
+            setState(() {
+              tipoSeleccionado = opt;
+            });
+          }),
+    );
+  }
+
   Text crearSubTitulo(String tiulo) {
     return Text(
       tiulo,
@@ -447,7 +534,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
         print(aerolineaSeleccionada.idaerolinea);
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          // guardar(context);
+          guardar(context);
         } else {
           helper.mostrarMensanjeError(context, 'Complete los campos');
         }
@@ -456,31 +543,42 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   }
 
   Future<void> guardar(BuildContext context) async {
-    var miModel = CotizacionClienteModel(
-      anio: aerolineaSeleccionada.toString(),
-      modelo: modeloSeleccionado.idmodelo,
-      caracteristicas: _controllerAdulto.text,
-      direccionDevolucion: _controllerDireccionDevolucion.text,
-      direccionRecogida: _controllerDireccionRecogida.text,
-      fechaDevolucion: _controllerFechaDevolucion.text,
-      fechaRecogida: _controllerFechaRecogida.text,
-      horaDevolucion: _controllerTimeDevolucion.text,
-      horaRecogida: _controllerTimeRecogida.text,
-      idUsuario: _pref.idCliente,
-    );
-    bool res = await VehiculoServices().guardarReserva(miModel);
-    print("done");
+    var cotizacion = new VueloSaveModel(
+        adultos: _controllerAdulto.text,
+        bebes: _controllerBebe.text,
+        maletas: _controllerMaleta.text,
+        ninos: _controllerNino.text,
+        ciudadLlegada: _controllerPunetoLlegada.text,
+        horaLlegada: _controllerHoraLlegada.text,
+        fechaLlegada: _controllerFechaLlegada.text,
+        ciudadPartida: _controllerDireccionPartida.text,
+        fechaPartida: _controllerFechaPartida.text,
+        horaPartida: _controllerFechaPartida.text,
+        idtipoViaje: tipoSeleccionado.idtipoViaje,
+        idclase: claseSeleccionada.idclase,
+        idaerolinea: aerolineaSeleccionada.idaerolinea,
+        idCliente: _pref.idCliente,
+        opcAvanzadas: "algo",
+        detallePasajero: "aa");
+    print("adfa");
+    print(cotizacion.toJson());
+    // return;
+    bool res = await VuelosServices().guardarCotizacion(cotizacion);
+
     if (res) {
       helper.mostrarMensajeOk(context,
           'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
       setState(() {
         _controllerAdulto.clear();
-        _controllerDireccionDevolucion.clear();
-        _controllerDireccionRecogida.clear();
-        _controllerFechaDevolucion.clear();
-        _controllerFechaRecogida.clear();
-        _controllerTimeDevolucion.clear();
-        _controllerTimeRecogida.clear();
+        _controllerBebe.clear();
+        _controllerMaleta.clear();
+        _controllerNino.clear();
+        _controllerPunetoLlegada.clear();
+        _controllerHoraLlegada.clear();
+        _controllerFechaLlegada.clear();
+        _controllerDireccionPartida.clear();
+        _controllerFechaPartida.clear();
+        _controllerFechaPartida.clear();
       });
     } else {
       helper.mostrarMensanjeError(context, 'Favor intente más tarde');
