@@ -27,11 +27,13 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   TextEditingController _controllerPunetoLlegada = new TextEditingController();
   TextEditingController _controllerFechaLlegada = new TextEditingController();
   TextEditingController _controllerHoraLlegada = new TextEditingController();
+  TextEditingController _controllerOpciones = new TextEditingController();
   PreferenciasUsuario _pref = new PreferenciasUsuario();
   Aerolinea aerolineaSeleccionada;
   Clase claseSeleccionada;
   TiposViaje tipoSeleccionado;
   ModeloVehiculo modeloSeleccionado = ModeloVehiculo();
+  List<String> _opcionesAdicionales;
 
   Color fondo = Colors.green;
   double screenHeight;
@@ -45,6 +47,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     aerolineaSeleccionada = null;
     claseSeleccionada = null;
     tipoSeleccionado = null;
+    _opcionesAdicionales = [];
   }
 
   Future<CotizarVueloModel> getModelo() async {
@@ -165,6 +168,13 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                     _crearDropdownClases(data.clases),
                     helper.crearTitulo("Seleccione el Tipo de Viaje"),
                     _crearDropdownTipo(data.tiposViajes),
+                    helper.crearTitulo("Agregar Opciones Adicionales"),
+                    _inputOpciones(),
+                    crearSubTitulo("(Mueva a los lados para eliminar)"),
+                    SizedBox(height: 4.0),
+                    _botonOpcion(),
+                    _crearListaOpciones(),
+                    SizedBox(height: 4.0),
                     _botonAgregar(context)
                   ],
                 ),
@@ -203,6 +213,27 @@ class _CotizaVueloState extends State<CotizaVuelo> {
         ),
         onSaved: (String valor) {
           _controllerAdulto.text = valor;
+        },
+      ),
+    );
+  }
+
+  Widget _inputOpciones() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        minLines: 1,
+        maxLines: 18,
+        controller: _controllerOpciones,
+        textAlign: TextAlign.center,
+        decoration: InputDecoration(
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)),
+          alignLabelWithHint: true,
+          hintText: 'Opciones Adicionales',
+        ),
+        onSaved: (String valor) {
+          _controllerOpciones.text = valor;
         },
       ),
     );
@@ -583,5 +614,76 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     } else {
       helper.mostrarMensanjeError(context, 'Favor intente más tarde');
     }
+  }
+
+  Widget _botonOpcion() {
+    return RaisedButton.icon(
+      icon: Icon(Icons.add),
+      label: Text("Agregar"),
+      color: Colors.blue,
+      textColor: Colors.white,
+      focusColor: Colors.red,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      onPressed: () {
+        if (_controllerOpciones.text != "") {
+          setState(() {
+            agregarOpcion();
+          });
+        }
+      },
+    );
+  }
+
+  Widget _crearListaOpciones() {
+    List<Widget> listaIttem = [];
+    _opcionesAdicionales.forEach((opcion) {
+      listaIttem.add(_crearItemOpcion(opcion));
+      listaIttem.add(Divider(color: Colors.white, height: 1));
+    });
+
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.blue,
+        borderRadius: BorderRadius.circular(20.0),
+      ),
+      child: Column(
+        children: listaIttem,
+      ),
+    );
+  }
+
+  Widget _crearItemOpcion(String opcion) {
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: (direction) {
+        setState(() {
+          eliminarElemento(opcion);
+        });
+      },
+      background: Container(
+        decoration: BoxDecoration(
+          color: Colors.black12,
+        ),
+      ),
+      child: ListTile(
+        title: Text(
+          opcion,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 15.0, color: Colors.white),
+        ),
+      ),
+    );
+  }
+
+  void eliminarElemento(String opcion) {
+    _opcionesAdicionales.removeWhere((element) => element == opcion);
+  }
+
+  void agregarOpcion() {
+    _opcionesAdicionales.removeWhere((element) => element == _controllerOpciones.text);
+    _opcionesAdicionales.add(_controllerOpciones.text);
   }
 }

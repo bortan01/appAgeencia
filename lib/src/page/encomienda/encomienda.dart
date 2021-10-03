@@ -266,6 +266,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     List<Widget> listaIttem = [];
     productosSeleccionados.forEach((element) {
       listaIttem.add(_crearItemCarrito(element));
+      listaIttem.add(Divider(color: Colors.white, height: 1));
     });
     return Container(
       width: double.infinity,

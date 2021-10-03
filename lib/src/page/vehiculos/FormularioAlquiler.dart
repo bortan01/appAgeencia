@@ -244,6 +244,7 @@ class _AlquilerState extends State<Alquiler> {
     List<Widget> listaIttem = [];
     opcionesSeleccionadas.forEach((element) {
       listaIttem.add(_crearItemCarrito(element));
+      listaIttem.add(Divider(color: Colors.white, height: 1));
     });
     return Container(
       width: double.infinity,

@@ -251,6 +251,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     List<Widget> listaIttem = [];
     asientosPrecio.forEach((element) {
       listaIttem.add(_crearItemCarrito(element));
+      listaIttem.add(Divider(color: Colors.white, height: 1));
     });
     return Container(
       width: double.infinity,
