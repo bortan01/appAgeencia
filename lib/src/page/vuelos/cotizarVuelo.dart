@@ -22,7 +22,6 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   TextEditingController _controllerBebe = new TextEditingController();
   TextEditingController _controllerMaleta = new TextEditingController();
   TextEditingController _controllerDireccionPartida = new TextEditingController();
-  TextEditingController _controllerDetalle = new TextEditingController();
   TextEditingController _controllerFechaPartida = new TextEditingController();
   TextEditingController _controllerHoraPartida = new TextEditingController();
   TextEditingController _controllerPunetoLlegada = new TextEditingController();
@@ -421,25 +420,6 @@ class _CotizaVueloState extends State<CotizaVuelo> {
             hintText: 'Digite el punto de llegada'),
         onSaved: (String valor) {
           _controllerPunetoLlegada.text = valor;
-        },
-      ),
-    );
-  }
-
-  Widget _inputDetallePasajero() {
-    return Container(
-      padding: EdgeInsets.only(top: 10.0, bottom: 10),
-      child: TextFormField(
-        keyboardType: TextInputType.text,
-        minLines: 1,
-        maxLines: 8,
-        controller: _controllerDetalle,
-        textAlign: TextAlign.center,
-        //envia un paramettro inplicito
-        decoration: InputDecoration(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), hintText: 'Detalle del pasajero'),
-        onSaved: (String valor) {
-          _controllerDetalle.text = valor;
         },
       ),
     );
