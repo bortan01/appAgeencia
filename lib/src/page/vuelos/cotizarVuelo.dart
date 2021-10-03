@@ -22,6 +22,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   TextEditingController _controllerBebe = new TextEditingController();
   TextEditingController _controllerMaleta = new TextEditingController();
   TextEditingController _controllerDireccionPartida = new TextEditingController();
+  TextEditingController _controllerDetalle = new TextEditingController();
   TextEditingController _controllerFechaPartida = new TextEditingController();
   TextEditingController _controllerHoraPartida = new TextEditingController();
   TextEditingController _controllerPunetoLlegada = new TextEditingController();
@@ -175,7 +176,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                     _botonOpcion(),
                     _crearListaOpciones(),
                     SizedBox(height: 4.0),
-                    _botonAgregar(context)
+                    _botonEnviar(context)
                   ],
                 ),
               ),
@@ -387,7 +388,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10),
       child: TextFormField(
-        keyboardType: TextInputType.multiline,
+        keyboardType: TextInputType.text,
         minLines: 1,
         maxLines: 8,
         controller: _controllerDireccionPartida,
@@ -408,7 +409,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     return Container(
       padding: EdgeInsets.only(top: 10.0, bottom: 10),
       child: TextFormField(
-        keyboardType: TextInputType.multiline,
+        keyboardType: TextInputType.text,
         minLines: 1,
         maxLines: 8,
         controller: _controllerPunetoLlegada,
@@ -420,6 +421,25 @@ class _CotizaVueloState extends State<CotizaVuelo> {
             hintText: 'Digite el punto de llegada'),
         onSaved: (String valor) {
           _controllerPunetoLlegada.text = valor;
+        },
+      ),
+    );
+  }
+
+  Widget _inputDetallePasajero() {
+    return Container(
+      padding: EdgeInsets.only(top: 10.0, bottom: 10),
+      child: TextFormField(
+        keyboardType: TextInputType.text,
+        minLines: 1,
+        maxLines: 8,
+        controller: _controllerDetalle,
+        textAlign: TextAlign.center,
+        //envia un paramettro inplicito
+        decoration: InputDecoration(
+            border: OutlineInputBorder(borderRadius: BorderRadius.circular(20.0)), hintText: 'Detalle del pasajero'),
+        onSaved: (String valor) {
+          _controllerDetalle.text = valor;
         },
       ),
     );
@@ -506,7 +526,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   }
 
   Widget _crearDropdownTipo(List<TiposViaje> tipos) {
-    if (claseSeleccionada == null) {
+    if (tipoSeleccionado == null) {
       tipoSeleccionado = tipos[0];
     }
     return Container(
@@ -553,7 +573,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
     );
   }
 
-  Widget _botonAgregar(BuildContext context) {
+  Widget _botonEnviar(BuildContext context) {
     return RaisedButton.icon(
       icon: Icon(Icons.send),
       label: Text("Enviar Solicitud de cotización"),
@@ -562,7 +582,6 @@ class _CotizaVueloState extends State<CotizaVuelo> {
       focusColor: Colors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
       onPressed: () async {
-        print(aerolineaSeleccionada.idaerolinea);
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
           guardar(context);
@@ -575,25 +594,24 @@ class _CotizaVueloState extends State<CotizaVuelo> {
 
   Future<void> guardar(BuildContext context) async {
     var cotizacion = new VueloSaveModel(
-        adultos: _controllerAdulto.text,
-        bebes: _controllerBebe.text,
-        maletas: _controllerMaleta.text,
-        ninos: _controllerNino.text,
-        ciudadLlegada: _controllerPunetoLlegada.text,
-        horaLlegada: _controllerHoraLlegada.text,
-        fechaLlegada: _controllerFechaLlegada.text,
-        ciudadPartida: _controllerDireccionPartida.text,
-        fechaPartida: _controllerFechaPartida.text,
-        horaPartida: _controllerFechaPartida.text,
-        idtipoViaje: tipoSeleccionado.idtipoViaje,
-        idclase: claseSeleccionada.idclase,
-        idaerolinea: aerolineaSeleccionada.idaerolinea,
-        idCliente: _pref.idCliente,
-        opcAvanzadas: "algo",
-        detallePasajero: "aa");
-    print("adfa");
-    print(cotizacion.toJson());
-    // return;
+      adultos: _controllerAdulto.text,
+      bebes: _controllerBebe.text,
+      maletas: _controllerMaleta.text,
+      ninos: _controllerNino.text,
+      ciudadLlegada: _controllerPunetoLlegada.text,
+      horaLlegada: _controllerHoraLlegada.text,
+      fechaLlegada: _controllerFechaLlegada.text,
+      ciudadPartida: _controllerDireccionPartida.text,
+      fechaPartida: _controllerFechaPartida.text,
+      horaPartida: _controllerFechaPartida.text,
+      idtipoViaje: tipoSeleccionado.idtipoViaje,
+      idclase: claseSeleccionada.idclase,
+      idaerolinea: aerolineaSeleccionada.idaerolinea,
+      idCliente: _pref.idCliente,
+      opcAvanzadas: optenerOpciones(),
+      detallePasajero: "",
+    );
+
     bool res = await VuelosServices().guardarCotizacion(cotizacion);
 
     if (res) {
@@ -685,5 +703,20 @@ class _CotizaVueloState extends State<CotizaVuelo> {
   void agregarOpcion() {
     _opcionesAdicionales.removeWhere((element) => element == _controllerOpciones.text);
     _opcionesAdicionales.add(_controllerOpciones.text);
+    _controllerOpciones.clear();
+  }
+
+  String optenerOpciones() {
+    String strOpcion = " ";
+    _opcionesAdicionales.forEach((opt) {
+      strOpcion += '$opt, ';
+      print(opt);
+    });
+
+    if (strOpcion == " ") {
+      return "NINGUNA";
+    } else {
+      return strOpcion;
+    }
   }
 }
