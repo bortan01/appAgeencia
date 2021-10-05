@@ -20,6 +20,7 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
 
   ModeloVehiculo modeloSeleccionado = ModeloVehiculo();
   DateTime fechaSeleccionada;
+  DateTime hoy;
 
   Color fondo = Colors.green;
   double screenHeight;
@@ -31,6 +32,7 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
     super.initState();
     horaSeleccionada = "08:00";
     fechaSeleccionada = DateTime.now();
+    hoy = DateTime.now();
   }
 
   @override
@@ -215,9 +217,11 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
       onPressed: () async {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          DateTime hoy = DateTime.now();
-          print(fechaSeleccionada.compareTo(hoy));
-          // guardar(context);
+          if (!fechaSeleccionada.isBefore(hoy) || isSameDate(fechaSeleccionada, hoy)) {
+            // guardar(context);
+          } else {
+            helper.mostrarMensanjeError(context, 'No se puede agendar una cita en el pasado');
+          }
         } else {
           helper.mostrarMensanjeError(context, 'Complete los campos');
         }
@@ -237,5 +241,9 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
     } else {
       helper.mostrarMensanjeError(context, 'Favor intente más tarde');
     }
+  }
+
+  bool isSameDate(DateTime fecha1, fecha2) {
+    return (fecha1.day == fecha2.day && fecha1.month == fecha2.month && fecha1.year == fecha2.year);
   }
 }

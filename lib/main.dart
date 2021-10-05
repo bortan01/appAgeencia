@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
         navigatorKey: navigatorKey,
         localizationsDelegates: GlobalMaterialLocalizations.delegates,
         supportedLocales: [
-          const Locale('es', 'ES'), // American English
+          const Locale('es', 'SV'), // American English
           const Locale('en', 'US'), // ESPAÑOL DE ESPAÑA A
           // ...
         ],
