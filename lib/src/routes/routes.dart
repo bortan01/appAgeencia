@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/home.dart';
+import 'package:peliculas/src/page/asesoria/AgendarAsesoria.dart';
 import 'package:peliculas/src/page/asesoria/HomeAsesoria.dart';
 import 'package:peliculas/src/page/chat/ChatScreen.dart';
 import 'package:peliculas/src/page/ejemplo/avatar_page.dart';
@@ -97,7 +98,9 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     // MODULO DE VUELOS
     'HomeVuelos': (BuildContext context) => HomeVuelos(),
     'VerPromociones': (BuildContext context) => ListaPromociones(),
+    // MODULO DE ASESORIAS
     'HomeAsesoria': (BuildContext context) => HomeAsesoria(),
+    'AgendarAsesoria': (BuildContext context) => AgendarAsesoria(),
 
   };
 }

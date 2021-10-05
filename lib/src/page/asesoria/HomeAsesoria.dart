@@ -48,9 +48,9 @@ class _HomeAsesoriaState extends State<HomeAsesoria> {
       },
       {
         'posicion': 1,
-        'titulo': "Historial Encomiendas",
+        'titulo': "Historial Citas",
         'subtitulo': "Usa esta sencilla herramienta para obtener el historial de las citas realizadas.",
-        'assetImage': AssetImage("assets/img/cotizar.png"),
+        'assetImage': AssetImage("assets/img/AsesoriaHistoria.png"),
         'superficie': '74,8 millones km²',
         'distancia': ' 57,91 millones km',
       },
@@ -149,13 +149,13 @@ class _HomeAsesoriaState extends State<HomeAsesoria> {
                 ///para que dibuje deacuerdo a lo que se le envia
 
                 ///redirigir a paquetes nacionales
-                Navigator.pushNamed(context, 'encomienda', arguments: "Cotización");
+                Navigator.pushNamed(context, 'AgendarAsesoria');
 
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'HistoEncomienda', arguments: "Historial de Encomiendas");
+                Navigator.pushNamed(context, 'HistoEncomienda', arguments: "Historial de Citas");
 
                 break;
 
