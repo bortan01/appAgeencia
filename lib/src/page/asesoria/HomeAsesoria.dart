@@ -155,7 +155,7 @@ class _HomeAsesoriaState extends State<HomeAsesoria> {
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.pushNamed(context, 'HistoEncomienda', arguments: "Historial de Citas");
+                Navigator.pushNamed(context, 'HistorialAsesoriaPage', arguments: "Historial de Citas");
 
                 break;
 
