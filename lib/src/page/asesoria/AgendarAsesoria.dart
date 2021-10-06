@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/asesoria/AsesoriaSave_model.dart';
 import 'package:peliculas/src/models/vehiculo/tipoVehiculo_model.dart';
 import 'package:peliculas/src/models/vuelos/VueloSave_model.dart';
 import 'package:intl/intl.dart';
+import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/vuelos_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
@@ -21,7 +23,7 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
   ModeloVehiculo modeloSeleccionado = ModeloVehiculo();
   DateTime fechaSeleccionada;
   DateTime hoy;
-
+  PreferenciasUsuario _pref = new PreferenciasUsuario();
   Color fondo = Colors.green;
   double screenHeight;
 
@@ -214,19 +216,34 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
       textColor: Colors.white,
       focusColor: Colors.red,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      onPressed: () async {
-        if (formKey.currentState.validate()) {
-          formKey.currentState.save();
-          if (!fechaSeleccionada.isBefore(hoy) || isSameDate(fechaSeleccionada, hoy)) {
-            // guardar(context);
-          } else {
-            helper.mostrarMensanjeError(context, 'No se puede agendar una cita en el pasado');
-          }
-        } else {
-          helper.mostrarMensanjeError(context, 'Complete los campos');
-        }
-      },
+      onPressed: () => _validacionAdicional(),
     );
+  }
+
+  void _validacionAdicional() async {
+    if (formKey.currentState.validate()) {
+      formKey.currentState.save();
+      if (!fechaSeleccionada.isBefore(hoy) || isSameDate(fechaSeleccionada, hoy)) {
+        bool isSunday = DateFormat('EEEE').format(fechaSeleccionada) == 'Sunday';
+        if (!isSunday) {
+          String fecha = DateFormat('d-M-y').format(fechaSeleccionada);
+          AsesoriaSaveModel model = AsesoriaSaveModel(
+            cobros: "0",
+            title: "Asesoria",
+            idCliente: _pref.idCliente,
+            usuario: _pref.nombre,
+            start: horaSeleccionada,
+            fecha: fecha,
+          );
+            } else {
+          helper.mostrarMensanjeError(context, 'Este dia esta cerrado!');
+        }
+      } else {
+        helper.mostrarMensanjeError(context, 'No se puede agendar una cita en el pasado');
+      }
+    } else {
+      helper.mostrarMensanjeError(context, 'Complete los campos');
+    }
   }
 
   Future<void> guardar(BuildContext context) async {
