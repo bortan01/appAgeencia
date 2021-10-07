@@ -45,6 +45,12 @@ Widget getDrawerDefault(BuildContext context) {
           ),
           new Divider(height: 5.0, color: colorBase),
           new ListTile(
+            title: new Text("Cotizaciones de Vuelos", style: estiloLetra),
+            trailing: new Icon(Icons.local_airport, color: colorBase),
+            onTap: () => Navigator.of(context).pushNamed('CotizacionVueloRealizadaPage'),
+          ),
+          new Divider(height: 5.0, color: colorBase),
+          new ListTile(
             title: new Text("Acerca de nosotros", style: estiloLetra),
             trailing: new Icon(Icons.flag, color: colorBase),
             onTap: () => Navigator.of(context).pushNamed('aboutAs'),

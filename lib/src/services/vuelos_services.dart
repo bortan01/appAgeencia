@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:peliculas/src/models/vuelos/CotizacionVueloRealizada_model.dart';
 import 'package:peliculas/src/models/vuelos/CotizarVuelo_model.dart';
 import 'package:peliculas/src/models/vuelos/VueloSave_model.dart';
 import 'package:peliculas/src/models/vuelos/vuelos_model.dart';
@@ -45,6 +46,18 @@ class VuelosServices with ChangeNotifier, DiagnosticableTreeMixin {
       final jsonResponse = convert.jsonDecode(response.body);
       print(jsonResponse);
       return false;
+    }
+  }
+
+  Future<CotizacionVueloRealizadaModel> obtenerCotizacionesRealizadas(String idCliente) async {
+    final url = '${Conf.urlServidor}cotizarVuelo/cotizar?id_cliente=$idCliente';
+    print(url);
+    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    if (response.statusCode == 200) {
+      final res = cotizacionVueloRealizadaModelFromJson(response.body);
+      return res;
+    } else {
+      return null;
     }
   }
 }

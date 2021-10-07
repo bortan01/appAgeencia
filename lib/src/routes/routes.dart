@@ -42,6 +42,7 @@ import 'package:peliculas/src/page/vehiculos/ListaVehiculos.dart';
 import 'package:peliculas/src/page/vehiculos/Menu.dart';
 import 'package:peliculas/src/page/vehiculos/cotizacionesRealizadas_page.dart';
 import 'package:peliculas/src/page/vehiculos/cotizarVehiculo.dart';
+import 'package:peliculas/src/page/vuelos/CotizacionVueloRealizada_page.dart';
 import 'package:peliculas/src/page/vuelos/HomeVuelos.dart';
 import 'package:peliculas/src/page/vuelos/ListaPromociones.dart';
 
@@ -103,6 +104,7 @@ Map<String, WidgetBuilder> getAplicationRoute() {
     'HomeAsesoria': (BuildContext context) => HomeAsesoria(),
     'AgendarAsesoria': (BuildContext context) => AgendarAsesoria(),
     'HistorialAsesoriaPage': (BuildContext context) => HistorialAsesoriaPage(),
+    'CotizacionVueloRealizadaPage': (BuildContext context) => CotizacionVueloRealizadaPage(),
 
   };
 }
