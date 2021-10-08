@@ -16,6 +16,7 @@ class AsesoriaSaveModel {
     this.start,
     this.title,
     this.cobros,
+    this.dia,
   });
 
   String fecha;
@@ -24,6 +25,7 @@ class AsesoriaSaveModel {
   String start;
   String title;
   String cobros;
+  String dia;
 
   factory AsesoriaSaveModel.fromJson(Map<String, dynamic> json) => AsesoriaSaveModel(
         fecha: json["fecha"],
@@ -32,6 +34,7 @@ class AsesoriaSaveModel {
         start: json["start"],
         title: json["title"],
         cobros: json["cobros"],
+        dia: json["dia"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -41,5 +44,6 @@ class AsesoriaSaveModel {
         "start": start,
         "title": title,
         "cobros": cobros,
+        "dia": dia,
       };
 }

@@ -163,7 +163,7 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
   }
 
   Widget _crearDropdownHora() {
-    List<String> horas = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00"];
+    List<String> horas = ["08:00", "09:00", "10:00", "11:00", "13:00", "14:00", "15:00"];
 
     return Container(
       margin: EdgeInsets.only(top: 10.0, bottom: 10.0),
@@ -227,17 +227,23 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
       if (!fechaSeleccionada.isBefore(hoy) || isSameDate(fechaSeleccionada, hoy)) {
         bool isSunday = DateFormat('EEEE').format(fechaSeleccionada) == 'Sunday';
         if (!isSunday) {
-          String fecha = DateFormat('d-M-y').format(fechaSeleccionada);
+          String fecha = DateFormat('dd-MM-y').format(fechaSeleccionada);
+          String dia = DateFormat('EEEE').format(fechaSeleccionada) == 'Saturday' ? 'sabado' : "DIA_NORMAL";
+
           AsesoriaSaveModel model = AsesoriaSaveModel(
-            cobros: "0",
-            title: "Asesoria",
-            idCliente: _pref.idCliente,
-            usuario: _pref.nombre,
-            start: horaSeleccionada,
-            fecha: fecha,
-          );
+              cobros: "0",
+              title: "Asesoria",
+              idCliente: _pref.idCliente,
+              usuario: _pref.nombre,
+              start: horaSeleccionada,
+              fecha: fecha,
+              dia: dia);
           Map<String, dynamic> response = await AsesoriaServices().guardarCita(model);
-          print(response["mensaje"]);
+          if (!response["error"]) {
+            helper.mostrarMensajeOk(context, response["mensaje"]);
+          } else {
+            helper.mostrarMensanjeError(context, response["mensaje"]);
+          }
         } else {
           helper.mostrarMensanjeError(context, 'Este dia esta cerrado!');
         }
