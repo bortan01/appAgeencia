@@ -4,6 +4,7 @@ import 'package:peliculas/src/models/vehiculo/tipoVehiculo_model.dart';
 import 'package:peliculas/src/models/vuelos/VueloSave_model.dart';
 import 'package:intl/intl.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
+import 'package:peliculas/src/services/asesoria_services.dart';
 import 'package:peliculas/src/services/vuelos_services.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
@@ -235,7 +236,9 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
             start: horaSeleccionada,
             fecha: fecha,
           );
-            } else {
+          Map<String, dynamic> response = await AsesoriaServices().guardarCita(model);
+          print(response["mensaje"]);
+        } else {
           helper.mostrarMensanjeError(context, 'Este dia esta cerrado!');
         }
       } else {
