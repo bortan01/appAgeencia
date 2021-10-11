@@ -186,7 +186,7 @@ class _HomePaquetesState extends State<HomePaquetes> {
   }
 
   Widget nombreAccion(int posicion) {
-    List<String> nombres = ["Ver Tours Nacionales", "Ver Tours Internacionales", "Cotizar Paquete"];
+    List<String> nombres = ["Ver Paquetes Nacionales", "Ver Paquetes Internacionales", "Cotizar Paquete"];
     return Text(nombres[posicion]);
   }
 }

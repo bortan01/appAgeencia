@@ -40,8 +40,7 @@ class _MenuProductosState extends State<MenuProductos> {
       {
         'posicion': 0,
         'titulo': "Historial de Viajes",
-        'subtitulo':
-            "En esta seccion encontraras todos los viajes que haz realizado con nosotros is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the ",
+        'subtitulo': "En esta seccion encontraras todos los viajes que haz realizado con nosotros",
         'assetImage': AssetImage("assets/img/paquete-nacional.png"),
         'superficie': 'Todo El Salvador',
         'distancia': '0 km',
@@ -49,8 +48,7 @@ class _MenuProductosState extends State<MenuProductos> {
       {
         'posicion': 1,
         'titulo': "Historial de Vehículos",
-        'subtitulo':
-            "En esta seccion encontraras todos los vehiculos que has rentado con la ayuda de nuestra agencia It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout",
+        'subtitulo': "En esta seccion encontraras todos los vehiculos que has rentado con la ayuda de nuestra agencia",
         'assetImage': AssetImage("assets/img/sedan1.png"),
         'superficie': 'Sub-America y Europa',
         'distancia': ' 57,91 millones km',

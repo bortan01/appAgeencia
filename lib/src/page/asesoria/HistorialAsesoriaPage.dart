@@ -13,7 +13,7 @@ class HistorialAsesoriaPage extends StatelessWidget {
     final PreferenciasUsuario _pref = new PreferenciasUsuario();
     final AsesoriaServices _asesoriaServices = new AsesoriaServices();
     return Scaffold(
-      appBar: new AppBar(centerTitle: true, title: new Text('Historial de Asesorias')),
+      appBar: new AppBar(centerTitle: true, title: new Text('Historial de Asesorías')),
       body: FutureBuilder(
         future: _asesoriaServices.obtenerListaAsesoria(_pref.idCliente),
         builder: (BuildContext context, AsyncSnapshot<List<HistoriaAsesoriaModel>> snapshot) {
@@ -41,7 +41,7 @@ class HistorialAsesoriaPage extends StatelessWidget {
         //final imagen = listaNumeros[indice];
         return _tarjetaDetalle(
             context: context,
-            title: 'Cobro de asesoria: \$${eventos[i].cobros}',
+            title: 'Cobro de asesoría: \$${eventos[i].cobros}',
             fecha: fecha,
             // color: eventos[i].obtenerColor(),
             color: Colors.blue);

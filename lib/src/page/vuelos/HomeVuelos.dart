@@ -169,7 +169,7 @@ class _HomeVuelosState extends State<HomeVuelos> {
   }
 
   Widget nombreAccion(int posicion) {
-    List<String> nombres = ["Ver Promociones", "Realizar Cotizacion"];
+    List<String> nombres = ["Ver Promociones", "Realizar Cotización"];
     return Text(nombres[posicion]);
   }
 }
