@@ -60,7 +60,8 @@ class UserServices {
     print("haciendo peticion de login cliente");
 
     final url = '${Conf.urlServidor}Usuario/loginUser';
-    final response = await http.post(url, body: login.toJson() ,headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http
+        .post(url, body: login.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     Map<String, dynamic> resp = convert.jsonDecode(response.body);
     if (response.statusCode == 200) {
       if (resp['nivel'] == 'CLIENTE') {
@@ -112,7 +113,8 @@ class UserServices {
     print("haciendo peticion de guardar usuario");
     final url = '${Conf.urlServidor}Usuario/registroUser';
     final data = signUp.toJson();
-    final response = await http.post(url, body: data, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response =
+        await http.post(url, body: data, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     switch (response.statusCode) {
       case 200:
         final jsonResponse = convert.jsonDecode(response.body);
@@ -153,7 +155,6 @@ class UserServices {
     final imageUploadRequest = http.MultipartRequest(
       'POST',
       url,
-      
     );
     //mimeType[0] es la imagen mimeType[1] es la extencion
     final file = await http.MultipartFile.fromPath('foto', foto.path, contentType: MediaType(mimeType[0], mimeType[1]));
@@ -210,7 +211,8 @@ class UserServices {
   Future<bool> eliminarFoto(String id) async {
     final url = '${Conf.urlServidor}Imagen/delete';
     final data = {'key': id};
-    final response = await http.post(url, body: data, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response =
+        await http.post(url, body: data, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     return response.statusCode == 200;
   }
 
@@ -218,7 +220,8 @@ class UserServices {
     final url = '${Conf.urlServidor}Usuario/update';
     final data = signUp.toJsonForUpdate();
     data['id_cliente'] = _usuarioPref.idCliente;
-    final response = await http.put(url, body: data, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response =
+        await http.put(url, body: data, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     switch (response.statusCode) {
       case 200:
         final jsonResponse = responseUpdateModelFromJson(response.body);
@@ -227,6 +230,21 @@ class UserServices {
       default:
         return null;
         break;
+    }
+  }
+
+  Future<bool> actualizarFecha() async {
+    final url = '${Conf.urlServidor}Usuario/updateFecha';
+    print(url);
+    final response = await http.put(url,
+        headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'},
+        body: {"uuid": _usuarioPref.uid, "mensajePendiente": "Nuevo Mensaje"});
+    if (response.statusCode == 200) {
+      // final res = response.body;
+      return true;
+    } else {
+      // final res = response.body;
+      return false;
     }
   }
 }

@@ -55,6 +55,7 @@ class _DetallePaqueteState extends State<DetallePaquete> {
           new Divider(color: Colors.grey, height: 20.0),
           helper.crearTitulo("Descripción"),
           descripcion(dataTourPaquete.descripcionForApp),
+          helper.crearTitulo("Incluye"),
           listaHorizontal(tipo: TypeChip.azul, lista: dataTourPaquete.incluye),
           _incluye(context, dataTourPaquete),
           helper.crearTitulo("Lugares de Salida"),

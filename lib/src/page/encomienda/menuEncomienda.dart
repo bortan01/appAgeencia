@@ -41,7 +41,7 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
         'posicion': 0,
         'titulo': "Cotizar Encomienda",
         'subtitulo':
-            "Cotizador de envíos de encomiendas para conocer las tarifas ingresando todos los datos solicitados para realizar la cotización. ¡Cotiza ahora!",
+            "Cotizador de envíos de encomiendas para conocer las tarifas ingresando todos los datos solicitados para realizar la cotización. ¡Cotiza ahora! Aplica para encomiendas nacionales, para las internaciones ponerse en contacto con la agencia",
         'assetImage': AssetImage("assets/img/historial.png"),
         'superficie': 'Auto Familiar',
         'distancia': '0 km',

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/services/chat_services.dart';
+import 'package:peliculas/src/services/user_services.dart';
 
 class NewMessageWidget extends StatefulWidget {
   NewMessageWidget({Key key}) : super(key: key);
@@ -52,7 +53,7 @@ class _NewMessageWidgetState extends State<NewMessageWidget> with TickerProvider
       _isTyped = false;
     });
     _chatServices.addMessage(text);
-    print(text);
+    print("Guardando mensaje");
+    UserServices().actualizarFecha();
   }
 }
-
