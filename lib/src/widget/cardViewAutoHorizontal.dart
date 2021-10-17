@@ -39,7 +39,7 @@ class CardViewAutoHorizontal extends StatelessWidget {
     final tarjetaDetalles = Container(
         width: 250,
         height: 100.0,
-        margin: new EdgeInsets.only(left: 30.0),
+        margin: new EdgeInsets.only(left: 26.0),
         /* margen Tarjeta */
         decoration: new BoxDecoration(
           color: Colors.blue,
@@ -74,7 +74,7 @@ class CardViewAutoHorizontal extends StatelessWidget {
         ));
     /* Creamos una vista superpuesta  */
     return Container(
-        margin: const EdgeInsets.all(12.0),
+        margin: const EdgeInsets.all(8.0),
         child: Stack(
           children: <Widget>[
             tarjetaDetalles,

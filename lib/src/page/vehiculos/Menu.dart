@@ -108,15 +108,26 @@ class _HomeMenuState extends State<HomeMenu> {
                 scrollDirection: Axis.horizontal,
                 itemCount: listaCategoria.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return CardViewAutoHorizontal(
-                    color: Colors.red,
-                    colortexto: Theme.of(context).bottomAppBarColor,
-                    index: listaCategoria[index].idcategoria,
-                    assetImage: listaCategoria[index].getAsset(),
-                    titulo: listaCategoria[index].nombreCategoria,
-                    subtitulo: listaCategoria[index].descripcionCategoria,
-                    distancia: '',
-                    superficie: '',
+                  return Row(
+                    children: <Widget>[
+                      CardViewAutoHorizontal(
+                        color: Colors.red,
+                        colortexto: Theme.of(context).bottomAppBarColor,
+                        index: listaCategoria[index].idcategoria,
+                        assetImage: listaCategoria[index].getAsset(),
+                        titulo: listaCategoria[index].nombreCategoria,
+                        subtitulo: listaCategoria[index].descripcionCategoria,
+                        distancia: '',
+                        superficie: '',
+                      ),
+                      listaCategoria.length != index + 1
+                          ? Icon(
+                              Icons.arrow_forward,
+                              color: Colors.blueAccent,
+                              size: 40.0,
+                            )
+                          : Container(),
+                    ],
                   );
                 }),
           ),

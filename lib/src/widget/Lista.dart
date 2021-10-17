@@ -38,7 +38,19 @@ class Lista extends StatelessWidget {
             style: AppTheme.h6Style.copyWith(fontSize: 15, color: Colors.blueGrey),
           ),
         ),
-        SizedBox(height: 15),
+        SizedBox(height: 8),
+        Center(
+          child: Text(
+            "Toca para ver más",
+            style: AppTheme.h6Style.copyWith(
+              fontSize: 15,
+              color: Colors.blueGrey,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
+        ),
+        SizedBox(height: 12),
 
         ///para evitar problemas por si la pantalla es peque;a
 

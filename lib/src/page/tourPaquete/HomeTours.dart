@@ -88,15 +88,27 @@ class _HomeToursState extends State<HomeTours> {
                 scrollDirection: Axis.horizontal,
                 itemCount: listaPaquete.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return CardViewAutoHorizontal(
-                    color: Colors.red,
-                    colortexto: Theme.of(context).bottomAppBarColor,
-                    index: listaPaquete[index]["posicion"],
-                    assetImage: listaPaquete[index]["assetImage"],
-                    titulo: listaPaquete[index]["titulo"],
-                    subtitulo: listaPaquete[index]["subtitulo"],
-                    distancia: listaPaquete[index]["distancia"],
-                    superficie: listaPaquete[index]["superficie"],
+                  return Row(
+                    children: <Widget>[
+                      CardViewAutoHorizontal(
+                        color: Colors.red,
+                        colortexto: Theme.of(context).bottomAppBarColor,
+                        index: listaPaquete[index]["posicion"],
+                        assetImage: listaPaquete[index]["assetImage"],
+                        titulo: listaPaquete[index]["titulo"],
+                        subtitulo: listaPaquete[index]["subtitulo"],
+                        distancia: listaPaquete[index]["distancia"],
+                        superficie: listaPaquete[index]["superficie"],
+                      ),
+                      // para la flecha
+                      listaPaquete.length != index + 1
+                          ? Icon(
+                              Icons.arrow_forward,
+                              color: Colors.blueAccent,
+                              size: 40.0,
+                            )
+                          : Container(),
+                    ],
                   );
                 }),
           ),

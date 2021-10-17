@@ -37,7 +37,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
 
   Color fondo = Colors.green;
   double screenHeight;
-
+  bool isSaving = false;
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -175,7 +175,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
                     _botonOpcion(),
                     _crearListaOpciones(),
                     SizedBox(height: 4.0),
-                    _botonEnviar(context)
+                    (isSaving) ? CircularProgressIndicator() : _botonEnviar(context)
                   ],
                 ),
               ),
@@ -564,7 +564,10 @@ class _CotizaVueloState extends State<CotizaVuelo> {
       onPressed: () async {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          guardar(context);
+          setState(() {
+            isSaving = true;
+            guardar(context);
+          });
         } else {
           helper.mostrarMensanjeError(context, 'Complete los campos');
         }
@@ -598,6 +601,7 @@ class _CotizaVueloState extends State<CotizaVuelo> {
       helper.mostrarMensajeOk(context,
           'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
       setState(() {
+        isSaving = false;
         _controllerAdulto.clear();
         _controllerBebe.clear();
         _controllerMaleta.clear();

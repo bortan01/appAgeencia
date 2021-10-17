@@ -27,6 +27,7 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
   PreferenciasUsuario _pref = new PreferenciasUsuario();
   Color fondo = Colors.green;
   double screenHeight;
+  bool isSaving = false;
 
   final formKey = GlobalKey<FormState>();
 
@@ -105,7 +106,7 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
                     _crearFecha(context, _controllerFechaLlegada, 'Seleccione la Fecha'),
                     helper.crearTitulo("Seleccione la Hora"),
                     _crearDropdownHora(),
-                    _botonEnviar(context)
+                    (isSaving) ? CircularProgressIndicator() : _botonEnviar(context)
                   ],
                 ),
               ),
@@ -227,6 +228,10 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
       if (!fechaSeleccionada.isBefore(hoy) || isSameDate(fechaSeleccionada, hoy)) {
         bool isSunday = DateFormat('EEEE').format(fechaSeleccionada) == 'Sunday';
         if (!isSunday) {
+          setState(() {
+            isSaving = true;
+          });
+
           String fecha = DateFormat('dd-MM-y').format(fechaSeleccionada);
           String dia = DateFormat('EEEE').format(fechaSeleccionada) == 'Saturday' ? 'sabado' : "DIA_NORMAL";
 
@@ -239,6 +244,10 @@ class _AgendarAsesoriaState extends State<AgendarAsesoria> {
               fecha: fecha,
               dia: dia);
           Map<String, dynamic> response = await AsesoriaServices().guardarCita(model);
+
+          setState(() {
+            isSaving = false;
+          });
           if (!response["error"]) {
             helper.mostrarMensajeOk(context, response["mensaje"]);
           } else {

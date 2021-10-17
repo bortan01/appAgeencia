@@ -18,7 +18,7 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
     super.initState();
   }
 
-  List listaPaquete;
+  List listaOpciones;
   BoxDecoration boxDecorationFondo;
   Color colorCardView = Colors.white12;
   Color colorCardViewHorizontal = Colors.white10;
@@ -36,7 +36,7 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
       colors: [Theme.of(context).canvasColor, Theme.of(context).canvasColor],
     ));
 
-    listaPaquete = [
+    listaOpciones = [
       {
         'posicion': 0,
         'titulo': "Cotizar Encomienda",
@@ -86,17 +86,28 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
             /* Iteramos la lista horizontal de los cuerpos del vehiculos */
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: listaPaquete.length,
+                itemCount: listaOpciones.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return CardViewAutoHorizontal(
-                    color: Colors.red,
-                    colortexto: Theme.of(context).bottomAppBarColor,
-                    index: listaPaquete[index]["posicion"],
-                    assetImage: listaPaquete[index]["assetImage"],
-                    titulo: listaPaquete[index]["titulo"],
-                    subtitulo: listaPaquete[index]["subtitulo"],
-                    distancia: listaPaquete[index]["distancia"],
-                    superficie: listaPaquete[index]["superficie"],
+                  return Row(
+                    children: <Widget>[
+                      CardViewAutoHorizontal(
+                        color: Colors.red,
+                        colortexto: Theme.of(context).bottomAppBarColor,
+                        index: listaOpciones[index]["posicion"],
+                        assetImage: listaOpciones[index]["assetImage"],
+                        titulo: listaOpciones[index]["titulo"],
+                        subtitulo: listaOpciones[index]["subtitulo"],
+                        distancia: listaOpciones[index]["distancia"],
+                        superficie: listaOpciones[index]["superficie"],
+                      ),
+                      listaOpciones.length != index + 1
+                          ? Icon(
+                              Icons.arrow_forward,
+                              color: Colors.blueAccent,
+                              size: 40.0,
+                            )
+                          : Container(),
+                    ],
                   );
                 }),
           ),
@@ -115,11 +126,11 @@ class _HomeCategoriaState extends State<MenuEncomienda> {
         return Container(
           child: CardViewAutoView(
             colortexto: Theme.of(context).bottomAppBarColor,
-            assetImage: listaPaquete[posicion]["assetImage"],
-            titulo: listaPaquete[posicion]["titulo"],
-            subtitulo: listaPaquete[posicion]["subtitulo"],
-            distancia: listaPaquete[posicion]["distancia"],
-            superficie: listaPaquete[posicion]["superficie"],
+            assetImage: listaOpciones[posicion]["assetImage"],
+            titulo: listaOpciones[posicion]["titulo"],
+            subtitulo: listaOpciones[posicion]["subtitulo"],
+            distancia: listaOpciones[posicion]["distancia"],
+            superficie: listaOpciones[posicion]["superficie"],
           ),
         );
       },

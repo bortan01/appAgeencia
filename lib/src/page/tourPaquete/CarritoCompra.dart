@@ -378,7 +378,7 @@ class _CarritoCompraState extends State<CarritoCompra> {
     asientosPrecio.forEach((element) {
       double subTotal = (element.cantidad * element.pasaje);
       total += subTotal;
-      cantidadAsientos += element.cantidad;
+      cantidadAsientos += element.cantidad * element.asiento;
       descripcionProducto +=
           '${element.cantidad.toString()} X Asiento(s) ${element.titulo} \$${element.pasaje} c/u, Sub Total \$$subTotal\n';
     });

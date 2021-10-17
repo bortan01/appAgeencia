@@ -118,7 +118,7 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
                     SizedBox(height: 20),
                     SizedBox(height: 15),
                     _inputDui(),
-                    _inputBoton(),
+                    _inputBoton(context),
                   ],
                 ),
               ),
@@ -282,18 +282,22 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
     );
   }
 
-  Widget _inputBoton() {
+  Widget _inputBoton(BuildContext contx) {
     return new FlatButton(
       child: (_guardando) ? CircularProgressIndicator() : Text("Actualizar Información"),
       color: Colors.blue,
       textColor: Colors.white,
       padding: EdgeInsets.only(left: 38, right: 38, top: 15, bottom: 15),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-      onPressed: (_guardando) ? null : _actualizar,
+      onPressed: (_guardando)
+          ? null
+          : () {
+              _actualizar(contx);
+            },
     );
   }
 
-  void _actualizar() async {
+  void _actualizar(BuildContext con) async {
     if (formKey.currentState.validate()) {
       //para ejecutar el on save
 
@@ -311,10 +315,12 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
       _guardando = false;
       setState(() {});
       if (respuesta != null) {
-        helper.mostrarMensajeOk(context, "Datos Actualizados exitósamente");
+        helper.mostrarMensajeOk(con, "Datos Actualizados exitósamente");
+        helper.mostrarMensanjeError(con, "Intente más tarde");
+
         _actalizarPreferencias(respuesta);
       } else {
-        helper.mostrarMensanjeError(context, "Intente más tarde");
+        helper.mostrarMensanjeError(con, "Intente más tarde");
       }
       Navigator.pop(context);
     }

@@ -27,6 +27,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
   PreferenciasUsuario _pref = new PreferenciasUsuario();
   int anioSeleccionado = 0;
   ModeloVehiculo modeloSeleccionado = ModeloVehiculo();
+  bool isSaving = false;
 
   Color fondo = Colors.green;
   double screenHeight;
@@ -152,7 +153,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
                     _crearFecha(context, _controllerFechaDevolucion, 'Seleccione la Fecha'),
                     helper.crearTitulo('Hora de Devolución'),
                     _crearHora(context, _controllerTimeDevolucion, 'Seleccione la Hora'),
-                    _botonAgregar(context)
+                    (isSaving) ? CircularProgressIndicator() : _botonEnviar(context)
                   ],
                 ),
               ),
@@ -411,7 +412,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
     return lista;
   }
 
-  Widget _botonAgregar(BuildContext context) {
+  Widget _botonEnviar(BuildContext context) {
     return RaisedButton.icon(
       icon: Icon(Icons.send),
       label: Text("Enviar Solicitud de cotización"),
@@ -422,7 +423,10 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
       onPressed: () async {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          guardar(context);
+          setState(() {
+            isSaving = true;
+            guardar(context);
+          });
         } else {
           helper.mostrarMensanjeError(context, 'Complete los campos');
         }
@@ -444,7 +448,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
       idUsuario: _pref.idCliente,
     );
     bool res = await VehiculoServices().guardarReserva(miModel);
-    print("done");
+
     if (res) {
       helper.mostrarMensajeOk(context,
           'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
@@ -456,6 +460,7 @@ class _CotizaVehiculoState extends State<CotizaVehiculo> {
         _controllerFechaRecogida.clear();
         _controllerTimeDevolucion.clear();
         _controllerTimeRecogida.clear();
+        isSaving = false;
       });
     } else {
       helper.mostrarMensanjeError(context, 'Favor intente más tarde');
