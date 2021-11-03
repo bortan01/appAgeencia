@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
         android:name=".Application"
-        android:label="Agencia"
+        android:label="Martínez Travels y Tours"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"

@@ -15,10 +15,15 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   double screenHeight;
   List<Product> productosSeleccionados = [];
   List<Product> listaProductos = [];
+  List<Municipio> listaMunicipios = [];
   int cantidadSeleccionada = 1;
+  double subTotal = 0.0;
   double total = 0.0;
+  double _comision = 0.0;
   Product _productoSeleccionado;
+  Municipio _municipioSelecionado;
   String nombreUnidad = 'unidades';
+  double _costoDeEnvio = 0.0;
   double porcentajeComision = 0.0;
 
   final formKey = GlobalKey<FormState>();
@@ -31,8 +36,10 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
 
   Future<EncomiendaModel> _getEncomienda() async {
     final respuesta = await EncomiendaServices().obtenerEncomienda();
-    inicializarListaPrecios(respuesta.product);
+    inicializarListaProductos(respuesta.product);
+    inicializarListaMunicipios(respuesta.municipios);
     porcentajeComision = respuesta.comision[0].porcentaje;
+    _costoDeEnvio = respuesta.municipios[0].costoAgregado;
     return respuesta;
   }
 
@@ -116,7 +123,12 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    _crearDropdown(),
+                    helper.crearTitulo("Seleccione el municipio de envío"),
+                    SizedBox(height: 3.0),
+                    _crearDropdownMunicipio(),
+                    helper.crearTitulo("Seleccione los productos"),
+                    SizedBox(height: 3.0),
+                    _crearDropdownProductos(),
                     _inputCantidad(),
                     _botonAgregar(),
                     helper.crearTitulo("Productos Seleccionados"),
@@ -162,12 +174,14 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
   }
 
   Widget _labelTotal() {
-    total = 0.00;
+    subTotal = 0.00;
     productosSeleccionados.forEach((element) {
-      total += (element.cantidadSeleccionada) * (element.tarifa);
+      subTotal += (element.cantidadSeleccionada) * (element.tarifa);
     });
     //sumando la comision
-    total += total * (porcentajeComision / 100);
+    _comision = subTotal * (porcentajeComision / 100);
+
+    total = subTotal + _comision + _costoDeEnvio;
 
     return Row(
       children: <Widget>[
@@ -175,27 +189,60 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "Total +",
+              "Subtotal +",
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
               style: helper.titulo2(),
             ),
             Text(
-              " Gastos de envio:",
+              "Gastos de envio +",
               overflow: TextOverflow.ellipsis,
               maxLines: 3,
               style: helper.titulo2(),
             ),
+            Text(
+              "comisión +",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: helper.titulo2(),
+            ),
+            Text(
+              "Total:",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.lightBlue, fontSize: 25.0),
+            )
           ],
         ),
         Spacer(),
-        Text(
-          "\$${total.toStringAsFixed(2)}",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w600,
-            color: Colors.lightBlue,
-          ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: <Widget>[
+            Text(
+              "\$${subTotal.toStringAsFixed(2)}",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: helper.titulo2(),
+            ),
+            Text(
+              "\$${_costoDeEnvio.toStringAsFixed(2)}",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: helper.titulo2(),
+            ),
+            Text(
+              "\$${_comision.toStringAsFixed(2)}",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: helper.titulo2(),
+            ),
+            Text(
+              "\$${total.toStringAsFixed(2)}",
+              overflow: TextOverflow.ellipsis,
+              maxLines: 3,
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.lightBlue, fontSize: 25.0),
+            ),
+          ],
         )
       ],
     );
@@ -223,15 +270,38 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
-  Widget _crearDropdown() {
+  Widget _crearDropdownMunicipio() {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         children: <Widget>[
-          helper.crearTitulo("Seleccione los Productos"),
-          SizedBox(
-            height: 3.0,
-          ),
+          DropdownButtonFormField(
+              isExpanded: true,
+              decoration: InputDecoration(
+                hintText: "",
+                border: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                ),
+              ),
+              icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
+              value: listaMunicipios[0],
+              items: opcionesDropdownMunicipio(),
+              onChanged: (opt) {
+                setState(() {
+                  _municipioSelecionado = opt;
+                  _costoDeEnvio = _municipioSelecionado.costoAgregado;
+                });
+              }),
+        ],
+      ),
+    );
+  }
+
+  Widget _crearDropdownProductos() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Column(
+        children: <Widget>[
           DropdownButtonFormField(
               isExpanded: true,
               decoration: InputDecoration(
@@ -242,7 +312,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
               ),
               icon: Icon(Icons.arrow_drop_down_circle, color: Colors.blue),
               value: listaProductos[0],
-              items: opcionesDropdown(),
+              items: opcionesDropdownProducto(),
               onChanged: (opt) {
                 setState(() {
                   _productoSeleccionado = opt;
@@ -314,7 +384,7 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     );
   }
 
-  List<DropdownMenuItem<Product>> opcionesDropdown() {
+  List<DropdownMenuItem<Product>> opcionesDropdownProducto() {
     List<DropdownMenuItem<Product>> lista = new List();
     listaProductos.forEach((precioItem) {
       lista.add(DropdownMenuItem(
@@ -348,6 +418,40 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     return lista;
   }
 
+  List<DropdownMenuItem<Municipio>> opcionesDropdownMunicipio() {
+    List<DropdownMenuItem<Municipio>> lista = new List();
+    listaMunicipios.forEach((municipioItem) {
+      lista.add(DropdownMenuItem(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Text(
+                    '${municipioItem.nombreMunicipio} (${municipioItem.departamento})',
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Text(
+                  '\$${municipioItem.costoAgregado.toStringAsFixed(2)}',
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+          value: municipioItem));
+    });
+
+    return lista;
+  }
+
   void agregarACarrito() {
     final encontrado = productosSeleccionados.indexWhere((pre) => pre.idProducto == _productoSeleccionado.idProducto);
     if (encontrado == -1 && _productoSeleccionado != null) {
@@ -367,11 +471,19 @@ class _EncomiendaPageState extends State<EncomiendaPage> {
     productosSeleccionados.removeWhere((element) => element.idProducto == id);
   }
 
-  void inicializarListaPrecios(List<Product> products) {
+  void inicializarListaProductos(List<Product> products) {
     listaProductos = [];
     listaProductos = products;
     if (products.isNotEmpty) {
       _productoSeleccionado = products[0];
+    }
+  }
+
+  void inicializarListaMunicipios(List<Municipio> municipios) {
+    listaMunicipios = [];
+    listaMunicipios = municipios;
+    if (municipios.isNotEmpty) {
+      _municipioSelecionado = municipios[0];
     }
   }
 }

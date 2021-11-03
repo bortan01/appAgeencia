@@ -10,18 +10,21 @@ class EncomiendaModel {
     this.mensaje,
     this.product,
     this.comision,
+    this.municipios,
   });
 
   bool err;
   String mensaje;
   List<Product> product;
   List<Comision> comision;
+  List<Municipio> municipios;
 
   factory EncomiendaModel.fromJson(Map<String, dynamic> json) => EncomiendaModel(
         err: json["err"],
         mensaje: json["mensaje"],
         product: List<Product>.from(json["product"].map((x) => Product.fromJson(x))),
         comision: List<Comision>.from(json["comision"].map((x) => Comision.fromJson(x))),
+        municipios: List<Municipio>.from(json["municipios"].map((x) => Municipio.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,6 +32,7 @@ class EncomiendaModel {
         "mensaje": mensaje,
         "product": List<dynamic>.from(product.map((x) => x.toJson())),
         "comision": List<dynamic>.from(comision.map((x) => x.toJson())),
+        "municipios": List<dynamic>.from(municipios.map((x) => x.toJson())),
       };
 }
 
@@ -49,6 +53,34 @@ class Comision {
   Map<String, dynamic> toJson() => {
         "id_comision": idComision,
         "porcentaje": porcentaje,
+      };
+}
+
+class Municipio {
+  Municipio({
+    this.idMunicipio,
+    this.nombreMunicipio,
+    this.costoAgregado,
+    this.departamento,
+  });
+
+  String idMunicipio;
+  String nombreMunicipio;
+  double costoAgregado;
+  String departamento;
+
+  factory Municipio.fromJson(Map<String, dynamic> json) => Municipio(
+        idMunicipio: json["id_municipio"],
+        nombreMunicipio: json["nombre_municipio"],
+        costoAgregado: double.parse(json["costo_agregado"]),
+        departamento: json["departamento"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id_municipio": idMunicipio,
+        "nombre_municipio": nombreMunicipio,
+        "costo_agregado": costoAgregado,
+        "departamento": departamento,
       };
 }
 

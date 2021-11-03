@@ -227,7 +227,8 @@ class _LoginPageState extends State<Login> {
       _guardando = true;
     });
     //primera consulta es solo para obtener el token
-    final respuesta = await userServices.loginCliente(new LoginModel(password: _contrasena, username: _usuario));
+    final respuesta = await userServices.loginCliente(new LoginModel(password: _contrasena, username: _usuario.trim()
+    ));
     //verificamos si todo esta bien
     if (!respuesta['err']) {
       String token = respuesta['token'];
