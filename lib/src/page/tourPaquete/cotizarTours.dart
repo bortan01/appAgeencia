@@ -13,7 +13,7 @@ class _CotizarToursState extends State<CotizarTours> {
   int filas;
 
   double screenHeight;
-
+  bool guardando = false;
   TextEditingController _controllerFecha = new TextEditingController();
   TextEditingController _controllerDescripcion = new TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -82,7 +82,7 @@ class _CotizarToursState extends State<CotizarTours> {
                     _crearFecha(context, _controllerFecha, 'Seleccione la Fecha'),
                     helper.crearTitulo("Describa su viaje ideal"),
                     _inputDescripcion(),
-                    _botonAgregar(context),
+                    _botonGuardar(context),
                   ],
                 ),
               ),
@@ -139,21 +139,23 @@ class _CotizarToursState extends State<CotizarTours> {
     }
   }
 
-  Widget _botonAgregar(BuildContext context) {
-    return RaisedButton.icon(
-      icon: Icon(Icons.send),
-      label: Text("Enviar Solicitud"),
-      color: Colors.blue,
-      textColor: Colors.white,
-      focusColor: Colors.red,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-      onPressed: () async {
-        if (formKey.currentState.validate()) {
-          formKey.currentState.save();
-          guardar(context);
-        }
-      },
-    );
+  Widget _botonGuardar(BuildContext context) {
+    return (!guardando)
+        ? RaisedButton.icon(
+            icon: Icon(Icons.send),
+            label: Text("Enviar Solicitud"),
+            color: Colors.blue,
+            textColor: Colors.white,
+            focusColor: Colors.red,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
+            onPressed: () async {
+              if (formKey.currentState.validate()) {
+                formKey.currentState.save();
+                guardar(context);
+              }
+            },
+          )
+        : Container(padding: EdgeInsets.only(top: 10), child: CircularProgressIndicator());
   }
 
   Widget _inputDescripcion() {
@@ -179,6 +181,10 @@ class _CotizarToursState extends State<CotizarTours> {
   }
 
   Future<void> guardar(BuildContext context) async {
+    setState(() {
+      guardando = true;
+    });
+
     PreferenciasUsuario pref = PreferenciasUsuario();
     CotizarModel cotizacion = CotizarModel(
       idCliente: pref.idCliente,
@@ -188,14 +194,18 @@ class _CotizarToursState extends State<CotizarTours> {
     );
 
     bool res = await TurServices().guardaCotizacion(cotizacion);
+    // bool res = true;
     if (res) {
       helper.mostrarMensajeOk(context,
           'Solicitud de cotización enviada correctamente, le notificaremos la respuesta en la brevedad posible');
       _controllerDescripcion.clear();
       _controllerFecha.clear();
-      setState(() {});
     } else {
       helper.mostrarMensanjeError(context, 'Favor intente más tarde');
     }
+
+    setState(() {
+      guardando = false;
+    });
   }
 }

@@ -78,7 +78,8 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
       final res = WompiModel.fromJson(jsonResponse);
       return res;
     } else {
-      // final jsonResponse = convert.jsonDecode(response.body);
+      final jsonResponse = (response.body);
+      print(jsonResponse);
       return null;
     }
   }
@@ -96,7 +97,6 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
       return null;
     }
   }
-
   Future<bool> guardaCotizacion(CotizarModel cotizacion) async {
     print("haciendo peticion de guardar cotizacion");
     final url = '${Conf.urlServidor}TurPaquete/cotizacion';
@@ -118,6 +118,8 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
       final cotizacion = cotizacionesPaquetesClienteFromJson(response.body);
       return cotizacion;
     } else {
+      final jsonResponse = (response.body);
+      print(jsonResponse);
       return null;
     }
   }
