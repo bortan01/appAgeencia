@@ -18,7 +18,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   PreferenciasUsuario _pref = new PreferenciasUsuario();
   Future<VehiculosModel> obtenerVehiculos(String idCategoria) async {
     final url = '${Conf.urlServidor}vehiculo/show?idCategoria=$idCategoria';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = vehiculosModelFromJson(response.body);
       return res;
@@ -30,7 +30,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   Future<List<Categoria>> obtenerCategoria() async {
     print('haciendo peticion de vehiculos');
     final url = '${Conf.urlServidor}categoriasAutos/categorias';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = categoriaModelFromJson(response.body);
       return res.categorias;
@@ -42,7 +42,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   Future<List<ModeloVehiculo>> obtenerModelo() async {
     print('haciendo peticion de vehiculos');
     final url = '${Conf.urlServidor}modeloVehiculo/modelo';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = tipoVehiculoFromJson(response.body);
       return res.modelo;
@@ -55,7 +55,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
     print("haciendo peticion de guardar cotizacion");
     final url = '${Conf.urlServidor}cotizarVehiculo/cotizar';
     final response = await http
-        .post(url, body: cotizacion.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+        .post(Uri.parse (url), body: cotizacion.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       final res = CotizacionResponse.fromJson(jsonResponse);
@@ -69,7 +69,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   Future<VehiculosAlquiladosModel> obtenerHistorial() async {
     print("historia por cliente");
     final url = '${Conf.urlServidor}vehiculo/historial?id_cliente=${_pref.idCliente}';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       final res = VehiculosAlquiladosModel.fromJson(jsonResponse);
@@ -82,7 +82,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
   Future<CotizacionesRealizadas> cotizacionesByCliente() async {
     print("obtener by cliente");
     final url = '${Conf.urlServidor}cotizarVehiculo/cotizar?id_usuario=${_pref.idCliente}';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = cotizacionesRealizadasFromJson(response.body);
       return res;

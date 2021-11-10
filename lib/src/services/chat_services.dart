@@ -64,7 +64,7 @@ class ChatServices {
 
   Future<void> obtenerUID() async {
     final url = '${Conf.urlServidor}Usuario/obtenerChat';
-    final response = await http.post(url, body: {"user_2": _pref.uid},headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.post(Uri.parse (url), body: {"user_2": _pref.uid},headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final infoChat = informacionChatModelFromJson(response.body);
       _pref.uidAdministrador = infoChat.user1Uuid;

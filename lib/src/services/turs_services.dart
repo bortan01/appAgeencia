@@ -30,7 +30,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
   Future<List<dynamic>> obtenerViaje(String tipo) async {
     print('haciendo peticion obtener tur');
     final url = '${Conf.urlServidor}TurPaquete/show?estado=1&tipo=$tipo';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       return jsonResponse;
@@ -42,7 +42,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
   Future<InformacionAdicional> obtenerInformacionAdicional(String idTur) async {
     print('haciendo peticion informacion adicional');
     final url = '${Conf.urlServidor}TurPaquete/showAdicional?id_tours=$idTur';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       final res = InformacionAdicional.fromJson(jsonResponse);
@@ -56,7 +56,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     print('haciendo peticion informacion de reserva 3');
     final url = '${Conf.urlServidor}TurPaquete/showReserva?id_tours=$idTur';
     print(url);
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       final res = InfoReservaModel.fromJson(jsonResponse);
@@ -71,7 +71,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     reserva.idCliente = int.parse(_pref.idCliente);
     final url = '${Conf.urlServidor}DetalleTour/saveByClient';
     final response = await http
-        .post(url, body: reserva.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+        .post(Uri.parse (url), body: reserva.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
 
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
@@ -85,7 +85,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<ResponseReserva> reservasByUser() async {
     final url = '${Conf.urlServidor}TurPaquete/showInfoReserva?id_cliente=${_pref.idCliente}';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       //TRANSFORMANDO DE STRIN A JSON
       final jsonResponse = convert.jsonDecode(response.body);
@@ -101,7 +101,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     print("haciendo peticion de guardar cotizacion");
     final url = '${Conf.urlServidor}TurPaquete/cotizacion';
     final response = await http
-        .post(url, body: cotizacion.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+        .post(Uri.parse (url), body: cotizacion.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final jsonResponse = convert.jsonDecode(response.body);
       print(jsonResponse);
@@ -113,7 +113,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<CotizacionesPaquetesCliente> obtenerCotizacionesByCliente() async {
     final url = '${Conf.urlServidor}TurPaquete/cotizacionByClient?id_cliente=${_pref.idCliente}';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final cotizacion = cotizacionesPaquetesClienteFromJson(response.body);
       return cotizacion;
@@ -124,7 +124,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
 
   Future<ItinerarioModel> obtenerItinerario(String id) async {
     final url = '${Conf.urlServidor}Itinerario/itinerarioForApp?id_tours=$id';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final cotizacion = itinerarioModelFromJson(response.body);
       return cotizacion;
@@ -137,7 +137,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     //
     print('haciendo peticion obtener data tour paquete');
     final url = '${Conf.urlServidor}TurPaquete/showApp?estado=1&tipo=$tipo';
-    final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+    final response = await http.get(Uri.parse (url), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = dataTourPaqueteModelFromJson(response.body);
       return res;

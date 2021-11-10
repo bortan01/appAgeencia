@@ -5,7 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 //cg7jHTZxRmuLoLePCmVfR3:APA91bEaEaN0fw_iWrphfXd9uk1JcyIYBk0k3XAqh4ESLOKmzRmFCPx5umvhRKlsy4URu0n13ft_fyPI_cBoqTfxY7WNe9No69bz9ANvrVEjnU_dmrVsaLPGbuhQ3oYfwVPaUISHAChX
 class PushNotificationProvider {
-  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  //final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   final _mensajeStreamController = StreamController<String>.broadcast();
   Stream<String> get mensajesStreams => _mensajeStreamController.stream;
@@ -29,18 +29,7 @@ class PushNotificationProvider {
   }
 
   iniciarNotificaciones() async {
-    await _firebaseMessaging.requestNotificationPermissions();
-    final token = await _firebaseMessaging.getToken();
-    print("el token es $token");
-
-    await _firebaseMessaging.subscribeToTopic("TODOS_LOS_USUARIOS");
-
-    _firebaseMessaging.configure(
-      onMessage: onMessage,
-      onBackgroundMessage: mensajeBackground,
-      onLaunch: onLaunch,
-      onResume: onResume,
-    );
+   
   }
 
   Future<dynamic> onMessage(Map<String, dynamic> message) async {
