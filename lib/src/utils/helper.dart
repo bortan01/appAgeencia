@@ -29,6 +29,10 @@ String minLength(String s, int min) {
   if (s.isEmpty) return null;
   return (s.length < min) ? "Longitud debe ser menor que $min" : null;
 }
+String validateDui(String s, int min) {
+  if (s.isEmpty) return null;
+  return (s.length < min) ? "Longitud debe ser menor que $min" : null;
+}
 
 String minLengthRequired(String s, int min) {
   if (s.isEmpty) return necesario;

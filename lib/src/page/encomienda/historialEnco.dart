@@ -60,7 +60,7 @@ class HistorialEncomienda extends StatelessWidget {
                 ///AQUI ES DONDE SE CREAN LAS IMAGENES
                 Lista(
                   model: new ListaModel(
-                      nombre: 'Ciudad de Destino ${data[index].destino.ciudadDestino}',
+                      nombre: 'Ciudad de Destino ${data[index].nombreMunicipio}',
                       descripcion:
                           'Dirección de Destino: ${data[index].destino.direccionDestino} \n\nDirección Alternativa: ${data[index].destino.alternaDestino}',
                       tag1: 'Total de envio \$${data[index].totalCliente}',

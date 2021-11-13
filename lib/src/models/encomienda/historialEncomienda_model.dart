@@ -43,6 +43,7 @@ class EncomiendaRealizada {
     this.estado,
     this.totalCliente,
     this.destino,
+    this.nombreMunicipio,
   });
 
   String idEncomienda;
@@ -53,6 +54,7 @@ class EncomiendaRealizada {
   String estado;
   String totalCliente;
   Destino destino;
+  String nombreMunicipio;
 
   factory EncomiendaRealizada.fromJson(Map<String, dynamic> json) => EncomiendaRealizada(
         idEncomienda: json["id_encomienda"],
@@ -62,6 +64,7 @@ class EncomiendaRealizada {
         fecha: DateTime.parse(json["fecha"]),
         estado: json["estado"],
         totalCliente: json["total_cliente"],
+        nombreMunicipio: json["nombre_municipio"],
         destino: json["destino"] == null ? new Destino() : Destino.fromJson(json["destino"]),
       );
 

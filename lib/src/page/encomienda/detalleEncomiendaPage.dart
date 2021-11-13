@@ -11,7 +11,7 @@ class DetalleEncomiendaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final EncomiendaRealizada encomiendaRealizada = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-      appBar: appBarPaquete(context, encomiendaRealizada.destino.ciudadDestino),
+      appBar: appBarPaquete(context, encomiendaRealizada.nombreMunicipio),
       body: _listado(context, encomiendaRealizada.idEncomienda),
     );
   }
