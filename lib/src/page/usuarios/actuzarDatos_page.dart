@@ -3,6 +3,7 @@ import 'package:peliculas/src/models/usuarios/resposeUpdate_model.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
 import 'package:peliculas/src/preferencias/preferencias_usuario.dart';
 import 'package:peliculas/src/services/user_services.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class ActualizarDatosPage extends StatefulWidget {
@@ -17,21 +18,24 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
   String _correo = "";
   String _password = "";
   String _password2 = "";
-  String _celular = "";
-  String _dui = "";
   bool _guardando = false;
   bool _ocultarPassword1 = true;
   bool _ocultarPassword2 = true;
   final formKey = GlobalKey<FormState>();
   UserServices _userServices = new UserServices();
+  TextEditingController duiController = TextEditingController();
+  TextEditingController celularController = TextEditingController();
+  MaskTextInputFormatter maskDui = MaskTextInputFormatter(mask: "########-#", filter: {"#": RegExp(r'[0-9]')});
+  MaskTextInputFormatter maskCelular =
+      MaskTextInputFormatter(mask: "(+###) ####-####", filter: {"#": RegExp(r'[0-9]')});
 
   @override
   void initState() {
     super.initState();
     _nombre = _pref.nombre;
     _correo = _pref.correo;
-    _dui = _pref.dui;
-    _celular = _pref.celular;
+     duiController.text = _pref.dui;
+    celularController.text = _pref.celular;
   }
 
   @override
@@ -243,10 +247,11 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
 
   Widget _inputDui() {
     return new TextFormField(
-      // inputFormatters: [maskFormatter],
+      inputFormatters: [maskDui],
       keyboardType: TextInputType.number,
       validator: (value) => helper.minLength(value, 10),
-      initialValue: _dui,
+      // initialValue: _dui,
+      controller: duiController,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: '12345678-9',
@@ -256,7 +261,6 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
         suffixIcon: Icon(Icons.credit_card),
       ),
       onChanged: (String value) {
-        _dui = value;
         setState(() {});
       },
     );
@@ -264,9 +268,10 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
 
   Widget _inputCelular() {
     return new TextFormField(
+      inputFormatters: [maskCelular],
       keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
       validator: (value) => helper.minLength(value, 8),
-      initialValue: _celular,
+      controller: celularController,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
         hintText: 'Digite su Célular (opcional)',
@@ -276,7 +281,6 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
         suffixIcon: Icon(Icons.phone),
       ),
       onChanged: (String value) {
-        _celular = value;
         setState(() {});
       },
     );
@@ -308,8 +312,8 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
         nombre: _nombre.trim(),
         correo: _correo.trim(),
         password: _password.trim(),
-        celular: _celular.trim(),
-        dui: _dui.toString(),
+        celular: celularController.text.trim(),
+        dui: duiController.text.toString(),
       );
       ResponseUpdateModel respuesta = await _userServices.actulizarDatos(signUp);
       _guardando = false;

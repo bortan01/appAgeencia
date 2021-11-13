@@ -35,7 +35,7 @@ dependencies:
    url_launcher: ^5.0.2
    rflutter_alert: ^1.1.0
    shared_preferences:
-   mask_text_input_formatter: ^1.2.1
+   mask_text_input_formatter: ^1.0.0
    image_picker: ^0.6.7+22
    mime_type: ^0.3.2
    flutter_localizations:
@@ -52,9 +52,9 @@ dev_dependencies:
       sdk: flutter
 
 flutter_icons:
-  android: "launcher_icon"
-  ios: true
-  image_path: "assets/img/icon.png"
+   android: "launcher_icon"
+   ios: true
+   image_path: "assets/img/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following src.page: https://dart.dev/tools/pub/pubspec
