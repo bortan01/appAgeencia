@@ -250,7 +250,6 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
       inputFormatters: [maskDui],
       keyboardType: TextInputType.number,
       validator: (value) => helper.minLength(value, 10),
-      // initialValue: _dui,
       controller: duiController,
       decoration: InputDecoration(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
@@ -312,8 +311,8 @@ class _ActualizarDatosPagePageState extends State<ActualizarDatosPage> {
         nombre: _nombre.trim(),
         correo: _correo.trim(),
         password: _password.trim(),
-        celular: celularController.text.trim(),
-        dui: duiController.text.toString(),
+        celular: celularController.text,
+        dui: duiController.text,
       );
       ResponseUpdateModel respuesta = await _userServices.actulizarDatos(signUp);
       _guardando = false;

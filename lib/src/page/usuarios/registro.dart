@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas/src/models/usuarios/signUp_model.dart';
 import 'package:peliculas/src/services/user_services.dart';
-import 'package:peliculas/src/utils/helper.dart' as helper;
 import 'package:rflutter_alert/rflutter_alert.dart';
+import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:peliculas/src/utils/helper.dart' as helper;
 
 class Registro extends StatefulWidget {
   @override
@@ -16,13 +17,24 @@ class _RegistroPageState extends State<Registro> {
   String _correo = "";
   String _password = "";
   String _password2 = "";
-  String _celular = "";
-  String _dui = "";
   bool _guardando = false;
   bool _ocultarPassword1 = true;
   bool _ocultarPassword2 = true;
   final formKey = GlobalKey<FormState>();
   UserServices _userServices = new UserServices();
+  TextEditingController duiController = TextEditingController();
+  TextEditingController celularController = TextEditingController();
+  MaskTextInputFormatter maskDui = MaskTextInputFormatter(mask: "########-#", filter: {"#": RegExp(r'[0-9]')});
+  MaskTextInputFormatter maskCelular =
+      MaskTextInputFormatter(mask: "(+###) ####-####", filter: {"#": RegExp(r'[0-9]')});
+
+  @override
+  void initState() {
+    super.initState();
+    duiController.text = "";
+    celularController.text = "";
+  }
+
   @override
   Widget build(BuildContext context) {
     screenHeight = MediaQuery.of(context).size.height;
@@ -243,13 +255,8 @@ class _RegistroPageState extends State<Registro> {
   }
 
   Widget _inputDui() {
-    // var maskFormatter = new MaskTextInputFormatter(
-    //     mask: '########-#',
-    //     filter: {"#": RegExp(r'[0-9]')},
-    //     initialText: '12345678-9');
-
     return new TextFormField(
-      // inputFormatters: [maskFormatter],
+      inputFormatters: [maskDui],
       keyboardType: TextInputType.number,
       validator: (value) => helper.minLength(value, 10),
       decoration: InputDecoration(
@@ -261,7 +268,7 @@ class _RegistroPageState extends State<Registro> {
         suffixIcon: Icon(Icons.credit_card),
       ),
       onChanged: (String value) {
-        _dui = value;
+        duiController.text = value;
         setState(() {});
       },
     );
@@ -269,6 +276,7 @@ class _RegistroPageState extends State<Registro> {
 
   Widget _inputCelular() {
     return new TextFormField(
+      inputFormatters: [maskCelular],
       keyboardType: TextInputType.numberWithOptions(decimal: false, signed: false),
       validator: (value) => helper.minLength(value, 8),
       decoration: InputDecoration(
@@ -280,7 +288,7 @@ class _RegistroPageState extends State<Registro> {
         suffixIcon: Icon(Icons.phone),
       ),
       onChanged: (String value) {
-        _celular = value;
+        celularController.text = value;
         setState(() {});
       },
     );
@@ -323,8 +331,8 @@ class _RegistroPageState extends State<Registro> {
           nombre: _nombre.trim(),
           correo: _correo.trim(),
           password: _password.trim(),
-          celular: _celular.trim(),
-          dui: _dui.toString(),
+          celular: celularController.text,
+          dui: duiController.text,
           nivel: 'CLIENTE');
       var respuesta = await _userServices.registrarUsuario(signUp);
       setState(() {
@@ -367,8 +375,8 @@ class _RegistroPageState extends State<Registro> {
       _correo = "";
       _password = "";
       _password2 = "";
-      _celular = "";
-      _dui = "";
+      celularController.text = "";
+      duiController.text = "";
     });
   }
 }
