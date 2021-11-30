@@ -62,6 +62,7 @@ class VehiculoServices with ChangeNotifier, DiagnosticableTreeMixin {
       print(res.mensaje);
       return true;
     } else {
+      print(response.body);
       return false;
     }
   }

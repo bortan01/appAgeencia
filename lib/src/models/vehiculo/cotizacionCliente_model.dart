@@ -53,9 +53,9 @@ class CotizacionClienteModel {
         "caracteristicas": caracteristicas,
         "direccion_recogida": direccionRecogida,
         "fechaRecogida": fechaRecogida,
-        "HoraRecogida": horaRecogida,
+        "horaRecogida": horaRecogida,
         "direccion_devolucion": direccionDevolucion,
         "fechaDevolucion": fechaDevolucion,
-        "HoraDevolucion": horaDevolucion,
+        "horaDevolucion": horaDevolucion,
     };
 }

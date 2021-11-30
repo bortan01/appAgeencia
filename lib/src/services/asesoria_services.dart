@@ -69,6 +69,7 @@ class AsesoriaServices with ChangeNotifier, DiagnosticableTreeMixin {
         final url = '${Conf.urlServidor}/Cita/Citas';
         final response = await http
             .post(url, body: modelo.toJson(), headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
+        print(response.body);
         final respuesta = asesoriaResponseModelFromJson(response.body);
         if (response.statusCode != 200) {
           return {"error": true, "mensaje": respuesta.mensaje};
@@ -78,6 +79,7 @@ class AsesoriaServices with ChangeNotifier, DiagnosticableTreeMixin {
       }
     }
   }
+
   Future<ExisteModelDart> verificarExiste(String idCliente) async {
     final url = '${Conf.urlServidor}Cita/verificarExist?id_cliente=$idCliente';
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
@@ -85,6 +87,7 @@ class AsesoriaServices with ChangeNotifier, DiagnosticableTreeMixin {
       final res = existeModelDartFromJson(response.body);
       return res;
     } else {
+      print(response.body);
       return null;
     }
   }
