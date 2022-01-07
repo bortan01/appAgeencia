@@ -97,6 +97,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
       return null;
     }
   }
+
   Future<bool> guardaCotizacion(CotizarModel cotizacion) async {
     print("haciendo peticion de guardar cotizacion");
     final url = '${Conf.urlServidor}TurPaquete/cotizacion';
@@ -139,6 +140,7 @@ class TurServices with ChangeNotifier, DiagnosticableTreeMixin {
     //
     print('haciendo peticion obtener data tour paquete');
     final url = '${Conf.urlServidor}TurPaquete/showApp?estado=1&tipo=$tipo';
+    print(url);
     final response = await http.get(url, headers: {HttpHeaders.authorizationHeader: 'Basic your_api_token_here'});
     if (response.statusCode == 200) {
       final res = dataTourPaqueteModelFromJson(response.body);

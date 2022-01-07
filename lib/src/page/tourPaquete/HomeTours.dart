@@ -39,7 +39,7 @@ class _HomeToursState extends State<HomeTours> {
     listaPaquete = [
       {
         'posicion': 0,
-        'titulo': "Nacionales",
+        'titulo': "Terrestres",
         'subtitulo':
             "Haz realidad tus sueños con nuestros Tours, visitando los lugares mas hermonos de nuestro lindo El Salvador",
         'assetImage': AssetImage("assets/img/tours-nacional.png"),
@@ -48,10 +48,18 @@ class _HomeToursState extends State<HomeTours> {
       },
       {
         'posicion': 1,
-        'titulo': "Internacionales",
+        'titulo': "Aéreos",
         'subtitulo': "Ven y Haz realidad tus sueños con nuestros Tours para Centro América, Sudamérica y Europa",
         'assetImage': AssetImage("assets/img/tours-internacionas.png"),
         'superficie': 'Sub-America y Europa',
+        'distancia': ' 57,91 millones km',
+      },
+      {
+        'posicion': 2,
+        'titulo': "Cotizar Tour",
+        'subtitulo': "Realiza tu cotización de Paquetes a Nivel nacional, Centro América, Sudamérica y Europa",
+        'assetImage': AssetImage("assets/img/cotizar-tours.png"),
+        'superficie': 'Centro América, Sub-America y Europa',
         'distancia': ' 57,91 millones km',
       },
     ];
@@ -161,14 +169,19 @@ class _HomeToursState extends State<HomeTours> {
                 ///lo ideal es crear una sola pagina y mandarle los argumentos
                 ///para que dibuje deacuerdo a lo que se le envia
                 ///redirigir a paquetes nacionales
-                Navigator.push(context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Tour Nacional')));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'terrestres')));
                 break;
               case 1:
 
                 ///redirigir a paquetes intercacionales
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Tour Internacional')));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'aereos')));
                 break;
+              case 2:
+
+                ///redirigir a paquetes intercacionales
+                Navigator.pushNamed(context, 'CotizarTours', arguments: "Cotización");
+                break;
+
               default:
             }
           },
@@ -182,7 +195,7 @@ class _HomeToursState extends State<HomeTours> {
   }
 
   Widget nombreAccion(int posicion) {
-    List<String> nombres = ["Ver Tours Nacionales", "Ver Tours Internacionales"];
+    List<String> nombres = ["Ver Tours Terrestres", "Ver Tours Aéreos", "Cotizar Tour"];
     return Text(nombres[posicion]);
   }
 }

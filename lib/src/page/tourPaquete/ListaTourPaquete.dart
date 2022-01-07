@@ -32,7 +32,7 @@ class _ListaToursState extends State<ListaTours> {
   Widget build(BuildContext context) {
     final String argumento = widget.tipo;
     return Scaffold(
-      appBar: appBarPaquete(context, argumento),
+      appBar: appBarPaquete(context, "Tours " + argumento),
       body: _listado(context, argumento),
     );
   }

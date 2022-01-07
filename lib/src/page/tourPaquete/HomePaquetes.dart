@@ -171,16 +171,13 @@ class _HomePaquetesState extends State<HomePaquetes> {
                 ///para que dibuje deacuerdo a lo que se le envia
                 ///redirigir a paquetes nacionales
                 Navigator.push(context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Paquete Nacional')));
-
                 break;
               case 1:
-
                 ///redirigir a paquetes intercacionales
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => ListaTours(tipo: 'Paquete Internacional')));
                 break;
               case 2:
-
                 ///redirigir a paquetes intercacionales
                 Navigator.pushNamed(context, 'CotizarTours', arguments: "Cotización");
                 break;
