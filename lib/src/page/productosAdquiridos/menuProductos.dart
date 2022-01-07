@@ -54,14 +54,6 @@ class _MenuProductosState extends State<MenuProductos> {
         'distancia': ' 57,91 millones km',
       },
       {
-        'posicion': 2,
-        'titulo': "Historial Encomiendas",
-        'subtitulo': "Usa esta sencilla herramienta para obtener el historial de encomiendas realizadas.",
-        'assetImage': AssetImage("assets/img/cotizar.png"),
-        'superficie': '74,8 millones km²',
-        'distancia': ' 57,91 millones km',
-      },
-      {
         'posicion': 3,
         'titulo': "Historial Citas",
         'subtitulo': "Usa esta sencilla herramienta para obtener el historial de las citas realizadas.",
@@ -186,10 +178,6 @@ class _MenuProductosState extends State<MenuProductos> {
 
                 break;
 
-              case 2:
-                Navigator.pushNamed(context, 'HistoEncomienda', arguments: "Historial de Encomiendas");
-
-                break;
               case 3:
                 Navigator.pushNamed(context, 'HistorialAsesoriaPage', arguments: "Historial de Citas");
 
@@ -208,7 +196,6 @@ class _MenuProductosState extends State<MenuProductos> {
     List<String> nombres = [
       "Ver historial de Viajes",
       "Ver historial de Vehículos",
-      "Ver historial de Encomiendas",
       "Ver historial de Citas",
     ];
     return Text(nombres[posicion]);

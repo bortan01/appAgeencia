@@ -32,16 +32,16 @@ class _ListaToursState extends State<ListaTours> {
   Widget build(BuildContext context) {
     final String argumento = widget.tipo;
     return Scaffold(
-      appBar: appBarPaquete(context, "Tours " + argumento),
+      appBar: appBarPaquete(context, argumento),
       body: _listado(context, argumento),
     );
   }
 
-  Widget appBarPaquete(BuildContext context, String titulo) {
+  Widget appBarPaquete(BuildContext context, String tipo) {
     return AppBar(
       backgroundColor: Theme.of(context).accentColor,
       centerTitle: true,
-      title: Text(titulo),
+      title: Text(tipo == "aereos" ? "Tours Aéreos" : "Tours Terrestres"),
     );
   }
 

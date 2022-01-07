@@ -4,7 +4,6 @@ import 'package:peliculas/src/models/tourPaquete/InformacionAdicional_model.dart
 import 'package:peliculas/src/services/turs_services.dart';
 import 'package:peliculas/src/utils/helper.dart';
 import 'package:peliculas/src/widget/app_bar_widget.dart';
-import 'package:peliculas/src/page/tourPaquete/CarritoCompra.dart';
 import 'package:peliculas/src/widget/chip_widget.dart';
 import 'package:peliculas/src/widget/descripcion_widget.dart';
 import 'package:peliculas/src/widget/galeria.dart';
